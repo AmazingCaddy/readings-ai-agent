@@ -30,8 +30,9 @@
 
 ## 结论状态
 
-- 部分验证：自治程度可以作为解释维度；它描述系统控制权分配和风险面，而不是能力等级。仍缺真实模型 / 框架 / 成本 / 权限实验。
+- 可入正文：窄结论“自治程度可以作为解释 Agent 系统的维度，但它描述的是控制权分配和风险面，不是能力等级，也不代表越高越可靠”已完成第一轮交叉验证。OpenAI Agents SDK、LangGraph、ReAct、Agent/Workflow evidence、Prompt Injection evidence 和标准库 workflow / hybrid / ReAct-like 实验共同支撑该边界。
+- 部分验证：不同自治程度在真实模型 / 框架 / 成本 / 权限 / 工具错误恢复中的收益和风险，仍需实际运行验证。
 
 ## 可进入章节
 
-- 是。可以写成：Agent 的自治程度是连续谱，从固定 workflow、workflow-agent hybrid 到更开放的 tool loop；初学者应先从可控、可评测、低风险的设计开始，再逐步增加模型决策范围。
+- 是。可以确定写成：Agent 的自治程度是连续谱，从固定 workflow、workflow-agent hybrid 到更开放的 tool loop；它是控制权和风险面的维度，不是能力等级。初学者应先从可控、可评测、低风险的设计开始，再逐步增加模型决策范围。

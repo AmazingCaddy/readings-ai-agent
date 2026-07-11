@@ -57,7 +57,7 @@
 先读手册 01 和 04，再看 ReAct、Reflexion、Tree of Thoughts 和 LangGraph 文档。
 
 阅读重点不是记住所有方法名，而是理解：模型如何在观察、行动、状态和反馈之间循环。
-自治程度边界已完成第一轮验证，可帮助理解固定 workflow、workflow-agent hybrid 和更开放 tool loop 是控制权连续谱，不是能力等级排行。
+Agent/Workflow 与自治程度窄边界已升级为可入正文，可帮助理解固定 workflow、workflow-agent hybrid 和更开放 tool loop 是控制权连续谱，不是能力等级排行。
 Workflow / Hybrid / ReAct-like 标准库对比实验已经完成，可帮助理解固定流程、受控动态查询和 tool loop 在成功率、工具调用数、失败原因和 trace 上的差异；真实模型 / Agent framework / repo issue 仍需后续实验。
 
 ### LLM 接口与工具调用
@@ -155,7 +155,7 @@ Prompt injection / tool permission 标准库模拟实验已经完成，可帮助
 - 当前手册已经建立 source card index、coverage matrix 和 claim ledger，用于控制资料进入正文的门槛。
 - Source card index 明确记录了每张卡片的可信度、验证状态和下一步。
 - Coverage matrix 显示 Agent/Workflow、LLM / Context、Evaluation / Observability、Production / Security 和 Memory / 知识库治理都已补标准库模拟实验；这些实验支撑流程和 trace 设计，但仍需要真实模型、真实框架和真实多会话实验来升级结论强度。
-- Agent / Workflow 和自治程度边界已补标准库 workflow / hybrid / ReAct-like 对比实验，可支撑固定 workflow、受控动态查询和 tool loop 的最小比较，并支持“自治程度是控制权和风险面的连续谱”；仍缺真实模型 / Agent framework / repo issue、token/latency/cost、权限确认和工具错误恢复实验。
+- Agent / Workflow 和自治程度边界已补标准库 workflow / hybrid / ReAct-like 对比实验，窄结论“Agent 和 Workflow 是控制权与编排方式的连续谱，自治程度不是能力等级”已可入正文；仍缺真实模型 / Agent framework / repo issue、token/latency/cost、权限确认和工具错误恢复实验。
 - Planner / Executor 已补标准库对比实验，可支撑计划遗漏、证据校验、失败反馈和重规划 trace 的最小流程；Reflection / Retry 已补标准库错误反思实验，可支撑 verified feedback 与 unverified reflection memory 的边界；仍缺真实模型 / 框架 / repo issue、token/latency/cost、长期记忆和人工评审实验。
 - 多 Agent 已补标准库单流程 / 无控制多 Agent / Flow 控制多 Agent 对比实验，可支撑角色协作需要证据分配、冲突处理和 review trace 的最小流程；仍缺真实模型、真实框架、token/latency/cost 和复杂任务实验。
 - MCP official docs 已补 2025-11-25 tools/resources/prompts/authorization/roots/elicitation/sampling spec 和 Security Best Practices 第一轮精读；MCP 最小 trace 标准库模拟实验已完成，可支撑最小审计字段和职责流设计；仍缺真实 MCP SDK / host trace、权限确认、URL mode / OAuth、恶意 resource/prompt 和 host 实现差异实验。

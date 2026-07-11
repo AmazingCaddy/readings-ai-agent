@@ -14,8 +14,8 @@
 | 结论 | 支撑资料 | 当前状态 | 正文写法 |
 | --- | --- | --- | --- |
 | ReAct 的核心思想是交替生成推理轨迹和任务行动。 | ReAct paper；Evidence Note: Agent 架构模式边界 | 部分验证 | 可作为 ReAct 的基础解释，但效果边界需保守。 |
-| Agent 和 Workflow 的边界主要在控制权、状态和决策方式；二者可以组合成 workflow-agent hybrid。 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper；Evidence Note: Agent 与 Workflow 边界；Workflow / Hybrid / ReAct-like 对比实验结果 | 部分验证 | 可作为第 01/04 章基础边界；标准库实验支持固定 workflow、hybrid 和 tool loop 的最小比较流程，仍需真实模型/框架实验；需避免写成“Agent 总比 workflow 高级”。 |
-| 自治程度可以作为 Agent 系统的分类维度，但不是能力等级。 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper；Evidence Note: Agent 与 Workflow 边界；Evidence Note: Agent 自治程度边界；Prompt Injection evidence；Workflow / Hybrid / ReAct-like 对比实验结果 | 部分验证 | 可作为第 01/04 章基础边界；应写成控制权和风险面的连续谱，避免“越自治越高级/越可靠”。 |
+| Agent 和 Workflow 的边界主要在控制权、状态推进、工具调用顺序和运行时决策方式；二者可以组合成 workflow-agent hybrid。 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper；Evidence Note: Agent 与 Workflow 边界；Workflow / Hybrid / ReAct-like 对比实验结果 | 可入正文 | 可作为第 01/04 章确定性术语边界写入正文；标准库实验支持固定 workflow、hybrid 和 tool loop 的最小比较流程。真实模型/框架任务中的收益、成本、权限和工具错误恢复仍属部分验证；需避免写成“Agent 总比 workflow 高级”。 |
+| 自治程度可以作为 Agent 系统的分类维度，但不是能力等级。 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper；Evidence Note: Agent 与 Workflow 边界；Evidence Note: Agent 自治程度边界；Prompt Injection evidence；Workflow / Hybrid / ReAct-like 对比实验结果 | 可入正文 | 可作为第 01/04 章确定性术语边界写入正文；应写成控制权和风险面的连续谱，避免“越自治越高级/越可靠”。真实模型 / 框架 / 成本 / 权限表现仍属部分验证。 |
 | Reflection / Reflexion 可以利用任务反馈和文字反思改进后续尝试，但不保证稳定提升。 | Reflexion paper；Memory governance evidence；Agent eval evidence；Evidence Note: Agent 架构模式边界；Reflection / Retry 实验结果 | 部分验证 | 可作为架构模式解释；标准库实验显示 verified reflection retry 可补齐缺证据，但 unverified reflection memory 会让错误重复；需提醒反馈质量、成本和错误记忆风险。 |
 | Tree of Thoughts 支持搜索式推理路径，但不等同于生产 Agent 编排框架。 | Tree of Thoughts paper；LangGraph docs；Evidence Note: Agent 架构模式边界 | 部分验证 | 可作为规划/搜索思路解释；不能写成复杂任务默认应使用 ToT。 |
 | 复杂 Agent 架构不是默认更可靠，需用 trace、成本、失败原因和实验比较。 | ReAct；Reflexion；Tree of Thoughts；LangGraph docs；Agent/Workflow evidence；Multi-agent evidence；Workflow / Hybrid / ReAct-like 对比实验结果；Planner / Executor 对比实验结果；Reflection / Retry 实验结果 | 部分验证 | 可作为第 04/07 章核心提醒；标准库实验已覆盖固定 workflow、hybrid、ReAct-like tool loop、planner/executor 和 reflection/retry 的工具调用/失败原因/重规划/错误反思比较，仍需真实框架对比实验。 |
@@ -42,7 +42,7 @@
 
 ## 待升级为可入正文的优先结论
 
-1. Agent vs Workflow / 自治程度的边界。已完成第一轮 OpenAI Agents SDK、LangGraph、ReAct 交叉验证、Agent 自治程度 evidence 和标准库 workflow / hybrid / ReAct-like 对比实验，待补真实模型 / 框架 / repo issue 实验。
+1. Agent vs Workflow / 自治程度的边界。窄结论“Agent 和 Workflow 是控制权与编排方式的连续谱，自治程度不是能力等级”已升级为可入正文；真实模型 / 框架 / repo issue、成本、权限和工具错误恢复仍待实际运行验证。
 2. Tool Use vs Function Calling 的边界。窄结论“Function Calling 本身不执行工具”已升级为可入正文；参数校验失败后真实模型能否稳定修正、真实 API 错误恢复和其他框架术语对照仍待实际运行验证。
 3. RAG vs Memory 的术语边界已升级为可入正文；工程 RAG 流程仍已完成第一轮论文/框架文档交叉验证、标准库 RAG / Memory 对比实验、最小 RAG pipeline / citation 模拟和真实 LLM citation harness 准备，待实际运行真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank、真实 memory framework 和成本/延迟实验。
 4. MCP server/client/host 的职责边界已升级为可入正文；MCP 安全/授权/权限边界已完成第一轮官方文档交叉验证、标准库最小 trace 模拟和本地 stdio JSON-RPC harness，待补真实 MCP SDK / host 的 trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验。

@@ -8,7 +8,7 @@
 - 主题：Agent Framework / Tool Use / Tracing
 - 适合阶段：入门 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接、README、文档首页、guardrails、tools、tracing、human-in-the-loop 关键段落已复核；高风险工具权限窄边界可入正文；安全 regression set 和审批状态恢复实验已完成；真实 SDK guardrail/HITL 效果仍部分验证
+- 是否已验证：来源链接、README、文档首页、guardrails、tools、tracing、human-in-the-loop 关键段落已复核；Agent/Workflow 和自治程度窄边界可入正文；高风险工具权限窄边界可入正文；安全 regression set 和审批状态恢复实验已完成；真实 SDK runtime/guardrail/HITL 效果仍部分验证
 
 ## 一句话总结
 
@@ -57,9 +57,10 @@ OpenAI Agents SDK 文档适合用于解释现代 Agent SDK 的基本抽象、工
 - 构建一个最小 tool-calling 任务，对比 Responses API 自己管理 loop 与 Agents SDK 管理 loop 的 trace、guardrails、human approval、敏感 trace 数据配置和状态管理成本。
 - 已完成标准库安全 regression set，可作为后续迁移到 Agents SDK guardrails / HITL 的 case matrix：记录 `allow`、`block`、`require_approval`、false positive、false negative 和 trace secret 泄漏。当前结果不代表 Agents SDK 的真实拦截率。
 - 已完成标准库审批状态恢复与幂等性实验，可作为后续迁移到 Agents SDK HITL 的 case matrix：记录 approval state、RunState / resume、参数快照、重复恢复、拒绝恢复和 trace 脱敏。当前结果不代表 Agents SDK 的真实 HITL 行为。
+- Agent/Workflow 和自治程度窄边界已升级为可入正文：Agents SDK 文档直接支撑 managed agent loop、runtime 管理 turns/tool execution/state handling，以及直接使用 Responses API 时开发者自行控制 loop/tool dispatch/state handling 的边界。真实 SDK 任务表现、成本和失败恢复仍需实验。
 - 已纳入框架能力交叉表，用于支撑“轻量 agent runtime / tool loop / tracing / guardrails / sessions”的保守定位；不代表真实横向性能结论。
 
 ## 是否进入正文
 
 - 结论：部分进入
-- 原因：可支撑 Agent runtime、tool loop、guardrails、human approval、handoffs、sessions 和 tracing 的工程抽象，并与标准库安全实验共同支撑“高风险工具要把权限、审批、状态恢复和审计放进执行路径”的窄边界。不能把 OpenAI SDK 术语直接当成所有 Agent 系统的唯一通用定义，也不能提前断言真实 SDK guardrail/HITL 拦截率。
+- 原因：可支撑 Agent runtime、tool loop、guardrails、human approval、handoffs、sessions 和 tracing 的工程抽象，并与 LangGraph/ReAct/标准库实验共同支撑 Agent/Workflow 和自治程度窄边界；也与标准库安全实验共同支撑“高风险工具要把权限、审批、状态恢复和审计放进执行路径”的窄边界。不能把 OpenAI SDK 术语直接当成所有 Agent 系统的唯一通用定义，也不能提前断言真实 SDK runtime、guardrail 或 HITL 效果。

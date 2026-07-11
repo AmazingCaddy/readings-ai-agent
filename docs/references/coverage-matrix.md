@@ -13,7 +13,7 @@
 
 | 主题 | 入门资料 | 高可信 reference | 工程/源码 reference | 当前状态 | 缺口 |
 | --- | --- | --- | --- | --- | --- |
-| AI Agent 定义与边界 | 待补 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper | Agent 自治程度 evidence；Workflow / Hybrid / ReAct-like 对比实验 | 关键段落已精读；自治程度边界和标准库 workflow-agent 对比已完成；部分验证 | 需要真实模型 / Agent framework / repo issue 实验和更多框架横向资料 |
+| AI Agent 定义与边界 | 待补 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper | Agent 自治程度 evidence；Workflow / Hybrid / ReAct-like 对比实验 | Agent/Workflow 控制权连续谱和自治程度不是能力等级的窄边界可入正文；关键段落已精读；标准库 workflow-agent 对比已完成；真实表现仍部分验证 | 需要真实模型 / Agent framework / repo issue 实验和更多框架横向资料 |
 | LLM 与上下文工程 | OpenAI Text Generation docs；OpenAI Responses API docs | OpenAI Text Generation docs；OpenAI Structured Outputs docs；OpenAI Responses API docs | 上下文治理与结构化输出实验；上下文策略对比实验；Real Structured Outputs / JSON Mode harness；OpenAI cookbook 候选 | “schema valid 不等于事实/权限/业务正确”窄边界可入正文；标准库输出解析 / 上下文治理模拟实验和上下文策略对比实验已完成；真实 API harness 已准备；其他上下文行为部分验证 | 需要实际运行真实 Responses API / Structured Outputs、长上下文 / RAG / 摘要 / 成本对比和跨模型稳定性实验 |
 | Tool Use / Function Calling | OpenAI function calling docs | Toolformer paper；OpenAI function calling docs；OpenAI Responses API docs | Tool calling 参数校验模拟实验；Real Tool Calling harness；OpenAI cookbook 候选 | “Function Calling 本身不执行工具”窄边界可入正文；参数校验/重试标准库模拟已完成；真实 API harness 已准备；其他工程行为部分验证 | 需要实际运行真实模型 / API 实验、SDK 文档和其他框架术语对照 |
 | Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；OpenAI Agents SDK docs；LangGraph docs | Workflow / Hybrid / ReAct-like 对比实验；Planner / Executor 对比实验；Reflection / Retry 实验；LangGraph examples 候选 | 关键论文摘要和框架段落已精读；标准库 workflow / ReAct-like、planner/executor 和 reflection/retry 对比已完成；部分验证 | 需要真实模型和真实框架对比实验 |
@@ -29,7 +29,7 @@
 
 ## 当前优先级
 
-1. 补齐基础定义和术语边界的高可信 references。Agent/Workflow 和自治程度边界已完成标准库 workflow / hybrid / ReAct-like 对比，仍需真实模型 / 框架 / repo issue 实验。
+1. 补齐基础定义和术语边界的高可信 references。Agent/Workflow 控制权连续谱和自治程度不是能力等级的窄边界已可入正文；标准库 workflow / hybrid / ReAct-like 对比已完成，仍需真实模型 / 框架 / repo issue 实验。
 2. 精读并提取已经链接复核的论文、官方文档和安全资料。LLM / Context、Tool Use / Function Calling、MCP、RAG / Memory、Production / Security 已完成第一轮；LLM / Context、Tool Use 和 Production / Security 已补 P0 真实 API harness，仍需实际运行真实 API 和长上下文成本实验。
 3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。MCP 职责边界已可入正文，安全/授权已完成官方 spec 第一轮、标准库 trace 模拟和本地 stdio JSON-RPC harness，仍需真实 MCP SDK / host trace 与权限实验；Tool Use 的 Function Calling 执行边界已可入正文，参数校验/重试标准库模拟已完成，仍需真实模型 / API 实验和框架对照；Eval 的工具/副作用 Agent 过程安全边界已可入正文，OpenAI Evals README、Cookbook、LangSmith、Phoenix、标准库 trace-aware eval、trace schema audit 和真实模型 trace harness 已完成第一轮，仍需实际运行真实 Agent trace、自动评分误判和人工复核实验。
 4. 为 Memory / 知识库治理补充真实多会话 Agent / memory framework 实验。标准库写入守门模拟和生命周期权限审计已完成，仍需扩展真实框架中的隐私、权限、查看、编辑和删除工程资料。
