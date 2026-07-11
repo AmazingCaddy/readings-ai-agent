@@ -9,7 +9,7 @@
 - 主题：Observability / Evaluation / Tracing
 - 适合阶段：工程实践
 - 可信度等级：B
-- 是否已验证：Observability 与 Evaluation concepts Markdown 页面已复核；关键段落已精读；结论需结合其他工具和本地实验
+- 是否已验证：Observability 与 Evaluation concepts Markdown 页面已复核；关键段落已精读；已结合 Phoenix / OpenAI Evals 和 trace-aware eval 标准库实验完成部分验证
 
 ## 一句话总结
 
@@ -37,7 +37,7 @@ LangSmith 文档适合学习 LLM/Agent 应用的 tracing、offline eval、online
 
 - LangSmith 是 LangChain 生态产品文档，可能偏产品能力介绍；不能把它写成行业通用标准。
 - 文档能支撑 eval/observability workflow，但不能证明某个 evaluator 或平台默认最优。
-- LLM-as-judge、online evaluation 和自动化规则仍需要按任务校验误判率、成本和隐私边界。
+- LLM-as-judge、online evaluation 和自动化规则仍需要在真实任务中校验误判率、成本和隐私边界。
 
 ## 初学者阅读建议
 
@@ -45,7 +45,7 @@ LangSmith 文档适合学习 LLM/Agent 应用的 tracing、offline eval、online
 
 ## 可复现实验
 
-- 用 10 条 toy RAG/tool-calling 样例建立 dataset，记录每次运行的 trace、工具调用、失败分类和 evaluator 输出，对比改 prompt 前后的 experiment。
+- 已完成标准库 trace-aware eval 最小实验；后续应扩展为真实 RAG/tool-calling traces、LLM-as-judge、人工抽样复核和平台对照。
 
 ## 是否进入正文
 

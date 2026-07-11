@@ -8,7 +8,7 @@
 - 主题：Text Generation / Prompt Engineering / Message Roles / Context Window
 - 适合阶段：入门 / 工程实践
 - 可信度等级：A
-- 是否已验证：text generation 页面已复核；上下文工程边界已完成第一轮交叉验证
+- 是否已验证：text generation 页面已复核；上下文工程边界已完成第一轮交叉验证；上下文治理与结构化输出标准库实验已完成
 
 ## 一句话总结
 
@@ -40,7 +40,7 @@ OpenAI Text Generation 文档适合解释模型输入、输出数组、message r
 
 ## 可复现实验
 
-- 构建一个最小 Responses 请求，分别记录纯文本输出、tool call 输出和 structured output，验证为什么不能直接读取 `output[0].content[0].text`。
+- 已完成标准库上下文治理与结构化输出实验，验证输出解析和长上下文治理的最小失败模式。后续仍需真实 Responses API 请求，记录纯文本输出、tool call 输出、structured output、refusal 和长上下文成本。
 
 ## 是否进入正文
 

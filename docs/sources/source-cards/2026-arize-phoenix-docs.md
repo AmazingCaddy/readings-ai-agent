@@ -9,7 +9,7 @@
 - 主题：AI Observability / Evaluation / Tracing / Experiments
 - 适合阶段：工程实践
 - 可信度等级：B
-- 是否已验证：Overview 与 Tracing Tutorial Markdown 页面已复核；关键段落已精读；结论需结合其他工具和本地实验
+- 是否已验证：Overview 与 Tracing Tutorial Markdown 页面已复核；关键段落已精读；已结合 LangSmith / OpenAI Evals 和 trace-aware eval 标准库实验完成部分验证
 
 ## 一句话总结
 
@@ -39,7 +39,7 @@ Phoenix 文档适合学习 AI 应用 tracing、evaluations、datasets/experiment
 
 - Phoenix 是特定平台/开源项目文档，可能突出产品能力；不能把它写成唯一或默认方案。
 - Tutorial 中的 agent 是示例项目，不能单独证明所有生产 Agent 都应采用同样技术栈。
-- LLM-as-judge、human feedback 和 session metrics 的质量仍需本地验证和抽样人工复核。
+- LLM-as-judge、human feedback 和 session metrics 的质量仍需真实任务验证和抽样人工复核。
 
 ## 初学者阅读建议
 
@@ -47,7 +47,7 @@ Phoenix 文档适合学习 AI 应用 tracing、evaluations、datasets/experiment
 
 ## 可复现实验
 
-- 用一个最小客服 Agent 记录 LLM call、tool execution、retrieval、latency、token usage 和 session id，比较只看最终答案与查看 trace 后能发现的失败类型。
+- 已完成标准库 trace-aware eval 最小实验；后续应扩展为真实客服/RAG/tool traces，记录 LLM call、tool execution、retrieval、latency、token usage 和 session id。
 
 ## 是否进入正文
 

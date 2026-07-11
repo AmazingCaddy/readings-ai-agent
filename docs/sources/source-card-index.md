@@ -34,8 +34,8 @@
 | [OpenAI Text Generation docs](source-cards/2026-openai-text-generation-docs.md) | Text Generation / Context | Official Docs | A | output array、message roles、instructions 和 context window 边界已精读；上下文治理实验已完成；部分验证 | 补真实 Responses API 输出结构、长上下文成本和跨模型稳定性实验 |
 | [OWASP LLM Top 10](source-cards/2026-owasp-llm-top-10.md) | Security | Security Guidance | A | 关键风险项已精读；prompt injection / permission evidence 已引用；部分验证 | 补真实攻击样例、误报/漏报和安全 regression set |
 | [Semantic Kernel docs](source-cards/2026-semantic-kernel-docs.md) | Framework / Enterprise integration | Framework Docs | A | 插件、task automation、agent framework、process framework 段落已精读；framework/security evidence 已引用；部分验证 | 补真实 Semantic Kernel plugin / HITL / process 对比实验 |
-| [LangSmith docs](source-cards/2026-langsmith-docs.md) | Observability / Evaluation | Framework Docs | B | 关键页面已精读；部分验证 | 结合本地 trace-aware eval 实验验证字段清单和误判率 |
-| [Arize Phoenix docs](source-cards/2026-arize-phoenix-docs.md) | Observability / Evaluation | Framework Docs | B | 关键页面已精读；部分验证 | 结合本地 trace-aware eval 实验验证 traces/spans/sessions 设计 |
+| [LangSmith docs](source-cards/2026-langsmith-docs.md) | Observability / Evaluation | Framework Docs | B | 关键页面已精读；trace-aware eval 标准库实验已完成；部分验证 | 补真实平台 traces、LLM-as-judge 误判和人工复核实验 |
+| [Arize Phoenix docs](source-cards/2026-arize-phoenix-docs.md) | Observability / Evaluation | Framework Docs | B | 关键页面已精读；trace-aware eval 标准库实验已完成；部分验证 | 补真实平台 traces/spans/sessions、token/latency 和人工复核实验 |
 | [Zep docs](source-cards/2026-zep-docs.md) | Agent memory / Knowledge graph | Framework Docs | B | 关键 temporal graph / fact invalidation 段落已精读；长期记忆治理 evidence 已引用；部分验证 | 补真实 Zep / Letta / LangGraph memory governance 对比实验 |
 
 ## 待创建高优先级卡片
