@@ -2,13 +2,13 @@
 
 - 来源链接：https://docs.crewai.com/
 - 作者 / 机构：CrewAI
-- 发布时间：持续更新文档；页面 last-modified 复核为 2026-07-10
-- 最后复核日期：2026-07-11
+- 发布时间：持续更新文档；页面 last-modified 复核为 2026-07-11 UTC
+- 最后复核日期：2026-07-12
 - 类型：框架文档
 - 主题：Multi-agent / Agent Framework
 - 适合阶段：进阶 / 工程实践
 - 可信度等级：B
-- 是否已验证：来源链接和 Introduction Markdown 已复核；关键段落已精读；支撑先用 Flow 控制、按需调用 Crew 和跨框架术语对照窄边界；Real Multi-Agent Framework Validation 已用 fake `BaseLLM` 跑通 CrewAI 1.15.2 的本地 researcher/reviewer sequential crew surface；真实模型 CrewAI 表现仍部分验证
+- 是否已验证：入口、Introduction Markdown、First Flow Markdown 和 First Crew Markdown 已于 2026-07-12 复核；关键段落已精读；支撑先用 Flow 控制、按需调用 Crew、JSON-first crew 配置安全边界和跨框架术语对照窄边界；Real Multi-Agent Framework Validation 已用 fake `BaseLLM` 跑通 CrewAI 1.15.2 的本地 researcher/reviewer sequential crew surface；真实模型 CrewAI 表现仍部分验证
 
 ## 一句话总结
 
@@ -16,24 +16,30 @@ CrewAI 是多 Agent 工程生态中的常见框架，可作为框架比较和多
 
 ## 核心结论
 
-- CrewAI 文档将 CrewAI 定位为 orchestrating autonomous AI agents and building complex workflows 的框架。
+- CrewAI 文档入口在 2026-07-12 返回 HTTP 200，HEAD 显示 last-modified 为 2026-07-11 UTC；Introduction 将 CrewAI 定位为 orchestrating autonomous AI agents and building complex workflows 的框架。
 - 文档把 CrewAI 架构拆成 `Flows` 和 `Crews`：Flows 管理 state 和 control execution，Crews 是在 Flow 内协作完成特定任务的 agent teams。
 - 文档明确写出 “For any production-ready application, start with a Flow.”
 - 文档建议在需要 team of agents 执行 specific, complex task that requires autonomy 时，在 Flow step 中使用 Crew。
+- First Flow Markdown 展示 Flow 可以组合 regular code、direct LLM calls 和 crew-based processing，并用 `@start` / `@listen`、Pydantic state 和 crew integration 组织事件驱动流程。
+- First Crew Markdown 展示 JSON-first project：`agents/*.jsonc` 定义 agents，`crew.jsonc` 定义 tasks、process、memory 和 inputs；`context` 可把前序 task output 传给后续 task。
+- First Crew Markdown 明确警告只应运行可信来源的 JSON crew project，因为 `custom:<name>` tools 和 `{"python": "module.attribute"}` references 会在加载 crew 时执行本地 Python 代码。
 - 这些段落支持正文中“多 Agent 应嵌入受控流程，而不是默认替代流程”的保守表述。
 
 ## 支撑证据
 
-- 官方文档入口和 Introduction Markdown 返回 HTTP 200。
+- 官方文档入口、Introduction Markdown、First Flow Markdown 和 First Crew Markdown 于 2026-07-12 返回 HTTP 200。
 - Introduction Markdown 写明 Flows create structured, event-driven workflows that manage state and control execution。
 - Introduction Markdown 写明 Crews are teams of autonomous agents that collaborate to solve specific tasks delegated to them by the Flow。
 - Introduction Markdown 写明 Flow manages state and decides what to do next，再 delegates a complex task to a Crew。
 - Introduction Markdown 的 “When to Use Crews vs. Flows” 小节写明 production-ready application 应 start with a Flow。
+- First Flow Markdown 写明 Flows combine regular code, direct LLM calls, and crew-based processing，并展示 state、event-driven relationships、sequential section processing 和 flow visualization。
+- First Crew Markdown 写明 JSON-first crew projects 使用 `agents/*.jsonc`、`crew.jsonc`、`process: sequential`、`memory: true`、`context` 和 `output_file`；同时包含本地 Python 执行风险警告。
 
 ## 可能的问题
 
 - 需要警惕框架文档中的产品定位和营销倾向。
 - 正文应重点比较抽象和适用场景，而不是宣传特性。
+- Introduction 中 enterprise-ready、Production Ready、Security-Focused、Cost-Efficient 等产品 claim 不能作为可入正文的事实结论；本手册只能把它们列为待真实实验或待独立证据验证的宣传性表述。
 - CrewAI 当前可信度仍保持 B；它适合作为生态和抽象对照，不单独支撑关键结论。
 
 ## 初学者阅读建议

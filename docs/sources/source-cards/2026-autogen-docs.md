@@ -3,12 +3,12 @@
 - 来源链接：https://microsoft.github.io/autogen/stable/
 - 作者 / 机构：Microsoft
 - 发布时间：持续更新文档；页面 last-modified 复核为 2026-04-06
-- 最后复核日期：2026-07-11
+- 最后复核日期：2026-07-12
 - 类型：框架文档
 - 主题：Multi-agent / Agent Framework / Orchestration
 - 适合阶段：进阶 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接、AgentChat 页面和源 Markdown 已复核；关键段落已精读；支撑多 Agent 编排能力、“多 Agent 不是默认升级路径”和跨框架术语对照窄边界；Real Multi-Agent Framework Validation 已用 fake `ChatCompletionClient` 跑通 AutoGen AgentChat 0.7.5 的本地 researcher/reviewer team surface；真实模型 AutoGen 表现仍部分验证
+- 是否已验证：入口、AgentChat HTML 和 AgentChat `_sources` Markdown 已于 2026-07-12 复核；关键段落已精读；支撑多 Agent 编排能力、“多 Agent 不是默认升级路径”和跨框架术语对照窄边界；Real Multi-Agent Framework Validation 已用 fake `ChatCompletionClient` 跑通 AutoGen AgentChat 0.7.5 的本地 researcher/reviewer team surface；真实模型 AutoGen 表现仍部分验证
 
 ## 一句话总结
 
@@ -16,23 +16,25 @@ AutoGen 是理解多 Agent 对话、协作和框架抽象的重要工程 referen
 
 ## 核心结论
 
-- AutoGen 文档将其定位为 building AI agents and applications 的框架。
+- AutoGen 文档入口在 2026-07-12 返回 HTTP 200，HEAD 显示 last-modified 为 2026-04-06；它将 AutoGen 定位为 building AI agents and applications 的框架。
 - 首页说明 AgentChat 是用于 conversational single and multi-agent applications 的 programming framework。
 - AgentChat 文档说明它是 building multi-agent applications 的 high-level API，并提供 Agents、Teams 和 predefined multi-agent design patterns。
 - AutoGen Core 被描述为 event-driven programming framework，用于 scalable multi-agent AI systems，包含 deterministic and dynamic agentic workflows、multi-agent collaboration 和 distributed agents 等场景。
-- 文档提供 Selector Group Chat、Swarm、GraphFlow、logging、tracing 等多 Agent 协调和可观测性入口；这说明多 Agent 需要明确协调机制和 trace。
+- AgentChat `_sources` Markdown 列出 Selector Group Chat、Swarm、Magentic-One、GraphFlow (Workflow)、Memory、Logging、Serialize Components、Tracing 等入口；这说明多 Agent 需要明确协调机制和 trace。
 
 ## 支撑证据
 
-- 官方文档入口、AgentChat 页面和 `_sources` Markdown 均返回 HTTP 200。
+- 官方文档入口、AgentChat HTML 页面和 AgentChat `_sources` Markdown 均于 2026-07-12 返回 HTTP 200。
 - 首页写明 AgentChat 是 conversational single and multi-agent applications 的框架。
 - AgentChat Markdown 写明它是 high-level API for building multi-agent applications，提供 Agents 和 Teams 以及 multi-agent design patterns。
+- AgentChat Markdown 的 navigation 明确包含 Selector Group Chat、Swarm、Magentic-One、GraphFlow (Workflow)、Memory、Logging、Serialize Components 和 Tracing。
 - 首页写明 Core 是 event-driven programming framework for scalable multi-agent AI systems，并列出 deterministic/dynamic workflows、multi-agent collaboration、distributed agents。
 
 ## 可能的问题
 
 - AutoGen 是特定框架，不应被写成多 Agent 的通用定义。
 - 多 Agent 示例容易显得强大，但需要重点评估成本、调试复杂度和失败恢复。
+- AgentChat 页面能证明文档化能力和抽象入口，不证明 Selector Group Chat、Swarm、GraphFlow 或 tracing 在真实任务中默认提高质量、降低成本或完整覆盖生产审计。
 
 ## 初学者阅读建议
 

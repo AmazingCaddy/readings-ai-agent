@@ -17,14 +17,16 @@
 
 ## 交叉验证结果
 
-- 一致点：AutoGen 文档明确提供 AgentChat、Teams、Selector Group Chat、Swarm、GraphFlow、logging 等多 Agent 抽象，说明多 Agent 是成熟工程生态的一部分。
+- 一致点：AutoGen 入口、AgentChat HTML 和 AgentChat `_sources` Markdown 已于 2026-07-12 复核；文档明确提供 AgentChat、Agents、Teams、Selector Group Chat、Swarm、Magentic-One、GraphFlow (Workflow)、Memory、Logging、Serialize Components 和 Tracing 等多 Agent 抽象，说明多 Agent 是成熟工程生态的一部分。
 - 一致点：Multiagent Debate paper 摘要展示了多个模型实例提出、辩论各自答案和推理过程、多轮后形成共同答案的研究机制；这支持“多视角和互相审查可能有价值”的窄边界。
 - 一致点：Multiagent Debate paper 同时是研究任务和提示流程，不是生产框架指南；它不能证明工程多 Agent 对所有复杂任务默认更可靠。
 - 一致点：AutoGen Core 被描述为 event-driven framework for scalable multi-agent AI systems，适用场景包括 deterministic/dynamic workflows、multi-agent collaboration 和 distributed agents。
-- 一致点：CrewAI 文档把 Flows 和 Crews 分开，并明确 production-ready application 应 start with a Flow；Crew 只在需要特定复杂自治任务时作为 Flow 中的团队能力使用。
+- 一致点：CrewAI 入口、Introduction、First Flow 和 First Crew Markdown 已于 2026-07-12 复核；文档把 Flows 和 Crews 分开，并明确 production-ready application 应 start with a Flow；Crew 只在需要特定复杂自治任务时作为 Flow 中的团队能力使用。First Flow 还展示 Flow 可组合 regular code、direct LLM calls 和 crew-based processing；First Crew 展示 JSON-first agents/tasks/crew settings、sequential process、task context 和 memory flag。
+- 一致点：CrewAI First Crew 的安全警告说明 `custom:<name>` tools 和 `{"python": "module.attribute"}` references 会在 crew 加载时执行本地 Python 代码；这支持“多 Agent / crew 配置也是执行面，不能只当提示词文件看待”的工程边界。
 - 一致点：AgentBench 和 Eval evidence note 支持对 Agent 系统进行交互环境、失败原因、trajectory/trace 和成本评估；这说明多 Agent 是否值得需要被评测，而不是只看架构图。
 - 分歧点：AutoGen 更强调多 Agent 应用和设计模式，CrewAI 明确强调 Flow 控制和 Crew 协作的组合。二者都说明多 Agent 可实现，但都不能证明多 Agent 对所有复杂任务默认更优。
 - 可能原因：框架文档通常展示能力和抽象，而不是针对单 Agent、workflow、多 Agent 做严格对照实验。是否采用多 Agent 取决于任务分解、协调成本、可观测性和失败代价。
+- 边界：CrewAI Introduction 中 enterprise-ready、Production Ready、Security-Focused、Cost-Efficient 等产品表述不进入本结论证据；它们需要独立安全、成本、延迟和可靠性实验验证。
 - 本地实验：标准库多 Agent 对比中，`single_checklist` 以 6 次工具调用完成 3/3 个任务；`ungoverned_multi_agent` 只完成 1/3，出现 7 条 messages、1 个 unresolved conflict、3 次 duplicate reads，并漏掉 `cost.md` / `feedback.md`；`flow_controlled_multi_agent` 通过 `plan_created` 和 `review_completed` 恢复到 3/3，但有 9 条 messages。该结果支持“多 Agent 需要 Flow / workflow 控制，否则角色化本身会增加协调和缺证据风险”的保守表述。
 - 真实框架本地观察：Real Multi-Agent Framework Validation 用 deterministic fake model / fake LLM 跑通 AutoGen AgentChat 0.7.5 的 `AssistantAgent` + `RoundRobinGroupChat` + `TextMentionTermination` 和 CrewAI 1.15.2 的 `Agent` + `Task` + `Crew(process=sequential)`；也用 deterministic local node functions 跑通 LangGraph 1.2.9 的 `StateGraph` + node functions + conditional edges。三者都能产生 researcher/reviewer transcript、task output 或 state trace，并暴露 `feedback.md missing`；发布 trace 未泄露示例 secret。该结果支撑“多 Agent / 多角色框架提供可用编排表面和可检查输出形状”的窄观察，但 role behavior、evidence policy、missing-evidence rubric 和 trace 脱敏仍是应用层代码。
 
