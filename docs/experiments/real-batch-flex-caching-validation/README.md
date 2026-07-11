@@ -4,12 +4,12 @@
 
 把 OpenAI Batch、Flex Processing 和 Prompt Caching 文档中的观测字段迁移到真实 API harness：记录 Batch `custom_id` / status / output-error file 边界、Flex resource-unavailable / fallback 边界，以及 Prompt Caching `cached_tokens` / `cache_write_tokens` 观测字段。
 
-这个实验用于准备真实验证入口，不用于证明 Batch、Flex 或 Prompt Caching 一定更便宜、更快或更可靠。
+这个实验用于准备真实验证入口，并在没有 API key 时验证本地记录字段模板；不用于证明 Batch、Flex 或 Prompt Caching 一定更便宜、更快或更可靠。
 
 ## 当前状态
 
 - Harness 已准备：`real_batch_flex_caching_validation.py`
-- 当前本地运行状态：`skipped`，因为未设置 `OPENAI_API_KEY`。
+- 当前本地运行状态：`completed`；未设置 `OPENAI_API_KEY` 时运行 deterministic local control，并标记 `api_status=skipped_without_openai_api_key` / `real_api_validated=false`。
 - 结果页：[2026-07-11 结果](results-2026-07-11.md)
 
 ## 运行方式
@@ -20,7 +20,7 @@ uv run python docs/experiments/real-batch-flex-caching-validation/real_batch_fle
 
 可选环境变量：
 
-- `OPENAI_API_KEY`：未设置时返回 `skipped`。
+- `OPENAI_API_KEY`：未设置时运行本地 deterministic control，不调用真实 API。
 - `OPENAI_MODEL`：默认 `gpt-4.1-mini`。
 - `OPENAI_RESPONSES_URL`：默认 `https://api.openai.com/v1/responses`。
 - `OPENAI_FILES_URL`：默认 `https://api.openai.com/v1/files`。
@@ -31,6 +31,12 @@ uv run python docs/experiments/real-batch-flex-caching-validation/real_batch_fle
 - `OPENAI_BATCH_FLEX_MAX_OUTPUT_TOKENS`：默认 `40`，最大 `120`。
 
 ## 观察点
+
+### 无 API key control
+
+- Prompt Caching fixtures 记录 `cached_tokens` 和 `cache_write_tokens` 字段，并验证字段聚合逻辑。
+- Flex fixture 记录模拟 `429 resource_unavailable` 和 fallback action。
+- Batch fixture 复用 JSONL metadata 生成逻辑，验证 `custom_id` 唯一性、request count、endpoint 和 required result fields。
 
 ### Prompt Caching
 
@@ -52,8 +58,8 @@ uv run python docs/experiments/real-batch-flex-caching-validation/real_batch_fle
 
 ## 结论边界
 
-- 可支撑：真实 API 验证入口、观测字段模板和保守 skip / opt-in 行为。
-- 当前不能支撑：当前环境未设置 API key，没有真实 API completed run。即使后续运行成功，也只能验证所选模型、prompt、账号、网络和时间窗口，不能证明 Batch / Flex / Prompt Caching 默认更便宜、更快、更稳定或保持质量。
+- 可支撑：真实 API 验证入口、观测字段模板、无 API key 本地字段控制和 Batch opt-in 行为。
+- 当前不能支撑：当前环境未设置 API key，没有真实 API completed run。本地 control 只验证 cache usage 字段聚合、Flex fallback 记录和 Batch JSONL metadata 检查；即使后续真实运行成功，也只能验证所选模型、prompt、账号、网络和时间窗口，不能证明 Batch / Flex / Prompt Caching 默认更便宜、更快、更稳定或保持质量。
 
 ## 下一步
 

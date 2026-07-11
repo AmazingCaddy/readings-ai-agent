@@ -11,7 +11,7 @@
 - 主题：Batch API / Flex Processing / Prompt Caching
 - 适合阶段：工程实践 / 生产化前检查
 - 可信度等级：A
-- 是否已验证：三个官方 Markdown 页面均返回 HTTP 200；关键段落已精读；可支撑异步批处理、低优先级处理和提示缓存的工程边界；标准库字段 audit 已完成；Real Production Cost / Latency / Rate-Limit harness 已补本地 accounting control，覆盖 `cached_tokens` / `cache_write_tokens` 汇总和 budget action；真实 Batch / Flex / Prompt Caching harness 已准备并接入统一 runner，当前无 API key 只验证 skip 分支，Batch 提交默认 opt-in；真实节省、命中率、延迟、失败率、质量影响和生产适用性仍部分验证
+- 是否已验证：三个官方 Markdown 页面均返回 HTTP 200；关键段落已精读；可支撑异步批处理、低优先级处理和提示缓存的工程边界；标准库字段 audit 已完成；Real Production Cost / Latency / Rate-Limit harness 已补本地 accounting control，覆盖 `cached_tokens` / `cache_write_tokens` 汇总和 budget action；Real Batch / Flex / Prompt Caching harness 已完成本地 deterministic metadata control，覆盖 cache usage 字段聚合、Flex fallback 记录、Batch JSONL metadata、`custom_id` 唯一性和 required result fields，并标记 `real_api_validated=false`；Batch 提交默认 opt-in；真实节省、命中率、延迟、失败率、质量影响和生产适用性仍部分验证
 
 ## 一句话总结
 
@@ -56,7 +56,7 @@ Batch、Flex processing 和 Prompt Caching 都是成本/延迟治理工具，但
 ## 可复现实验
 
 - 已完成标准库 production cost / latency / rate-limit audit：它检查 Batch candidate/status/`custom_id`/expiration、Flex service tier/resource unavailable/fallback 和 Prompt Caching cache eligible/`cached_tokens`/`cache_write_tokens`/miss reason 字段。Real Production Cost / Latency / Rate-Limit harness 的本地 accounting control 进一步验证 usage/cache 字段提取和汇总逻辑。两者都不提交 Batch job、不使用 Flex、不触发真实 Prompt Caching，因此不证明真实收益、命中率、延迟或失败率。
-- 已准备 [Real Batch / Flex / Prompt Caching Validation](../../experiments/real-batch-flex-caching-validation/README.md) harness：无 API key 时返回 `skipped`；有 API key 时可观测 Prompt Caching usage 字段和 Flex response / API error；Batch JSONL metadata 默认只准备不提交，只有 `OPENAI_SUBMIT_BATCH=1` 才会创建 batch job。当前尚未产生真实 API completed run。
+- 已准备 [Real Batch / Flex / Prompt Caching Validation](../../experiments/real-batch-flex-caching-validation/README.md) harness：无 API key 时运行本地 deterministic metadata control；有 API key 时可观测 Prompt Caching usage 字段和 Flex response / API error；Batch JSONL metadata 默认只准备不提交，只有 `OPENAI_SUBMIT_BATCH=1` 才会创建 batch job。当前尚未产生真实 API completed run。
 - 后续可选一个小型 eval dataset，用同步请求与 Batch API 对比：提交文件、batch status、completed / failed / expired request、`custom_id` 映射、成本估算和等待时间。
 - 后续可用同一低优先级任务对比 standard vs flex：成功率、timeout、`429 Resource Unavailable`、fallback 次数、等待时间和成本估算。
 - 后续可用一个长稳定 system prompt / tool schema 对比缓存前后：`cached_tokens`、`cache_write_tokens`、latency、cost estimate 和 cache miss 原因。
@@ -64,4 +64,4 @@ Batch、Flex processing 和 Prompt Caching 都是成本/延迟治理工具，但
 ## 是否进入正文
 
 - 结论：进入；作为成本/延迟治理工具的适用边界可入正文。
-- 原因：官方文档直接支撑 Batch / Flex / Prompt Caching 的接口形态、适用场景、限制和观测字段；标准库 audit 和真实 harness 准备工作支撑记录模板。仍需保守写明：它们不证明真实应用一定更便宜、更快或更可靠，具体收益必须用真实 workload 和 eval 记录。
+- 原因：官方文档直接支撑 Batch / Flex / Prompt Caching 的接口形态、适用场景、限制和观测字段；标准库 audit 和本地 deterministic metadata control 支撑记录模板。仍需保守写明：它们不证明真实应用一定更便宜、更快或更可靠，具体收益必须用真实 workload 和 eval 记录。

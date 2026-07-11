@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Real Batch / Flex / Prompt Caching observation harness.
+"""Batch / Flex / Prompt Caching observation harness.
 
-The harness skips without OPENAI_API_KEY. With a key, it can run small Responses
-API observations for Prompt Caching and Flex processing, and it prepares Batch
-JSONL metadata. Actual Batch submission is opt-in because it creates asynchronous
+Without OPENAI_API_KEY this harness runs deterministic local fixtures for cache
+usage fields, Flex fallback recording, and Batch JSONL metadata instead of
+claiming real API behavior. With a key, it can run small Responses API
+observations for Prompt Caching and Flex processing, and it prepares Batch JSONL
+metadata. Actual Batch submission is opt-in because it creates asynchronous
 server-side work.
 """
 
@@ -217,6 +219,115 @@ def prepare_batch_file() -> dict[str, Any]:
     }
 
 
+def control_prompt_caching() -> dict[str, Any]:
+    observations = [
+        {
+            "run_index": 1,
+            "status_code": 200,
+            "latency_ms": 620,
+            "usage": {
+                "input_tokens": 1800,
+                "output_tokens": 28,
+                "total_tokens": 1828,
+                "cached_tokens": 0,
+                "cache_write_tokens": 1400,
+            },
+            "rate_limit_headers": {
+                "x-ratelimit-remaining-requests": "499",
+                "x-ratelimit-remaining-tokens": "198200",
+            },
+        },
+        {
+            "run_index": 2,
+            "status_code": 200,
+            "latency_ms": 410,
+            "usage": {
+                "input_tokens": 1750,
+                "output_tokens": 26,
+                "total_tokens": 1776,
+                "cached_tokens": 1400,
+                "cache_write_tokens": 0,
+            },
+            "rate_limit_headers": {
+                "x-ratelimit-remaining-requests": "498",
+                "x-ratelimit-remaining-tokens": "196450",
+            },
+        },
+    ]
+    cached_tokens = sum(item["usage"]["cached_tokens"] for item in observations)
+    cache_write_tokens = sum(item["usage"]["cache_write_tokens"] for item in observations)
+    return {
+        "status": "completed",
+        "control": "deterministic_cache_usage_fixtures",
+        "observation_count": len(observations),
+        "observations": observations,
+        "cache_fields_seen": cached_tokens > 0 and cache_write_tokens > 0,
+        "cached_tokens": cached_tokens,
+        "cache_write_tokens": cache_write_tokens,
+    }
+
+
+def control_flex() -> dict[str, Any]:
+    return {
+        "status": "completed",
+        "control": "deterministic_flex_fallback_fixture",
+        "simulated_api_error": {
+            "code": 429,
+            "type": "resource_unavailable",
+            "service_tier": "flex",
+        },
+        "fallback_action": "retry_standard_tier_or_queue_batch",
+        "fallback_recorded": True,
+    }
+
+
+def run_batch_flex_cache_control() -> dict[str, Any]:
+    prompt_caching = control_prompt_caching()
+    flex_processing = control_flex()
+    batch_api = prepare_batch_file() | {
+        "status": "prepared_not_submitted",
+        "control": "deterministic_batch_jsonl_metadata",
+        "reason": "OPENAI_API_KEY is not set; OPENAI_SUBMIT_BATCH is not used in no-key control",
+    }
+    custom_ids = batch_api["custom_ids"]
+    required_result_fields = set(batch_api["required_result_fields"])
+    expected_result_fields = {"id", "status", "output_file_id", "error_file_id", "request_counts", "custom_id"}
+    required_batch_fields_present = expected_result_fields.issubset(required_result_fields)
+    all_passed = (
+        prompt_caching["cache_fields_seen"]
+        and flex_processing["fallback_recorded"]
+        and batch_api["request_count"] == 2
+        and len(custom_ids) == len(set(custom_ids))
+        and batch_api["endpoint"] == "/v1/responses"
+        and required_batch_fields_present
+    )
+    return {
+        "status": "completed",
+        "api_status": "skipped_without_openai_api_key",
+        "reason": "OPENAI_API_KEY is not set",
+        "model": MODEL,
+        "batch_flex_cache_control": "deterministic_cache_flex_batch_fixtures",
+        "batch_flex_cache_control_passed": all_passed,
+        "real_api_validated": False,
+        "prompt_cache_fields_seen": prompt_caching["cache_fields_seen"],
+        "cached_tokens": prompt_caching["cached_tokens"],
+        "cache_write_tokens": prompt_caching["cache_write_tokens"],
+        "flex_fallback_recorded": flex_processing["fallback_recorded"],
+        "batch_jsonl_prepared": batch_api["status"] == "prepared_not_submitted",
+        "batch_request_count": batch_api["request_count"],
+        "batch_custom_id_count": len(custom_ids),
+        "required_batch_fields_present": required_batch_fields_present,
+        "all_passed": all_passed,
+        "prompt_caching": prompt_caching,
+        "flex_processing": flex_processing,
+        "batch_api": batch_api,
+        "limitations": [
+            "Deterministic fixtures only validate local cache usage field aggregation, Flex fallback recording, and Batch JSONL metadata checks.",
+            "They do not validate real Prompt Caching hits, real Flex availability or latency, real Batch submission/completion, cost savings, quality, throughput, or production reliability.",
+        ],
+    }
+
+
 def upload_file(api_key: str, file_path: Path) -> str:
     boundary = "----agent-handbook-boundary"
     file_bytes = file_path.read_bytes()
@@ -288,20 +399,7 @@ def run(api_key: str) -> dict[str, Any]:
 def main() -> int:
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
-        print(
-            json.dumps(
-                {
-                    "status": "skipped",
-                    "reason": "OPENAI_API_KEY is not set",
-                    "model": MODEL,
-                    "prompt_caching": "not_run",
-                    "flex_processing": "not_run",
-                    "batch_api": "not_run",
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+        print(json.dumps(run_batch_flex_cache_control(), ensure_ascii=False, indent=2))
         return 0
 
     try:
