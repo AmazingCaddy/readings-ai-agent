@@ -26,8 +26,8 @@ LLM 应用不能把模型调用理解成“输入一段 prompt，取回一段文
 - 一致点：Function Calling 文档和 Structured Outputs 文档都把工具调用描述为模型与应用系统之间的结构化协作接口；结构化输出也可用于非工具调用场景，例如分类、路由和 UI 数据。
 - 一致点：Structured Outputs 文档明确 structured output 仍可能包含 mistakes；这支持“结构化输出提升可解析性，不等于保证事实正确”的边界。
 - 一致点：Text Generation 文档说明 context window 是模型一次请求可处理的数据上限；Responses API reference 提供 `context_management` 和 `truncation` 参数。这支持“上下文窗口是限制和治理对象，不是可靠性保证”的表述。
-- 一致点：Google Cloud Responsible AI 文档把 hallucinations、grounding、factuality、data quality、limited domain expertise、input/output length and structure 列为模型限制，并建议按用例做 security risk assessment、safety testing、配置 safety filters、收集用户反馈和监控内容。这支持“上下文治理不只是塞更多内容，还要处理 grounding、输入质量、限制、安全测试和监控”的正文表述。
-- 边界点：Google 文档说明如果输入或输出超过最大 token limit，safety classifiers are not applied。这不能推出其他供应商相同，但能补强“长度和结构限制会影响安全/质量机制，长上下文不是可靠性保证”的保守边界。
+- 一致点：Google Cloud Responsible AI 文档已于 2026-07-12 复核，页面把 hallucinations、grounding、factuality、data quality、limited domain expertise、input/output length and structure 列为模型限制，并建议按用例做 security risk assessment、safety testing、配置 safety filters、收集用户反馈和监控内容。这支持“上下文治理不只是塞更多内容，还要处理 grounding、输入质量、限制、安全测试和监控”的正文表述。
+- 边界点：Google 文档说明如果输入或输出超过最大 token limit，Google Agent Platform 的 safety classifiers are not applied。这不能推出其他供应商相同，也不证明真实 classifier 效果，但能补强“长度和结构限制会影响安全/质量机制，长上下文不是可靠性保证”的保守边界。
 - 关联点：RAG/Memory evidence 说明外部知识检索、状态和长期记忆治理各有边界；Prompt Injection evidence 说明外部内容不能只靠 prompt 处理。这些资料共同支持“长上下文不能替代检索、摘要、状态、权限和评测”。
 - 本地实验：标准库输出解析实验中，`free_text` 只有 1/3 语义有效，`json_mode` 有 2/3 schema valid 但只有 1/3 semantic valid，`schema_validated` 全部 schema valid 但仍有 1 个语义错误。这支持“结构化输出提升解析和 schema adherence，不等于业务正确”。
 - 本地实验：标准库上下文治理实验中，`naive_long_context` 同时使用旧政策和外部注入，输出自动退款和导出 token；`governed_context` 选择最新可信政策并隔离外部 attachment。这支持“长上下文不能替代来源、时效、信任和权限治理”。
