@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Real Responses API cost, latency, and rate-limit observation harness.
+"""Responses API cost, latency, and rate-limit observation harness.
 
 This harness intentionally records production fields without claiming that any
-optimization is effective. It skips when OPENAI_API_KEY is absent.
+optimization is effective. Without OPENAI_API_KEY it runs deterministic local
+accounting fixtures instead of claiming real API behavior.
 """
 
 from __future__ import annotations
@@ -64,6 +65,17 @@ def estimate_cost(input_tokens: int, output_tokens: int) -> tuple[float | None, 
     if input_price is None or output_price is None:
         return None, "price_env_not_configured"
     return round((input_tokens * input_price) + (output_tokens * output_price), 8), "estimated_from_env_prices"
+
+
+def estimate_cost_from_prices(
+    input_tokens: int,
+    output_tokens: int,
+    input_price_per_million: float,
+    output_price_per_million: float,
+) -> float:
+    input_price = input_price_per_million / 1_000_000
+    output_price = output_price_per_million / 1_000_000
+    return round((input_tokens * input_price) + (output_tokens * output_price), 8)
 
 
 def rate_limit_headers(headers: Any) -> dict[str, str | None]:
@@ -148,6 +160,127 @@ def observe_response(body: dict[str, Any], headers: dict[str, str | None], laten
     )
 
 
+def deterministic_control_inputs() -> list[tuple[dict[str, Any], dict[str, str | None], int]]:
+    return [
+        (
+            {
+                "id": "resp_control_1",
+                "usage": {
+                    "input_tokens": 1200,
+                    "output_tokens": 180,
+                    "total_tokens": 1380,
+                    "input_tokens_details": {"cached_tokens": 0, "cache_write_tokens": 1200},
+                },
+            },
+            {
+                "x-ratelimit-limit-requests": "500",
+                "x-ratelimit-remaining-requests": "499",
+                "x-ratelimit-reset-requests": "1s",
+                "x-ratelimit-limit-tokens": "30000",
+                "x-ratelimit-remaining-tokens": "28620",
+                "x-ratelimit-reset-tokens": "1s",
+            },
+            120,
+        ),
+        (
+            {
+                "id": "resp_control_2",
+                "usage": {
+                    "input_tokens": 1200,
+                    "output_tokens": 160,
+                    "total_tokens": 1360,
+                    "input_tokens_details": {"cached_tokens": 900, "cache_write_tokens": 0},
+                },
+            },
+            {
+                "x-ratelimit-limit-requests": "500",
+                "x-ratelimit-remaining-requests": "498",
+                "x-ratelimit-reset-requests": "1s",
+                "x-ratelimit-limit-tokens": "30000",
+                "x-ratelimit-remaining-tokens": "27260",
+                "x-ratelimit-reset-tokens": "1s",
+            },
+            250,
+        ),
+        (
+            {
+                "id": "resp_control_3",
+                "usage": {
+                    "input_tokens": 1300,
+                    "output_tokens": 260,
+                    "total_tokens": 1560,
+                    "input_tokens_details": {"cached_tokens": 900, "cache_write_tokens": 0},
+                },
+            },
+            {
+                "x-ratelimit-limit-requests": "500",
+                "x-ratelimit-remaining-requests": "497",
+                "x-ratelimit-reset-requests": "1s",
+                "x-ratelimit-limit-tokens": "30000",
+                "x-ratelimit-remaining-tokens": "25700",
+                "x-ratelimit-reset-tokens": "1s",
+            },
+            900,
+        ),
+    ]
+
+
+def run_accounting_control() -> dict[str, Any]:
+    observations = [observe_response(body, headers, latency_ms) for body, headers, latency_ms in deterministic_control_inputs()]
+    latencies = [item.latency_ms for item in observations]
+    input_tokens = sum(item.input_tokens or 0 for item in observations)
+    output_tokens = sum(item.output_tokens or 0 for item in observations)
+    total_tokens = sum(item.total_tokens or 0 for item in observations)
+    cached_tokens = sum(item.cached_tokens or 0 for item in observations)
+    cache_write_tokens = sum(item.cache_write_tokens or 0 for item in observations)
+    cost_estimate = estimate_cost_from_prices(
+        input_tokens,
+        output_tokens,
+        input_price_per_million=2.0,
+        output_price_per_million=8.0,
+    )
+    budget_threshold = 0.005
+    headers_seen = any(value is not None for item in observations for value in item.rate_limit_headers.values())
+    average_latency_ms = int(mean(latencies))
+    p95_latency_ms = percentile_95(latencies)
+    checks = {
+        "usage_tokens_recorded": input_tokens == 3700 and output_tokens == 600 and total_tokens == 4300,
+        "cache_fields_recorded": cached_tokens == 1800 and cache_write_tokens == 1200,
+        "rate_limit_headers_seen": headers_seen,
+        "latency_distribution_recorded": average_latency_ms == 423 and p95_latency_ms == 900,
+        "budget_action_degrades": cost_estimate > budget_threshold,
+    }
+    return {
+        "status": "completed",
+        "api_status": "skipped_without_openai_api_key",
+        "reason": "OPENAI_API_KEY is not set",
+        "model": MODEL,
+        "accounting_control": "deterministic_usage_latency_fixtures",
+        "real_api_validated": False,
+        "request_count": len(observations),
+        "average_latency_ms": average_latency_ms,
+        "p95_latency_ms": p95_latency_ms,
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "total_tokens": total_tokens,
+        "cached_tokens": cached_tokens,
+        "cache_write_tokens": cache_write_tokens,
+        "cost_estimate": cost_estimate,
+        "cost_estimate_status": "deterministic_fixture_prices",
+        "budget_threshold": budget_threshold,
+        "budget_action": "degrade" if cost_estimate > budget_threshold else "continue",
+        "rate_limit_headers_seen": headers_seen,
+        "accounting_control_passed": all(checks.values()),
+        "all_passed": all(checks.values()),
+        "checks": checks,
+        "observations": [item.__dict__ for item in observations],
+        "limitations": [
+            "Deterministic fixtures only validate local field extraction and aggregation logic.",
+            "They do not validate real API usage, rate-limit behavior, latency, cost, retry, quality, or production reliability.",
+        ],
+    }
+
+
 def run(api_key: str) -> dict[str, Any]:
     started = time.perf_counter()
     observations: list[Observation] = []
@@ -164,8 +297,10 @@ def run(api_key: str) -> dict[str, Any]:
 
     return {
         "status": "completed",
+        "api_status": "completed",
         "model": MODEL,
         "api_url": API_URL,
+        "real_api_validated": True,
         "request_count": RUN_COUNT,
         "max_output_tokens": MAX_OUTPUT_TOKENS,
         "elapsed_seconds": round(time.perf_counter() - started, 3),
@@ -190,18 +325,7 @@ def run(api_key: str) -> dict[str, Any]:
 def main() -> int:
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
-        print(
-            json.dumps(
-                {
-                    "status": "skipped",
-                    "reason": "OPENAI_API_KEY is not set",
-                    "model": MODEL,
-                    "request_count": RUN_COUNT,
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+        print(json.dumps(run_accounting_control(), ensure_ascii=False, indent=2))
         return 0
 
     try:

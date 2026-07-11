@@ -13,7 +13,7 @@
 - 主题：Production / Cost / Latency / Rate Limits / Token Accounting
 - 适合阶段：工程实践 / 生产化前检查
 - 可信度等级：A
-- 是否已验证：上述 5 个官方 Markdown 页面均返回 HTTP 200；关键段落已精读；可支撑成本、延迟、限流、token 计数和用量治理的工程边界；标准库字段 audit 已完成；真实 cost-latency harness 和 Batch / Flex / Prompt Caching harness 已准备并接入统一 runner，当前无 API key 只验证 skip 分支，且有单独结果页；真实成本、真实延迟、吞吐、模型质量取舍和具体优化效果仍部分验证
+- 是否已验证：上述 5 个官方 Markdown 页面均返回 HTTP 200；关键段落已精读；可支撑成本、延迟、限流、token 计数和用量治理的工程边界；标准库字段 audit 已完成；真实 cost-latency harness 已完成本地 deterministic accounting control，当前无 API key 未验证真实 API；Batch / Flex / Prompt Caching harness 已准备并接入统一 runner；真实成本、真实延迟、吞吐、模型质量取舍和具体优化效果仍部分验证
 
 ## 一句话总结
 
@@ -61,7 +61,7 @@
 
 - 已完成标准库 practice roadmap smoke harness，其中包含预算阻断 case；该实验只验证本地验收结构，不证明真实 API 成本或延迟。
 - 已完成标准库 production cost / latency / rate-limit audit：`naive_run` 0/9 通过，`governed_run` 9/9 通过。该实验验证 usage/token accounting、rate-limit headers、bounded retry、latency distribution、budget gate、model/output controls 等字段可以被审计，不证明真实 API 成本、P95 latency、吞吐、质量或优化收益。
-- 已准备真实 API harness：`docs/experiments/real-production-cost-latency-validation/real_production_cost_latency_validation.py`。无 `OPENAI_API_KEY` 时返回 `skipped`，本次已记录 skipped 结果；配置 API key 后可记录 usage、rate-limit headers、平均/P95 latency、成本估算状态和 budget action。
+- 已准备真实 API harness：`docs/experiments/real-production-cost-latency-validation/real_production_cost_latency_validation.py`。无 `OPENAI_API_KEY` 时运行本地 deterministic accounting control，并标记 `api_status=skipped_without_openai_api_key`、`real_api_validated=false`；本次记录 `input_tokens=3700`、`output_tokens=600`、`total_tokens=4300`、`cached_tokens=1800`、`cache_write_tokens=1200`、`average_latency_ms=423`、`p95_latency_ms=900`、`cost_estimate=0.0122`、`budget_action=degrade` 和 `accounting_control_passed=true`。配置 API key 后可记录真实 usage、rate-limit headers、平均/P95 latency、成本估算状态和 budget action。
 - 已准备真实 Batch / Flex / Prompt Caching harness：`docs/experiments/real-batch-flex-caching-validation/real_batch_flex_caching_validation.py`。无 `OPENAI_API_KEY` 时返回 `skipped`，已有 skipped 结果页；配置 API key 后可记录 Prompt Caching usage 字段、Flex response / API error 和 Batch JSONL / `custom_id` metadata。Batch job 提交默认 opt-in。
 - 后续应实际运行一个最小 API / Cookbook 练习，记录 input tokens、output tokens、model、request count、rate-limit headers、retry count、平均/P95 latency、cost estimate、budget threshold 和失败样例。
 - 后续应把同一任务在较小模型、较少输出 token、streaming、batch / non-batch、flex / standard、prompt caching / non-caching、parallel / sequential 等条件下做对照，先看质量和 trace，再谈优化。

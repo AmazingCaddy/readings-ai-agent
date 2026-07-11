@@ -216,7 +216,7 @@
 
 如果你用 Cookbook 做练习，Usage/Cost recipe 更适合帮你设计 usage/cost 表：`start_time`、`end_time`、`bucket_width`、`group_by`、`project_id`、`line_item`、`amount.value`、`amount.currency`。Rate limits recipe 更适合帮你设计限流和降级表：429 / `RateLimitError`、重试次数、等待时间、失败请求、主动节流、RPM/RPD/TPM、`max_tokens`、batching、fallback model 和质量/成本/延迟对照。没有真实 API run 时，这些字段只能作为模板，不能当作优化已经有效。
 
-标准库 production cost / latency / rate-limit audit 可以作为无 API key 时的字段模板：它检查 usage/token accounting、rate-limit headers、bounded retry、latency distribution、budget gate、model/output controls、Batch boundary、Flex fallback 和 Prompt Caching read/write 字段。真实项目仍要用真实 API 日志、rate-limit headers、usage/cost 记录、latency 样本和质量 eval 复核，不能把模板通过当成优化有效。
+标准库 production cost / latency / rate-limit audit 可以作为无 API key 时的字段模板：它检查 usage/token accounting、rate-limit headers、bounded retry、latency distribution、budget gate、model/output controls、Batch boundary、Flex fallback 和 Prompt Caching read/write 字段。Real Production Cost / Latency / Rate-Limit harness 的本地 deterministic accounting control 可以继续练习 usage/cache 字段提取、rate-limit header 解析、平均 / P95 latency、fixture cost estimate 和 budget action 汇总。真实项目仍要用真实 API 日志、rate-limit headers、usage/cost 记录、latency 样本和质量 eval 复核，不能把模板或 control 通过当成优化有效。
 
 数据治理记录也要具体。最小记录表应包含：是否产生服务端 application state、对象如何删除、trace 是否脱敏、是否发送 `safety_identifier`、API key 如何存放和撤销、remote MCP / web search / hosted tool / browser 工具会看到哪些数据，以及这些第三方服务的数据保留政策由谁负责。标准库 production safety / data governance checklist audit 可以作为无 API key 时的字段模板；真实项目仍要用平台配置、应用日志和 runbook 复核。
 
@@ -342,7 +342,7 @@
 ## 待验证问题
 
 - 这些 Cookbook recipe 真实本地试跑时的依赖、成本、失败样例和初学者阻塞点是什么？
-- 真实项目 8 中，token、usage、rate-limit headers、retry、平均/P95 latency、cost estimate、budget threshold、Batch/Flex/Prompt Caching 字段和降级策略应该如何记录成初学者能复用的模板？真实 Batch/Flex/Caching harness 已准备，completed run 仍待做。
+- 真实项目 8 中，token、usage、rate-limit headers、retry、平均/P95 latency、cost estimate、budget threshold、Batch/Flex/Prompt Caching 字段和降级策略应该如何记录成初学者能复用的模板？Real Production Cost / Latency / Rate-Limit harness 已补本地 accounting control，真实 Batch/Flex/Caching harness 已准备；真实 API completed run 仍待做。
 - 真实项目 8 中，API key、`safety_identifier`、abuse logs、application state、对象删除、third-party tool data flow 和 data retention controls 应如何记录成初学者能复用的模板？
 - 真实项目 8 中，moderation-only、policy-enforced 和 HITL 如何对照记录误报、漏报、延迟、成本和人工复核负担？Real Moderation Safety harness 已准备入口，completed run 仍待做。
 - 每个项目应使用哪个最小技术栈，才能降低环境成本？
