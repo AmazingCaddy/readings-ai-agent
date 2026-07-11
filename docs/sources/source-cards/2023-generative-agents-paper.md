@@ -8,7 +8,7 @@
 - 主题：Agent Memory / Reflection / Planning / Simulation
 - 适合阶段：进阶
 - 可信度等级：A
-- 是否已验证：arXiv 元数据已复核；内容待精读；结论待交叉验证
+- 是否已验证：arXiv 元数据和摘要已复核；memory/reflection/planning 边界已完成第一轮交叉验证
 
 ## 一句话总结
 
@@ -18,15 +18,18 @@ Generative Agents 是理解“记忆、反思、规划”如何组合成 believa
 
 - 论文摘要描述了一个把 LLM 扩展为可存储经验、综合高层反思并动态检索记忆来规划行为的 agent 架构。
 - 摘要提到 observation、planning 和 reflection 组件分别对行为可信度有关键贡献。
+- 该论文支撑“记忆、反思和规划可以组合成 agent 行为架构”的案例，但其评价目标是 believable behavior，不等同于生产 Agent 的任务可靠性。
 
 ## 支撑证据
 
 - arXiv API 返回有效条目：`2304.03442v2`。
+- 2026-07-11 抓取 arXiv 页面成功；摘要包含 complete record of experiences、synthesize memories into higher-level reflections、retrieve memories dynamically 和 plan behavior 等关键表述。
+- 已与 MemoryBank、MemGPT、Letta、Zep、OWASP 和 NIST 交叉验证长期记忆治理边界。
 
 ## 可能的问题
 
 - 论文场景是模拟人类行为的 sandbox，不等同于通用生产 Agent。
-- 正文引用时应避免把“believable behavior”直接等同于任务可靠性。
+- 正文引用时应避免把“believable behavior”直接等同于任务可靠性，也不能从该论文推出“长期记忆适合所有 Agent”。
 
 ## 初学者阅读建议
 
@@ -40,4 +43,3 @@ Generative Agents 是理解“记忆、反思、规划”如何组合成 believa
 
 - 结论：作为进阶资料进入
 - 原因：Memory、Planning 和 Reflection 的交叉案例很有代表性。
-

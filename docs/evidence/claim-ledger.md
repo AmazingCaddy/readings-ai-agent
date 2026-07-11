@@ -19,7 +19,7 @@
 | Function calling 本身不执行工具，执行发生在应用程序或工具运行时。 | OpenAI Function Calling docs；OpenAI Responses API docs；Evidence Note: Tool Use 与 Function Calling 边界 | 部分验证 | 可作为工程边界写入正文；仍建议用最小实验验证错误回传和重试流程。 |
 | RAG 的动机包括外部知识访问、知识更新和 provenance。 | RAG paper；Evidence Note: RAG 与 Memory 边界 | 部分验证 | 可作为 RAG 章节基础动机，但现代工程实现需另引框架文档。 |
 | Memory 不等于 RAG，也不等于把完整历史塞进 prompt。 | RAG paper；MemGPT；MemoryBank；LangGraph memory docs；Evidence Note: RAG 与 Memory 边界 | 部分验证 | 可作为术语边界写入正文；需提醒 RAG paper 中的 non-parametric memory 不是 Agent 长期记忆治理。 |
-| 长期记忆可能提升持续交互体验，但也会引入错误写入、过时和隐私风险。 | MemoryBank；MemGPT；OWASP LLM Top 10；NIST AI RMF | 候选结论 | 不应写成“长期记忆总是提升 Agent”。 |
+| 长期记忆可能提升持续交互体验，但也会引入错误写入、过时和隐私风险。 | MemoryBank；MemGPT；Generative Agents；Letta docs；Zep docs；OWASP LLM Top 10；NIST AI RMF；Evidence Note: 长期记忆治理与风险边界 | 部分验证 | 可作为长期记忆章节的保守边界；不应写成“长期记忆总是提升 Agent”。 |
 | Benchmark 不能直接代表真实业务 Agent 质量。 | AgentBench；WebArena；OpenAI Evals repo；Evidence Note: Agent Eval 与 Trajectory 边界 | 部分验证 | 可作为 Eval 章节核心提醒；公开 benchmark 可学习评测思想，但业务系统仍需 custom/private eval 和 trace。 |
 | Agent eval 不应只看最终答案，还应检查关键 trajectory / trace。 | AgentBench；WebArena；OpenAI Evals repo；Evidence Note: Agent Eval 与 Trajectory 边界 | 部分验证 | 可写入 Eval 章节；需说明 trajectory 自动评分方法仍待任务级验证。 |
 | Prompt injection 不能只靠 prompt 解决。 | OWASP LLM Top 10；NIST AI RMF；OpenAI Function Calling docs；Evidence Note: Prompt Injection 与权限边界 | 部分验证 | 可作为生产安全章节的核心提醒；需明确 prompt 有帮助但不是充分安全边界，仍待最小实验和框架安全资料。 |
@@ -34,6 +34,7 @@
 4. MCP server/client/host 的职责边界。已完成第一轮官方文档交叉验证，待补最小 MCP trace 实验。
 5. Agent eval 为什么要看 trajectory。已完成第一轮 benchmark 和 eval framework 交叉验证，待补最小实验和 observability 资料。
 6. Prompt injection 为什么需要权限和隔离，而不是只靠提示词。已完成第一轮风险资料交叉验证，待补最小实验和框架安全资料。
+7. 长期记忆的收益与治理风险边界。已完成第一轮论文、工程文档和安全资料交叉验证，待补最小多会话记忆实验。
 
 ## 升级流程
 

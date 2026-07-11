@@ -19,7 +19,7 @@
 | Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；OpenAI Agents SDK docs；LangGraph docs | LangGraph examples 候选 | Agent/workflow 边界已部分验证 | 需要 Plan-and-Execute、Reflection、workflow-agent hybrid 实验 |
 | MCP | MCP official docs | MCP official docs | MCP servers repo | 关键段落已精读；部分验证 | 需要 spec 细节、安全边界和最小 trace 实验 |
 | RAG | 待补 | RAG paper；Self-RAG 候选；LlamaIndex docs | LlamaIndex examples 候选 | RAG paper 摘要已精读；部分验证 | 需要现代 RAG 工程实践和最小实验 |
-| Memory / 知识库治理 | LangGraph memory docs | MemGPT；MemoryBank；Generative Agents；LangGraph memory docs | Letta docs；Zep docs | LangGraph memory 关键段落已精读；部分验证 | 仍缺写入守门、冲突治理、隐私边界的工程案例 |
+| Memory / 知识库治理 | LangGraph memory docs | MemGPT；MemoryBank；Generative Agents；LangGraph memory docs；OWASP LLM Top 10；NIST AI RMF | Letta docs；Zep docs | 关键论文、框架文档和风险资料已精读；部分验证 | 仍缺多会话长期记忆最小实验和更多隐私/权限工程资料 |
 | Planning / Orchestration | 待补 | Tree of Thoughts；Reflexion；LangGraph docs | LangGraph docs | 部分链接已复核 | 需要 planner/executor 和状态机工程资料 |
 | 多 Agent | 待补 | Multi-agent debate 候选；AutoGen docs；CrewAI docs；AgentBench | AutoGen docs；CrewAI docs | 关键段落已精读；部分验证 | 需要最小对比实验、真实工程边界和成本资料 |
 | Evaluation / Observability | 待补 | AgentBench；WebArena | OpenAI Evals；LangSmith；Phoenix 候选 | 关键摘要/README 已精读；部分验证 | 需要 trace observability 资料、trajectory 最小实验、回归集工程案例 |
@@ -32,7 +32,7 @@
 1. 补齐基础定义和术语边界的高可信 references。
 2. 精读并提取已经链接复核的论文、官方文档和安全资料。Tool Use / Function Calling、MCP、RAG / Memory、Production / Security 已完成第一轮。
 3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。Eval 已完成 OpenAI Evals README 第一轮，仍需 trace/observability 工程资料。
-4. 为 Memory / 知识库治理补充写入守门、冲突治理和隐私边界的工程案例。
+4. 为 Memory / 知识库治理补充长期记忆最小实验，并继续扩展隐私/权限工程资料。
 5. 为 Production / Security 补充 prompt injection 最小实验、工具权限工程案例和审计资料。
 
 ## 入正文门槛

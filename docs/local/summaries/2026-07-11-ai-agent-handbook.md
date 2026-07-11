@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 16:05 Asia/Shanghai
+**Last Updated:** 2026-07-11 16:06 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -30,9 +30,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 13. Completed first evidence upgrade for Agent Eval / Trajectory boundary using AgentBench and WebArena abstracts plus OpenAI Evals README.
 14. Completed first evidence upgrade for Agent vs Workflow boundary using OpenAI Agents SDK docs/README, LangGraph overview markdown, and ReAct.
 15. Completed first evidence upgrade for Multi-agent default boundary using AutoGen AgentChat docs, CrewAI Introduction markdown, AgentBench, and eval evidence.
+16. Completed first evidence upgrade for long-term memory governance and risk boundary using MemoryBank, MemGPT, Generative Agents, Letta memory docs, Zep concepts docs, OWASP LLM Top 10, and NIST AI RMF.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2026-autogen-docs.md`, `docs/sources/source-cards/2026-crewai-docs.md`, `docs/evidence/multi-agent-default-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/07-planning-orchestration.md`, `docs/chapters/10-framework-landscape.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2023-memorybank-paper.md`, `docs/sources/source-cards/2023-memgpt-paper.md`, `docs/sources/source-cards/2023-generative-agents-paper.md`, `docs/sources/source-cards/2026-letta-docs.md`, `docs/sources/source-cards/2026-zep-docs.md`, `docs/evidence/memory-governance-risk-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/06-rag-memory.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
@@ -43,6 +44,7 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 - Run a toy Agent eval experiment comparing final-answer-only scoring with trajectory/trace-aware scoring.
 - Run a minimal read-only MCP trace experiment to upgrade the MCP role boundary from partial verification toward `可入正文`.
 - Run a minimal RAG vs short-term vs long-term memory comparison experiment.
+- Run a multi-session long-term memory governance experiment covering explicit write confirmation, automatic write failure modes, stale preference invalidation, conflicting facts, and sensitive information handling.
 - Run a minimal prompt-injection permission-boundary experiment covering external document injection, read/write tool separation, parameter validation, human confirmation, and audit logs.
 - In a new session, verify whether the newly added `openaiDeveloperDocs` MCP tools are exposed.
 

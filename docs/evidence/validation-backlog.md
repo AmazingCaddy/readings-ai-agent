@@ -6,7 +6,7 @@
 
 - Agent 和 Workflow 的边界如何定义才准确？已完成第一轮 OpenAI Agents SDK、LangGraph 和 ReAct 交叉验证，仍需补最小对比实验。
 - “自治程度”是否可以作为分类维度？有哪些可靠来源支持？
-- RAG 和 Memory 的边界如何解释给初学者？已完成第一轮验证，仍需补最小实验和更多工程案例。
+- RAG 和 Memory 的边界如何解释给初学者？已完成第一轮验证，仍需补最小实验。
 
 ## 架构模式
 
@@ -31,9 +31,9 @@
 
 ## RAG 与 Memory
 
-- 长期记忆是否一定提升 Agent 表现？在哪些任务中可能造成污染？
+- 长期记忆是否一定提升 Agent 表现？已完成第一轮验证：不能写成“一定提升”，仍需多会话实验验证在哪些任务中可能造成污染。
 - Chunk size、embedding model、reranking 对结果的影响如何验证？
-- Memory 写入守门有哪些可复用设计？
+- Memory 写入守门有哪些可复用设计？Letta/Zep 已提供第一轮工程模式参考，仍需结合本地实验验证。
 - RAG paper 中的 non-parametric memory 与 Agent long-term memory 如何避免术语混淆？
 
 ## Eval 与生产化
