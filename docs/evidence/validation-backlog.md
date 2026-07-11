@@ -20,7 +20,7 @@
 | P1 | 真实 RAG citation correctness | 轻量本地检索 + LLM synthesis；后续扩展到 LlamaIndex / vector store | chunk 配置、top-k、citation correctness、faithfulness、成本/延迟；LLM synthesis harness 已准备，结果待跑 | 不证明某个 chunk/rerank 策略默认最优 |
 | P1 | 真实 Agent trace-aware eval | Responses API toy agent trace；后续扩展到 OpenAI Evals / LangSmith / Phoenix | runs/traces、final-only vs trace-aware 对比、人工复核样例；真实模型 trace harness 已准备，结果待跑 | 自动评分不能当真值，需保留人工抽样 |
 | P1 | 真实 MCP host/client/server trace | 本地 stdio JSON-RPC harness；后续扩展到 MCP SDK / host | tools/resources/prompts 调用 trace、approval/resource review、token/resource 泄露检查；stdio harness 已完成 | 不同 host 实现差异可能很大 |
-| P2 | 真实 memory framework 多会话对比 | LangGraph memory / Letta / Zep 中至少一种 | 写入、查看、编辑、删除、失效历史、污染样例 | 不写成长期记忆一定提升质量 |
+| P2 | 真实 memory framework 多会话对比 | LangGraph memory / Letta / Zep 中至少一种 | 写入、查看、编辑、删除、失效历史、跨用户隔离、删除后召回、污染样例；标准库 lifecycle audit 已覆盖最小验收结构 | 不写成长期记忆一定提升质量 |
 | P2 | 同一任务框架横向对比 | OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel | 相同任务实现、LOC、trace、权限、错误恢复、成本/延迟 | 不得推出“某框架默认最好” |
 | P2 | Cookbook 初学者项目试跑 | Structured Outputs、File Search/RAG、Eval、Cost/Rate limit recipes | 环境步骤、阻塞点、费用、失败样例、可跟练教程草稿 | Cookbook 是练习入口，不是生产保证 |
 
@@ -50,10 +50,10 @@
 
 ## RAG 与 Memory
 
-- 长期记忆是否一定提升 Agent 表现？已完成第一轮验证和标准库写入守门模拟：不能写成“一定提升”；仍需真实多会话 Agent / memory framework 实验验证哪些任务有收益、哪些任务会被污染。
+- 长期记忆是否一定提升 Agent 表现？已完成第一轮验证、标准库写入守门模拟和 lifecycle audit：不能写成“一定提升”；仍需真实多会话 Agent / memory framework 实验验证哪些任务有收益、哪些任务会被污染。
 - Chunk size、embedding model、reranking 对结果的影响如何验证？LlamaIndex 已完成第一轮工程流程验证，标准库最小 pipeline 已验证 trace/citation 字段；真实 LLM citation synthesis harness 已准备但仍使用本地关键词检索，仍需真实 embedding / vector store / rerank 对比实验。
 - RAG 答案如何稳定带 source citation / source nodes？标准库模拟实验已验证 chunk-level citation 字段设计；真实 LLM citation synthesis harness 已准备；仍需实际运行验证 citation correctness / faithfulness，并扩展到真实 RAG stack。
-- Memory 写入守门有哪些可复用设计？Letta/Zep 已提供第一轮工程模式参考，标准库模拟已验证显式写入、敏感信息拒绝、低置信推断拒绝、用户纠正和失效历史的最小流程；仍需真实 framework 的查看、编辑、删除、权限和隐私边界实验。
+- Memory 写入守门和生命周期控制有哪些可复用设计？Letta/Zep 已提供第一轮工程模式参考，标准库模拟已验证显式写入、敏感信息拒绝、低置信推断拒绝、用户纠正、失效历史、查看、编辑、删除、删除后不召回、跨用户阻断和 trace 脱敏的最小流程；仍需真实 framework 的查看、编辑、删除、权限和隐私边界实验。
 - RAG paper 中的 non-parametric memory 与 Agent long-term memory 如何避免术语混淆？已完成第一轮边界解释和标准库 RAG / Memory 分流实验；后续仍需真实教程示例避免术语误用。
 
 ## Eval 与生产化

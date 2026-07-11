@@ -8,7 +8,7 @@
 - 主题：Agent Memory / Stateful Agents / MemGPT Ecosystem
 - 适合阶段：工程实践
 - 可信度等级：B
-- 是否已验证：memory 页面已复核；长期记忆治理边界已完成第一轮交叉验证
+- 是否已验证：memory 页面已复核；长期记忆治理边界已完成第一轮交叉验证；生命周期权限审计已完成标准库模拟
 
 ## 一句话总结
 
@@ -27,6 +27,7 @@ Letta 是 MemGPT 相关生态的工程化文档，可用于观察长期记忆 ag
 - 官方文档入口返回 HTTP 200。
 - 2026-07-11 抓取 `https://docs.letta.com/letta-agent/memory.md` 成功；页面包含 `/init`、`/doctor`、`/remember`、dream subagents、memory defragmentation、MemFS、version history、conflict resolution 和 direct inspection/editing 等关键内容。
 - 已与 MemoryBank、MemGPT、Generative Agents、Zep、OWASP 和 NIST 交叉验证长期记忆治理边界。
+- 标准库 lifecycle audit 已把 direct inspection/editing、版本历史、删除语义、权限隔离和 trace 脱敏转化为最小验收项；该实验不验证 Letta 的真实实现行为。
 
 ## 可能的问题
 
@@ -39,7 +40,7 @@ Letta 是 MemGPT 相关生态的工程化文档，可用于观察长期记忆 ag
 
 ## 可复现实验
 
-- 构建一个最小 stateful agent，记录 memory 写入、召回和更新路径。
+- 构建一个最小 stateful agent，记录 memory 写入、查看、编辑、删除、召回、权限阻断和更新路径。
 
 ## 是否进入正文
 

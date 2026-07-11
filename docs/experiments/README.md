@@ -26,7 +26,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 3. Long-term memory 写入守门
    - 目标：验证自动写入记忆是否会引入冲突、过时和脏数据。
-   - 状态：已完成标准库长期记忆写入守门模拟实验，见 [长期记忆写入守门与治理实验](memory-governance/README.md) 和 [2026-07-11 结果](memory-governance/results-2026-07-11.md)。仍需真实多会话 Agent / memory framework 实验。
+   - 状态：已完成标准库长期记忆写入守门模拟实验，见 [长期记忆写入守门与治理实验](memory-governance/README.md) 和 [2026-07-11 结果](memory-governance/results-2026-07-11.md)；已完成标准库长期记忆生命周期与权限审计实验，见 [长期记忆生命周期与权限审计实验](memory-lifecycle-audit/README.md) 和 [2026-07-11 结果](memory-lifecycle-audit/results-2026-07-11.md)。仍需真实多会话 Agent / memory framework 实验。
 
 4. ReAct vs 简单 workflow
    - 目标：比较工具搜索任务中 ReAct 和固定 workflow 的成功率、成本和延迟。

@@ -23,7 +23,7 @@
 | [MCP official docs](source-cards/2026-mcp-official-docs.md) | MCP | Official Docs / Spec | A | 关键 spec / security / authorization 页面已精读；MCP trace 模拟和 stdio harness 已完成；部分验证 | 补真实 MCP SDK / host trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验 |
 | [LangGraph docs](source-cards/2026-langgraph-docs.md) | Agent 架构 / Orchestration | Framework Docs | A | 关键 stateful workflow / agent / durable execution / HITL 段落已精读；多个 architecture evidence 和框架能力交叉表已引用；部分验证 | 补真实 LangGraph workflow / agent 对比实验 |
 | [LangGraph memory docs](source-cards/2026-langgraph-memory-docs.md) | Short-term / Long-term memory | Framework Docs | A | 关键 short-term / long-term memory 边界已精读；RAG/Memory 对比实验已完成；部分验证 | 补真实 memory framework、用户编辑/删除和多会话收益实验 |
-| [Letta docs](source-cards/2026-letta-docs.md) | Agent memory / Stateful agents | Framework Docs | B | 关键 memory inspection/editing/versioning 段落已精读；长期记忆治理 evidence 已引用；部分验证 | 和 Zep / LangGraph 做真实 memory governance 对比实验 |
+| [Letta docs](source-cards/2026-letta-docs.md) | Agent memory / Stateful agents | Framework Docs | B | 关键 memory inspection/editing/versioning 段落已精读；长期记忆治理 evidence 和 lifecycle audit 已引用；部分验证 | 和 Zep / LangGraph 做真实 memory governance 对比实验 |
 | [LlamaIndex docs](source-cards/2026-llamaindex-docs.md) | RAG / Data framework | Framework Docs | A | 关键页面已精读；RAG pipeline / citation 模拟实验、上下文策略对比实验和框架能力交叉表已完成；真实 LLM citation harness 已准备；部分验证 | 实际运行 LLM citation harness，并补真实 embedding / LlamaIndex pipeline、metadata filter 和 citation correctness 实验 |
 | [NIST AI RMF](source-cards/2026-nist-ai-rmf.md) | Risk / Governance | Standard / Guidance | A | 关键风险治理段落已精读；security / memory / production evidence 已引用；安全 regression set 已完成；部分验证 | 补真实风险评审清单和生产安全试跑 |
 | [OpenAI Agents SDK docs](source-cards/2026-openai-agents-sdk-docs.md) | Agent Framework | Official Docs | A | 关键页面已精读；prompt injection / permission 标准库实验、安全 regression set 和框架能力交叉表已完成；部分验证 | 补真实 guardrails/HITL/tool permission 和框架横向对比实验 |
@@ -36,11 +36,11 @@
 | [Semantic Kernel docs](source-cards/2026-semantic-kernel-docs.md) | Framework / Enterprise integration | Framework Docs | A | 插件、task automation、agent framework、process framework 段落已精读；framework/security evidence 和框架能力交叉表已引用；部分验证 | 补真实 Semantic Kernel plugin / HITL / process 对比实验 |
 | [LangSmith docs](source-cards/2026-langsmith-docs.md) | Observability / Evaluation | Framework Docs | B | 关键页面已精读；trace-aware eval 和 trace schema audit 标准库实验已完成；真实模型 trace harness 已准备；部分验证 | 实际运行真实平台 traces、LLM-as-judge 误判和人工复核实验 |
 | [Arize Phoenix docs](source-cards/2026-arize-phoenix-docs.md) | Observability / Evaluation | Framework Docs | B | 关键页面已精读；trace-aware eval 和 trace schema audit 标准库实验已完成；真实模型 trace harness 已准备；部分验证 | 实际运行真实平台 traces/spans/sessions、token/latency 和人工复核实验 |
-| [Zep docs](source-cards/2026-zep-docs.md) | Agent memory / Knowledge graph | Framework Docs | B | 关键 temporal graph / fact invalidation 段落已精读；长期记忆治理 evidence 已引用；部分验证 | 补真实 Zep / Letta / LangGraph memory governance 对比实验 |
+| [Zep docs](source-cards/2026-zep-docs.md) | Agent memory / Knowledge graph | Framework Docs | B | 关键 temporal graph / fact invalidation 段落已精读；长期记忆治理 evidence 和 lifecycle audit 已引用；部分验证 | 补真实 Zep / Letta / LangGraph memory governance 对比实验 |
 
 ## 待创建高优先级卡片
 
 | 候选来源 | 主题 | 理由 |
 | --- | --- | --- |
 | Prompt injection papers and security writeups | Security | 已有 OWASP/NIST 和标准库攻击实验；仍需要更多真实攻击样例、防护工程实践和误报/漏报资料 |
-| Memory framework implementation case studies | Memory | 已有 Letta/Zep/LangGraph 第一轮资料和标准库实验；仍需真实 memory framework 的用户查看/编辑/删除、权限和隐私边界案例 |
+| Memory framework implementation case studies | Memory | 已有 Letta/Zep/LangGraph 第一轮资料、标准库写入守门和 lifecycle audit；仍需真实 memory framework 的用户查看/编辑/删除、权限和隐私边界案例 |
