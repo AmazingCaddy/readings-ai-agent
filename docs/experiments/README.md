@@ -28,7 +28,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 2. RAG chunk size 对召回质量的影响
    - 目标：比较不同 chunk size 和 overlap 对答案准确率的影响。
-   - 状态：已完成标准库最小 pipeline / citation 模拟实验，见 [RAG 最小 Pipeline 与 Citation 实验](rag-pipeline/README.md) 和 [2026-07-11 结果](rag-pipeline/results-2026-07-11.md)；真实 LLM citation synthesis harness 已准备，见 [Real RAG Citation Synthesis 实验](real-rag-citation-validation/README.md)。仍需真实 embedding / vector store / rerank 和 chunk size 对比实验。
+   - 状态：已完成标准库最小 pipeline / citation 模拟实验，见 [RAG 最小 Pipeline 与 Citation 实验](rag-pipeline/README.md) 和 [2026-07-11 结果](rag-pipeline/results-2026-07-11.md)；真实 LLM citation synthesis harness 已准备，见 [Real RAG Citation Synthesis 实验](real-rag-citation-validation/README.md) 和 [2026-07-11 结果](real-rag-citation-validation/results-2026-07-11.md)。当前无 API key，运行结果为 `skipped`；仍需真实 completed run、embedding / vector store / rerank 和 chunk size 对比实验。
 
 3. Long-term memory 写入守门
    - 目标：验证自动写入记忆是否会引入冲突、过时和脏数据。
@@ -48,11 +48,11 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 7. MCP 最小 trace 实验
    - 目标：验证 host/client/server、`tools/list`、`tools/call`、`resources/list`、`resources/read`、roots 和 host approval trace 字段。
-   - 状态：已完成标准库模拟实验，见 [MCP 最小 Trace 实验](mcp-trace/README.md) 和 [2026-07-11 结果](mcp-trace/results-2026-07-11.md)；本地 stdio JSON-RPC harness 已准备，见 [Real MCP Stdio Trace 实验](real-mcp-stdio-trace/README.md)。仍需真实 MCP SDK / host / OAuth / URL mode 实验。
+   - 状态：已完成标准库模拟实验，见 [MCP 最小 Trace 实验](mcp-trace/README.md) 和 [2026-07-11 结果](mcp-trace/results-2026-07-11.md)；本地 stdio JSON-RPC harness 已完成，见 [Real MCP Stdio Trace 实验](real-mcp-stdio-trace/README.md) 和 [2026-07-11 结果](real-mcp-stdio-trace/results-2026-07-11.md)。本地结果支撑进程边界、JSON-RPC 消息流、host approval/resource review 和 trace 脱敏的窄结论；仍需真实 MCP SDK / host / OAuth / URL mode 实验。
 
 8. Trace-aware eval 最小实验
    - 目标：比较 final-answer-only scoring 和 trace-aware scoring 能发现的错误类型差异。
-   - 状态：已完成标准库模拟实验，见 [Trace-Aware Eval 最小实验](trace-aware-eval/README.md) 和 [2026-07-11 结果](trace-aware-eval/results-2026-07-11.md)；已完成标准库 trace schema audit，见 [Trace Schema Audit 最小实验](trace-schema-audit/README.md) 和 [2026-07-11 结果](trace-schema-audit/results-2026-07-11.md)；已完成标准库 grader misalignment / reward hacking audit，见 [Grader Misalignment / Reward Hacking 最小实验](grader-misalignment/README.md) 和 [2026-07-11 结果](grader-misalignment/results-2026-07-11.md)；真实模型 trace-aware eval harness 已准备，见 [Real Trace-Aware Eval 实验](real-trace-aware-eval/README.md)。仍需配置 API key 后记录真实 Agent trace、真实 LLM-as-judge、平台 grader 和人工复核结果。
+   - 状态：已完成标准库模拟实验，见 [Trace-Aware Eval 最小实验](trace-aware-eval/README.md) 和 [2026-07-11 结果](trace-aware-eval/results-2026-07-11.md)；已完成标准库 trace schema audit，见 [Trace Schema Audit 最小实验](trace-schema-audit/README.md) 和 [2026-07-11 结果](trace-schema-audit/results-2026-07-11.md)；已完成标准库 grader misalignment / reward hacking audit，见 [Grader Misalignment / Reward Hacking 最小实验](grader-misalignment/README.md) 和 [2026-07-11 结果](grader-misalignment/results-2026-07-11.md)；真实模型 trace-aware eval harness 已准备，见 [Real Trace-Aware Eval 实验](real-trace-aware-eval/README.md) 和 [2026-07-11 结果](real-trace-aware-eval/results-2026-07-11.md)。当前无 API key，运行结果为 `skipped`；仍需配置 API key 后记录真实 Agent trace、真实 LLM-as-judge、平台 grader 和人工复核结果。
 
 9. Reflection / Retry 错误反思实验
    - 目标：验证 reflection 是否能帮助补证据，以及未验证反思是否会污染后续尝试。
@@ -96,7 +96,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 19. Production cost / latency / rate-limit audit 实验
     - 目标：把 Production、Cost、Latency、Rate Limits、Token Counting、Batch、Flex 和 Prompt Caching 文档中的生产质量边界整理成可审计字段表。
-    - 状态：已完成标准库 field audit，见 [Production Cost / Latency / Rate-Limit Audit](production-cost-latency-rate-limit/README.md) 和 [2026-07-11 结果](production-cost-latency-rate-limit/results-2026-07-11.md)；真实 API harness 已准备，见 [Real Production Cost / Latency / Rate-Limit Validation](real-production-cost-latency-validation/README.md) 和 [Real Batch / Flex / Prompt Caching Validation](real-batch-flex-caching-validation/README.md)。当前无 API key，真实 harness 只验证 skip 分支；尚未调用真实 API、读取真实 rate-limit headers、提交 Batch job、使用 Flex 或触发 Prompt Caching；不能证明任何真实成本、P95 latency、吞吐、缓存命中率、优化收益或生产可靠性。
+    - 状态：已完成标准库 field audit，见 [Production Cost / Latency / Rate-Limit Audit](production-cost-latency-rate-limit/README.md) 和 [2026-07-11 结果](production-cost-latency-rate-limit/results-2026-07-11.md)；真实 API harness 已准备，见 [Real Production Cost / Latency / Rate-Limit Validation](real-production-cost-latency-validation/README.md)、[2026-07-11 结果](real-production-cost-latency-validation/results-2026-07-11.md)、[Real Batch / Flex / Prompt Caching Validation](real-batch-flex-caching-validation/README.md) 和 [2026-07-11 结果](real-batch-flex-caching-validation/results-2026-07-11.md)。当前无 API key，真实 harness 只验证 skip 分支；尚未调用真实 API、读取真实 rate-limit headers、提交 Batch job、使用 Flex 或触发 Prompt Caching；不能证明任何真实成本、P95 latency、吞吐、缓存命中率、优化收益或生产可靠性。
 
 20. Browser action trace audit 实验
     - 目标：把 Browser Use、Playwright、Anthropic Computer Use 和权限 / observability evidence 中的 browser agent 边界整理成可审计 action trace 字段表。

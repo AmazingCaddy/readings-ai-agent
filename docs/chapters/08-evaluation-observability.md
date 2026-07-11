@@ -218,11 +218,11 @@ OpenAI Graders 文档还提供了更具体的评分器类型：string check、te
 - 本地标准库 browser action trace audit 显示，浏览器 Agent 的最小评测字段应覆盖 action trace、DOM/screenshot state、side-effect approval、profile isolation、file upload control、external content untrusted boundary、trace redaction 和 failure classification。该实验支撑字段设计，但不启动真实浏览器，也不证明 Browser Use、Playwright、Anthropic computer use 或任何模型的真实网页任务表现。
 - τ-bench 的摘要和 README 已完成第一轮复核，可支撑“工具 Agent 评测需要动态用户交互、领域 API tools、policy guidelines、数据库状态评测和多次试验一致性”的保守表述；原始 repo 已提示任务不是最新版，实际试跑应优先看 τ³-bench。
 - “公开 benchmark 可以帮助学习评测环境、任务设计、functional correctness、用户交互、状态评测和失败分类，但不能直接代表真实业务 Agent 质量或产品可用性”已升级为可入正文。业务系统仍需要自己的 custom/private eval、trace、权限检查和回归集。
-- OpenAI Evals README 已完成第一轮精读，可支撑 custom eval、private eval 和 tool-using agent eval 的工程思路；标准库 trace-aware eval 已覆盖最小评分字段。真实模型 trace-aware eval harness 已准备，但结果待跑，具体实践仍需结合当前文档、LLM-as-judge 误判和人工复核实验。
+- OpenAI Evals README 已完成第一轮精读，可支撑 custom eval、private eval 和 tool-using agent eval 的工程思路；标准库 trace-aware eval 已覆盖最小评分字段。真实模型 trace-aware eval harness 已准备并记录无 API key skipped 结果；当前没有 completed run，具体实践仍需结合当前文档、LLM-as-judge 误判和人工复核实验。
 - OpenAI Evaluation best practices 和 Agent evals guide 已完成第一轮精读，可支撑 eval-driven development、task-specific eval、trace grading、datasets/eval runs、tool selection、data precision、handoff accuracy、LLM-as-judge caveats 和 Evals platform 退役边界。它们不证明任何 grader、judge model、平台 trace 或指标在真实业务中可靠。
 - OpenAI Graders docs 已完成第一轮精读，可支撑 grader 类型、tool-call grading、Python grader 执行约束、score model grader 和 reward hacking 风险边界。它不证明 graders / LLM-as-judge 在真实业务中稳定准确，也不能绕过人工校准。
 - LangSmith 与 Phoenix 文档已完成第一轮精读，可支撑 offline/online eval、datasets、runs/traces/spans、human feedback、LLM-as-judge、code evaluators、experiments 和 sessions 等工程工作流。
-- 本地标准库 trace-aware eval 实验显示，final-answer-only scoring 通过 3/3，而 trace-aware scoring 只通过 1/3；过程评分发现了无审批副作用工具和工具错误未恢复。它支撑“Agent eval 不应只看最终答案”的工程建议。真实模型 trace-aware eval harness 已准备，但结果待跑，仍需要真实 LLM-as-judge、人工复核和平台对照实验。
+- 本地标准库 trace-aware eval 实验显示，final-answer-only scoring 通过 3/3，而 trace-aware scoring 只通过 1/3；过程评分发现了无审批副作用工具和工具错误未恢复。它支撑“Agent eval 不应只看最终答案”的工程建议。真实模型 trace-aware eval harness 已准备并记录无 API key skipped 结果；当前没有 completed run，仍需要真实 LLM-as-judge、人工复核和平台对照实验。
 - 本地标准库 grader misalignment / reward hacking 实验显示，`string_check` 会漏掉语义等价答案并放过过程错误，关键词式 judge 会被 verbose / reward-hacked 输出骗过，tool-call rule 会放过纯文本错误，majority multigrader 也不能自动消除共享偏差。该实验支撑“自动 grader 需要人工校准、edge cases、误判统计和抽样复核”的流程设计；真实 LLM-as-judge、平台 grader、成本和延迟仍需实验。
 - “Agent trace 不能只保存最终输入输出，字段要按 debug、audit、regression、cost/latency、RAG 和 privacy 等用途设计”已升级为可入正文：本地标准库 trace schema audit 显示，debug、audit、regression、cost/latency、RAG 和 privacy 需要不同字段集合；debug 够用不代表 audit/eval/privacy 够用。该实验不证明任何真实平台默认覆盖这些字段，也不能定义所有 Agent 系统的通用 schema。
 - “对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全；关键 trajectory / trace 应作为 eval、审计和回归输入”已升级为可入正文。trace 字段、grader 类型、reward hacking 风险和 offline/online eval 工作流已有工程资料和标准库实验支撑；真实 LLM-as-judge、平台 grader 和真实平台字段覆盖仍待任务级验证。
@@ -230,7 +230,7 @@ OpenAI Graders 文档还提供了更具体的评分器类型：string check、te
 ## 待验证问题
 
 - 真实 Agent eval 中 trajectory 应该如何自动评分？
-- 真实 Agent trace-aware eval 中，规则评分、LLM-as-judge 和人工评审分别会产生哪些误判？标准库 grader misalignment 实验已给出最小误判结构；真实模型 trace harness 已准备，仍需实际运行和人工复核样例。
+- 真实 Agent trace-aware eval 中，规则评分、LLM-as-judge 和人工评审分别会产生哪些误判？标准库 grader misalignment 实验已给出最小误判结构；真实模型 trace harness 已准备并记录无 API key skipped 结果，仍需实际运行和人工复核样例。
 - 模型评审与人工评审如何组合，才能减少误判？
 - 不同框架的 observability 能力如何比较？
 - AgentBench 和 WebArena 的任务设计对现代业务 Agent 有哪些可迁移经验？
@@ -273,4 +273,5 @@ OpenAI Graders 文档还提供了更具体的评分器类型：string check、te
 - [Trace Schema Audit 最小实验结果](../experiments/trace-schema-audit/results-2026-07-11.md)
 - [Grader Misalignment / Reward Hacking 最小实验](../experiments/grader-misalignment/README.md)
 - [Real Trace-Aware Eval 实验](../experiments/real-trace-aware-eval/README.md)
+- [Real Trace-Aware Eval 结果](../experiments/real-trace-aware-eval/results-2026-07-11.md)
 - [References 覆盖矩阵](../references/coverage-matrix.md)
