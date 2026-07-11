@@ -40,8 +40,9 @@ Agent observability 不是普通日志的同义词。对会检索、调用工具
 ## 结论状态
 
 - 可入正文：窄结论“对工具型或有副作用的 Agent，trace 是 eval、审计和回归输入，不只是 debug 日志”已完成第一轮交叉验证。论文/benchmark 支撑过程评测的重要性，OpenAI Evals 支撑 custom eval，LangSmith/Phoenix/Cookbook 支撑 trace、runs、spans、datasets、online/offline evaluation 和反馈工作流；标准库 trace-aware eval 支撑 trace 能发现 final-only 漏掉的过程错误。
-- 部分验证：完整 trace 字段集合、平台字段覆盖、真实 Agent / RAG traces、自动评分误判分析和人工复核设计仍需真实运行与平台对照。trace schema audit 只能支持“字段要按用途设计”的工程边界，不能定义通用 schema。
+- 可入正文：窄结论“trace 不能只保存最终输入输出；字段应按用途覆盖关键工具调用、检索、错误、审批/副作用、版本、延迟/token/成本、dataset/case、citation、隐私脱敏、访问范围和保留策略等信息”已完成第一轮验证。trace schema audit 显示 minimal log 无法支撑 debug/audit/regression/cost/RAG/privacy，debug trace 不等于 audit trace，audit trace 不等于 regression trace，字段够多但未脱敏仍可能隐私失败。
+- 部分验证：完整通用 trace schema、平台字段覆盖、真实 Agent / RAG traces、自动评分误判分析和人工复核设计仍需真实运行与平台对照；不能写成任何平台默认覆盖这些字段，也不能把这份字段清单写成所有 Agent 系统的唯一标准。
 
 ## 可进入章节
 
-- 是。可以写成：Agent eval 应同时保存任务、关键 trace、工具调用、检索、错误、成本/延迟和反馈；offline eval 更适合回归和版本对比，online eval 更适合监控生产流量中的异常和质量退化。不能写成“上了 observability 平台就可靠”，也不能把任何 trace 字段清单写成通用标准。
+- 是。可以写成：Agent eval 应同时保存任务、关键 trace、工具调用、检索、错误、审批/副作用、成本/延迟、版本和反馈；trace 字段要按 debug、audit、regression、cost、RAG 和 privacy 等用途设计。offline eval 更适合回归和版本对比，online eval 更适合监控生产流量中的异常和质量退化。不能写成“上了 observability 平台就可靠”，也不能把任何 trace 字段清单写成通用标准。

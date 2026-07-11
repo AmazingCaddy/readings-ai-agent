@@ -165,7 +165,7 @@ Prompt injection / tool permission 标准库模拟实验已经完成，可帮助
 - RAG / Memory 已补标准库对比实验，可支撑外部知识、thread state、guarded long-term memory 和无安全来源拒答的分层边界；仍缺真实 RAG / memory framework / 多会话质量实验。
 - RAG 已补标准库最小 pipeline / citation 模拟实验，可支撑 chunk metadata、retrieval trace、chunk-level citations 和 `grounded=false` 拒答流程；仍缺真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank 对比、citation correctness 和成本/延迟实验。
 - Memory / 知识库治理已补标准库写入守门模拟实验和生命周期权限审计，窄结论“长期记忆不能默认自动写入或默认提升表现，必须配套写入守门、生命周期权限、跨用户隔离和 trace 脱敏”已可入正文；仍缺真实多会话 Agent / memory framework 的收益、污染、权限、隐私和用户查看/编辑/删除实验。
-- Evaluation / Observability 已补标准库 trace-aware eval 模拟实验，可支撑 final-answer-only 与 trace-aware scoring 的差异说明；仍缺真实 Agent trace、LLM-as-judge 误判分析、人工复核和回归集工程案例。
+- Evaluation / Observability 已补标准库 trace-aware eval 模拟实验和 trace schema audit，窄结论“工具/副作用 Agent 不能只看最终答案”和“trace 字段要按 debug/audit/regression/cost/RAG/privacy 用途设计”已可入正文；仍缺真实 Agent trace、LLM-as-judge 误判分析、人工复核、平台字段映射和回归集工程案例。
 - Production / Security 已补标准库 prompt injection / tool permission 模拟实验，可支撑 prompt-only 风险、写工具阻断和 trace 脱敏流程；仍缺真实模型 / 框架 guardrail / HITL approval 实验、跨框架权限对比和审计脱敏策略。
 - Framework landscape 已补标准库框架选择 rubric smoke test，可支撑任务画像、能力标签、missing required 和 cautions 的比较方法；仍缺真实同一任务框架横向实验。
 - Cookbook 的具体 recipe 已能支撑实践项目路线，标准库 smoke harness 已支撑项目验收结构和 trace / 失败分类设计；仍需要真实本地试跑来确认依赖、成本、失败样例和初学者阻塞点。

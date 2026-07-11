@@ -9,7 +9,7 @@
 - 主题：Observability / Evaluation / Tracing
 - 适合阶段：工程实践
 - 可信度等级：B
-- 是否已验证：Observability 与 Evaluation concepts Markdown 页面已复核；关键段落已精读；已结合 Phoenix / OpenAI Evals、trace-aware eval 和 trace schema audit 标准库实验将 trace 作为 eval/审计/回归输入的窄边界升级为可入正文；其余结论部分验证
+- 是否已验证：Observability 与 Evaluation concepts Markdown 页面已复核；关键段落已精读；已结合 Phoenix / OpenAI Evals、trace-aware eval 和 trace schema audit 标准库实验将 trace 作为 eval/审计/回归输入和 trace 字段用途设计的窄边界升级为可入正文；真实平台字段映射和自动评分仍部分验证
 
 ## 一句话总结
 
@@ -46,9 +46,9 @@ LangSmith 文档适合学习 LLM/Agent 应用的 tracing、offline eval、online
 ## 可复现实验
 
 - 已完成标准库 trace-aware eval 最小实验；已准备真实模型 trace-aware eval harness，可记录 tool call/result/error/approval/final response 并比较 final-only 与 trace-aware scoring；后续仍需扩展为真实 RAG/tool-calling traces、LLM-as-judge、人工抽样复核和 LangSmith 平台对照。
-- 已完成标准库 trace schema audit，验证 debug、audit、regression、cost/latency、RAG 和 privacy 用途需要不同字段；后续仍需映射到真实 LangSmith runs/threads/datasets/evaluators 字段。
+- 已完成标准库 trace schema audit，验证 debug、audit、regression、cost/latency、RAG 和 privacy 用途需要不同字段；该结果支撑“字段要按用途设计”的窄边界，后续仍需映射到真实 LangSmith runs/threads/datasets/evaluators 字段。
 
 ## 是否进入正文
 
 - 结论：部分进入
-- 原因：可支撑 observability 和 eval 工程流程，并与 trace-aware eval 实验共同支撑“trace 不只是 debug 日志，也是工具/副作用 Agent 的 eval、审计和回归输入”的窄结论；不应作为唯一平台推荐或自动评分正确性的证明。
+- 原因：可支撑 observability 和 eval 工程流程，并与 trace-aware eval / trace schema audit 实验共同支撑“trace 不只是 debug 日志，也是工具/副作用 Agent 的 eval、审计和回归输入”以及“trace 字段要按用途设计”的窄结论；不应作为唯一平台推荐或自动评分正确性的证明。
