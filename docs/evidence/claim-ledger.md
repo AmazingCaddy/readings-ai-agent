@@ -22,14 +22,14 @@
 | Benchmark 不能直接代表真实业务 Agent 质量。 | AgentBench；WebArena；OpenAI Evals repo | 候选结论 | 可作为 Eval 章节核心提醒，需补 trace/业务 eval references。 |
 | Prompt injection 不能只靠 prompt 解决。 | OWASP LLM Top 10；NIST AI RMF | 候选结论 | 待补工具权限和隔离案例后升级。 |
 | 多 Agent 不是默认更好，会带来成本、调试和协调复杂度。 | AutoGen docs；CrewAI docs；AgentBench | 候选结论 | 需要工程案例或实验对比后再写成正文建议。 |
-| MCP 是连接工具和上下文能力的协议，不是 Agent 框架本身。 | MCP official docs；MCP servers repo | 候选结论 | 待精读 MCP docs 后升级。 |
+| MCP 是连接工具和上下文能力的协议，不是 Agent 框架本身。 | MCP official docs；MCP servers repo；Evidence Note: MCP Host / Client / Server 职责边界 | 部分验证 | 可作为 MCP 章节核心边界；仍建议补最小 MCP trace 实验。 |
 
 ## 待升级为可入正文的优先结论
 
 1. Agent vs Workflow 的边界。
 2. Tool Use vs Function Calling 的边界。已完成第一轮官方文档交叉验证，待补最小实验。
 3. RAG vs Memory 的边界。
-4. MCP server/client/host 的职责边界。
+4. MCP server/client/host 的职责边界。已完成第一轮官方文档交叉验证，待补最小 MCP trace 实验。
 5. Agent eval 为什么要看 trajectory。
 6. Prompt injection 为什么需要权限和隔离，而不是只靠提示词。
 

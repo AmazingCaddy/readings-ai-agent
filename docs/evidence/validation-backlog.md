@@ -24,8 +24,9 @@
 ## MCP
 
 - MCP 相比传统 API wrapper 的核心价值是什么？
-- MCP tools、resources、prompts 的边界如何准确解释？
-- MCP 安全模型和权限边界有哪些官方建议？
+- MCP tools、resources、prompts 的边界如何准确解释？官方 server concepts 已完成第一轮验证，仍需结合 spec 细节。
+- MCP 安全模型和权限边界有哪些官方建议？已确认 roots 不是安全边界，仍需补 auth/approval/permission 资料。
+- 如何用一个只读 MCP server 复现 host/client/server、`tools/list` 和 `tools/call` trace？
 
 ## RAG 与 Memory
 
