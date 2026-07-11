@@ -12,7 +12,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
 
-当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-11.md)：2026-07-11 运行覆盖 7 个入口，6 个真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，1 个本地 MCP stdio harness 完成。
+当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-11.md)：2026-07-11 运行覆盖 11 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，Playwright / LangGraph harness 因本地依赖缺失保守跳过，1 个本地 MCP stdio harness 完成。
 
 ## 实验清单与状态
 
@@ -64,7 +64,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 11. 上下文治理与结构化输出实验
     - 目标：比较 free text、JSON mode、schema validation 和 naive/governed context 的失败模式。
-    - 状态：已完成标准库上下文治理与结构化输出模拟实验，见 [上下文治理与结构化输出实验](context-structured-output/README.md) 和 [2026-07-11 结果](context-structured-output/results-2026-07-11.md)；已完成标准库上下文策略对比实验，见 [上下文策略对比实验](context-strategy-comparison/README.md) 和 [2026-07-11 结果](context-strategy-comparison/results-2026-07-11.md)；真实 API harness 已准备，见 [Real Structured Outputs / JSON Mode 对比实验](real-structured-output-validation/README.md)。仍需配置 API key 后记录真实 Responses API / Structured Outputs / 长上下文成本结果。
+    - 状态：已完成标准库上下文治理与结构化输出模拟实验，见 [上下文治理与结构化输出实验](context-structured-output/README.md) 和 [2026-07-11 结果](context-structured-output/results-2026-07-11.md)；已完成标准库上下文策略对比实验，见 [上下文策略对比实验](context-strategy-comparison/README.md) 和 [2026-07-11 结果](context-strategy-comparison/results-2026-07-11.md)；真实 API harness 已准备，见 [Real Structured Outputs / JSON Mode 对比实验](real-structured-output-validation/README.md) 和 [2026-07-11 结果](real-structured-output-validation/results-2026-07-11.md)。当前无 API key，运行结果为 `skipped`；仍需配置 API key 后记录真实 Responses API / Structured Outputs / refusal / retry / 长上下文成本结果。
 
 12. 实践路线 smoke harness
     - 目标：验证初学者实践项目是否能拆成结构化输出、工具校验、RAG 引用、eval cases 和成本闸门等可运行验收单元。
