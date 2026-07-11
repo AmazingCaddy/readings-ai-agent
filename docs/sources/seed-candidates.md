@@ -64,6 +64,7 @@
 | --- | --- | --- | --- | --- |
 | LLM 应用安全 | OWASP Top 10 for LLM Applications | Security Guidance | A | 链接已复核；source card 已创建 |
 | AI 风险管理 | NIST AI Risk Management Framework | Standard / Guidance | A | 链接已复核；source card 已创建 |
+| Responsible AI / 安全治理 | Google Cloud Responsible AI documentation | Official Docs | A | Google Cloud 页面和关键段落已复核；source card 已创建；真实过滤、grounding、监控效果待实验 |
 | Prompt injection | Indirect Prompt Injection paper；Microsoft Prompt Shields docs；additional security writeups | Paper / Engineering | A/B | arXiv paper 元数据已复核；Microsoft Learn Prompt Shields concept/quickstart 已复核；source cards 已创建；更多独立工程 writeups 待复核 |
 | Tool permissions | Framework security guidance for tools and agents | Official Docs | A/B | OpenAI Agents SDK / Semantic Kernel 已完成第一轮；仍需横向补充 |
 

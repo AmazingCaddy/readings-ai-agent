@@ -15,6 +15,7 @@ LLM 应用不能把模型调用理解成“输入一段 prompt，取回一段文
 - Source 7：[Evidence Note: Prompt Injection 与权限边界](prompt-injection-permission-boundary.md)
 - Source 8：[上下文治理与结构化输出实验结果](../experiments/context-structured-output/results-2026-07-11.md)
 - Source 9：[上下文策略对比实验结果](../experiments/context-strategy-comparison/results-2026-07-11.md)
+- Source 10：[Google Cloud Responsible AI Documentation](../sources/source-cards/2026-google-responsible-ai-docs.md)
 
 ## 交叉验证结果
 
@@ -25,6 +26,8 @@ LLM 应用不能把模型调用理解成“输入一段 prompt，取回一段文
 - 一致点：Function Calling 文档和 Structured Outputs 文档都把工具调用描述为模型与应用系统之间的结构化协作接口；结构化输出也可用于非工具调用场景，例如分类、路由和 UI 数据。
 - 一致点：Structured Outputs 文档明确 structured output 仍可能包含 mistakes；这支持“结构化输出提升可解析性，不等于保证事实正确”的边界。
 - 一致点：Text Generation 文档说明 context window 是模型一次请求可处理的数据上限；Responses API reference 提供 `context_management` 和 `truncation` 参数。这支持“上下文窗口是限制和治理对象，不是可靠性保证”的表述。
+- 一致点：Google Cloud Responsible AI 文档把 hallucinations、grounding、factuality、data quality、limited domain expertise、input/output length and structure 列为模型限制，并建议按用例做 security risk assessment、safety testing、配置 safety filters、收集用户反馈和监控内容。这支持“上下文治理不只是塞更多内容，还要处理 grounding、输入质量、限制、安全测试和监控”的正文表述。
+- 边界点：Google 文档说明如果输入或输出超过最大 token limit，safety classifiers are not applied。这不能推出其他供应商相同，但能补强“长度和结构限制会影响安全/质量机制，长上下文不是可靠性保证”的保守边界。
 - 关联点：RAG/Memory evidence 说明外部知识检索、状态和长期记忆治理各有边界；Prompt Injection evidence 说明外部内容不能只靠 prompt 处理。这些资料共同支持“长上下文不能替代检索、摘要、状态、权限和评测”。
 - 本地实验：标准库输出解析实验中，`free_text` 只有 1/3 语义有效，`json_mode` 有 2/3 schema valid 但只有 1/3 semantic valid，`schema_validated` 全部 schema valid 但仍有 1 个语义错误。这支持“结构化输出提升解析和 schema adherence，不等于业务正确”。
 - 本地实验：标准库上下文治理实验中，`naive_long_context` 同时使用旧政策和外部注入，输出自动退款和导出 token；`governed_context` 选择最新可信政策并隔离外部 attachment。这支持“长上下文不能替代来源、时效、信任和权限治理”。
@@ -40,7 +43,7 @@ LLM 应用不能把模型调用理解成“输入一段 prompt，取回一段文
 
 - 可入正文：窄结论“LLM 应用的输入输出不只是字符串；Responses 等 API 会把 message roles、content items、tool calls、refusals、structured outputs 和 context management 建模为结构化对象”由 OpenAI Text Generation 文档和 Responses API reference 直接支撑，并被 Tool Calling / Structured Outputs 资料交叉支撑。
 - 可入正文：窄结论“Structured Outputs / schema validation 提升可解析性和 schema adherence，但不保证事实正确、权限正确或业务正确”由 OpenAI Structured Outputs 文档直接支撑，并被 Responses API / Function Calling source cards 和标准库 schema-valid semantic error 实验交叉支撑。
-- 可入正文：窄结论“长上下文不能替代上下文治理；系统仍需要处理来源、时效、信任级别、引用、状态、权限隔离和评测”已完成第一轮交叉验证。OpenAI 文档支撑 context window、context management 和 truncation 是工程限制，RAG/Memory 与 Prompt Injection evidence 支撑检索、状态和权限隔离的必要性，两组标准库实验复现了旧资料、外部注入、摘要丢失 provenance 和基础 RAG 召回不可信文档的失败模式。
+- 可入正文：窄结论“长上下文不能替代上下文治理；系统仍需要处理来源、时效、信任级别、引用、状态、权限隔离和评测”已完成第一轮交叉验证。OpenAI 文档支撑 context window、context management 和 truncation 是工程限制，Google Responsible AI 文档补强 grounding/factuality、数据质量、长度/结构限制、安全测试和监控边界，RAG/Memory 与 Prompt Injection evidence 支撑检索、状态和权限隔离的必要性，两组标准库实验复现了旧资料、外部注入、摘要丢失 provenance 和基础 RAG 召回不可信文档的失败模式。
 - 部分验证：真实 Responses API / Structured Outputs 的 refusal、retry、跨模型稳定性、真实长上下文成本和真实外部攻击样本仍待验证；其他供应商和框架可能有不同字段名；真实长上下文 / RAG / 摘要策略的质量、成本和延迟对比仍需实验。
 
 ## 可进入章节

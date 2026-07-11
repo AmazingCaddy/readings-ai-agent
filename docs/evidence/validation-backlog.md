@@ -18,7 +18,7 @@
 | P0 | 真实 tool-calling 参数校验与有限重试 | OpenAI Responses / Function Calling API | 可复现实验脚本、失败样例、trace、成本/延迟记录；harness 已准备，结果待跑 | 只能验证所选模型和 schema，不代表所有模型稳定修正 |
 | P0 | 真实 Structured Outputs / JSON mode / refusal 对比 | OpenAI Structured Outputs / Responses API | schema valid、semantic valid、refusal、retry 结果表；harness 已准备，结果待跑 | schema 通过不等于事实正确或业务正确 |
 | P0 | 真实 prompt injection + tool permission / HITL / detector | OpenAI Responses API 或一个轻量 tool agent；可扩展 Prompt Shields 或同类检测层 | 攻击样例、detector-only / policy-enforced / HITL 对照、阻断/漏报/误报、审批、pause/resume、幂等执行、参数快照和 trace 脱敏结果；harness 已准备，结果待跑；标准库审批恢复实验已完成 | 不证明 guardrail 或检测层完全安全，只能记录覆盖范围 |
-| P1 | 真实 RAG citation correctness | 轻量本地检索 + LLM synthesis；后续扩展到 LlamaIndex / vector store | chunk 配置、top-k、citation correctness、faithfulness、成本/延迟；LLM synthesis harness 已准备，LlamaIndex examples 已复核但未试跑 | 不证明某个 chunk/rerank 策略默认最优 |
+| P1 | 真实 RAG citation correctness / grounding | 轻量本地检索 + LLM synthesis；后续扩展到 LlamaIndex / vector store | chunk 配置、top-k、citation correctness、faithfulness、groundedness、成本/延迟；LLM synthesis harness 已准备，LlamaIndex examples 已复核但未试跑 | 不证明某个 chunk/rerank/grounding 策略默认最优 |
 | P1 | 真实 Agent trace-aware eval | Responses API toy agent trace；后续扩展到 OpenAI Evals / LangSmith / Phoenix | runs/traces、final-only vs trace-aware 对比、人工复核样例；真实模型 trace harness 已准备，结果待跑 | 自动评分不能当真值，需保留人工抽样 |
 | P1 | 真实 Browser Agent action trace / permission eval | Playwright 固定 workflow；Browser Use browser agent | demo page、DOM state、action trace、file upload、form submit、approval、profile isolation、cost/latency、failure categories | 只能验证所选 demo page 和模型/框架，不代表真实网站、CAPTCHA/stealth、合规或生产可靠性 |
 | P1 | 真实 MCP host/client/server trace | 本地 stdio JSON-RPC harness；后续扩展到 MCP SDK / host | tools/resources/prompts 调用 trace、approval/resource review、token/resource 泄露检查；stdio harness 已完成 | 不同 host 实现差异可能很大 |
@@ -66,7 +66,7 @@
 ## Eval 与生产化
 
 - LLM 应用输入输出不只是字符串的窄边界已可入正文：OpenAI Text Generation 和 Responses API reference 直接支撑 message roles、content items、output array、tool calls、refusals、structured outputs 和 context management 等结构化接口。仍需真实 API 运行记录 refusal/retry、跨模型稳定性、其他供应商字段名和成本。
-- 上下文工程中的输出解析、Structured Outputs、JSON mode 和长上下文失败模式如何设计最小实验？“schema valid 不等于事实/权限/业务正确”和“长上下文不能替代上下文治理”窄边界已升级为可入正文；已完成 OpenAI 官方文档第一轮验证、标准库输出解析 / 上下文治理模拟实验和上下文策略对比实验；真实 Structured Outputs / JSON mode harness 已准备；仍需实际运行验证 refusal、semantic validator、retry loop、真实长上下文 / RAG / 摘要 token/latency/cost 和跨模型稳定性。
+- 上下文工程中的输出解析、Structured Outputs、JSON mode 和长上下文失败模式如何设计最小实验？“schema valid 不等于事实/权限/业务正确”和“长上下文不能替代上下文治理”窄边界已升级为可入正文；已完成 OpenAI 官方文档、Google Responsible AI、标准库输出解析 / 上下文治理模拟实验和上下文策略对比实验第一轮验证；真实 Structured Outputs / JSON mode harness 已准备；仍需实际运行验证 refusal、semantic validator、retry loop、真实长上下文 / RAG / 摘要 token/latency/cost、grounding/factuality 和跨模型稳定性。
 - Agent eval 应该优先评估最终结果还是完整 trajectory？窄结论“对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全；关键 trajectory / trace 应作为 eval、审计和回归输入”已可入正文。AgentBench/WebArena/OpenAI Evals/LangSmith/Phoenix 支撑过程与交互评测的重要性，标准库 trace-aware eval 已验证 final-only 会漏掉无审批副作用工具和工具错误未恢复；trace schema audit 已验证 debug/audit/regression/cost/RAG/privacy 需要不同字段；真实模型 trace-aware eval harness 已准备，仍需实际运行和平台对照实验。
 - Browser Agent 应该如何评估？窄结论已可入正文：浏览器 Agent 不能只看最终文本或 demo 成功，必须检查网页动作、页面/DOM 状态、登录态/profile、文件上传、表单提交、购物/支付、权限确认、trace 和脱敏。Browser Use / Playwright / WebArena 已完成第一轮复核；仍需固定 Playwright workflow vs Browser Use browser agent 小实验。
 - 通用 benchmark 对真实业务 agent 的代表性有多强？窄结论已可入正文：公开 benchmark 可学习评测环境、任务设计、functional correctness 和失败分类，但不能直接代表真实业务 Agent 质量或产品可用性；业务系统仍需 custom/private eval、trace、权限检查和回归集。仍需真实业务任务中的相关性分析和人工复核样例。

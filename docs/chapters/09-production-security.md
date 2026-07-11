@@ -231,6 +231,7 @@ Browser Agent 是另一类高风险工具连接。它可能复用真实浏览器
 - [OWASP Top 10 for Large Language Model Applications](../sources/source-cards/2026-owasp-llm-top-10.md)
 - [NIST AI Risk Management Framework](../sources/source-cards/2026-nist-ai-rmf.md)
 - [Microsoft Prompt Shields Documentation](../sources/source-cards/2026-microsoft-prompt-shields-docs.md)
+- [Google Cloud Responsible AI Documentation](../sources/source-cards/2026-google-responsible-ai-docs.md)
 - [Anthropic MCP Connector and Tunnels Documentation](../sources/source-cards/2026-anthropic-mcp-docs.md)
 - [Browser Use and Playwright Browser Automation References](../sources/source-cards/2026-browser-use-playwright.md)
 

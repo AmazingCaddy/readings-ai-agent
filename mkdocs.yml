@@ -64,6 +64,7 @@ nav:
           - Browser Use and Playwright: sources/source-cards/2026-browser-use-playwright.md
           - AutoGen docs: sources/source-cards/2026-autogen-docs.md
           - CrewAI docs: sources/source-cards/2026-crewai-docs.md
+          - Google Cloud Responsible AI docs: sources/source-cards/2026-google-responsible-ai-docs.md
           - MCP servers repo: sources/source-cards/2026-mcp-servers-repo.md
           - OpenAI Function Calling docs: sources/source-cards/2026-openai-function-calling-docs.md
           - MCP official docs: sources/source-cards/2026-mcp-official-docs.md
