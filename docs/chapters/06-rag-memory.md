@@ -125,6 +125,8 @@ LlamaIndex examples repo 也提供了代码层参考：`CitationQueryEngine` 示
 
 本手册的 Real LlamaIndex RAG Source-Node Validation 已进一步跑通本地 `llama-index-core`：用 `Document` 构建 `VectorStoreIndex`，通过 retriever 返回带 `chunk_id`、`source`、`trust` 和 `score` 的 source-node metadata，再由应用层过滤 untrusted chunk 并生成 citation metadata。后续扩展还用 QueryEngine、`MockLLM` 和自定义 node postprocessor 观察到：`response.source_nodes` 会保留 trusted source-node metadata；无证据 query 在过滤 zero-score nodes 后返回 `Empty Response` 且 source_nodes 为空。这个实验说明真实框架里可以观察和记录这些 RAG 中间结构；但 `MockLLM` 只验证框架 plumbing，没有证明真实答案忠实性、引用正确率、embedding / vector store / rerank 策略或生产质量。
 
+OpenAI File Search / Retrieval 2026-07-12 复核补强了托管 RAG 也需要记录的工程字段：`file_search_call`、file citations、`include=["file_search_call.results"]`、metadata filters、query rewriting、ranking options、chunking strategy、attributes、batch ingestion、per-vector-store ingest rate limits、tiered RPM、storage pricing、expiration、ZDR 和 data residency 链接。它可以降低自建检索代码量，但不证明默认检索结果、默认 chunking、file citations 或删除一致性在你的资料上可靠。
+
 上下文策略对比实验也给出一个 RAG 相关边界：基础 `keyword_rag` 能在 connector setup 任务中找对产品文档，但在 refund dispute 任务中把外部注入 attachment 排到前面，导致错误答案和错误 human-review gate。这说明 RAG 不只需要检索，还需要可信度、时效、metadata filter 和 citation 校验。
 
 ### Chunking 需要实验

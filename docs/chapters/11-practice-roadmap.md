@@ -96,7 +96,7 @@
 ### 可参考 recipe
 
 - OpenAI Cookbook 的 `Doing RAG on PDFs using File Search in the Responses API`。它适合作为 PDF/RAG 入门练习参考，也包含 retrieval evaluation 的例子。
-- OpenAI File Search / Retrieval source card。它适合用来理解 vector store、`file_search_call`、file citations、included search results、metadata filtering、ranking/chunking、expiration 和成本边界。
+- OpenAI File Search / Retrieval source card。它适合用来理解 vector store、`file_search_call`、file citations、included search results、metadata filtering、ranking/chunking、batch ingestion、expiration、rate limits、ZDR/data residency 和成本边界。
 
 ## 项目 4：短期状态与长期记忆
 
@@ -329,7 +329,7 @@
 - OpenAI Production / Cost / Latency / Rate Limit docs 和 Batch / Flex / Prompt Caching docs 可支撑项目 8 的生产质量记录项：token/usage、organization/project 级 request/token rate limits、standard/project token rate-limit headers、重试、平均/P95 latency、model choice、budget threshold、reported output token 与可见输出差异、Batch status、Flex fallback、`cached_tokens` / `cache_write_tokens` 和降级策略。它们不证明任何具体优化默认有效，真实 cost / latency / throughput / quality tradeoff 仍需练习项目实测。
 - Real Batch / Flex / Prompt Caching harness 已准备，可作为项目 8 的真实 API 观测入口：Prompt Caching 记录 cache read/write usage，Flex 记录成功或 resource unavailable / fallback，Batch 默认只准备 JSONL metadata，只有显式 opt-in 才提交 job。当前无 API key 时已完成本地 deterministic metadata control，验证 cache usage 字段、Flex fallback 记录和 Batch JSONL / `custom_id` 检查；它不能替代真实 API completed run。
 - OpenAI Moderation 和 Safety / Data Controls docs 可支撑项目 8 的安全和数据治理记录项：moderation signals、categories/scores、tool-calling moderation 覆盖限制、streaming moderation 限制、red-team、HITL、用户举报、`safety_identifier`、API key revoke、abuse monitoring logs、application state、endpoint retention、remote MCP third-party retention、hosted container state 和 data residency。标准库 production safety / data governance checklist + object-level data-flow audit 已验证这些字段以及 remote MCP、hosted execution、file/vector store、prompt caching、browser/computer-use 数据面可以拆成可运行检查表；Real Moderation Safety harness 已补本地 deterministic policy-signal control，覆盖 `flagged`、categories、scores、expected mismatch 和 allow / review / false-positive / false-negative 分支。它们不证明任何真实检测层、数据控制配置、对象删除、trace 脱敏或合规方案充分有效。
-- OpenAI File Search / Retrieval docs 可作为 File Search RAG 项目的 API 边界 reference：托管 `file_search` 仍需要记录 included search results、citations、filters、ranking/chunking、成本、延迟和删除一致性。
+- OpenAI File Search / Retrieval docs 可作为 File Search RAG 项目的 API 边界 reference：托管 `file_search` 仍需要记录 included search results、citations、filters、ranking/chunking、batch ingestion、attributes、rate limits、storage pricing、ZDR/data residency、成本、延迟和删除一致性。
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源，但具体 server 的权限和安全假设需要逐个检查。
 - OpenAI Evals repo、OpenAI Evaluation guides 和 OpenAI Graders docs 可作为小型回归测试、trace grading、dataset / eval run、tool-call grading、LLM-as-judge 校准和 reward hacking 风险的结构参考；标准库 grader misalignment / reward hacking audit 可作为无模型时的最小误判样本模板；Agent eval 仍应结合 trace、业务任务和人工复核。OpenAI Evals / graders platform 正在退役，具体平台入口需要按当前官方文档复核。

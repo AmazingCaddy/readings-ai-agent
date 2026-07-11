@@ -3,13 +3,13 @@
 - 来源链接：https://developers.openai.com/api/docs/guides/tools-file-search.md
 - 相关链接：https://developers.openai.com/api/docs/guides/retrieval.md
 - 作者 / 机构：OpenAI
-- 发布时间：文档持续更新；File Search 页面 HTTP `last-modified` 为 2026-07-11
-- 最后复核日期：2026-07-11
+- 发布时间：文档持续更新；Retrieval Markdown 页面 last-modified 复核为 2026-07-11 17:54:18 GMT
+- 最后复核日期：2026-07-12
 - 类型：Official Docs / API Guide / Retrieval Engineering
 - 主题：File Search / Retrieval API / Vector Stores / RAG / Citations
 - 适合阶段：入门后 / RAG 实践
 - 可信度等级：A
-- 是否已验证：官方 Markdown 页面已抓取；File Search guide、Retrieval guide 和 File Search 页面 HTTP metadata 已复核；支撑 Responses API `file_search` hosted tool、vector stores、semantic + keyword search、`file_search_call`、file citations、`include=["file_search_call.results"]`、metadata filtering、query rewriting、ranking options、vector store attributes、expiration policies、chunking defaults/limits、supported file types、rate limits、pricing/data links 的工程边界；标准库 RAG strategy audit 已补 top-k / filter / chunking / rerank eval 字段模板；不证明真实 citation correctness、answer faithfulness、默认 chunking/ranking 最优、成本、延迟、权限隔离或生产可靠性
+- 是否已验证：File Search 和 Retrieval 的 HTML / Markdown 页面均于 2026-07-12 返回 HTTP 200；关键段落已复核；支撑 Responses API `file_search` hosted tool、vector stores、semantic + keyword search、`file_search_call`、file citations、`include=["file_search_call.results"]`、metadata filtering、query rewriting、ranking options、vector store attributes、expiration policies、chunking defaults/limits、supported file types、file-ingest rate limits、batch ingestion、pricing/ZDR/data links 的工程边界；标准库 RAG strategy audit 已补 top-k / filter / chunking / rerank eval 字段模板；不证明真实 citation correctness、answer faithfulness、默认 chunking/ranking 最优、成本、延迟、权限隔离或生产可靠性
 
 ## 一句话总结
 
@@ -27,25 +27,33 @@ OpenAI File Search / Retrieval 文档适合把初学者从“RAG 是自己拼 pr
 - Retrieval guide 提供 query rewriting、attribute filtering 和 ranking options；`ranking_options` 可配置 ranker、score threshold 和 hybrid search 中 embedding / text 权重。
 - Vector stores 是 Retrieval API 和 File Search tool 的索引容器；添加文件后会自动 chunk、embed 和 index。
 - Vector store file operations 有异步处理和 eventually consistent 边界；删除文件后 search results 短时间内仍可能包含已移除文件内容。
+- 添加文件到同一个 vector store 有 per-vector-store rate limit：`/vector_stores/{vector_store_id}/files` 和 `/file_batches` 共享 300 requests/minute；批量导入一次最多 500 files，适合更高吞吐 ingestion。
+- `vector_store.file` attributes 可用于 filter；attributes 字典最多 16 个 keys，每个 key 最多 256 字符。Batch 创建时可以给所有 files 统一 attributes / chunking strategy，或用 `files` 数组做 per-file overrides，两种方式互斥。
 - Vector store 有 storage pricing、expiration policies、file size / token limits 和默认 chunking 参数；默认 chunking 使用 `max_chunk_size_tokens=800`、`chunk_overlap_tokens=400`，也可通过 `chunking_strategy` 调整。
+- File Search usage notes 说明 Responses / Chat Completions / Assistants 都可用，但 rate limits 按 tier 区分：Tier 1 为 100 RPM，Tier 2/3 为 500 RPM，Tier 4/5 为 1000 RPM；同页链接到 built-in tools pricing、ZDR 和 data residency。
 - 对本手册而言，稳妥结论是：File Search 能降低自建 RAG pipeline 的实现负担，但不能替代检索评测、citation correctness、权限/数据治理、成本/延迟记录和失败样例回放。
 
 ## 支撑证据
 
-- 2026-07-11 使用 `curl -L --no-progress-meter` 抓取 `tools-file-search.md` 成功，页面标题为 `File search`。
-- 2026-07-11 使用 `curl -L -I` 复核 File Search 页面 URL，返回 HTTP 200，HTTP header 包含 `last-modified: Sat, 11 Jul 2026 06:08:23 GMT`。
+- `https://developers.openai.com/api/docs/guides/tools-file-search` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 17:03:54 GMT`；`content-type: text/html; charset=utf-8`。
+- `https://developers.openai.com/api/docs/guides/tools-file-search.md` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 09:02:26 GMT`；`content-type: text/markdown; charset=utf-8`。
+- `https://developers.openai.com/api/docs/guides/retrieval` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 06:08:24 GMT`；`content-type: text/html; charset=utf-8`。
+- `https://developers.openai.com/api/docs/guides/retrieval.md` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 17:54:18 GMT`；`content-type: text/markdown; charset=utf-8`。
+- 2026-07-12 抓取 `tools-file-search.md` 成功，页面标题为 `File search`。
 - File Search guide 说明该工具 available in the Responses API，可通过 semantic and keyword search 检索 previously uploaded files，并通过 vector stores / knowledge bases 增强模型知识。
 - File Search guide 明确这是 hosted tool managed by OpenAI；模型决定使用时会自动调用工具、从文件检索信息并返回 output。
 - File Search guide 展示创建 vector store、上传文件、把 file 加入 vector store、检查状态，以及在 `tools` 中传入 `type: "file_search"` 和 `vector_store_ids` 的流程。
 - File Search response 示例包含 `file_search_call` output item、`queries`、`status`，以及 assistant message 中的 `file_citation` annotations。
 - File Search guide 说明默认不会返回 search results；使用 `include=["file_search_call.results"]` 才能包含检索结果。
 - File Search guide 展示 `max_num_results` 和 `filters` 参数，并说明结果数量限制会影响 token usage、latency 和 answer quality。
-- 2026-07-11 抓取 `retrieval.md` 成功；Retrieval guide 说明 Retrieval API 支持 semantic search，vector stores serve as indices for your data。
+- File Search guide usage notes 列出 Responses / Chat Completions / Assistants API availability、tiered RPM、pricing、ZDR 和 data residency 链接。
+- 2026-07-12 抓取 `retrieval.md` 成功；Retrieval guide 说明 Retrieval API 支持 semantic search，vector stores serve as indices for your data。
 - Retrieval guide 说明 vector store search 默认最多 10 个结果，可设置到最多 50 个；支持 `rewrite_query=true`，并在结果中提供 rewritten `search_query`。
 - Retrieval guide 说明 `attribute_filter` 可按 attributes 限制搜索范围，`ranking_options` 可调整 ranker、score threshold 和 hybrid semantic / keyword 权重。
 - Retrieval guide 说明 vector stores 中的 file 会被自动 chunk、embed 和 index；vector store files 支持 attributes、expiration、limits 和 chunking strategy。
 - Retrieval guide 说明 vector store storage 超过免费额度后按 GB/day 收费；expiration policies 可用于降低成本。
 - Retrieval guide 说明文件删除存在 eventually consistent 边界，search results 可能短时间包含已移除文件内容。
+- Retrieval guide 说明单 vector store 添加文件的 per-vector-store limit、batch ingestion 最多 500 files、attributes 上限和 batch / per-file attributes + chunking strategy 配置边界。
 
 ## 可能的问题
 
@@ -54,6 +62,7 @@ OpenAI File Search / Retrieval 文档适合把初学者从“RAG 是自己拼 pr
 - Hosted tool 降低了实现成本，但检索结果默认不返回；如果不显式 `include` search results，调试、审计和评测会缺关键证据。
 - Storage pricing、expiration、rate limits、data residency/ZDR 等需要结合当前账号、组织设置和实际用量复核。
 - Vector store 删除存在 eventually consistent 边界，生产权限和删除后召回测试不能只看 API 返回的 delete 成功。
+- File Search 和 Retrieval 页中的 tiered RPM、storage pricing、batch ingestion 和 chunking limits 是当前文档边界；真实账号配额、数据保留配置、成本和延迟必须实际运行或查项目设置确认。
 
 ## 初学者阅读建议
 
