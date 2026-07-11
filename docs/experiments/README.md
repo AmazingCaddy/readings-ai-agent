@@ -24,7 +24,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 1. Tool calling 参数错误恢复
    - 目标：观察模型生成错误参数时，schema 校验和重试策略是否有效。
-   - 状态：已完成标准库模拟实验，见 [Tool Calling 参数校验与重试实验](tool-calling-validation/README.md) 和 [2026-07-11 结果](tool-calling-validation/results-2026-07-11.md)；真实 API harness 已准备，见 [Real Tool Calling 参数校验与重试实验](real-tool-calling-validation/README.md)。仍需配置 API key 后记录真实模型 / API 结果。
+   - 状态：已完成标准库模拟实验，见 [Tool Calling 参数校验与重试实验](tool-calling-validation/README.md) 和 [2026-07-11 结果](tool-calling-validation/results-2026-07-11.md)；真实 API harness 已准备，见 [Real Tool Calling 参数校验与重试实验](real-tool-calling-validation/README.md) 和 [2026-07-11 结果](real-tool-calling-validation/results-2026-07-11.md)。当前无 API key，运行结果为 `skipped`；仍需配置 API key 后记录真实模型 / API 结果。
 
 2. RAG chunk size 对召回质量的影响
    - 目标：比较不同 chunk size 和 overlap 对答案准确率的影响。

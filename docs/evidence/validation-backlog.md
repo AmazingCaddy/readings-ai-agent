@@ -15,7 +15,7 @@
 
 | 优先级 | 验证任务 | 主要验证对象 | 最小产出物 | 仍需保守的边界 |
 | --- | --- | --- | --- | --- |
-| P0 | 真实 tool-calling 参数校验与有限重试 | OpenAI Responses / Function Calling API | 可复现实验脚本、失败样例、trace、成本/延迟记录；harness 已准备，结果待跑 | 只能验证所选模型和 schema，不代表所有模型稳定修正 |
+| P0 | 真实 tool-calling 参数校验与有限重试 | OpenAI Responses / Function Calling API | 可复现实验脚本、失败样例、trace、成本/延迟记录；harness 已准备并接入统一 runner，当前无 API key 返回 `skipped`，尚未产生 completed run | 只能验证所选模型和 schema，不代表所有模型稳定修正 |
 | P0 | 真实 Structured Outputs / JSON mode / refusal 对比 | OpenAI Structured Outputs / Responses API | schema valid、semantic valid、refusal、retry 结果表；harness 已准备并接入统一 runner，当前无 API key 返回 `skipped`，尚未产生 completed run | schema 通过不等于事实正确或业务正确 |
 | P0 | 真实 prompt injection + tool permission / HITL / detector | OpenAI Responses API 或一个轻量 tool agent；可扩展 Prompt Shields、Anthropic-style tool-output screening、LangGraph interrupt/checkpointer 或同类检测层；从 MITRE ATLAS 和 OWASP Agentic AI resources 抽样 agentic-specific cases，覆盖 goal hijacking、tool misuse、tool poisoning、identity / privilege abuse、memory poisoning、MCP / remote tool abuse、computer-use destructive action、insecure inter-agent communication、cascading failures 和 rogue agent / runaway loop 停止条件 | 攻击样例、raw tool output / JSON-encoded tool result / detector-only / policy-enforced / HITL 对照、阻断/漏报/误报、审批、pause/resume、幂等执行、参数快照、trace 脱敏、身份/权限/记忆/MCP/远程工具/computer-use/多 Agent 通信/级联失败 case 结果；harness 已准备，结果待跑；agentic security regression set 标准库模拟已完成；标准库审批恢复实验已完成；LangGraph docs 已确认 interrupt/resume、checkpointer、`thread_id`、node restart 和 side-effect idempotency 边界；Real LangGraph Interrupt Recovery harness 已准备并接入统一 runner，当前因未安装 LangGraph 返回 `skipped` | 不证明 guardrail、screening、interrupt、检测层、runtime containment、MITRE/OWASP mitigation candidate 或 agentic-specific 控制完全安全，只能记录覆盖范围 |
 | P1 | 真实 RAG citation correctness / grounding | 轻量本地检索 + LLM synthesis；后续扩展到 LlamaIndex / OpenAI File Search / vector store | chunk 配置、top-k、included search results、citation correctness、faithfulness、groundedness、metadata filters、ranking options、删除一致性、成本/延迟；LLM synthesis harness 已准备，LlamaIndex examples 和 OpenAI File Search docs 已复核但未试跑 | 不证明某个 chunk/rerank/grounding/File Search 策略默认最优 |
@@ -45,9 +45,9 @@
 ## 工具调用
 
 - Function calling、tool use、structured output 在不同框架中的术语差异是什么？“Tool use 可以连接外部工具能力”和 OpenAI API 层“Function Calling 本身不执行工具”的窄边界已升级为可入正文；跨框架 tool / function / plugin / retriever / flow 术语对照已完成第一轮文档交叉验证。仍需真实最小实现记录工具定义、参数校验、错误回传、权限确认、trace 字段和恢复行为差异。
-- 工具参数校验和重试的最佳实践有哪些官方或工程 references？已完成标准库模拟实验，支持“应用层校验、错误回传、有限重试”的流程；真实 Responses API harness 已准备，仍需配置 API key 后记录真实 API / SDK 行为和框架默认行为对照。
+- 工具参数校验和重试的最佳实践有哪些官方或工程 references？已完成标准库模拟实验，支持“应用层校验、错误回传、有限重试”的流程；真实 Responses API harness 已准备并接入统一 runner，当前无 API key 只验证 skip 分支；仍需配置 API key 后记录真实 API / SDK 行为和框架默认行为对照。
 - 工具调用权限应该如何设计确认边界？窄结论已可入正文：高风险工具需要系统/应用层最小权限、参数校验、人工确认、审批状态恢复、幂等执行和审计 trace 的组合，不能只靠模型自觉。标准库 prompt injection / tool permission、安全 regression set、审批状态恢复和 agentic security regression set 实验已完成；LangGraph current docs 已确认 interrupt/resume、checkpointer、`thread_id`、node restart、interrupt 顺序和 side-effect idempotency 的机制边界；OWASP Agentic AI resources 已补 goal hijacking、tool misuse、identity / privilege abuse、memory poisoning、多 Agent 通信、级联失败和 rogue agent 等风险分类；MITRE ATLAS 已补 LLM Prompt Injection、AI Agent Tool Invocation、AI Agent Tool Poisoning、memory / MCP / computer-use case-study-derived regression set 边界；仍需真实 Responses API / Agents SDK / LangGraph / MCP / Semantic Kernel 等框架实验验证 guardrail/HITL 覆盖范围、误报漏报、pause/resume、参数快照、trace 脱敏、agentic-specific regression cases 和跨框架差异。
-- 真实 tool-calling 实验中，参数校验失败后模型能否稳定修正？标准库 fake model 已复现流程，真实 API harness 已准备，但不能证明真实模型稳定性，仍需实际运行结果。
+- 真实 tool-calling 实验中，参数校验失败后模型能否稳定修正？标准库 fake model 已复现流程，真实 API harness 已准备但当前只验证 skip 分支，不能证明真实模型稳定性，仍需实际运行结果。
 
 ## MCP
 
