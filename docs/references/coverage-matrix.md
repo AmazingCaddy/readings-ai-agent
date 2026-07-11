@@ -14,8 +14,8 @@
 | 主题 | 入门资料 | 高可信 reference | 工程/源码 reference | 当前状态 | 缺口 |
 | --- | --- | --- | --- | --- | --- |
 | AI Agent 定义与边界 | 待补 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper | Agent 自治程度 evidence；Workflow / Hybrid / ReAct-like 对比实验 | 关键段落已精读；自治程度边界和标准库 workflow-agent 对比已完成；部分验证 | 需要真实模型 / Agent framework / repo issue 实验和更多框架横向资料 |
-| LLM 与上下文工程 | OpenAI Text Generation docs；OpenAI Responses API docs | OpenAI Text Generation docs；OpenAI Structured Outputs docs；OpenAI Responses API docs | 上下文治理与结构化输出实验；OpenAI cookbook 候选 | 关键段落已精读；标准库输出解析 / 上下文治理模拟实验已完成；部分验证 | 需要真实 Responses API / Structured Outputs、长上下文 / RAG / 摘要 / 成本对比和跨模型稳定性实验 |
-| Tool Use / Function Calling | OpenAI function calling docs | Toolformer paper；OpenAI function calling docs；OpenAI Responses API docs | Tool calling 参数校验模拟实验；OpenAI cookbook 候选 | 关键段落已精读；标准库模拟实验已完成；部分验证 | 需要真实模型 / API 实验、SDK 文档和其他框架术语对照 |
+| LLM 与上下文工程 | OpenAI Text Generation docs；OpenAI Responses API docs | OpenAI Text Generation docs；OpenAI Structured Outputs docs；OpenAI Responses API docs | 上下文治理与结构化输出实验；Real Structured Outputs / JSON Mode harness；OpenAI cookbook 候选 | 关键段落已精读；标准库输出解析 / 上下文治理模拟实验已完成；真实 API harness 已准备；部分验证 | 需要实际运行真实 Responses API / Structured Outputs、长上下文 / RAG / 摘要 / 成本对比和跨模型稳定性实验 |
+| Tool Use / Function Calling | OpenAI function calling docs | Toolformer paper；OpenAI function calling docs；OpenAI Responses API docs | Tool calling 参数校验模拟实验；Real Tool Calling harness；OpenAI cookbook 候选 | 关键段落已精读；标准库模拟实验已完成；真实 API harness 已准备；部分验证 | 需要实际运行真实模型 / API 实验、SDK 文档和其他框架术语对照 |
 | Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；OpenAI Agents SDK docs；LangGraph docs | Workflow / Hybrid / ReAct-like 对比实验；Planner / Executor 对比实验；Reflection / Retry 实验；LangGraph examples 候选 | 关键论文摘要和框架段落已精读；标准库 workflow / ReAct-like、planner/executor 和 reflection/retry 对比已完成；部分验证 | 需要真实模型和真实框架对比实验 |
 | MCP | MCP official docs | MCP official docs；MCP 2025-11-25 spec；MCP Security Best Practices | MCP servers repo；MCP 最小 trace 模拟实验 | spec / 安全 / 授权关键段落已精读；标准库模拟实验已完成；部分验证 | 需要真实 MCP SDK / host trace、权限确认、URL mode / OAuth、恶意 resource/prompt 实验和 host 实现差异对比 |
 | RAG | LlamaIndex RAG docs | RAG paper；LlamaIndex docs；Self-RAG 候选 | RAG / Memory 对比实验；RAG 最小 pipeline / citation 模拟实验；LlamaIndex examples 候选 | RAG paper 摘要和 LlamaIndex 核心页面已精读；标准库 RAG / Memory 对比和 RAG pipeline 模拟实验已完成；部分验证 | 需要真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank 对比和 citation correctness 实验 |
@@ -23,14 +23,14 @@
 | Planning / Orchestration | 待补 | Tree of Thoughts；Reflexion；LangGraph docs | Planner / Executor 对比实验；Reflection / Retry 实验；LangGraph docs | 关键论文摘要、LangGraph 段落、标准库 planner/executor 和 reflection/retry 对比已完成；部分验证 | 需要状态机、真实模型和真实框架对比实验 |
 | 多 Agent | 待补 | Multi-agent debate 候选；AutoGen docs；CrewAI docs；AgentBench | AutoGen docs；CrewAI docs；多 Agent / Flow 控制对比实验 | 关键段落已精读；标准库多 Agent 对比已完成；部分验证 | 需要真实模型 / AutoGen / CrewAI / LangGraph 横向实验、真实工程边界和成本资料 |
 | Evaluation / Observability | LangSmith docs；Phoenix docs | AgentBench；WebArena；LangSmith docs；Phoenix docs | OpenAI Evals；OpenAI Cookbook；LangSmith docs；Phoenix docs；Trace-aware eval 模拟实验 | 关键论文/README/工程文档已精读；标准库模拟实验已完成；部分验证 | 需要真实 Agent trace、自动评分误判分析、人工复核和回归集工程案例 |
-| Production / 安全 / 成本 | OpenAI Agents SDK docs；OpenAI Cookbook | OWASP LLM Top 10；NIST AI RMF；OpenAI Agents SDK docs；Semantic Kernel docs | OpenAI Responses API docs；OpenAI Agents SDK docs；OpenAI Cookbook；Observability docs；Prompt injection / tool permission 模拟实验 | 风险资料和框架工程资料已精读；标准库攻击模拟已完成；部分验证 | 需要真实模型 / 框架 guardrail / HITL approval 实验、跨框架权限对比、审计脱敏策略 |
+| Production / 安全 / 成本 | OpenAI Agents SDK docs；OpenAI Cookbook | OWASP LLM Top 10；NIST AI RMF；OpenAI Agents SDK docs；Semantic Kernel docs | OpenAI Responses API docs；OpenAI Agents SDK docs；OpenAI Cookbook；Observability docs；Prompt injection / tool permission 模拟实验；Real Prompt Injection / Permission harness | 风险资料和框架工程资料已精读；标准库攻击模拟已完成；真实 API harness 已准备；部分验证 | 需要实际运行真实模型 / 框架 guardrail / HITL approval 实验、跨框架权限对比、审计脱敏策略 |
 | 框架生态 | 待补 | OpenAI Agents SDK；LangGraph；LlamaIndex；AutoGen；Semantic Kernel；CrewAI | 框架选择 rubric smoke test；官方 examples 候选 | 关键框架定位已精读；标准库 rubric smoke test 已完成；部分验证 | 需要真实同一任务横向实验、observability/permission 对比和官方 examples |
 | 实践项目路线 | OpenAI Cookbook | OpenAI Cookbook；OpenAI Function Calling docs；OpenAI Responses API docs；OpenAI Evals repo | 实践路线 smoke harness；OpenAI Cookbook；MCP servers repo；LangGraph examples 候选 | 具体 Cookbook recipe 已精读；标准库 smoke harness 已完成；部分验证 | 需要真实 Cookbook / API 本地试跑最小项目、选择低成本技术栈、补 MCP/LangGraph examples |
 
 ## 当前优先级
 
 1. 补齐基础定义和术语边界的高可信 references。Agent/Workflow 和自治程度边界已完成标准库 workflow / hybrid / ReAct-like 对比，仍需真实模型 / 框架 / repo issue 实验。
-2. 精读并提取已经链接复核的论文、官方文档和安全资料。LLM / Context、Tool Use / Function Calling、MCP、RAG / Memory、Production / Security 已完成第一轮；LLM / Context 已补标准库输出解析 / 上下文治理模拟实验，仍需真实 API 和长上下文成本实验。
+2. 精读并提取已经链接复核的论文、官方文档和安全资料。LLM / Context、Tool Use / Function Calling、MCP、RAG / Memory、Production / Security 已完成第一轮；LLM / Context、Tool Use 和 Production / Security 已补 P0 真实 API harness，仍需实际运行真实 API 和长上下文成本实验。
 3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。MCP 已完成官方 spec、安全、授权第一轮和标准库 trace 模拟，仍需真实 MCP SDK / host trace 与权限实验；Tool Use 已完成参数校验/重试标准库模拟，仍需真实模型 / API 实验和框架对照；Eval 已完成 OpenAI Evals README、Cookbook、LangSmith、Phoenix 和标准库 trace-aware eval 第一轮，仍需真实 Agent trace、自动评分误判和人工复核实验。
 4. 为 Memory / 知识库治理补充真实多会话 Agent / memory framework 实验。标准库写入守门模拟已完成，仍需扩展隐私、权限、查看、编辑和删除工程资料。
 5. 为 Production / Security 补充真实模型 / 框架 guardrail / HITL approval 实验、跨框架权限对比和审计脱敏策略。标准库 prompt injection / tool permission 模拟已完成。

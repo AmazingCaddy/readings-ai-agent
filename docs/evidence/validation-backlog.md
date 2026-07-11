@@ -14,9 +14,9 @@
 
 | 优先级 | 验证任务 | 主要验证对象 | 最小产出物 | 仍需保守的边界 |
 | --- | --- | --- | --- | --- |
-| P0 | 真实 tool-calling 参数校验与有限重试 | OpenAI Responses / Function Calling API | 可复现实验脚本、失败样例、trace、成本/延迟记录 | 只能验证所选模型和 schema，不代表所有模型稳定修正 |
-| P0 | 真实 Structured Outputs / JSON mode / refusal 对比 | OpenAI Structured Outputs / Responses API | schema valid、semantic valid、refusal、retry 结果表 | schema 通过不等于事实正确或业务正确 |
-| P0 | 真实 prompt injection + tool permission / HITL | OpenAI Agents SDK 或一个轻量 tool agent | 攻击样例、阻断/漏报/误报、审批和 trace 脱敏结果 | 不证明 guardrail 完全安全，只能记录覆盖范围 |
+| P0 | 真实 tool-calling 参数校验与有限重试 | OpenAI Responses / Function Calling API | 可复现实验脚本、失败样例、trace、成本/延迟记录；harness 已准备，结果待跑 | 只能验证所选模型和 schema，不代表所有模型稳定修正 |
+| P0 | 真实 Structured Outputs / JSON mode / refusal 对比 | OpenAI Structured Outputs / Responses API | schema valid、semantic valid、refusal、retry 结果表；harness 已准备，结果待跑 | schema 通过不等于事实正确或业务正确 |
+| P0 | 真实 prompt injection + tool permission / HITL | OpenAI Responses API 或一个轻量 tool agent | 攻击样例、阻断/漏报/误报、审批和 trace 脱敏结果；harness 已准备，结果待跑 | 不证明 guardrail 完全安全，只能记录覆盖范围 |
 | P1 | 真实 RAG citation correctness | LlamaIndex 或轻量 vector store + LLM synthesis | chunk 配置、top-k、citation correctness、faithfulness、成本/延迟 | 不证明某个 chunk/rerank 策略默认最优 |
 | P1 | 真实 Agent trace-aware eval | OpenAI Evals / LangSmith / Phoenix 中至少一种 | runs/traces、final-only vs trace-aware 对比、人工复核样例 | 自动评分不能当真值，需保留人工抽样 |
 | P1 | 真实 MCP host/client/server trace | MCP SDK / host | tools/resources/prompts 调用 trace、approval/resource review、token/resource 泄露检查 | 不同 host 实现差异可能很大 |
@@ -34,9 +34,9 @@
 ## 工具调用
 
 - Function calling、tool use、structured output 在不同框架中的术语差异是什么？OpenAI API 层和 Structured Outputs 边界已完成第一轮验证，仍需补其他框架术语对照。
-- 工具参数校验和重试的最佳实践有哪些官方或工程 references？已完成标准库模拟实验，支持“应用层校验、错误回传、有限重试”的流程；仍需真实 API / SDK 资料和框架默认行为对照。
+- 工具参数校验和重试的最佳实践有哪些官方或工程 references？已完成标准库模拟实验，支持“应用层校验、错误回传、有限重试”的流程；真实 Responses API harness 已准备，仍需配置 API key 后记录真实 API / SDK 行为和框架默认行为对照。
 - 工具调用权限应该如何设计确认边界？
-- 真实 tool-calling 实验中，参数校验失败后模型能否稳定修正？标准库 fake model 已复现流程，但不能证明真实模型稳定性。
+- 真实 tool-calling 实验中，参数校验失败后模型能否稳定修正？标准库 fake model 已复现流程，真实 API harness 已准备，但不能证明真实模型稳定性，仍需实际运行结果。
 
 ## MCP
 
@@ -56,12 +56,12 @@
 
 ## Eval 与生产化
 
-- 上下文工程中的输出解析、Structured Outputs、JSON mode 和长上下文失败模式如何设计最小实验？已完成 OpenAI 官方文档第一轮验证和标准库输出解析 / 上下文治理模拟实验；仍需真实 Responses API / Structured Outputs、refusal、semantic validator、retry loop、长上下文 token/latency/cost 和跨模型稳定性实验。
+- 上下文工程中的输出解析、Structured Outputs、JSON mode 和长上下文失败模式如何设计最小实验？已完成 OpenAI 官方文档第一轮验证和标准库输出解析 / 上下文治理模拟实验；真实 Structured Outputs / JSON mode harness 已准备；仍需实际运行验证 refusal、semantic validator、retry loop、长上下文 token/latency/cost 和跨模型稳定性。
 - Agent eval 应该优先评估最终结果还是完整 trajectory？已确认 AgentBench/WebArena/OpenAI Evals/LangSmith/Phoenix 支撑过程与交互评测的重要性，标准库 trace-aware eval 已验证 final-only 会漏掉无审批副作用工具和工具错误未恢复；仍需真实 Agent trace 实验。
 - 通用 benchmark 对真实业务 agent 的代表性有多强？已确认公开 benchmark 可学习评测思想，但业务系统仍需 custom/private eval。
 - Trace 字段如何设计，才能同时支持调试、审计、回归和隐私控制？已完成 LangSmith/Phoenix/Cookbook 第一轮验证，标准库 trace-aware eval 已覆盖 tool call/result/error/approval/final response；候选字段仍包括输入、输出、中间步骤、工具调用、检索、错误、延迟、token/cost、反馈、版本、metadata；仍需真实 RAG/tool traces 和隐私脱敏策略。
 - LLM-as-judge、online evaluator 和自动化规则的误判率、成本与抽样人工复核比例如何设计？
-- Prompt injection 防护有哪些已验证的工程方法？已确认 OWASP/NIST 支撑风险边界，OpenAI Agents SDK/Semantic Kernel/Responses API 支撑 guardrails、approval、require_approval、sensitive trace 控制等工程边界；标准库最小攻击实验已验证 prompt-only 风险和 policy-enforced 写工具阻断/trace 脱敏流程；仍需真实模型 / 框架 guardrail 误报漏报实验。
+- Prompt injection 防护有哪些已验证的工程方法？已确认 OWASP/NIST 支撑风险边界，OpenAI Agents SDK/Semantic Kernel/Responses API 支撑 guardrails、approval、require_approval、sensitive trace 控制等工程边界；标准库最小攻击实验已验证 prompt-only 风险和 policy-enforced 写工具阻断/trace 脱敏流程；真实 prompt injection / permission harness 已准备；仍需实际运行验证真实模型 / 框架 guardrail 误报漏报。
 - 安全 regression set 应该如何覆盖外部文档注入、工具参数越权、敏感信息泄露和 excessive agency？标准库实验已覆盖外部文档注入、写工具越权和 trace 假 secret 泄露；仍需扩展到更多真实工具和多样攻击样例。
 - Guardrails、HITL approval、tool approval 和 sensitive trace 配置在不同框架中的覆盖范围有什么差异？OpenAI Agents SDK 已确认 tool guardrails 不覆盖所有工具类型，仍需横向比较。
 

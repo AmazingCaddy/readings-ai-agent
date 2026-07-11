@@ -43,6 +43,7 @@
 ## 可复现实验
 
 - 已完成一个参数校验失败的标准库模拟实验：fake model 第一轮生成错误参数，应用层返回可操作错误，第二轮修正后执行工具。该实验支撑应用层校验/错误回传/有限重试流程，但不证明真实模型稳定修正参数。
+- 已准备真实 Responses API tool-calling harness：无 API key 时跳过，配置后可记录真实 tool call、validation error、tool result、最终响应、成本/延迟相关字段；结果待跑，不能提前升级结论。
 
 ## 是否进入正文
 
