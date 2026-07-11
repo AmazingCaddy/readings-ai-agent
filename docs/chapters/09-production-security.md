@@ -240,7 +240,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - Real MCP SDK Trace completed run 使用官方 MCP Python SDK / FastMCP stdio server 完成 tools/resources/prompts 的本地 SDK flow，记录写工具未转发、恶意 resource review 和 trace 脱敏。这支撑“SDK 接入后 host 仍需实现审批、resource review 和审计脱敏”的窄边界，但不证明真实 host UI、OAuth、URL mode、sampling、connector、tunnel 或跨 host 默认安全。
 - MCP 标准化了工具、资源、提示、授权、roots、elicitation 和 sampling 等协议能力，但安全不是协议接入后自动完成；remote MCP、私有 MCP server、resources/prompts 和 sampling 仍需要最小权限、授权审查、用户确认、sandbox/runtime containment、数据保留审查和审计 trace。真实 host UI、OAuth、URL mode、sampling 和 connector/tunnel 行为仍需实验。
 - 长上下文不能替代上下文治理，也不能替代生产数据边界；把更多外部内容、历史记忆或工具结果塞进上下文，会扩大 prompt injection、过时信息、隐私暴露和 trace 泄露风险，仍需来源标注、可信度过滤、最小必要字段和脱敏策略。
-- 长期记忆可能提升持续交互体验，但也会引入错误写入、过时、权限和隐私风险；生产系统不能默认自动写入或默认提升表现，必须把写入守门、跨用户隔离、inspect/edit/delete、失效历史和敏感 trace 脱敏纳入权限模型。
+- 长期记忆可能提升持续交互体验，但也会引入错误写入、过时、权限、短期/长期上下文混用和隐私风险；生产系统不能默认自动写入或默认提升表现，必须把写入守门、跨用户隔离、inspect/edit/delete、失效历史、短期原始上下文保留和敏感 trace 脱敏纳入权限模型。
 - 对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全；生产审计需要把关键 trajectory / trace 作为 eval、审计和回归输入，尤其要记录工具参数、审批状态、错误恢复、外部内容来源、成本和敏感字段处理；真实平台字段覆盖、成本记录完整性和人工复核流程仍需验证。
 - Agent trace 应记录输入、输出、中间步骤、工具调用、检索、错误、延迟/成本、反馈和版本信息，才能支撑调试、审计、回归和在线/离线评测；但 trace 本身也有隐私和数据保留边界，真实平台字段覆盖和脱敏效果仍需验证。
 - Browser Use / Playwright / Anthropic Computer Use 资料已补充 browser agent 和 computer-use agent 的工程边界：浏览器动作、登录态 profile、截图、鼠标键盘控制、文件上传、表单提交、custom tools、human-in-the-loop、VM/container 隔离、domain allowlist、action validation/logging 和 Playwright action trace 都需要纳入权限、审计和脱敏设计。Anthropic 文档还提示网页或图片中的指令可能造成 prompt injection，并提供 screenshot classifier 作为一层确认机制；这些资料不能证明真实网站任务、点击精度、classifier 效果、CAPTCHA/stealth、合规或生产可靠性。
