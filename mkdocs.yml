@@ -82,6 +82,7 @@ nav:
           - OpenAI Cookbook: sources/source-cards/2026-openai-cookbook.md
           - OpenAI Evals repo: sources/source-cards/2026-openai-evals-repo.md
           - OpenAI Evaluation guides: sources/source-cards/2026-openai-evaluation-guides.md
+          - OpenAI Graders docs: sources/source-cards/2026-openai-graders-docs.md
           - OpenAI Responses API docs: sources/source-cards/2026-openai-responses-api-docs.md
           - OpenAI Structured Outputs docs: sources/source-cards/2026-openai-structured-outputs-docs.md
           - OpenAI Text Generation docs: sources/source-cards/2026-openai-text-generation-docs.md

@@ -42,7 +42,7 @@
 | --- | --- | --- | --- | --- |
 | Agent traces | LangSmith documentation and examples | Engineering Docs | B | 关键页面已复核；source card 已创建 |
 | Observability | Arize Phoenix documentation | Engineering Docs | B | 关键页面已复核；source card 已创建 |
-| Evals | OpenAI Evals repository；OpenAI Evaluation Guides | Source Code / Official Docs | A | OpenAI Evals repo README 和 OpenAI Evaluation / Agent evals 官方 Markdown 已复核；source cards 已创建；Evals platform 正在退役，学习时应区分 eval 设计原则和具体平台入口 |
+| Evals | OpenAI Evals repository；OpenAI Evaluation Guides；OpenAI Graders docs | Source Code / Official Docs | A | OpenAI Evals repo README、OpenAI Evaluation / Agent evals 和 Graders 官方 Markdown 已复核；source cards 已创建；Evals / graders platform 正在退役，学习时应区分 eval 设计原则、grader 风险和具体平台入口 |
 | Browser agents | Playwright / browser-use related examples；Anthropic computer use documentation | Source / Engineering | A/B | Browser Use GitHub metadata、README、docs llms.txt、Playwright actions/trace viewer 和 Anthropic computer use official docs 已复核；source cards 已创建；真实浏览器 / computer-use Agent 试跑待做 |
 | RAG implementation | LlamaIndex examples repository；OpenAI File Search / Retrieval docs | Source Code / Official Docs | A/B | GitHub 仓库元数据、README、examples index 和关键 notebook 抽样已复核；OpenAI File Search / Retrieval 官方文档已复核；source cards 已创建；真实试跑待做 |
 | LangGraph examples | LangGraph examples repository | Source Code | A/B | GitHub 仓库元数据、current docs quickstart、examples README 和历史 notebook 抽样已复核；source card 已创建；examples 目录已归档，真实试跑应使用当前 docs |
