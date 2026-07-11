@@ -19,7 +19,7 @@
 | Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；LangGraph docs | LangGraph examples 候选 | 部分链接已复核 | 需要 workflow-agent hybrid 工程来源 |
 | MCP | MCP official docs | MCP official docs | MCP servers repo | 部分链接已复核 | 需要官方 spec 细读和安全边界资料 |
 | RAG | 待补 | RAG paper；Self-RAG 候选；LlamaIndex docs | LlamaIndex examples 候选 | 部分链接已复核 | 需要现代 RAG 工程实践和 memory 对比 |
-| Memory / 知识库治理 | 待补 | 待补 | 待补 | 缺口较大 | 需要长期记忆、写入守门、冲突治理资料 |
+| Memory / 知识库治理 | LangGraph memory docs | MemGPT；MemoryBank；Generative Agents；LangGraph memory docs | Letta docs；Zep docs | 部分链接和元数据已复核 | 仍缺写入守门、冲突治理、隐私边界的工程案例 |
 | Planning / Orchestration | 待补 | Tree of Thoughts；Reflexion；LangGraph docs | LangGraph docs | 部分链接已复核 | 需要 planner/executor 和状态机工程资料 |
 | 多 Agent | 待补 | Multi-agent debate 候选；AutoGen docs；CrewAI docs | AutoGen docs；CrewAI docs | 部分链接已复核 | 需要真实工程边界和成本资料 |
 | Evaluation / Observability | 待补 | AgentBench；WebArena | OpenAI Evals；LangSmith；Phoenix 候选 | 部分链接已复核 | 需要 trace、trajectory、回归集资料 |
@@ -32,7 +32,7 @@
 1. 补齐基础定义和术语边界的高可信 references。
 2. 精读并提取已经链接复核的论文、官方文档和安全资料。
 3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。
-4. 为 Memory / 知识库治理单独调查资料，这是当前最大缺口。
+4. 为 Memory / 知识库治理补充写入守门、冲突治理和隐私边界的工程案例。
 5. 为 Production / Security 补充 prompt injection 和工具权限的工程案例。
 
 ## 入正文门槛

@@ -47,6 +47,17 @@
 | LangGraph examples | LangGraph examples repository | Source Code | A/B | 待复核 |
 | MCP examples | MCP official example servers | Source Code | A | 链接已复核；source card 已创建 |
 
+## Memory / Knowledge Governance
+
+| 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |
+| --- | --- | --- | --- | --- |
+| Agent 行为记忆 | Generative Agents: Interactive Simulacra of Human Behavior | Paper | A | 元数据已复核；source card 已创建 |
+| 长期记忆 | MemoryBank: Enhancing Large Language Models with Long-Term Memory | Paper | A | 元数据已复核；source card 已创建 |
+| 上下文与记忆管理 | MemGPT: Towards LLMs as Operating Systems | Paper | A | 元数据已复核；source card 已创建 |
+| Stateful agents | Letta documentation | Framework Docs | B | 链接已复核；source card 已创建 |
+| Agent memory 平台 | Zep documentation | Framework Docs | B | 链接已复核；source card 已创建 |
+| 短期/长期记忆边界 | LangGraph memory documentation | Framework Docs | A | 链接已复核；source card 已创建 |
+
 ## Security / Risk
 
 | 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |

@@ -30,6 +30,9 @@ nav:
           - 目录: sources/source-cards/index.md
           - RAG paper: sources/source-cards/2020-rag-paper.md
           - ReAct paper: sources/source-cards/2022-react-paper.md
+          - Generative Agents paper: sources/source-cards/2023-generative-agents-paper.md
+          - MemoryBank paper: sources/source-cards/2023-memorybank-paper.md
+          - MemGPT paper: sources/source-cards/2023-memgpt-paper.md
           - AgentBench paper: sources/source-cards/2023-agentbench-paper.md
           - Reflexion paper: sources/source-cards/2023-reflexion-paper.md
           - Toolformer paper: sources/source-cards/2023-toolformer-paper.md
@@ -41,6 +44,8 @@ nav:
           - OpenAI Function Calling docs: sources/source-cards/2026-openai-function-calling-docs.md
           - MCP official docs: sources/source-cards/2026-mcp-official-docs.md
           - LangGraph docs: sources/source-cards/2026-langgraph-docs.md
+          - LangGraph memory docs: sources/source-cards/2026-langgraph-memory-docs.md
+          - Letta docs: sources/source-cards/2026-letta-docs.md
           - LlamaIndex docs: sources/source-cards/2026-llamaindex-docs.md
           - NIST AI RMF: sources/source-cards/2026-nist-ai-rmf.md
           - OpenAI Agents SDK docs: sources/source-cards/2026-openai-agents-sdk-docs.md
@@ -49,6 +54,7 @@ nav:
           - OpenAI Responses API docs: sources/source-cards/2026-openai-responses-api-docs.md
           - OWASP LLM Top 10: sources/source-cards/2026-owasp-llm-top-10.md
           - Semantic Kernel docs: sources/source-cards/2026-semantic-kernel-docs.md
+          - Zep docs: sources/source-cards/2026-zep-docs.md
   - References:
       - 覆盖矩阵: references/coverage-matrix.md
   - 证据与实验:
