@@ -8,7 +8,7 @@
 - 主题：Web Agent / Evaluation
 - 适合阶段：进阶
 - 可信度等级：A
-- 是否已验证：arXiv API 元数据、HTTP metadata、摘要、项目页和 GitHub README 已于 2026-07-12 复核；支撑公开 benchmark 不能直接代表真实业务 Agent 质量和过程/交互评测窄结论；其余结论部分验证
+- 是否已验证：arXiv API 元数据、HTTP metadata、摘要、项目页和 GitHub README / raw README 已于 2026-07-12 复核；支撑公开 benchmark 不能直接代表真实业务 Agent 质量、过程/交互评测、Web benchmark 需要 self-hosted environment / reset / auth / trajectory 记录的窄结论；其余结论部分验证
 
 ## 一句话总结
 
@@ -29,7 +29,9 @@ WebArena 适合用于理解 Web Agent 的评测环境和真实任务复杂度。
 - API 摘要写明 WebArena 建立 highly realistic and reproducible 的 language-guided agent 环境，包含 fully functional websites、tools 和 external knowledge bases。
 - API 摘要写明任务关注 functional correctness of task completions，且 diverse、long-horizon；摘要中的 14.41% / 78.24% 只能作为论文实验设置下的历史观察，不能外推为当前模型能力。
 - `https://webarena.dev/` 于 2026-07-12 返回 HTTP 200；页面列出 WebArena、WebArena-Infinity、VisualWebArena 和 TheAgentCompany 等项目，WebArena 卡片描述为 autonomous web agents 的 realistic web environment。
-- GitHub README 于 2026-07-12 可达，说明 WebArena 是 self-hostable web environment；2024-12-05 更新提示 canonical implementation 可复现论文结果，但强烈建议使用 AgentLab / BrowserGym 等增强框架做实验；end-to-end evaluation 需要自建网站环境、配置 URL、生成测试数据、auto-login cookies 和 API key。
+- GitHub README / raw README 于 2026-07-12 可达，说明 WebArena 是 standalone, self-hostable web environment；2024-12-05 更新提示该 repo 是复现论文结果的 canonical implementation，但 web navigation infrastructure 已由 AgentLab / BrowserGym 增强，README 强烈建议用这些框架做实验。
+- README 明确 quick walkthrough / demo sites 只用于教育和理解内容；要做 reproducible / end-to-end evaluation，必须自建 WebArena websites、配置 shopping / admin / reddit / gitlab / map / wikipedia / homepage URL、生成测试数据、获取 auto-login cookies，并在评估 812 examples 后按环境文档 reset 到初始状态。
+- README 的 evaluation 命令需要 `OPENAI_API_KEY`，示例只跑第一个 example，并说明 trajectory 会保存到 `<result_dir>/0.html`；这支撑“Web Agent eval 必须保存 trajectory / browser state”，但不证明任何模型当前网页任务能力。
 
 ## 是否进入正文
 

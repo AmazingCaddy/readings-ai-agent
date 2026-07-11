@@ -18,9 +18,9 @@ Agent eval 不能只看最终答案。对会调用工具、跨多步环境行动
 
 ## 交叉验证结果
 
-- 一致点：AgentBench 摘要强调需要在 challenging tasks in interactive environments 中定量评估 LLM-as-Agent，并用 8 个环境评估 reasoning 和 decision-making abilities。
+- 一致点：AgentBench 摘要强调需要在 challenging tasks in interactive environments 中定量评估 LLM-as-Agent，并用 8 个环境评估 reasoning 和 decision-making abilities；README / raw README 进一步显示当前 AgentBench FC、原始 v0.2 和 VisualAgentBench 是不同入口，FC 需要 Docker Compose / Freebase / Redis 等环境依赖，原始任务也有 Python 3.9、Docker images 和明显 memory footprint。
 - 一致点：AgentBench 摘要把失败原因归到 long-term reasoning、decision-making 和 instruction following 等过程性能力，这支持正文中把错误分类和过程诊断作为 eval 的重点。
-- 一致点：WebArena 摘要强调真实、可复现的 Web 环境，包含工具和外部知识库，任务 diverse、long-horizon，并关注 task completions 的 functional correctness。
+- 一致点：WebArena 摘要强调真实、可复现的 Web 环境，包含工具和外部知识库，任务 diverse、long-horizon，并关注 task completions 的 functional correctness；README / raw README 进一步说明 demo sites 只适合浏览，reproducible end-to-end evaluation 需要 self-host websites、配置 URL、生成 test data、auto-login cookies、环境 reset，并保存 per-example trajectory HTML。
 - 一致点：τ-bench 摘要强调动态用户交互、domain-specific API tools、policy guidelines、conversation 结束后的 database state 和 annotated goal state 对比，以及用 `pass^k` 衡量多次试验一致性。
 - 一致点：tau2/tau3-bench current repo 2026-07-12 复核补强当前试跑入口、dual-control 用户也可用 tools 改变 shared environment、knowledge domain、voice full-duplex、domain/policy/tool/task 结构，以及 `reward_basis` 决定最终 reward 的评测边界。
 - 一致点：tau2/tau3-bench Evaluation docs 明确 `evaluation_criteria.actions` 是 one reference trajectory，用于在 fresh gold env 推导 target DB end state；除非 `RewardType.ACTION` 进入 `reward_basis`，agent 不需要复现同一路径。airline / retail / telecom 默认 reward 是 `DB` + `COMMUNICATE`，`ACTION` 只用于少量 `banking_knowledge` tasks。
@@ -29,7 +29,7 @@ Agent eval 不能只看最终答案。对会调用工具、跨多步环境行动
 - 一致点：OpenAI Evaluation best practices 将 eval 定义为 structured tests，用来处理 AI output variability；它强调 task-specific evals、log everything、automated scoring、continuous evaluation 和用 human feedback 校准自动评分。
 - 一致点：OpenAI Evaluation best practices 将 single-agent 的 tool selection / data precision 和 multi-agent 的 handoff accuracy 列为需要评估的 nondeterminism 来源；这直接补强工具型和多 Agent 不能只看最终答案的边界。
 - 一致点：OpenAI Agent evals guide 建议调试 workflow behavior 时先从 traces 开始，因为 trace 捕获 model calls、tool calls、guardrails 和 handoffs；知道“good”是什么之后，再迁移到 datasets 和 eval runs 来做 repeatable comparison。
-- 分歧点：WebArena 更强调端到端 Web 任务完成正确性，τ-bench / tau2/tau3-bench 更强调工具 Agent 与模拟用户、用户工具、数据库状态、communication 和可选 action reward 的交互评测，OpenAI Evals 更强调 eval 框架和自定义用例；它们都不直接给出通用 trajectory 自动评分标准。
+- 分歧点：AgentBench / WebArena 更像重型 benchmark 环境，要求记录版本、依赖、资源和自托管状态；τ-bench / tau2/tau3-bench 更强调工具 Agent 与模拟用户、用户工具、数据库状态、communication 和可选 action reward 的交互评测，OpenAI Evals 更强调 eval 框架和自定义用例；它们都不直接给出通用 trajectory 自动评分标准，也不能替代业务私有回归集。
 - 可能原因：Agent eval 同时有 benchmark、工程回归和线上观测三个层面。公开 benchmark 更适合比较环境，工程 eval 更适合诊断业务系统。
 - 本地实验：标准库 trace-aware eval 模拟中，3 条 toy refund runs 的 final-answer-only scorer 全部通过，但 trace-aware scorer 只通过 1 条；它额外发现了无审批执行 `issue_refund` 和工具错误未恢复。这支持“最终答案正确不等于 Agent 过程正确”的工程边界。
 - 本地实验：Real Trace-Aware Eval harness 在无 API key 时运行 deterministic scorer control。4 条 trace fixture 中 final-only scorer 4/4 通过，trace-aware scorer 1/4 通过；3 个 score delta 分别来自缺少 `get_order` / `check_refund_policy`、最终文本声称 not found 但无 `tool_error` trace、以及 `issue_refund` side-effect tool 缺少 approval rejection trace。该结果补强最小规则 scorer 的失败样例，但不调用真实模型。
@@ -43,9 +43,9 @@ Agent eval 不能只看最终答案。对会调用工具、跨多步环境行动
 
 ## 结论状态
 
-- 可入正文：窄结论“公开 benchmark 可以帮助学习评测环境、任务设计和失败分类，但不能直接代表真实业务 Agent 质量或产品可用性”已完成第一轮交叉验证。AgentBench、WebArena 和 τ-bench 支撑交互环境、长程任务、工具/外部知识、用户交互、状态评测、functional correctness 和失败原因分析的重要性；OpenAI Evals repo 和 Evaluation guides 支撑为具体 use case 写 task-specific / custom eval，并用 datasets、registry/YAML、typical / edge / adversarial cases、human feedback calibration 和持续评估做回归；这共同说明公开 benchmark 更适合学习评测思想和做有限比较，业务系统仍需要自己的任务集、trace、权限和回归评测。
+- 可入正文：窄结论“公开 benchmark 可以帮助学习评测环境、任务设计和失败分类，但不能直接代表真实业务 Agent 质量或产品可用性”已完成第一轮交叉验证。AgentBench、WebArena 和 τ-bench 支撑交互环境、长程任务、工具/外部知识、用户交互、状态评测、functional correctness 和失败原因分析的重要性；AgentBench / WebArena README 还显示，严肃 benchmark run 需要记录仓库版本、任务版本、Docker / 数据 / auth / reset / 资源约束和 trajectory 文件，而不是只引用 leaderboard；OpenAI Evals repo 和 Evaluation guides 支撑为具体 use case 写 task-specific / custom eval，并用 datasets、registry/YAML、typical / edge / adversarial cases、human feedback calibration 和持续评估做回归；这共同说明公开 benchmark 更适合学习评测思想和做有限比较，业务系统仍需要自己的任务集、trace、权限和回归评测。
 - 可入正文：窄结论“对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全；关键 trajectory / trace 应作为 eval、审计和回归输入”已完成第一轮交叉验证。AgentBench 和 WebArena 支撑交互环境、长程任务、工具/外部知识和失败原因分析的重要性；τ-bench 支撑工具 Agent 需要评估动态对话、API tools、policy guidelines、数据库状态和多次试验一致性；Browser Agent evidence 补强网页动作、浏览器状态和表单/购物/登录态等外部副作用边界；OpenAI Evaluation guides 补强 trace grading、tool selection、data precision、handoff accuracy、instruction/safety policy violation、multiple tool calls、circular handoffs、system-prompt conflict 和 dataset/eval run 的工程流程；标准库实验和 Real Trace-Aware Eval scorer control 复现了 final-only scoring 漏掉无审批副作用工具、工具错误未恢复、缺工具调用、缺 error trace 和缺 approval rejection 等过程错误。
-- 部分验证：τ-bench 原始任务已被仓库标注为过期；tau2/tau3-bench current repo 已完成资料复核但未本地运行，不能证明 leaderboard、论文数值、真实模型能力、voice provider 行为、真实业务相关性、成本或延迟；OpenAI Evals platform 正在退役，deprecations 页面显示 2026-10-31 read-only、2026-11-30 shutdown，eval workflow 的 graders 也在该过渡内；Real Trace-Aware Eval scorer control 只验证本地规则 scorer，不验证真实模型、真实平台或 LLM-as-judge；标准库 grader audit 只验证误判结构，不验证真实 LLM-as-judge 可靠性；真实 Agent trace 字段覆盖、真实业务质量与公开 benchmark 的相关性仍待真实模型、平台映射、tau2/tau3-bench 小样本试跑和人工复核实验。
+- 部分验证：AgentBench / WebArena 本次只复核论文 metadata、摘要、项目页和 README / raw README，尚未本地搭建 Docker / self-hosted environment 或运行任一任务；τ-bench 原始任务已被仓库标注为过期；tau2/tau3-bench current repo 已完成资料复核但未本地运行，不能证明 leaderboard、论文数值、真实模型能力、voice provider 行为、真实业务相关性、成本或延迟；OpenAI Evals platform 正在退役，deprecations 页面显示 2026-10-31 read-only、2026-11-30 shutdown，eval workflow 的 graders 也在该过渡内；Real Trace-Aware Eval scorer control 只验证本地规则 scorer，不验证真实模型、真实平台或 LLM-as-judge；标准库 grader audit 只验证误判结构，不验证真实 LLM-as-judge 可靠性；真实 Agent trace 字段覆盖、真实业务质量与公开 benchmark 的相关性仍待真实模型、平台映射、tau2/tau3-bench 小样本试跑和人工复核实验。
 
 ## 可进入章节
 
