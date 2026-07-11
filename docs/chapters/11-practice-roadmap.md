@@ -211,7 +211,7 @@
 
 安全 regression cases 不应只写“有一个 prompt injection 测试”。更实用的最小集合应同时包含：外部文档注入、跨用户数据访问、高金额写操作、敏感字段外泄、破坏性工具、重复提交和一个正常请求。每条 case 都应记录预期行为、实际行为、是否误报、是否漏报和 trace 是否泄露敏感字段。
 
-成本和延迟记录也不要只写“看起来还行”。最小记录表应包含：input tokens、output tokens、request count、model、rate-limit headers、retry count、平均 latency、P95 latency、cost estimate、budget threshold、超预算后的停止或降级行为。先把这些字段记录下来，再讨论减少输出 token、换模型、streaming、batching 或异步处理是否真的改善了你的任务。
+成本和延迟记录也不要只写“看起来还行”。最小记录表应包含：input tokens、output tokens、request count、model、rate-limit headers、retry count、平均 latency、P95 latency、cost estimate、budget threshold、超预算后的停止或降级行为。先把这些字段记录下来，再讨论减少输出 token、换模型、streaming、Batch、Flex、Prompt Caching 或异步处理是否真的改善了你的任务。
 
 ### 关联章节
 
@@ -222,6 +222,7 @@
 - OpenAI Cookbook 的 `How to use the Usage API and Cost API to monitor your OpenAI usage`。
 - OpenAI Cookbook 的 `How to handle rate limits`。
 - OpenAI Production / Cost / Latency / Rate Limit source card。它适合用来理解 usage dashboard、billing / usage limits、token counting、rate-limit headers、exponential backoff、`max_tokens`、streaming、batching 和预算阈值的工程边界。
+- OpenAI Batch / Flex / Prompt Caching source card。它适合用来理解 Batch 的离线任务边界、Flex 的低优先级取舍，以及 Prompt Caching 的 cache read/write 观测字段。
 
 ## 进阶项目：Repo Issue Agent
 
@@ -313,7 +314,7 @@
 
 - “OpenAI Cookbook 的具体 recipe 可以作为初学者实践项目参考，但不能替代 API 文档、生产安全指南或本地实验”已升级为可入正文。正文应引用具体 recipe，而不是笼统引用整个站点；Cookbook 是示例集合，不是 API 规范或生产保证。
 - 当前已复核的 Cookbook recipe 可以支撑以下练习方向：Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits。
-- OpenAI Production / Cost / Latency / Rate Limit docs 可支撑项目 8 的生产质量记录项：token/usage、request/token rate limits、rate-limit headers、重试、平均/P95 latency、model choice、budget threshold 和降级策略。它不证明任何具体优化默认有效，真实 cost / latency / throughput / quality tradeoff 仍需练习项目实测。
+- OpenAI Production / Cost / Latency / Rate Limit docs 和 Batch / Flex / Prompt Caching docs 可支撑项目 8 的生产质量记录项：token/usage、request/token rate limits、rate-limit headers、重试、平均/P95 latency、model choice、budget threshold、Batch status、Flex fallback、`cached_tokens` / `cache_write_tokens` 和降级策略。它们不证明任何具体优化默认有效，真实 cost / latency / throughput / quality tradeoff 仍需练习项目实测。
 - OpenAI File Search / Retrieval docs 可作为 File Search RAG 项目的 API 边界 reference：托管 `file_search` 仍需要记录 included search results、citations、filters、ranking/chunking、成本、延迟和删除一致性。
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源，但具体 server 的权限和安全假设需要逐个检查。
@@ -326,7 +327,7 @@
 ## 待验证问题
 
 - 这些 Cookbook recipe 真实本地试跑时的依赖、成本、失败样例和初学者阻塞点是什么？
-- 真实项目 8 中，token、usage、rate-limit headers、retry、平均/P95 latency、cost estimate、budget threshold 和降级策略应该如何记录成初学者能复用的模板？
+- 真实项目 8 中，token、usage、rate-limit headers、retry、平均/P95 latency、cost estimate、budget threshold、Batch/Flex/Prompt Caching 字段和降级策略应该如何记录成初学者能复用的模板？
 - 每个项目应使用哪个最小技术栈，才能降低环境成本？
 - 如何为项目 7 设计可自动运行的轻量 eval harness，并把 trace grading、dataset / eval run 和人工复核串起来？
 - MCP 实验应选择哪个只读 server 作为最小示例？
@@ -351,6 +352,7 @@
 - [OpenAI File Search and Retrieval Documentation](../sources/source-cards/2026-openai-file-search-retrieval-docs.md)
 - [OpenAI Cookbook](../sources/source-cards/2026-openai-cookbook.md)
 - [OpenAI Production, Cost, Latency and Rate Limit Documentation](../sources/source-cards/2026-openai-production-cost-latency-docs.md)
+- [OpenAI Batch, Flex Processing and Prompt Caching Documentation](../sources/source-cards/2026-openai-batch-flex-prompt-caching-docs.md)
 - [MCP servers repo](../sources/source-cards/2026-mcp-servers-repo.md)
 - [OpenAI Evals Repository](../sources/source-cards/2026-openai-evals-repo.md)
 - [OpenAI Evaluation Guides](../sources/source-cards/2026-openai-evaluation-guides.md)

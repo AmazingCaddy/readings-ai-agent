@@ -47,7 +47,7 @@
 
 - 这些文档可以支撑生产治理和优化方向，但不证明任一应用的真实 P95 latency、token cost、吞吐、质量或稳定性。
 - 价格、模型名称、usage tiers、rate limits 和产品入口会变化；正文不应硬编码价格表或把当前 tier 数值写成长期规则。
-- Batch API、flex processing、prompt caching、pricing 等相邻页面仍需要按具体练习场景单独复核，不能只因为被 cost 文档链接到就支撑细节结论。
+- Batch API、flex processing、prompt caching 已另建 source card 复核；pricing 仍需要按具体练习场景单独复核，正文不应硬编码价格表。
 - 减少 token、换小模型、并行化、batching 和 streaming 都可能有质量、交互、复杂度或等待时间取舍，需要真实任务 eval 支撑。
 
 ## 初学者阅读建议
@@ -61,7 +61,7 @@
 
 - 已完成标准库 practice roadmap smoke harness，其中包含预算阻断 case；该实验只验证本地验收结构，不证明真实 API 成本或延迟。
 - 后续应实际运行一个最小 API / Cookbook 练习，记录 input tokens、output tokens、model、request count、rate-limit headers、retry count、平均/P95 latency、cost estimate、budget threshold 和失败样例。
-- 后续应把同一任务在较小模型、较少输出 token、streaming、batch / non-batch、parallel / sequential 等条件下做对照，先看质量和 trace，再谈优化。
+- 后续应把同一任务在较小模型、较少输出 token、streaming、batch / non-batch、flex / standard、prompt caching / non-caching、parallel / sequential 等条件下做对照，先看质量和 trace，再谈优化。
 
 ## 是否进入正文
 
