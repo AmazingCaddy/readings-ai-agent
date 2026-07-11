@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Real Responses API structured output validation harness."""
+"""Responses API structured output validation harness.
+
+Without OPENAI_API_KEY this harness runs deterministic local fixtures that reuse
+the parser, schema validator, and semantic validator instead of claiming real
+Responses API behavior.
+"""
 
 from __future__ import annotations
 
@@ -163,15 +168,103 @@ def run_case(mode: str, api_key: str) -> CaseResult:
     return CaseResult(mode, status, not schema_errors, not semantic_errors, details)
 
 
+def run_control_case(mode: str, text: str, expected_status: str) -> dict[str, Any]:
+    details: dict[str, Any] = {"text": text, "expected_status": expected_status}
+    try:
+        data = extract_json(text)
+    except Exception as error:  # noqa: BLE001 - experiment reports parse failures.
+        details["parse_error"] = str(error)
+        result = CaseResult(mode, "parse_failed", False, False, details).__dict__
+        result["expectation_met"] = expected_status == "parse_failed"
+        return result
+
+    schema_errors = validate_schema(data)
+    semantic_errors = validate_semantics(data) if not schema_errors else ["schema invalid"]
+    details["parsed"] = data
+    details["schema_errors"] = schema_errors
+    details["semantic_errors"] = semantic_errors
+    status = "ok" if not schema_errors and not semantic_errors else "invalid"
+    result = CaseResult(mode, status, not schema_errors, not semantic_errors, details).__dict__
+    result["expectation_met"] = status == expected_status
+    return result
+
+
+def control_fixtures() -> list[tuple[str, str, str]]:
+    return [
+        (
+            "free_text",
+            "Escalate this refund request because the order is 90 days old and policy conflicts require review.",
+            "parse_failed",
+        ),
+        (
+            "json_mode",
+            json.dumps(
+                {
+                    "action": "approve_refund",
+                    "needs_human": False,
+                    "reason": "Valid JSON shape, but this auto-approves a 90-day-old policy conflict.",
+                    "confidence": 0.82,
+                }
+            ),
+            "invalid",
+        ),
+        (
+            "json_schema",
+            json.dumps(
+                {
+                    "action": "escalate",
+                    "needs_human": True,
+                    "reason": "The order is 90 days old, conflicts with policy, and needs human review.",
+                    "confidence": 0.91,
+                }
+            ),
+            "ok",
+        ),
+    ]
+
+
+def summarize_results(results: list[dict[str, Any]]) -> dict[str, int]:
+    return {
+        "schema_valid_count": sum(1 for item in results if item["schema_valid"]),
+        "semantic_valid_count": sum(1 for item in results if item["semantic_valid"]),
+        "parse_failed_count": sum(1 for item in results if item["status"] == "parse_failed"),
+    }
+
+
+def run_structured_output_control() -> dict[str, Any]:
+    results = [run_control_case(mode, text, expected_status) for mode, text, expected_status in control_fixtures()]
+    summary = summarize_results(results)
+    return {
+        "status": "completed",
+        "api_status": "skipped_without_openai_api_key",
+        "reason": "OPENAI_API_KEY is not set",
+        "model": MODEL,
+        "structured_output_control": "deterministic_schema_semantic_fixtures",
+        "real_api_validated": False,
+        "case_count": len(results),
+        **summary,
+        "structured_output_control_passed": all(item["expectation_met"] for item in results),
+        "all_passed": all(item["expectation_met"] for item in results),
+        "results": results,
+        "limitations": [
+            "Deterministic fixtures only validate local parsing, schema validation, and semantic validation logic.",
+            "They do not validate real Responses API behavior, refusal behavior, retry stability, latency, cost, or cross-model reliability.",
+        ],
+    }
+
+
 def run(api_key: str) -> dict[str, Any]:
     started = time.perf_counter()
     modes = ["free_text", "json_mode", "json_schema"]
     results = [run_case(mode, api_key).__dict__ for mode in modes]
     return {
         "status": "completed",
+        "api_status": "completed",
         "model": MODEL,
         "api_url": API_URL,
+        "real_api_validated": True,
         "elapsed_seconds": round(time.perf_counter() - started, 3),
+        **summarize_results(results),
         "results": results,
     }
 
@@ -179,17 +272,7 @@ def run(api_key: str) -> dict[str, Any]:
 def main() -> int:
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
-        print(
-            json.dumps(
-                {
-                    "status": "skipped",
-                    "reason": "OPENAI_API_KEY is not set",
-                    "model": MODEL,
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+        print(json.dumps(run_structured_output_control(), ensure_ascii=False, indent=2))
         return 0
 
     try:

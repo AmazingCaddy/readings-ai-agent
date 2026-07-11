@@ -6,7 +6,7 @@
 
 ## 实验边界
 
-这是一个需要真实 OpenAI API 的实验 harness。没有 `OPENAI_API_KEY` 时脚本会输出 `skipped`，不写成已验证结果。
+这是一个可连接真实 OpenAI API 的实验 harness。没有 `OPENAI_API_KEY` 时，脚本会运行 deterministic local control：复用同一套 JSON extraction、schema validation 和 semantic validation 逻辑，验证“可解析 / schema-valid / semantic-valid”的本地判断边界，但显式标记 `real_api_validated=false`。
 
 本实验只验证所选模型、所选 schema、所选输入和当前 API 版本下的行为，不能代表所有模型或所有业务场景。
 
@@ -31,5 +31,5 @@ uv run python docs/experiments/real-structured-output-validation/real_structured
 
 ## 结论状态
 
-- 当前状态：harness 已准备；真实结果取决于本地是否配置 API key 和模型版本。
-- 未完成前不得把 Structured Outputs 的真实稳定性写成正文结论。
+- 当前状态：无 API key 时已完成本地 deterministic schema/semantic control；真实 Responses API 结果取决于本地是否配置 API key 和模型版本。
+- 本地 control 可支撑“schema-valid 仍可能业务错误”的应用层校验边界；不得把它写成 Structured Outputs、JSON mode、refusal 或 retry 的真实 API 稳定性结论。
