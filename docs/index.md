@@ -26,6 +26,8 @@
 - [术语边界表](glossary.md)
 - [初学者学习路径](learning-path.md)
 - [章节目录](chapter-outline.md)
+- [00. 序言：如何学习 AI Agent](chapters/00-preface.md)
+- [01. AI Agent 是什么](chapters/01-agent-landscape.md)
 - [References 覆盖矩阵](references/coverage-matrix.md)
 - [候选资料清单](sources/seed-candidates.md)
 - [Source Card 索引](sources/source-card-index.md)
