@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 20:45 CST
+**Last Updated:** 2026-07-11 20:52 CST
 **Status:** In Progress
 
 ## Objective
@@ -79,9 +79,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 62. Promoted narrow ReAct and Tree of Thoughts mechanism boundary claims to `可入正文`: ReAct is an interleaving of reasoning traces and task-specific actions; Tree of Thoughts supports search over intermediate thoughts and reasoning paths, but is not the same thing as a production Agent orchestration framework. Updated agent architecture evidence, claim ledger, coverage matrix, validation backlog, chapters 04/07/12, source-card index, and ReAct / Tree of Thoughts source cards. Real task benefits, cost, latency, tool-error recovery, and whether either pattern outperforms simpler workflows remain partially verified or pending.
 63. Promoted the remaining narrow Tool Use and RAG motivation claims to `可入正文`: tool use can connect models to external tools such as APIs, search, calculators, calendars, and databases through application/runtime mechanisms; RAG's basic motivations include external knowledge access, knowledge updates, and provenance/source traceability. Updated tool-use and RAG evidence, claim ledger, coverage matrix, validation backlog, chapters 03/06/12, source-card index, and Toolformer / RAG paper source cards. Real API behavior, tool reliability, RAG stack quality, citation correctness, latency, cost, and cross-framework terminology remain partially verified or pending.
 64. Clarified the validation-status wording after all current claim-ledger rows reached `可入正文`. The claim ledger now says these are narrow concept/protocol/engineering-boundary claims, while real quality, cost, latency, stability, framework superiority, and production reliability still require experiments. The coverage matrix now explicitly distinguishes narrow `可入正文` status from broad real-world partial verification, and the source-map chapter summary no longer says most materials still need deep reading.
+65. Audited chapter wording for overbroad trace requirements. Chapter 02 now limits process-trace guidance to multi-step Agents and systems involving tools, state, or external side effects, aligning the chapter summary with the claim ledger and chapter 08 observability boundary.
 
 ## Technical Context
-- Files modified recently: `docs/evidence/claim-ledger.md`, `docs/references/coverage-matrix.md`, `docs/chapters/12-source-map.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/chapters/02-llm-context.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
