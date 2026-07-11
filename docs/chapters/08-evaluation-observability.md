@@ -125,6 +125,8 @@ Browser Agent 还要记录网页动作和页面状态。比如打开了哪个 UR
 
 τ-bench 还提醒一个容易忽略的点：客服类工具 Agent 不能只看回答文字，还要看对话结束后的数据库状态是否达到目标，以及同一个任务多次运行是否稳定。它的原始 repo 已提示任务不是最新版，所以正文只采用这个评测思想，不采用旧 leaderboard 数字作为当前能力结论。
 
+当前试跑入口应看 tau2-bench / tau3-bench repo，而不是旧 tau-bench tasks。2026-07-12 复核的当前 repo 资料显示，它把评测扩展到 dual-control 场景：用户也可能通过工具改变共享环境；同时还包含 knowledge domain 和 voice full-duplex 模式。这里最容易误解的是 `evaluation_criteria.actions`：它是 one reference trajectory，用来推导 gold DB state，不是默认要求 Agent 复现同一条动作路径；只有 `RewardType.ACTION` 进入 `reward_basis` 时，动作轨迹才参与最终 reward。这个结论只支撑评测设计和试跑入口，本手册还没有本地运行 tau2/tau3-bench，因此不采用 leaderboard、论文数值或 README 数字作为模型能力证明。
+
 ### 失败是否可恢复
 
 真实环境里，工具会超时，检索会失败，外部 API 会返回不完整数据。Agent 不应该在失败后直接编造。
@@ -220,7 +222,8 @@ OpenAI Graders 文档还提供了更具体的评分器类型：string check、te
 - WebArena 已于 2026-07-12 复核 arXiv API、HTTP metadata、摘要、项目页和 GitHub README，可支撑“真实 Web Agent 任务需要端到端环境、工具、外部知识、self-hosted websites、functional correctness 和 long-horizon 评测”的保守表述；论文中的旧实验数值和 README 当前复现路径不能泛化为当前模型能力。
 - Browser Use / Playwright / Anthropic Computer Use 资料已完成第一轮复核，可支撑浏览器 / computer-use Agent 的动作层和 trace 边界：任务可能包含打开页面、点击、输入、填表、上传文件、登录态 profile、screenshot/mouse/keyboard control、custom tools 和 human-in-the-loop；Playwright trace viewer 支持按 action 回放页面状态、log、source、network 和 DOM snapshot；Anthropic computer use docs 2026-07-12 复核补强 `computer-use-2025-11-24` beta header、VM/container 隔离、domain allowlist、action validation/logging、截图 prompt injection classifier、client-side data storage、ZDR eligibility、token overhead 和 beta limitation 边界。Real Browser Use Package Surface Validation 已完成 `browser-use==0.13.3` package / source surface 检查；Real Browser Playwright Validation 已完成固定本地 demo page workflow 和 deterministic computer-use-style loop，记录 8 条 action record、DOM/screenshot hash、coordinate validation、redacted invoice 文件上传、submit order 审批阻断、destructive action 阻断和 trace.zip metadata。真实 Browser Use agent / Anthropic computer-use agent、模型任务成功率、点击精度、classifier 行为、真实成本、延迟、CAPTCHA/stealth、合规和生产可靠性仍需实验。
 - 本地标准库 browser action trace audit 显示，浏览器 Agent 的最小评测字段应覆盖 action trace、DOM/screenshot state、side-effect approval、profile isolation、file upload control、external content untrusted boundary、trace redaction 和 failure classification。该实验支撑字段设计；Browser Use package harness 支撑本地入口和源码表面观察；真实 Playwright completed run 支撑一个固定浏览器执行层观察和一个 deterministic coordinate-loop 观察；这些结果都不证明 Browser Use、Anthropic computer use 或任何模型的真实网页任务表现。
-- τ-bench 已于 2026-07-12 复核 arXiv API、HTTP metadata、摘要和 GitHub README，可支撑“工具 Agent 评测需要动态用户交互、领域 API tools、policy guidelines、数据库状态评测和多次试验一致性”的保守表述；原始 repo 已提示任务不是最新版，τ³-bench README 已补 text / voice / knowledge domains 和 task fixes 边界，实际试跑应优先看 τ³-bench。
+- τ-bench 已于 2026-07-12 复核 arXiv API、HTTP metadata、摘要和 GitHub README，可支撑“工具 Agent 评测需要动态用户交互、领域 API tools、policy guidelines、数据库状态评测和多次试验一致性”的保守表述；原始 repo 已提示任务不是最新版，当前入口已由 tau2/tau3-bench source card 单独承载。
+- tau2/tau3-bench 当前 repo 已于 2026-07-12 复核 GitHub metadata、README、Getting Started、Evaluation docs、tau2 / tau-Knowledge arXiv metadata、taubench.com HEAD 和 Sierra blog HEAD；可支撑 dual-control、knowledge domain、voice full-duplex、domain/policy/tool/task 结构、`reward_basis` 与 reference action trajectory 边界。没有本地 run，不能证明 leaderboard 数字、真实模型能力、voice provider 行为、成本、延迟或真实业务相关性。
 - “公开 benchmark 可以帮助学习评测环境、任务设计、functional correctness、用户交互、状态评测和失败分类，但不能直接代表真实业务 Agent 质量或产品可用性”已升级为可入正文。业务系统仍需要自己的 custom/private eval、trace、权限检查和回归集。
 - OpenAI Evals repo 已于 2026-07-12 复核 GitHub metadata、README、build-eval 和 completion-fns docs，可支撑 custom/private eval、dataset + registry/YAML、model-graded eval human-label/meta-eval、completion function 和 tool/prompt-chain eval 的工程思路；但 README 的 Dashboard 入口必须和官方 Evals platform 退役时间线一起读，不能写成长期稳定教程。Real Trace-Aware Eval harness 已完成本地 deterministic scorer control，验证 final-only scoring 会放过缺工具调用、缺 tool error trace 和缺 approval rejection 的过程错误；当前无 API key，真实模型 completed run 仍待做，具体实践仍需结合当前文档、LLM-as-judge 误判和人工复核实验。
 - OpenAI Evaluation best practices、Agent evals guide 和 deprecations 页面已于 2026-07-12 复核，可支撑 eval-driven development、task-specific eval、trace grading、datasets/eval runs、tool selection、data precision、handoff accuracy、edge/adversarial cases、LLM-as-judge human-label calibration 和 Evals platform 退役边界。它们不证明任何 grader、judge model、平台 trace 或指标在真实业务中可靠。
@@ -254,6 +257,7 @@ OpenAI Graders 文档还提供了更具体的评分器类型：string check、te
 
 - [AgentBench: Evaluating LLMs as Agents](../sources/source-cards/2023-agentbench-paper.md)
 - [τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains](../sources/source-cards/2024-tau-bench-paper.md)
+- [tau2-bench / tau3-bench Current Repository and Documentation](../sources/source-cards/2026-tau2-tau3-bench.md)
 - [WebArena: A Realistic Web Environment for Building Autonomous Agents](../sources/source-cards/2023-webarena-paper.md)
 - [Browser Use and Playwright Browser Automation References](../sources/source-cards/2026-browser-use-playwright.md)
 - [Real Browser Use Package Surface Validation](../experiments/real-browser-use-package-validation/README.md)

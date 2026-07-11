@@ -52,6 +52,7 @@ nav:
           - MemGPT paper: sources/source-cards/2023-memgpt-paper.md
           - AgentBench paper: sources/source-cards/2023-agentbench-paper.md
           - Tau-bench paper: sources/source-cards/2024-tau-bench-paper.md
+          - Tau2 / Tau3-bench current repo: sources/source-cards/2026-tau2-tau3-bench.md
           - Anthropic Building effective agents: sources/source-cards/2024-anthropic-building-effective-agents.md
           - SWE-agent paper: sources/source-cards/2024-swe-agent-paper.md
           - mini-SWE-agent docs: sources/source-cards/2026-mini-swe-agent-docs.md

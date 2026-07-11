@@ -9,7 +9,7 @@
 - 主题：Tool-agent eval / User simulation / Domain rules / State-based evaluation
 - 适合阶段：进阶 / Evaluation
 - 可信度等级：A
-- 是否已验证：arXiv API 元数据、HTTP metadata、摘要和 GitHub README 已于 2026-07-12 复核；支撑“工具 Agent 评测需要覆盖动态用户交互、领域规则、API tools、数据库状态和多次试验一致性”的窄边界；原 `tau-bench` repo 已提示任务过期，实际试跑应优先参考 `tau2-bench` / τ³-bench；真实模型表现、leaderboard 数字和最新任务质量仍部分验证
+- 是否已验证：arXiv API 元数据、HTTP metadata、摘要和 GitHub README 已于 2026-07-12 复核；支撑“工具 Agent 评测需要覆盖动态用户交互、领域规则、API tools、数据库状态和多次试验一致性”的窄边界；原 `tau-bench` repo 已提示任务过期，实际试跑入口已拆到 [tau2-bench / tau3-bench Current Repository and Documentation](2026-tau2-tau3-bench.md)；真实模型表现、leaderboard 数字和最新任务质量仍部分验证
 
 ## 一句话总结
 
@@ -31,7 +31,7 @@
 - API 摘要写明 evaluation process compares database state at the end of a conversation with annotated goal state，并用 `pass^k` evaluates reliability of agent behavior over multiple trials。
 - API 摘要报告当时 function calling agents 如 `gpt-4o` 在任务上成功率有限且不稳定；这只能作为论文实验设置下的历史观察，不能外推为当前模型能力。
 - 原 GitHub repo `sierra-research/tau-bench` README 于 2026-07-12 可达，并明确警告：tasks in this repo are not updated，airline / retail tasks 是 outdated versions，建议使用 `tau2-bench` / τ³-bench。
-- `sierra-research/tau2-bench` README 于 2026-07-12 可达，说明 τ³-bench 已加入 `banking_knowledge`、voice full-duplex、75+ task fixes、updated leaderboard；simulation framework 支持 text half-duplex、voice full-duplex、多个 domains、policies、tools、tasks、user simulator 和 results。该 README 支撑后续试跑入口和任务结构，不证明 leaderboard 数字或真实业务 agent 质量。
+- `sierra-research/tau2-bench` 当前入口已单独建卡并于 2026-07-12 复核 README、Getting Started、Evaluation docs 和 tau2 / tau-Knowledge arXiv metadata；该 current repo card 支撑后续试跑入口、任务结构和 `reward_basis` / reference action trajectory 边界，不证明 leaderboard 数字或真实业务 agent 质量。
 
 ## 是否进入正文
 
