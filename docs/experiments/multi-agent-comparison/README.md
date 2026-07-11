@@ -39,4 +39,4 @@ uv run python docs/experiments/multi-agent-comparison/multi_agent_comparison.py
 
 - 支撑：可以把“多 Agent 不应作为默认起点；先用 Flow / workflow 控制，再在需要角色协作时引入 Agent team”写入第 07/10 章。
 - 支撑：比较多 Agent 架构时应记录 success、tool calls、messages、conflicts、duplicate reads 和 missing evidence。
-- 仍缺：真实模型、真实 AutoGen/CrewAI/LangGraph/Crew 流程、token/latency/cost、工具错误、人工评审和更复杂冲突处理实验。
+- 仍缺：真实模型驱动的 AutoGen/CrewAI/LangGraph 多角色流程、token/latency/cost、工具错误、人工评审和更复杂冲突处理实验。
