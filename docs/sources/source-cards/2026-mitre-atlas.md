@@ -36,12 +36,16 @@ MITRE ATLAS 是面向 AI 系统的 adversarial tactics、techniques、mitigation
 - term catalog 明确列出 platform values：`Predictive AI`、`Generative AI`、`Agentic AI`、`Enterprise`，并给出 Agentic AI 的 multi-step action / memory / tool use / workflow orchestration 相关定义。
 - term catalog 明确列出 maturity values：`Feasible`、`Demonstrated`、`Realized`。
 - 2026-07-12 复核：最新 YAML 仍命中 `LLM Prompt Injection`、`AI Agent Tool Invocation`、`AI Agent Tool Poisoning`、`Data Exfiltration from Slack AI via Indirect Prompt Injection`、`Hacking ChatGPT's Memories with Prompt Injection` 和 `Data Destruction via Indirect Prompt Injection Targeting Claude Computer-Use`。
+- 2026-07-12 YAML 精确抽样：`AML.T0051` `LLM Prompt Injection` 标注 platforms `Generative AI, Agentic AI`、maturity `Realized`；`AML.T0053` `AI Agent Tool Invocation` 标注 platform `Agentic AI`、maturity `Demonstrated`；`AML.T0110` `AI Agent Tool Poisoning` 标注 platform `Agentic AI`、maturity `Realized`；`AML.T0011.002` `Poisoned AI Agent Tool` 标注 platform `Agentic AI`、maturity `Realized`；`AML.T0099` `AI Agent Tool Data Poisoning` 标注 platform `Agentic AI`、maturity `Feasible`。
+- 2026-07-12 YAML 精确抽样：`AML.T0034.002` `Agentic Resource Consumption` 标注 platform `Agentic AI`、maturity `Feasible`；`AML.T0070` `RAG Poisoning` 标注 platforms `Generative AI, Agentic AI`、maturity `Demonstrated`；`AML.T0002.002` `AI Agent Configuration` 标注 platforms `Predictive AI, Generative AI, Agentic AI`、maturity `Demonstrated`。
+- 2026-07-12 YAML 精确抽样：Agentic AI 相关 case-study relationships 可支撑 regression case 映射，例如 `AML.CS0035` Slack AI indirect prompt injection / RAG poisoning / exfiltration，`AML.CS0040` ChatGPT memory prompt injection，`AML.CS0045` Cursor MCP server data exfiltration，`AML.CS0046` Claude Computer Use destructive action，`AML.CS0053` poisoned Postmark MCP server email exfiltration，`AML.CS0054` remote poisoned MCP tool data exfiltration，`AML.CS0055` AI ClickFix computer-use hijacking。
 
 ## 可能的问题
 
 - ATLAS 是威胁知识库和数据集，不是 Agent 框架文档，也不是防护产品评测。
 - ATLAS 的 mitigations 可作为控制候选和 checklist 来源，但不能直接证明任何 mitigation 在本手册实验环境或读者系统中有效。
 - Case study 的真实性、适用范围和复现难度需要逐条看原始 references；不能只凭 case title 推导普遍风险概率。
+- Case study relationships 只能作为测试用例映射证据，不证明这些攻击在读者系统中的发生频率、可利用性或复现成功率。
 - 最新数据会随 release 更新，章节中应尽量引用 source card 和版本号，而不是把条目数量写成长期不变事实。
 
 ## 初学者阅读建议

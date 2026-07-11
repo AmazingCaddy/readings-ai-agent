@@ -47,6 +47,8 @@
 
 当前台账中的结论都已达到 `可入正文` 门槛，但这只表示对应的窄口径概念、协议或工程边界可以写成确定性表述。每条结论仍必须保留正文写法中的限制条件；真实质量、成本、延迟、稳定性、框架优劣、模型收益和生产可靠性仍需实验或更强 references 支撑。Claim Boundary Consistency Audit 已把这条规则转成可运行文本检查：当前 29 条 `可入正文` rows 均保留边界词，但该 audit 不验证外部资料事实或真实 API / 模型行为。
 
+2026-07-12 MITRE ATLAS 精确映射补充：`AML.T0053`、`AML.T0110`、`AML.T0011.002`、`AML.T0099`、`AML.T0070`、`AML.T0034.002` 以及 `AML.CS0035`、`AML.CS0040`、`AML.CS0045`、`AML.CS0046`、`AML.CS0053`、`AML.CS0054`、`AML.CS0055` 可支撑第 09 章和安全 evidence notes 中的 attack-technique / case-study-derived regression set 设计边界。该补充不改变台账状态：它不证明任意 mitigation、detector、guardrail、HITL、sandbox/runtime containment、monitoring 或真实模型 / 框架安全效果，也不证明攻击在读者系统中的发生频率、可利用性或复现成功率。
+
 1. Agent vs Workflow / 自治程度的边界。窄结论“Agent 和 Workflow 是控制权与编排方式的连续谱，自治程度不是能力等级”可入正文；真实模型 / 框架 / repo issue、成本、权限和工具错误恢复仍待实际运行验证。
 2. Tool Use vs Function Calling 的边界。窄结论“tool use 可以连接外部工具能力”“Function Calling 本身不执行工具”和“跨框架 tool/function/plugin/retriever/flow 术语不能直接互换”可入正文；Real Semantic Kernel Plugin Validation 已补 native plugin runtime 的最小观察；Real Tool Calling harness 已补本地 deterministic validation/retry control，可支撑应用层 parser、validator、错误反馈和 toy tool execution 的固定样例边界。参数校验失败后真实模型能否稳定修正、真实 API 错误恢复、OpenAPI/MCP plugin 和真实框架默认行为仍待实际运行验证。
 3. RAG vs Memory 与 RAG 工程边界。RAG 动机、RAG / Memory 术语边界和工程 RAG pipeline 的窄结论可入正文；Real RAG Citation Synthesis 已补本地 citation verifier control 和失败样例，Real LlamaIndex RAG Source-Node Validation 已补真实框架 retrieval / QueryEngine source-node metadata 和 MockLLM plumbing 的最小观察；真实 embedding / vector store / 真实 LLM synthesis、chunk size/top-k/rerank、真实 memory framework、citation correctness、成本和延迟仍待验证。
