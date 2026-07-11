@@ -26,7 +26,7 @@
 
 ## 交叉验证结果
 
-- 一致点：OWASP 支撑 prompt injection、insecure plugin/tool design、sensitive information disclosure 和 excessive agency 风险；这说明工具权限和外部内容边界必须由系统控制。
+- 一致点：OWASP GenAI LLM Top 10 2025 archive 支撑 `LLM01 Prompt Injection`、`LLM02 Sensitive Information Disclosure`、`LLM05 Improper Output Handling`、`LLM06 Excessive Agency` 和 `LLM08 Vector and Embedding Weaknesses` 风险；这说明工具权限、外部内容、模型输出、敏感数据和 RAG/vector store 边界必须由系统控制。
 - 一致点：OpenAI Function Calling / Tool Calling docs 和 Responses API evidence 已确认工具执行发生在应用侧或工具运行时，模型主要生成工具调用请求；这支持应用侧参数校验、权限判断和审计责任。
 - 一致点：Responses API source card 已记录 remote MCP 工具支持 `allowed_tools`、`require_approval`、`authorization`、`server_url` / `connector_id` 等字段；这说明工具权限和审批是 API 层需要表达的边界。
 - 一致点：OpenAI Agents SDK guardrails 文档支持 input/output/tool guardrails；tool guardrails 可在 custom function-tool 调用前后验证或阻断工具调用。2026-07-12 复核进一步确认 tool guardrails 只覆盖 `function_tool` 创建的 function tools，不覆盖 hosted tools、built-in execution tools、handoff call 本身或 `Agent.as_tool()` 的直接 tool-guardrail options。

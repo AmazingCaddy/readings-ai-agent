@@ -32,7 +32,7 @@ Prompt injection 指外部输入试图改变模型行为，让系统忽略原有
 
 对 Agent 来说，风险更高，因为 Agent 可能读取网页、文档、邮件、工单和数据库内容。这些外部内容可能包含恶意指令。
 
-OWASP 把 prompt injection 列为 LLM 应用风险项，并把不安全插件设计、敏感信息泄露和 excessive agency 也列为相关风险。对初学者来说，关键不是背风险编号，而是记住：外部内容只能被当作数据，不能被当作系统规则。
+OWASP GenAI LLM Top 10 2025 archive 把 prompt injection、sensitive information disclosure、improper output handling、excessive agency 和 vector / embedding weaknesses 都列为 LLM / GenAI 应用风险。对初学者来说，关键不是背风险编号，而是记住：外部内容、检索内容和模型输出都只能被当作不可信数据，不能被当作系统规则或直接交给高风险工具执行。
 
 OWASP Agentic Security Initiative 的公开资源还把 Agentic AI 风险扩展到目标劫持、工具误用、身份和权限滥用、记忆污染、多 Agent 通信不安全、级联失败和失控 Agent。这里不能得出“某个缓解方案已经有效”的结论，但可以提醒你：生产安全不只是挡住 prompt injection，还要检查身份、权限、记忆、运行时隔离、schema 校验、停止条件和监控。
 
@@ -224,7 +224,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 
 ## 已验证结论
 
-- Indirect Prompt Injection paper 和 OWASP LLM Top 10 的关键风险项已完成第一轮精读，可支撑外部内容模糊数据/指令边界、prompt injection、敏感信息泄露、工具/插件访问控制和 excessive agency 的保守风险表述。
+- Indirect Prompt Injection paper 和 OWASP GenAI LLM Top 10 2025 archive 的关键风险项已完成第一轮精读，可支撑外部内容模糊数据/指令边界、prompt injection、敏感信息泄露、LLM output validation、工具/插件访问控制、excessive agency 和 RAG/vector store 风险的保守表述。旧 OWASP 项目页仍保留 version 1.1 摘要；正文引用当前风险项时优先使用 2025 编号和名称。
 - OWASP Agentic AI Security Resources 的公开资源页、HTTP metadata 和 WP JSON 摘要已在 2026-07-12 复核，可支撑 goal hijacking、tool misuse、identity / privilege abuse、memory poisoning、insecure inter-agent communication、cascading failures、rogue agents、runtime containment、architectural monitoring 和 schema controls 等 agentic-specific 风险边界。白皮书全文未精读，因此不能支撑完整缓解清单或具体控制效果。
 - MITRE ATLAS 的主页、manifest、latest v6 YAML、HTTP metadata、term catalog 和关键 Agentic AI 条目已在 2026-07-12 复核，可支撑 LLM Prompt Injection、AI Agent Tool Invocation、AI Agent Tool Poisoning、memory / MCP / computer-use case-study-derived regression set、Agentic AI platform 和 maturity 的保守边界。它不能支撑任意 mitigation、guardrail、detector、HITL 或监控方案的真实效果。
 - Real Agentic Security Regression Set 已完成标准库 toy runtime，可作为把 MITRE ATLAS / OWASP 风险转成 case matrix 的模板；它定义并运行了 prompt injection、tool invocation、tool poisoning、memory poisoning、MCP / remote tool abuse、computer-use destructive action、runaway loop 和 inter-agent message 等 case，以及 expected decision、approval state、trace redaction、false positive / false negative 等记录字段。该结果只支撑 case 覆盖和记录字段设计，不能支撑真实防护效果。
