@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-12 00:05 CST
+**Last Updated:** 2026-07-12 00:10 CST
 **Status:** In Progress
 
 ## Objective
@@ -104,9 +104,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 87. Added a source card for Browser Use and Playwright (`docs/sources/source-cards/2026-browser-use-playwright.md`) plus an evidence note (`docs/evidence/browser-agent-boundary.md`). The card records Browser Use GitHub/README/docs evidence and Playwright actions/trace viewer evidence. Synced MkDocs nav, source-card directory, source-card index, seed candidates, evidence index, claim ledger, agent-eval/observability evidence, validation backlog, coverage matrix, chapters 08/09/11/12. This supports the narrow Browser Agent boundary around webpage actions, DOM/page state, profile/auth risk, custom tools, permissions, approval, and trace; it does not validate Browser Use benchmark/leaderboard/cloud claims, CAPTCHA/stealth effectiveness, real task success rate, cost, latency, compliance, or production reliability.
 88. Attempted to verify beginner course pages from DeepLearning.AI and LangChain Academy, but the public pages returned Cloudflare challenge / HTTP 403 from the current CLI environment. Did not create a course source card from inaccessible content. Pivoted to a more verifiable security source gap.
 89. Added a source card for Microsoft Prompt Shields (`docs/sources/source-cards/2026-microsoft-prompt-shields-docs.md`). The card records Microsoft Learn Prompt Shields concept page and quickstart metadata, user prompt attack / document attack classification, `shieldPrompt` API shape, `attackDetected` response fields, and the documented false positive / false negative limitation. Synced MkDocs nav, source-card directory, source-card index, seed candidates, prompt-injection evidence, claim ledger, validation backlog, coverage matrix, and chapters 09/12. This strengthens the prompt-injection detection-layer evidence while preserving the boundary that real detector/guardrail/HITL effectiveness, false positives/negatives, cost, latency, and production safety remain untested.
+90. Corrected MCP official docs source metadata. The source card no longer says `发布时间：待复核`; it now records that MCP protocol versions use `YYYY-MM-DD`, the current version is `2025-11-25`, and the date denotes the latest backwards-incompatible change. Added versioning/changelog evidence and synced source-card index plus chapter 12 wording. This improves source precision without changing real MCP host/SDK/security behavior status.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2026-microsoft-prompt-shields-docs.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/index.md`, `docs/sources/seed-candidates.md`, `docs/evidence/prompt-injection-permission-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/09-production-security.md`, `docs/chapters/12-source-map.md`, `mkdocs.yml`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2026-mcp-official-docs.md`, `docs/sources/source-card-index.md`, `docs/chapters/12-source-map.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
