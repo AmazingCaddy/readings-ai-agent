@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 16:51 Asia/Shanghai
+**Last Updated:** 2026-07-11 16:53 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -45,16 +45,17 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 28. Completed a standard-library trace-aware eval simulation under `docs/experiments/trace-aware-eval/`. The script compares final-answer-only scoring with trace-aware scoring on three toy refund runs. Final-only passes 3/3, while trace-aware passes 1/3 and catches side-effect tool execution without approval plus unrecovered tool errors. This supports the handbook's process-eval boundary but does not validate real Agent traces, LLM-as-judge, human review, or observability platform behavior.
 29. Completed a standard-library prompt injection / tool permission simulation under `docs/experiments/prompt-injection-permission/`. It compares `prompt_only` with `policy_enforced` on an external refund-policy document containing malicious instructions. Prompt-only issues a refund and leaks a fake secret into trace; policy-enforced allows read-only lookup, rejects write tools, records denial reasons, and redacts the fake secret. This supports permission-boundary and trace-redaction guidance but does not validate real model/framework guardrails or HITL approval behavior.
 30. Completed a standard-library memory governance simulation under `docs/experiments/memory-governance/`. It compares `auto_write` with `guarded_write` on explicit preferences, low-confidence inferred profile data, a fake secret, preference changes, assistant guesses, and user corrections. The result supports write-guard, invalidation-history, and trace-redaction guidance, but does not validate real multi-session Agent quality, real memory framework behavior, privacy controls, or user edit/delete flows.
+31. Completed a standard-library workflow / hybrid / ReAct-like comparison under `docs/experiments/workflow-agent-comparison/`. Fixed workflow succeeds on 2/3 fake issue triage tasks with 3 tool calls but misses a bug root cause requiring log/config/deploy evidence; workflow-agent hybrid succeeds on 3/3 with 7 tool calls; ReAct-like loop succeeds on 3/3 with 9 tool calls and extra feature-context lookup. This supports the control-boundary explanation but does not validate real models, frameworks, costs, permissions, or tool-error recovery.
 
 ## Technical Context
-- Files modified recently: `docs/chapters/06-rag-memory.md`, `docs/chapters/12-source-map.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/memory-governance-risk-boundary.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/memory-governance/README.md`, `docs/experiments/memory-governance/memory_governance.py`, `docs/experiments/memory-governance/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/chapters/01-agent-landscape.md`, `docs/chapters/04-agent-architecture.md`, `docs/chapters/12-source-map.md`, `docs/evidence/agent-workflow-boundary.md`, `docs/evidence/agent-architecture-pattern-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/workflow-agent-comparison/README.md`, `docs/experiments/workflow-agent-comparison/workflow_agent_comparison.py`, `docs/experiments/workflow-agent-comparison/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
 ## Open Questions
 - Run a real Function Calling / Responses API experiment to upgrade the Function Calling boundary beyond the current standard-library simulation; compare whether a real model can repair validation errors and how tool execution errors are represented.
-- Run a workflow vs workflow-agent hybrid vs agent loop comparison experiment for the same task.
-- Run a fixed workflow vs ReAct tool loop vs planner/executor vs reflection retry experiment for the same issue-analysis task.
+- Run a real workflow vs workflow-agent hybrid vs agent loop comparison beyond the current standard-library simulation, using a real model/framework/repo issue and recording token, latency, cost, permission, tool-error, and trace-readability metrics.
+- Run planner/executor and reflection retry variants for the same issue-analysis task; the current standard-library comparison only covers fixed workflow, workflow-agent hybrid, and ReAct-like tool loop.
 - Run an output parsing experiment comparing free text, JSON mode, and Structured Outputs; include refusal and semantic-error handling.
 - Run a long-context failure-mode experiment covering irrelevant context, conflicting context, stale context, external prompt injection, truncation behavior, and token cost.
 - Run a single-agent vs planner/executor vs multi-agent comparison experiment for the same research/writing task.

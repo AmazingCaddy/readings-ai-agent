@@ -57,6 +57,7 @@
 先读手册 01 和 04，再看 ReAct、Reflexion、Tree of Thoughts 和 LangGraph 文档。
 
 阅读重点不是记住所有方法名，而是理解：模型如何在观察、行动、状态和反馈之间循环。
+Workflow / Hybrid / ReAct-like 标准库对比实验已经完成，可帮助理解固定流程、受控动态查询和 tool loop 在成功率、工具调用数、失败原因和 trace 上的差异；真实模型 / Agent framework / repo issue 仍需后续实验。
 
 ### LLM 接口与工具调用
 
@@ -145,7 +146,8 @@ Prompt injection / tool permission 标准库模拟实验已经完成，可帮助
 
 - 当前手册已经建立 source card index、coverage matrix 和 claim ledger，用于控制资料进入正文的门槛。
 - Source card index 明确记录了每张卡片的可信度、验证状态和下一步。
-- Coverage matrix 显示 Evaluation / Observability 已补 LangSmith、Phoenix 和标准库 trace-aware eval 第一轮资料；Production / Security 已补 OpenAI Agents SDK、Semantic Kernel 和标准库 prompt injection / tool permission 实验；Memory / 知识库治理已补标准库写入守门模拟。它们仍需要真实模型、真实框架和真实多会话实验来升级结论强度。
+- Coverage matrix 显示 Agent/Workflow、Evaluation / Observability、Production / Security 和 Memory / 知识库治理都已补标准库模拟实验；这些实验支撑流程和 trace 设计，但仍需要真实模型、真实框架和真实多会话实验来升级结论强度。
+- Agent / Workflow 已补标准库 workflow / hybrid / ReAct-like 对比实验，可支撑固定 workflow、受控动态查询和 tool loop 的最小比较；仍缺真实模型 / Agent framework / repo issue、token/latency/cost、权限确认和工具错误恢复实验。
 - MCP official docs 已补 2025-11-25 tools/resources/prompts/authorization/roots/elicitation/sampling spec 和 Security Best Practices 第一轮精读；MCP 最小 trace 标准库模拟实验已完成，可支撑最小审计字段和职责流设计；仍缺真实 MCP SDK / host trace、权限确认、URL mode / OAuth、恶意 resource/prompt 和 host 实现差异实验。
 - Tool Use / Function Calling 已补标准库参数校验/重试模拟实验，可支撑“应用层校验、错误回传、有限重试”的流程说明；仍缺真实 Function Calling / Responses API 实验和其他框架术语对照。
 - RAG 已补标准库最小 pipeline / citation 模拟实验，可支撑 chunk metadata、retrieval trace、chunk-level citations 和 `grounded=false` 拒答流程；仍缺真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank 对比、citation correctness 和成本/延迟实验。
@@ -160,6 +162,7 @@ Prompt injection / tool permission 标准库模拟实验已经完成，可帮助
 - prompt injection / tool permission 的最小攻击实验应该如何覆盖 guardrails、HITL approval、敏感 trace 和审计字段？
 - 真实 MCP SDK / host trace 实验应如何覆盖 `tools/list`、`tools/call`、`resources/list`、`resources/read`、用户拒绝、roots、URL mode elicitation 和敏感日志脱敏？
 - 真实 Function Calling / Responses API 实验中，模型能否稳定根据 tool validation error 修正参数？不同框架如何表示 tool execution error？
+- 真实 Agent/Workflow 对比实验中，固定 workflow、workflow-agent hybrid、ReAct tool loop、planner/executor 和 reflection retry 如何影响成功率、工具调用数、成本、延迟、失败原因、权限确认和 trace 可读性？
 - 真实 RAG stack 中，chunk size、top-k、rerank/filter 和 LLM synthesis 如何影响 citation correctness、faithfulness、latency 和 token cost？
 - 真实多会话 Agent / memory framework 中，guarded memory、auto memory 和 no memory 如何影响任务质量、错误写入、过时记忆使用、敏感信息进入上下文和用户纠错成本？
 - 真实 Agent trace 中，规则评分、LLM-as-judge 和人工评审如何组合，才能发现过程错误并控制误判率？

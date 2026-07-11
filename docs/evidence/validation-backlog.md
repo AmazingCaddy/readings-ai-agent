@@ -4,13 +4,13 @@
 
 ## 概念边界
 
-- Agent 和 Workflow 的边界如何定义才准确？已完成第一轮 OpenAI Agents SDK、LangGraph 和 ReAct 交叉验证，仍需补最小对比实验。
+- Agent 和 Workflow 的边界如何定义才准确？已完成第一轮 OpenAI Agents SDK、LangGraph、ReAct 交叉验证和标准库 workflow / hybrid / ReAct-like 对比实验；仍需真实模型 / Agent framework / repo issue 实验。
 - “自治程度”是否可以作为分类维度？有哪些可靠来源支持？
 - RAG 和 Memory 的边界如何解释给初学者？已完成第一轮验证和标准库最小 RAG pipeline / citation 模拟；仍需 RAG vs short-term vs long-term memory 对比实验。
 
 ## 架构模式
 
-- ReAct 在哪些任务中确实优于单次提示或简单 workflow？已完成论文摘要第一轮验证，仍需本地对比实验。
+- ReAct 在哪些任务中确实优于单次提示或简单 workflow？已完成论文摘要第一轮验证和标准库 ReAct-like tool loop 对比；仍需真实模型、真实工具和真实任务实验。
 - Plan-and-Execute 的收益是否足以抵消额外成本和错误传播？已完成相关架构模式第一轮验证，仍需 planner/executor 最小实验。
 - Reflection / Critic 模式在真实任务中是否稳定提升质量？Reflexion 已完成论文摘要第一轮验证，仍需结合现代模型、成本和错误记忆风险实验。
 - 多 Agent 的收益是否足以抵消通信成本、协调复杂度和调试难度？已完成 AutoGen/CrewAI 第一轮资料验证，仍需最小对比实验。

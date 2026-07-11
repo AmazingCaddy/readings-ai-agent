@@ -13,10 +13,10 @@
 
 | 主题 | 入门资料 | 高可信 reference | 工程/源码 reference | 当前状态 | 缺口 |
 | --- | --- | --- | --- | --- | --- |
-| AI Agent 定义与边界 | 待补 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper | 待补 | 关键段落已精读；部分验证 | 需要 workflow-agent hybrid 最小实验和更多框架横向资料 |
+| AI Agent 定义与边界 | 待补 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper | Workflow / Hybrid / ReAct-like 对比实验 | 关键段落已精读；标准库 workflow-agent 对比已完成；部分验证 | 需要真实模型 / Agent framework / repo issue 实验和更多框架横向资料 |
 | LLM 与上下文工程 | OpenAI Text Generation docs；OpenAI Responses API docs | OpenAI Text Generation docs；OpenAI Structured Outputs docs；OpenAI Responses API docs | OpenAI cookbook 候选 | 关键段落已精读；部分验证 | 需要输出解析、结构化输出和长上下文失败模式最小实验 |
 | Tool Use / Function Calling | OpenAI function calling docs | Toolformer paper；OpenAI function calling docs；OpenAI Responses API docs | Tool calling 参数校验模拟实验；OpenAI cookbook 候选 | 关键段落已精读；标准库模拟实验已完成；部分验证 | 需要真实模型 / API 实验、SDK 文档和其他框架术语对照 |
-| Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；OpenAI Agents SDK docs；LangGraph docs | LangGraph examples 候选 | 关键论文摘要和框架段落已精读；部分验证 | 需要固定 workflow、ReAct、planner/executor、reflection 最小对比实验 |
+| Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；OpenAI Agents SDK docs；LangGraph docs | Workflow / Hybrid / ReAct-like 对比实验；LangGraph examples 候选 | 关键论文摘要和框架段落已精读；标准库 workflow / ReAct-like 对比已完成；部分验证 | 需要 planner/executor、reflection retry、真实模型和真实框架对比实验 |
 | MCP | MCP official docs | MCP official docs；MCP 2025-11-25 spec；MCP Security Best Practices | MCP servers repo；MCP 最小 trace 模拟实验 | spec / 安全 / 授权关键段落已精读；标准库模拟实验已完成；部分验证 | 需要真实 MCP SDK / host trace、权限确认、URL mode / OAuth、恶意 resource/prompt 实验和 host 实现差异对比 |
 | RAG | LlamaIndex RAG docs | RAG paper；LlamaIndex docs；Self-RAG 候选 | RAG 最小 pipeline / citation 模拟实验；LlamaIndex examples 候选 | RAG paper 摘要和 LlamaIndex 核心页面已精读；标准库模拟实验已完成；部分验证 | 需要真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank 对比和 citation correctness 实验 |
 | Memory / 知识库治理 | LangGraph memory docs | MemGPT；MemoryBank；Generative Agents；LangGraph memory docs；OWASP LLM Top 10；NIST AI RMF | Letta docs；Zep docs；长期记忆写入守门模拟实验 | 关键论文、框架文档、风险资料已精读；标准库写入守门模拟已完成；部分验证 | 仍缺真实多会话 Agent / memory framework 收益、污染、隐私、权限、查看/编辑/删除实验 |
@@ -29,7 +29,7 @@
 
 ## 当前优先级
 
-1. 补齐基础定义和术语边界的高可信 references。
+1. 补齐基础定义和术语边界的高可信 references。Agent/Workflow 已完成标准库 workflow / hybrid / ReAct-like 对比，仍需真实模型 / 框架 / repo issue 实验。
 2. 精读并提取已经链接复核的论文、官方文档和安全资料。LLM / Context、Tool Use / Function Calling、MCP、RAG / Memory、Production / Security 已完成第一轮。
 3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。MCP 已完成官方 spec、安全、授权第一轮和标准库 trace 模拟，仍需真实 MCP SDK / host trace 与权限实验；Tool Use 已完成参数校验/重试标准库模拟，仍需真实模型 / API 实验和框架对照；Eval 已完成 OpenAI Evals README、Cookbook、LangSmith、Phoenix 和标准库 trace-aware eval 第一轮，仍需真实 Agent trace、自动评分误判和人工复核实验。
 4. 为 Memory / 知识库治理补充真实多会话 Agent / memory framework 实验。标准库写入守门模拟已完成，仍需扩展隐私、权限、查看、编辑和删除工程资料。

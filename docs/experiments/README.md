@@ -18,6 +18,7 @@
 
 4. ReAct vs 简单 workflow
    - 目标：比较工具搜索任务中 ReAct 和固定 workflow 的成功率、成本和延迟。
+   - 状态：已完成标准库 workflow / hybrid / ReAct-like tool loop 模拟实验，见 [Workflow、Hybrid 与 ReAct-like Tool Loop 对比实验](workflow-agent-comparison/README.md) 和 [2026-07-11 结果](workflow-agent-comparison/results-2026-07-11.md)。仍需真实模型 / Agent framework / repo issue 实验。
 
 5. Planner/Executor vs 单 Agent
    - 目标：验证任务拆解是否提高复杂任务完成率，还是增加错误传播。
