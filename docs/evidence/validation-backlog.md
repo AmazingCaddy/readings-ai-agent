@@ -1,6 +1,6 @@
 # 待验证问题清单
 
-这些问题后续需要通过 references 交叉验证或最小实验确认。未完成验证前，不应写成确定性结论。
+本清单记录仍需补强的验证问题。部分条目已经有窄口径结论可入正文；它们仍保留在 backlog 中，是因为真实模型、真实 API、真实框架、成本、延迟、稳定性或生产效果还没有完成验证。未完成真实验证前，不应把这些宽口径表现写成确定性结论。
 
 ## 概念边界
 
@@ -39,7 +39,7 @@
 
 - Function calling、tool use、structured output 在不同框架中的术语差异是什么？“Tool use 可以连接外部工具能力”和 OpenAI API 层“Function Calling 本身不执行工具”的窄边界已升级为可入正文；跨框架 tool / function / plugin / retriever / flow 术语对照已完成第一轮文档交叉验证。仍需真实最小实现记录工具定义、参数校验、错误回传、权限确认、trace 字段和恢复行为差异。
 - 工具参数校验和重试的最佳实践有哪些官方或工程 references？已完成标准库模拟实验，支持“应用层校验、错误回传、有限重试”的流程；真实 Responses API harness 已准备，仍需配置 API key 后记录真实 API / SDK 行为和框架默认行为对照。
-- 工具调用权限应该如何设计确认边界？
+- 工具调用权限应该如何设计确认边界？窄结论已可入正文：高风险工具需要系统/应用层最小权限、参数校验、人工确认、审批状态恢复、幂等执行和审计 trace 的组合，不能只靠模型自觉。标准库 prompt injection / tool permission、安全 regression set 和审批状态恢复实验已完成；仍需真实 Responses API / Agents SDK / MCP / Semantic Kernel 等框架实验验证 guardrail/HITL 覆盖范围、误报漏报、pause/resume、参数快照、trace 脱敏和跨框架差异。
 - 真实 tool-calling 实验中，参数校验失败后模型能否稳定修正？标准库 fake model 已复现流程，真实 API harness 已准备，但不能证明真实模型稳定性，仍需实际运行结果。
 
 ## MCP

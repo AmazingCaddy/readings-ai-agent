@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 22:18 CST
+**Last Updated:** 2026-07-11 22:24 CST
 **Status:** In Progress
 
 ## Objective
@@ -90,9 +90,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 73. Clarified candidate/reference wording in `docs/references/coverage-matrix.md`. The matrix now states that `待建卡` and `待试跑` entries are future expansion items and cannot support current `可入正文` conclusions. Old reference-column labels like `OpenAI cookbook 候选`, `LangGraph examples 候选`, `LlamaIndex examples 候选`, `官方 examples 候选`, `Self-RAG 候选`, and `Multi-agent debate 候选` were replaced with more precise status labels.
 74. Updated the homepage current-status wording. `docs/index.md` now describes the project as being in evidence-upgrade and real-experiment-preparation stage rather than content-blueprint stage, and it exposes Evidence Notes and Experiments as core entry points.
 75. Re-ran the validation harness runner. It completed with 6 harnesses, 0 failures, 5 real API harnesses skipped because `OPENAI_API_KEY` is not set, and the local MCP stdio harness completed with 17 trace events and `leaked_secret_in_trace=false`. Updated the runner result wording so it no longer conflicts with existing narrow `可入正文` claims; the limitation now applies specifically to real model/API/framework/cost/latency/stability conclusions.
+76. Clarified `docs/evidence/validation-backlog.md`. The introduction now explains that some backlog items already have narrow `可入正文` conclusions but remain open for real model/API/framework/cost/latency/stability validation. The tool-permission confirmation-boundary item now points to the completed standard-library security, permission, regression, and approval-state experiments while keeping real framework guardrail/HITL behavior pending.
 
 ## Technical Context
-- Files modified recently: `docs/experiments/validation-harness-runner/results-2026-07-11.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/evidence/validation-backlog.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
