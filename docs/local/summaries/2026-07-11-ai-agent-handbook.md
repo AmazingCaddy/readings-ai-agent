@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 17:19 Asia/Shanghai
+**Last Updated:** 2026-07-11 17:22 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -54,9 +54,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 37. Completed a standard-library framework selection rubric smoke test under `docs/experiments/framework-selection-rubric/`. It maps five task profiles to framework directions using required/nice-to-have/avoid capabilities, missing required capabilities, and cautions. It supports the chapter 10 guidance to compare frameworks by task difficulty and tradeoffs, but it does not validate real framework implementation cost, trace, permissions, latency, token cost, or maintenance burden.
 38. Completed a first evidence note for Agent autonomy-level boundaries under `docs/evidence/autonomy-level-boundary.md`. It frames autonomy as a control/right-to-act and risk-surface continuum, not a capability rank. Chapter 01, chapter 04, glossary, claim ledger, validation backlog, coverage matrix, and source map now point to this boundary. It relies on existing official docs/evidence and the workflow/hybrid/ReAct-like simulation; no new script was added.
 39. Completed a standard-library RAG vs short-term vs long-term memory comparison under `docs/experiments/rag-memory-comparison/`. It passes 5/5 cases: external knowledge uses RAG plus citation, current-session continuation uses thread state, cross-session language preference uses confirmed long-term memory, stale assistant guess is skipped in favor of user-corrected MkDocs memory, and a private API key request is refused because no safe source exists. This supports the chapter 06 boundary between RAG, short-term memory, and guarded long-term memory, but it does not validate real embedding/vector store/LLM synthesis or real memory framework behavior.
+40. Synchronized `docs/sources/source-card-index.md` with current evidence status. Many rows previously still said “链接已复核；待精读” even though related evidence notes and standard-library experiments were already complete. The index now marks completed first-pass deep reads and partial-validation status for core papers, framework docs, official docs, security docs, and memory docs, and it includes the previously missing OpenAI Structured Outputs and Text Generation cards. No new source card or experiment was added in this batch.
 
 ## Technical Context
-- Files modified recently: `docs/chapters/06-rag-memory.md`, `docs/chapters/12-source-map.md`, `docs/evidence/rag-memory-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/rag-memory-comparison/README.md`, `docs/experiments/rag-memory-comparison/rag_memory_comparison.py`, `docs/experiments/rag-memory-comparison/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-card-index.md`, `docs/chapters/12-source-map.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 

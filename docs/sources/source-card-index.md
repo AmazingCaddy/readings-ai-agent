@@ -6,39 +6,41 @@
 
 | Source card | 主题 | 类型 | 可信度 | 当前验证状态 | 下一步 |
 | --- | --- | --- | --- | --- | --- |
-| [ReAct paper](source-cards/2022-react-paper.md) | Agent 架构 / Tool Use | Paper | A | 链接已复核；待精读 | 提取作者、摘要、核心结论；与框架文档交叉验证 |
-| [RAG paper](source-cards/2020-rag-paper.md) | RAG | Paper | A | 链接已复核；待精读 | 提取 RAG 基本定义和局限；与现代 RAG 文档对比 |
-| [Generative Agents paper](source-cards/2023-generative-agents-paper.md) | Memory / Reflection / Planning | Paper | A | 元数据已复核；待精读 | 提取 observation、planning、reflection 与 memory 关系 |
-| [MemoryBank paper](source-cards/2023-memorybank-paper.md) | Long-term memory | Paper | A | 元数据已复核；待精读 | 提取长期记忆更新、遗忘和用户画像边界 |
-| [MemGPT paper](source-cards/2023-memgpt-paper.md) | Memory management / Context | Paper | A | 元数据已复核；待精读 | 提取 virtual context management 和 memory tier 设计 |
-| [Toolformer paper](source-cards/2023-toolformer-paper.md) | Tool Use | Paper | A | 链接已复核；待精读 | 区分研究式 tool use 与现代 function calling |
-| [Tree of Thoughts paper](source-cards/2023-tree-of-thoughts-paper.md) | Planning | Paper | A | 链接已复核；待精读 | 判断是否适合作为初学者正文或进阶资料 |
-| [Reflexion paper](source-cards/2023-reflexion-paper.md) | Reflection / Eval | Paper | A | 链接已复核；待精读 | 验证 reflection 的适用边界 |
-| [AgentBench paper](source-cards/2023-agentbench-paper.md) | Eval / Benchmark | Paper | A | 链接已复核；待精读 | 提取 benchmark 覆盖任务和局限 |
-| [WebArena paper](source-cards/2023-webarena-paper.md) | Web Agent / Eval | Paper | A | 链接已复核；待精读 | 归纳 Web Agent 评测复杂度 |
-| [AutoGen docs](source-cards/2026-autogen-docs.md) | Multi-agent / Framework | Framework Docs | A | 链接已复核；待精读 | 提取多 Agent 协作抽象和适用边界 |
-| [CrewAI docs](source-cards/2026-crewai-docs.md) | Multi-agent / Framework | Framework Docs | B | 链接已复核；待精读 | 和 AutoGen / LangGraph 横向比较 |
-| [MCP servers repo](source-cards/2026-mcp-servers-repo.md) | MCP / Examples | Source Code | A | 链接已复核；待精读 | 提取 MCP server 示例结构和权限假设 |
+| [ReAct paper](source-cards/2022-react-paper.md) | Agent 架构 / Tool Use | Paper | A | 摘要/核心模式已精读；与 Agent/Workflow 和架构 evidence 交叉验证；部分验证 | 补真实模型 / 框架任务对比，避免泛化为 ReAct 默认更优 |
+| [RAG paper](source-cards/2020-rag-paper.md) | RAG | Paper | A | 摘要和关键动机已精读；与 LlamaIndex、RAG/Memory evidence 和标准库实验交叉验证；部分验证 | 补真实 RAG stack、citation correctness 和成本/延迟实验 |
+| [Generative Agents paper](source-cards/2023-generative-agents-paper.md) | Memory / Reflection / Planning | Paper | A | 摘要和 memory/reflection/planning 关系已精读；长期记忆治理 evidence 已引用；部分验证 | 补真实多会话 Agent / memory framework 收益与污染实验 |
+| [MemoryBank paper](source-cards/2023-memorybank-paper.md) | Long-term memory | Paper | A | 摘要和长期记忆更新/遗忘方向已精读；长期记忆治理 evidence 已引用；部分验证 | 补真实长期记忆收益、过时和隐私实验 |
+| [MemGPT paper](source-cards/2023-memgpt-paper.md) | Memory management / Context | Paper | A | 摘要和显式 memory management 方向已精读；RAG/Memory 与长期记忆 evidence 已引用；部分验证 | 补真实 memory tier / context management 实验 |
+| [Toolformer paper](source-cards/2023-toolformer-paper.md) | Tool Use | Paper | A | 摘要和研究式 tool use 边界已精读；Function Calling evidence 已引用；部分验证 | 补真实 API tool-calling validation / retry 实验 |
+| [Tree of Thoughts paper](source-cards/2023-tree-of-thoughts-paper.md) | Planning | Paper | A | 摘要和搜索式推理边界已精读；架构模式 evidence 已引用；部分验证 | 补真实 planning/search 与 workflow 对比实验 |
+| [Reflexion paper](source-cards/2023-reflexion-paper.md) | Reflection / Eval | Paper | A | 摘要和语言反馈/反思边界已精读；reflection retry 实验已完成；部分验证 | 补真实 critic、长期 episodic memory、成本和人工评审实验 |
+| [AgentBench paper](source-cards/2023-agentbench-paper.md) | Eval / Benchmark | Paper | A | 摘要和 benchmark / trajectory 边界已精读；eval evidence 已引用；部分验证 | 补真实 Agent trace、LLM-as-judge 和人工复核实验 |
+| [WebArena paper](source-cards/2023-webarena-paper.md) | Web Agent / Eval | Paper | A | 摘要和 Web Agent 评测复杂度已精读；eval evidence 已引用；部分验证 | 补真实 web/tool trace 评测和失败分类实验 |
+| [AutoGen docs](source-cards/2026-autogen-docs.md) | Multi-agent / Framework | Framework Docs | A | 关键多 Agent/Teams/GraphFlow 段落已精读；multi-agent evidence 和框架 rubric 已引用；部分验证 | 补真实 AutoGen / CrewAI / LangGraph 同任务横向实验 |
+| [CrewAI docs](source-cards/2026-crewai-docs.md) | Multi-agent / Framework | Framework Docs | B | Introduction / Flows / Crews 抽象已精读；multi-agent evidence 已引用；部分验证 | 和 AutoGen / LangGraph 做真实横向比较，避免营销式结论 |
+| [MCP servers repo](source-cards/2026-mcp-servers-repo.md) | MCP / Examples | Source Code | A | README / reference implementations 已复核；MCP role evidence 已引用；部分验证 | 补真实 MCP server 示例结构、权限假设和 host trace 实验 |
 | [OpenAI Function Calling docs](source-cards/2026-openai-function-calling-docs.md) | Tool Use / Function Calling | Official Docs | A | 关键段落已精读；参数校验/重试模拟实验已完成；部分验证 | 补真实模型 / API 实验和其他框架术语对照 |
-| [MCP official docs](source-cards/2026-mcp-official-docs.md) | MCP | Official Docs / Spec | A | 关键 spec / security / authorization 页面已精读；部分验证 | 运行最小 MCP trace、权限确认和恶意 resource/prompt 实验 |
-| [LangGraph docs](source-cards/2026-langgraph-docs.md) | Agent 架构 / Orchestration | Framework Docs | A | 链接已复核；待精读 | 提取 state graph、workflow 和持久化相关抽象 |
-| [LangGraph memory docs](source-cards/2026-langgraph-memory-docs.md) | Short-term / Long-term memory | Framework Docs | A | 链接已复核；待精读 | 提取短期/长期记忆边界和状态管理实践 |
-| [Letta docs](source-cards/2026-letta-docs.md) | Agent memory / Stateful agents | Framework Docs | B | 链接已复核；待精读 | 和 MemGPT 论文及其他 memory 框架对照 |
+| [MCP official docs](source-cards/2026-mcp-official-docs.md) | MCP | Official Docs / Spec | A | 关键 spec / security / authorization 页面已精读；MCP trace 模拟已完成；部分验证 | 补真实 MCP SDK / host trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验 |
+| [LangGraph docs](source-cards/2026-langgraph-docs.md) | Agent 架构 / Orchestration | Framework Docs | A | 关键 stateful workflow / agent / durable execution / HITL 段落已精读；多个 architecture evidence 已引用；部分验证 | 补真实 LangGraph workflow / agent 对比实验 |
+| [LangGraph memory docs](source-cards/2026-langgraph-memory-docs.md) | Short-term / Long-term memory | Framework Docs | A | 关键 short-term / long-term memory 边界已精读；RAG/Memory 对比实验已完成；部分验证 | 补真实 memory framework、用户编辑/删除和多会话收益实验 |
+| [Letta docs](source-cards/2026-letta-docs.md) | Agent memory / Stateful agents | Framework Docs | B | 关键 memory inspection/editing/versioning 段落已精读；长期记忆治理 evidence 已引用；部分验证 | 和 Zep / LangGraph 做真实 memory governance 对比实验 |
 | [LlamaIndex docs](source-cards/2026-llamaindex-docs.md) | RAG / Data framework | Framework Docs | A | 关键页面已精读；RAG pipeline / citation 模拟实验已完成；部分验证 | 补真实 embedding / LlamaIndex pipeline 和 citation correctness 实验 |
-| [NIST AI RMF](source-cards/2026-nist-ai-rmf.md) | Risk / Governance | Standard / Guidance | A | 链接已复核；待精读 | 提取生产化风险管理检查点 |
+| [NIST AI RMF](source-cards/2026-nist-ai-rmf.md) | Risk / Governance | Standard / Guidance | A | 关键风险治理段落已精读；security / memory / production evidence 已引用；部分验证 | 补真实风险评审清单和安全 regression set |
 | [OpenAI Agents SDK docs](source-cards/2026-openai-agents-sdk-docs.md) | Agent Framework | Official Docs | A | 关键页面已精读；部分验证 | 继续做 guardrails/HITL/tool permission 最小实验和框架横向对比 |
 | [OpenAI Cookbook](source-cards/2026-openai-cookbook.md) | Examples / Practice | Official Examples | A/B | 具体 recipe 已复核；部分验证 | 本地试跑最小项目并记录成本、失败样例和初学者阻塞点 |
-| [OpenAI Evals repo](source-cards/2026-openai-evals-repo.md) | Eval / Source Code | Source Code | A | 链接已复核；待精读 | 提取 eval 数据结构和回归测试实践 |
-| [OpenAI Responses API docs](source-cards/2026-openai-responses-api-docs.md) | LLM 应用接口 | Official Docs | A | 链接已复核；待精读 | 提取输入输出、响应结构和工具调用接口 |
-| [OWASP LLM Top 10](source-cards/2026-owasp-llm-top-10.md) | Security | Security Guidance | A | 链接已复核；待精读 | 提取 Agent 安全风险分类和检查清单 |
-| [Semantic Kernel docs](source-cards/2026-semantic-kernel-docs.md) | Framework / Enterprise integration | Framework Docs | A | 链接已复核；待精读 | 提取插件、工具和编排抽象 |
+| [OpenAI Evals repo](source-cards/2026-openai-evals-repo.md) | Eval / Source Code | Source Code | A | README 和 custom eval 方向已精读；trace-aware eval 实验已完成；部分验证 | 补真实 eval harness、LLM-as-judge 误判和人工复核实验 |
+| [OpenAI Responses API docs](source-cards/2026-openai-responses-api-docs.md) | LLM 应用接口 | Official Docs | A | 输入/输出、tool、structured output、permission 字段已精读；多个 evidence 已引用；部分验证 | 补真实 Responses API / Structured Outputs / tool validation retry 实验 |
+| [OpenAI Structured Outputs docs](source-cards/2026-openai-structured-outputs-docs.md) | Structured Outputs / JSON Schema | Official Docs | A | Structured Outputs、JSON mode、refusal 和 schema mistakes 边界已精读；上下文/结构化输出实验已完成；部分验证 | 补真实 Structured Outputs / JSON mode / refusal / semantic validator 实验 |
+| [OpenAI Text Generation docs](source-cards/2026-openai-text-generation-docs.md) | Text Generation / Context | Official Docs | A | output array、message roles、instructions 和 context window 边界已精读；上下文治理实验已完成；部分验证 | 补真实 Responses API 输出结构、长上下文成本和跨模型稳定性实验 |
+| [OWASP LLM Top 10](source-cards/2026-owasp-llm-top-10.md) | Security | Security Guidance | A | 关键风险项已精读；prompt injection / permission evidence 已引用；部分验证 | 补真实攻击样例、误报/漏报和安全 regression set |
+| [Semantic Kernel docs](source-cards/2026-semantic-kernel-docs.md) | Framework / Enterprise integration | Framework Docs | A | 插件、task automation、agent framework、process framework 段落已精读；framework/security evidence 已引用；部分验证 | 补真实 Semantic Kernel plugin / HITL / process 对比实验 |
 | [LangSmith docs](source-cards/2026-langsmith-docs.md) | Observability / Evaluation | Framework Docs | B | 关键页面已精读；部分验证 | 结合本地 trace-aware eval 实验验证字段清单和误判率 |
 | [Arize Phoenix docs](source-cards/2026-arize-phoenix-docs.md) | Observability / Evaluation | Framework Docs | B | 关键页面已精读；部分验证 | 结合本地 trace-aware eval 实验验证 traces/spans/sessions 设计 |
-| [Zep docs](source-cards/2026-zep-docs.md) | Agent memory / Knowledge graph | Framework Docs | B | 链接已复核；待精读 | 提取工程 memory 系统的冲突和过时信息处理思路 |
+| [Zep docs](source-cards/2026-zep-docs.md) | Agent memory / Knowledge graph | Framework Docs | B | 关键 temporal graph / fact invalidation 段落已精读；长期记忆治理 evidence 已引用；部分验证 | 补真实 Zep / Letta / LangGraph memory governance 对比实验 |
 
 ## 待创建高优先级卡片
 
 | 候选来源 | 主题 | 理由 |
 | --- | --- | --- |
-| Prompt injection papers and security writeups | Security | 需要攻击样例和防护工程实践 |
-| Memory write-guard and knowledge governance engineering cases | Memory | 仍需专门调查写入守门、冲突治理和隐私边界 |
+| Prompt injection papers and security writeups | Security | 已有 OWASP/NIST 和标准库攻击实验；仍需要更多真实攻击样例、防护工程实践和误报/漏报资料 |
+| Memory framework implementation case studies | Memory | 已有 Letta/Zep/LangGraph 第一轮资料和标准库实验；仍需真实 memory framework 的用户查看/编辑/删除、权限和隐私边界案例 |
