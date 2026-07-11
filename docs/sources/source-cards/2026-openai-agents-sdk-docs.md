@@ -56,6 +56,7 @@ OpenAI Agents SDK 文档适合用于解释现代 Agent SDK 的基本抽象、工
 
 - 构建一个最小 tool-calling 任务，对比 Responses API 自己管理 loop 与 Agents SDK 管理 loop 的 trace、guardrails、human approval、敏感 trace 数据配置和状态管理成本。
 - 已完成标准库安全 regression set，可作为后续迁移到 Agents SDK guardrails / HITL 的 case matrix：记录 `allow`、`block`、`require_approval`、false positive、false negative 和 trace secret 泄漏。当前结果不代表 Agents SDK 的真实拦截率。
+- 已纳入框架能力交叉表，用于支撑“轻量 agent runtime / tool loop / tracing / guardrails / sessions”的保守定位；不代表真实横向性能结论。
 
 ## 是否进入正文
 

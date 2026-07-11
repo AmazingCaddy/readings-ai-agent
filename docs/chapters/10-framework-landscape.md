@@ -88,6 +88,16 @@ Enterprise integration 更强调和现有系统、权限、插件、业务流程
 
 下面是基于当前 source cards 和第一轮 evidence notes 的保守定位。关键框架定位已经完成第一轮精读，但仍不能写成“最佳框架排行榜”，因为还缺同一任务的横向实验。
 
+框架能力交叉表把这些框架先按“主轴”粗分：OpenAI Agents SDK 偏轻量 agent runtime，LangGraph 偏状态编排，LlamaIndex 偏 RAG / data framework，AutoGen 和 CrewAI 偏多 Agent 协作，Semantic Kernel 偏企业插件和业务流程集成。这个表适合帮助初学者缩小阅读范围，但不等于性能、成本或可靠性排名。
+
+| 任务难点 | 优先观察的框架方向 | 仍要检查什么 |
+| --- | --- | --- |
+| 最小工具调用、trace、handoff | 轻量 SDK / agent runtime | 工具权限、错误恢复、成本和 eval。 |
+| 状态、分支、审批、恢复 | Workflow / graph runtime | 状态持久化、HITL、重试和 trace 可读性。 |
+| 文档、检索、引用、知识库 | RAG / data framework | chunk metadata、citation correctness、rerank 和无证据拒答。 |
+| 角色协作、多视角 review | Multi-agent framework | 协调成本、冲突处理、重复工作和最终责任边界。 |
+| 企业插件、OpenAPI/MCP、流程治理 | Enterprise integration framework | 权限、审批、插件安全、部署和维护复杂度。 |
+
 ### OpenAI Agents SDK
 
 适合作为理解现代 Agent SDK 抽象、工具调用和 tracing 的入口。它和 OpenAI API 生态结合紧密，适合先做最小 tool-calling agent。
@@ -195,6 +205,7 @@ Semantic Kernel 文档已确认它把自身定位为 lightweight open-source dev
 - LlamaIndex source card 明确其适合 RAG、数据连接、索引和 agent data framework；需区分通用 RAG 概念和框架实现。
 - Semantic Kernel source card 已完成第一轮精读，可支撑 enterprise integration、plugins/functions、native/OpenAPI/MCP plugin 导入、agent framework、human-in-the-loop 和 process orchestration 的框架定位；其 Process Framework 当前仍标注 experimental。
 - 框架生态定位边界已完成第一轮验证和标准库 rubric smoke test：各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；但不能从文档或 rubric 直接推出“哪个框架最好”。
+- 框架能力交叉表已把 6 个常见框架的主轴、适合学习内容、不应误读点和真实实验缺口整理到 evidence note；它支撑本章的定位表，但仍不能替代真实框架横向实验。
 
 ## 待验证问题
 
@@ -230,4 +241,5 @@ Semantic Kernel 文档已确认它把自身定位为 lightweight open-source dev
 - [Evidence Note: 多 Agent 不是默认更好](../evidence/multi-agent-default-boundary.md)
 - [多 Agent 与 Flow 控制对比实验结果](../experiments/multi-agent-comparison/results-2026-07-11.md)
 - [Evidence Note: 框架生态定位边界](../evidence/framework-landscape-boundary.md)
+- [Evidence Note: 框架能力交叉表与选择边界](../evidence/framework-capability-crosswalk.md)
 - [框架选择 Rubric Smoke Test 结果](../experiments/framework-selection-rubric/results-2026-07-11.md)

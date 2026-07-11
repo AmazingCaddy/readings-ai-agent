@@ -35,7 +35,7 @@
 | Prompt injection 不能只靠 prompt 解决。 | OWASP LLM Top 10；NIST AI RMF；OpenAI Function Calling docs；OpenAI Agents SDK docs；Semantic Kernel docs；Evidence Note: Prompt Injection 与权限边界；Evidence Note: 工具权限、人工确认与审计边界；Prompt Injection 与工具权限最小实验结果；安全 Regression Set 最小实验结果；Real Prompt Injection / Permission harness | 部分验证 | 可作为生产安全章节的核心提醒；标准库实验已验证 prompt-only 会执行注入诱导的写工具并泄露假 secret，安全 regression set 进一步覆盖越权读取、金额阈值、敏感信息、破坏性工具和幂等性；真实 API harness 已准备但结果待跑，仍需真实模型 / 框架 guardrail 实验。 |
 | 高风险工具应使用最小权限、参数校验、guardrails、人工确认、审批状态恢复和审计 trace 的组合，而不是只靠模型自觉。 | OWASP LLM Top 10；OpenAI Responses API docs；OpenAI Agents SDK docs；Semantic Kernel docs；Observability evidence；Evidence Note: 工具权限、人工确认与审计边界；Prompt Injection 与工具权限最小实验结果；安全 Regression Set 最小实验结果；Real Prompt Injection / Permission harness | 部分验证 | 可作为第 09/11 章工程建议；标准库实验已验证只读/写工具分离、审批拒绝和 trace 脱敏流程；安全 regression set 支撑同时记录 allow/block/require_approval、false positive、false negative 和 secret leak；真实 API harness 已准备但结果待跑，仍需真实框架 guardrail/HITL 覆盖范围实验。 |
 | 多 Agent 不是默认更好，会带来成本、调试和协调复杂度。 | AutoGen docs；CrewAI docs；AgentBench；Evidence Note: 多 Agent 不是默认更好；多 Agent 与 Flow 控制对比实验结果 | 部分验证 | 可作为 Planning / Orchestration 和框架生态章节的核心提醒；标准库实验已验证无控制多 Agent 的重复读取、缺证据和冲突风险，仍需真实模型 / 框架 / 成本实验。 |
-| Agent 框架应按任务难点比较，不应写成“某个框架默认最好”。 | OpenAI Agents SDK docs；LangGraph docs；LlamaIndex docs；AutoGen docs；CrewAI docs；Semantic Kernel docs；Evidence Note: 框架生态定位边界；框架选择 Rubric Smoke Test 结果 | 部分验证 | 可作为框架生态章节核心边界；标准库 rubric 支撑任务画像和比较维度设计，仍需真实同一任务横向实验。 |
+| Agent 框架应按任务难点比较，不应写成“某个框架默认最好”。 | OpenAI Agents SDK docs；LangGraph docs；LlamaIndex docs；AutoGen docs；CrewAI docs；Semantic Kernel docs；Evidence Note: 框架生态定位边界；Evidence Note: 框架能力交叉表与选择边界；框架选择 Rubric Smoke Test 结果 | 部分验证 | 可作为框架生态章节核心边界；框架能力交叉表和标准库 rubric 支撑任务画像、主轴定位和比较维度设计，仍需真实同一任务横向实验。 |
 | 实践项目路线可以用 Cookbook 的具体 recipe 作为模板，但 Cookbook 不能替代 API 文档、生产安全指南或本地实验。 | OpenAI Cookbook；OpenAI Function Calling docs；OpenAI Responses API docs；OpenAI Evals repo；Evidence Note: 实践路线与 Cookbook 示例边界；实践路线 Smoke Harness 结果 | 部分验证 | 可作为第 11 章项目 reference；标准库 smoke harness 支撑验收标准、trace 和失败分类设计，仍需真实 Cookbook / API 试跑；必须引用具体 recipe，并提醒示例不是生产保证。 |
 | MCP 是连接工具和上下文能力的协议，不是 Agent 框架本身。 | MCP official docs；MCP servers repo；Evidence Note: MCP Host / Client / Server 职责边界；MCP 最小 Trace 实验结果；MCP stdio JSON-RPC harness | 部分验证 | 可作为 MCP 章节核心边界；最小模拟 trace 和 stdio harness 已验证职责流和进程消息边界，仍需真实 MCP SDK / host trace 实验。 |
 | MCP 标准化了工具、资源、提示、授权、roots、elicitation 和 sampling 等协议能力，但安全不是协议接入后自动完成。 | MCP official docs；MCP Security Best Practices；Evidence Note: MCP 安全、授权与权限边界；Production permission evidence；MCP 最小 Trace 实验结果；MCP stdio JSON-RPC harness | 部分验证 | 可作为 MCP / Production 章节安全边界；需说明 authorization 是 optional，roots 不等于 sandbox，token passthrough 被禁止，模拟实验和 stdio harness 已验证 tool approval / resource review trace，仍需真实权限/URL/OAuth 实验。 |
@@ -51,7 +51,7 @@
 7. 长期记忆的收益与治理风险边界。已完成第一轮论文、工程文档、安全资料交叉验证和标准库写入守门模拟，待补真实多会话 Agent / memory framework 收益与污染实验。
 8. 上下文工程与结构化输出边界。已完成第一轮官方文档交叉验证、标准库输出解析 / 上下文治理模拟实验、上下文策略对比实验和真实 API harness 准备，待实际运行真实 Responses API / Structured Outputs、真实长上下文、RAG / 摘要 / 成本对比和跨模型稳定性实验。
 9. Agent 架构模式边界。已完成 ReAct、Reflexion、Tree of Thoughts、LangGraph、已有 workflow/multi-agent evidence 第一轮交叉验证、标准库 workflow / ReAct-like、planner/executor 和 reflection/retry 对比，待补真实框架实验。
-10. 框架生态定位边界。已完成主要框架文档第一轮交叉验证和标准库 rubric smoke test，待补真实同一任务横向实验。
+10. 框架生态定位边界。已完成主要框架文档第一轮交叉验证、框架能力交叉表和标准库 rubric smoke test，待补真实同一任务横向实验。
 11. 实践项目路线。已完成 OpenAI Cookbook 具体 recipe 第一轮验证和标准库 smoke harness，待补真实 Cookbook / API 最小项目试跑、成本估算和初学者跟练体验验证。
 
 ## 升级流程

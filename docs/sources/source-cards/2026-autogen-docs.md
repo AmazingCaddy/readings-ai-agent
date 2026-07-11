@@ -41,6 +41,7 @@ AutoGen 是理解多 Agent 对话、协作和框架抽象的重要工程 referen
 ## 可复现实验
 
 - 对比单 Agent、planner/executor 和多 Agent 在同一任务上的成功率、成本和 trace 可读性。
+- 已纳入框架能力交叉表，用于支撑“AgentChat / Teams / Group Chat / Swarm / GraphFlow / tracing”的保守定位；不代表真实横向性能结论。
 
 ## 是否进入正文
 
