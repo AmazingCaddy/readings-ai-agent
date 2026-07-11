@@ -9,6 +9,7 @@
 | OpenAI Agent 构建 | OpenAI Agents SDK documentation | Official Docs | A | 链接已复核；source card 已创建 |
 | OpenAI API 工具调用 | OpenAI tool calling / function calling documentation | Official Docs | A | 链接已复核；source card 已创建 |
 | OpenAI Responses API | OpenAI Responses API documentation | Official Docs | A | 链接已复核；source card 已创建 |
+| OpenAI File Search / Retrieval | OpenAI File Search and Retrieval documentation | Official Docs | A | File Search / Retrieval 官方 Markdown 已复核；source card 已创建；真实 vector store / citation correctness / 成本延迟实验待做 |
 | MCP 协议 | Model Context Protocol official specification | Spec | A | 链接已复核；source card 已创建 |
 | MCP 产品集成 | Anthropic MCP connector / tunnels documentation | Official Docs | A | 链接已复核；source card 已创建；旧 Anthropic MCP 概念页已重定向到 MCP 官方站点，通用协议概念仍引用 MCP official docs |
 | LangGraph | LangGraph documentation | Framework Docs | A | 链接已复核；source card 已创建 |
@@ -43,7 +44,7 @@
 | Observability | Arize Phoenix documentation | Engineering Docs | B | 关键页面已复核；source card 已创建 |
 | Evals | OpenAI Evals repository | Source Code | A | 链接已复核；source card 已创建 |
 | Browser agents | Playwright / browser-use related examples；Anthropic computer use documentation | Source / Engineering | A/B | Browser Use GitHub metadata、README、docs llms.txt、Playwright actions/trace viewer 和 Anthropic computer use official docs 已复核；source cards 已创建；真实浏览器 / computer-use Agent 试跑待做 |
-| RAG implementation | LlamaIndex examples repository | Source Code | A/B | GitHub 仓库元数据、README、examples index 和关键 notebook 抽样已复核；source card 已创建；真实试跑待做 |
+| RAG implementation | LlamaIndex examples repository；OpenAI File Search / Retrieval docs | Source Code / Official Docs | A/B | GitHub 仓库元数据、README、examples index 和关键 notebook 抽样已复核；OpenAI File Search / Retrieval 官方文档已复核；source cards 已创建；真实试跑待做 |
 | LangGraph examples | LangGraph examples repository | Source Code | A/B | GitHub 仓库元数据、current docs quickstart、examples README 和历史 notebook 抽样已复核；source card 已创建；examples 目录已归档，真实试跑应使用当前 docs |
 | MCP examples | MCP official example servers | Source Code | A | 链接已复核；source card 已创建 |
 

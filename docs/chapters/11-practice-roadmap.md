@@ -96,6 +96,7 @@
 ### 可参考 recipe
 
 - OpenAI Cookbook 的 `Doing RAG on PDFs using File Search in the Responses API`。它适合作为 PDF/RAG 入门练习参考，也包含 retrieval evaluation 的例子。
+- OpenAI File Search / Retrieval source card。它适合用来理解 vector store、`file_search_call`、file citations、included search results、metadata filtering、ranking/chunking、expiration 和成本边界。
 
 ## 项目 4：短期状态与长期记忆
 
@@ -306,6 +307,7 @@
 
 - “OpenAI Cookbook 的具体 recipe 可以作为初学者实践项目参考，但不能替代 API 文档、生产安全指南或本地实验”已升级为可入正文。正文应引用具体 recipe，而不是笼统引用整个站点；Cookbook 是示例集合，不是 API 规范或生产保证。
 - 当前已复核的 Cookbook recipe 可以支撑以下练习方向：Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits。
+- OpenAI File Search / Retrieval docs 可作为 File Search RAG 项目的 API 边界 reference：托管 `file_search` 仍需要记录 included search results、citations、filters、ranking/chunking、成本、延迟和删除一致性。
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源，但具体 server 的权限和安全假设需要逐个检查。
 - OpenAI Evals repo 可作为小型回归测试和 eval 结构参考；Agent eval 仍应结合 trace 和业务任务。
@@ -338,6 +340,7 @@
 
 - [OpenAI Responses API Reference](../sources/source-cards/2026-openai-responses-api-docs.md)
 - [OpenAI Function Calling / Tool Calling Documentation](../sources/source-cards/2026-openai-function-calling-docs.md)
+- [OpenAI File Search and Retrieval Documentation](../sources/source-cards/2026-openai-file-search-retrieval-docs.md)
 - [OpenAI Cookbook](../sources/source-cards/2026-openai-cookbook.md)
 - [MCP servers repo](../sources/source-cards/2026-mcp-servers-repo.md)
 - [OpenAI Evals Repository](../sources/source-cards/2026-openai-evals-repo.md)

@@ -68,6 +68,7 @@ nav:
           - Google Cloud Responsible AI docs: sources/source-cards/2026-google-responsible-ai-docs.md
           - MCP servers repo: sources/source-cards/2026-mcp-servers-repo.md
           - OpenAI Function Calling docs: sources/source-cards/2026-openai-function-calling-docs.md
+          - OpenAI File Search and Retrieval docs: sources/source-cards/2026-openai-file-search-retrieval-docs.md
           - MCP official docs: sources/source-cards/2026-mcp-official-docs.md
           - Anthropic MCP docs: sources/source-cards/2026-anthropic-mcp-docs.md
           - LangGraph docs: sources/source-cards/2026-langgraph-docs.md

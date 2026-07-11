@@ -184,6 +184,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 - Self-RAG 论文摘要已完成第一轮精读，可支撑“不要盲目固定检索；需要评估 retrieval necessity、passage relevance、answer faithfulness 和 citation accuracy”的进阶 RAG 边界。它不能证明当前工程默认应使用 Self-RAG，也不能替代真实 embedding / vector store / rerank / LLM synthesis 实验。
 - 本地标准库 RAG pipeline 模拟实验复现了 chunk、retrieve、synthesize 三个可观察阶段，输出 chunk-level citations，并在 unsupported question 上返回 `grounded=false`；它支撑最小 citation/source 追溯和无证据拒答设计。真实 LLM citation synthesis harness 已准备，但仍使用本地关键词检索且结果待跑，不证明真实 embedding / vector store / rerank 效果。
 - LlamaIndex examples repo 已完成第一轮复核：`CitationQueryEngine` / `response.source_nodes`、RAG workflow with reranking、BM25 / hybrid retrieval 等示例可作为工程结构 reference；这些示例不能证明 citation correctness、answer faithfulness、最佳 chunk/top-k/rerank 策略或生产可靠性。
+- OpenAI File Search / Retrieval 文档已完成第一轮复核：Responses API 的 `file_search` 是 hosted tool，可基于 vector stores 检索已上传文件，并返回 `file_search_call` 与 `file_citation` annotations；Retrieval guide 补充 semantic search、query rewriting、attribute filtering、ranking options、chunking defaults/limits、expiration、pricing 和删除 eventually consistent 边界。它适合支撑“托管检索也要记录 search results、citations、filters、ranking/chunking、成本和延迟”的工程表述，但不能证明 File Search 默认引用正确、默认低成本或默认生产可靠。
 - 本地标准库上下文策略对比实验显示，基础 keyword RAG 可能召回不可信外部文档，lossy summary 可能丢失 source id；它支撑 RAG 需要 trust/freshness metadata、citation 和 human gate trace 的工程边界，但不证明真实 embedding / rerank 表现。
 - 本地标准库 RAG / Memory 对比实验显示：RAG 适合外部知识和 citation，short-term memory 适合当前 thread state，guarded long-term memory 适合用户确认的跨会话偏好和纠正事实；敏感且无安全来源的问题应拒答。该实验支撑分层治理边界，但不证明真实框架质量。
 - LangGraph memory 文档按 recall scope 区分 short-term/thread-scoped memory 和 long-term/cross-session memory，可作为短期/长期记忆工程边界的参考。
@@ -195,7 +196,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 
 ## 待验证问题
 
-- 真实 embedding / vector store / LLM synthesis 下，最小 RAG baseline 应该包含哪些指标？当前真实 LLM citation harness 已准备，仍需实际运行并扩展到 embedding / vector store / rerank。
+- 真实 embedding / vector store / OpenAI File Search / LLM synthesis 下，最小 RAG baseline 应该包含哪些指标？当前真实 LLM citation harness 已准备，仍需实际运行并扩展到 embedding / vector store / File Search / rerank。
 - chunk size、top-k 和 rerank/filter 如何影响 citation correctness、answer faithfulness、latency 和 token cost？
 - 真实多会话 Agent 中，长期记忆在哪些任务中有稳定收益？
 - 真实 memory framework 中，写入守门、用户查看/编辑/删除和失效历史如何实现？
@@ -223,6 +224,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 
 ### Framework Docs
 
+- [OpenAI File Search and Retrieval Documentation](../sources/source-cards/2026-openai-file-search-retrieval-docs.md)
 - [LlamaIndex Documentation](../sources/source-cards/2026-llamaindex-docs.md)
 - [LlamaIndex Examples Repository](../sources/source-cards/2026-llamaindex-examples-repo.md)
 - [LangGraph Memory Documentation](../sources/source-cards/2026-langgraph-memory-docs.md)

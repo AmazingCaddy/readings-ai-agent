@@ -14,6 +14,7 @@
 - Source 6：[上下文策略对比实验结果](../experiments/context-strategy-comparison/results-2026-07-11.md)
 - Source 7：[Self-RAG paper](../sources/source-cards/2023-self-rag-paper.md)
 - Source 8：[LlamaIndex Examples Repository](../sources/source-cards/2026-llamaindex-examples-repo.md)
+- Source 9：[OpenAI File Search and Retrieval Documentation](../sources/source-cards/2026-openai-file-search-retrieval-docs.md)
 
 ## 交叉验证结果
 
@@ -26,23 +27,28 @@
 - 一致点：LlamaIndex Retriever 页面把 retriever 定义为根据 query 或 chat message 抓取最相关 context 的组件；Query Engine 页面说明 query engine 通常基于 indexes 和 retrievers 对数据提问并返回 rich response。
 - 一致点：LlamaIndex RAG 总览明确 Evaluation 是关键阶段，用于检查相对其他策略或修改后的效果，并关注 accurate、faithful 和 fast；这支持“RAG 需要评测而不是凭感觉调参”。
 - 一致点：LlamaIndex examples repo 中 `workflow/rag.ipynb` 把 RAG + reranking 拆成 indexing、retrieval、rerank 和 synthesis；`query_engine/citation_query_engine.ipynb` 使用 `CitationQueryEngine` 并展示 `response.source_nodes`；`retrievers/bm25_retriever.ipynb` 展示 nodes、docstore、metadata filter、BM25、hybrid retriever 和 `RetrieverQueryEngine`。这补强了“工程 RAG 示例会显式组织 pipeline、retriever 和 source/citation trace”的代码层证据。
+- 一致点：OpenAI File Search guide 把 `file_search` 描述为 Responses API 的 hosted tool，基于 vector stores 中已上传文件做 semantic and keyword search，并返回 `file_search_call` 和带 `file_citation` annotations 的 message。这补强了“托管 RAG 工具也应观察工具调用、检索 query 和 citation/source”的 API 层证据。
+- 一致点：OpenAI File Search guide 明确 search results 默认不返回，需使用 `include=["file_search_call.results"]`；这与本手册要求保存 retrieval trace、source binding 和可审计证据一致。
+- 一致点：OpenAI Retrieval guide 说明 semantic search 基于 vector embeddings，可命中少量或没有关键词重叠的结果；同时支持 query rewriting、attribute filtering、ranking options、hybrid search 权重、vector store attributes、expiration policies 和 chunking strategy。这补强了“RAG 质量来自检索、过滤、排序、chunking 和成本治理组合，而不是单个 prompt”的工程边界。
+- 一致点：OpenAI Retrieval guide 说明 vector store file 加入后会自动 chunk、embed 和 index，并给出默认 chunking 参数、chunking 限制、文件大小/token 限制、storage pricing 和删除后 eventual consistency。这支持第 06/11 章把托管 RAG 也纳入成本、延迟、删除一致性和权限验证。
 - 边界：LlamaIndex 是框架文档，支撑现代工程术语和流程，但不能证明某个 chunk size、embedding、vector store、retriever 或 reranker 在所有任务中最优。
 - 边界：LlamaIndex examples 可以证明框架示例中存在 citation / source node 相关实现形态，但不能证明真实 citation correctness、answer faithfulness、source attribution 稳定性或生产权限边界。
+- 边界：OpenAI File Search / Retrieval 是官方产品文档，支撑 API shape 和托管检索能力存在；不能证明默认 chunking/ranking、file citations、semantic search 或 hosted tool 在具体业务中的 citation correctness、faithfulness、成本、延迟或权限治理效果。
 - 本地实验：标准库最小 RAG pipeline 把 3 个文档加载为带 metadata 的 chunks，用关键词 overlap 检索，输出绑定到 `chunk_id`、`source_id`、`title`、`url` 的 citations，并在无检索证据时返回 `grounded=false`。这支持“最小 RAG 应记录 chunk / retrieve / synthesize trace，并把 answer citation 绑定到具体 chunk”的工程建议。
 - 本地实验：标准库上下文策略对比实验中，基础 `keyword_rag` 在一个 case 里找对产品文档，但在退款争议 case 中把外部注入 attachment 排到前面，导致错误答案和错误 human-review gate。这支持“RAG retrieval 需要 trust/freshness metadata、filter、citation 校验和权限边界”的工程建议。
 
 ## 实验验证
 
 - 是否需要实验：是
-- 实验设计：用同一组手册资料建立最小 RAG pipeline，比较不同 chunk size、metadata、top-k、rerank/filter 和无 RAG baseline。记录检索命中率、引用正确率、答案忠实度、延迟、token 成本和无法回答时的处理。
+- 实验设计：用同一组手册资料建立最小 RAG pipeline，比较不同 chunk size、metadata、top-k、rerank/filter、OpenAI File Search / vector store 和无 RAG baseline。记录检索命中率、included search results、引用正确率、答案忠实度、延迟、token / storage 成本、删除一致性和无法回答时的处理。
 - 结果：已完成标准库最小 pipeline / citation 模拟实验。实验验证了 chunk metadata、retrieval trace、citation 字段和 unsupported question 拒答流程。尚未覆盖真实 embedding、vector store、rerank、LLM synthesis、chunk size 对比、latency 或 token cost。
 
 ## 结论状态
 
 - 可入正文：窄结论“RAG 的基础动机包括外部知识访问、知识更新和 provenance / source traceability”已完成第一轮交叉验证。RAG paper 摘要直接支撑知识密集任务、外部检索、provenance 和 world knowledge 更新动机；LlamaIndex RAG 文档支撑现代工程中通过 loading / indexing / retrieval / response synthesis / evaluation 把外部数据接入 LLM 上下文。
-- 可入正文：窄结论“工程 RAG 是 loading、indexing、storing、querying/retrieval、response synthesis 和 evaluation 等阶段组成的可观察 pipeline，不是单个 prompt 技巧；最小可治理 RAG 应保留 chunk metadata、retrieval trace、citation/source 绑定、检索必要性/相关性判断和无证据拒答或 `grounded=false` 标记”已完成第一轮交叉验证。RAG paper 支撑外部检索、provenance 和知识更新动机，Self-RAG paper 支撑不要盲目固定检索、需要评估 retrieval necessity / passage relevance / critique / citation accuracy，LlamaIndex docs 支撑现代工程流程和组件边界，LlamaIndex examples repo 补强 citation/source node、retriever 和 RAG workflow 的代码示例证据，标准库最小 pipeline 实验复现了 chunk / retrieve / synthesize trace、chunk-level citations 和 unsupported question 拒答流程。
-- 部分验证：真实 RAG stack、embedding / vector store、chunk size/top-k/rerank 对比、LLM synthesis faithfulness、citation correctness、latency、token cost 和生产权限边界仍需实验；不能写成某个检索或 chunk 策略默认最优。
+- 可入正文：窄结论“工程 RAG 是 loading、indexing、storing、querying/retrieval、response synthesis 和 evaluation 等阶段组成的可观察 pipeline，不是单个 prompt 技巧；最小可治理 RAG 应保留 chunk metadata、retrieval trace、citation/source 绑定、检索必要性/相关性判断和无证据拒答或 `grounded=false` 标记”已完成第一轮交叉验证。RAG paper 支撑外部检索、provenance 和知识更新动机，Self-RAG paper 支撑不要盲目固定检索、需要评估 retrieval necessity / passage relevance / critique / citation accuracy，LlamaIndex docs 支撑现代工程流程和组件边界，LlamaIndex examples repo 补强 citation/source node、retriever 和 RAG workflow 的代码示例证据，OpenAI File Search / Retrieval docs 补强 hosted file search、vector stores、included search results、metadata filtering、ranking、chunking、expiration 和成本边界，标准库最小 pipeline 实验复现了 chunk / retrieve / synthesize trace、chunk-level citations 和 unsupported question 拒答流程。
+- 部分验证：真实 RAG stack、OpenAI File Search / vector store、embedding、chunk size/top-k/rerank 对比、LLM synthesis faithfulness、citation correctness、latency、token / storage cost、删除一致性和生产权限边界仍需实验；不能写成某个检索、托管工具或 chunk 策略默认最优。
 
 ## 可进入章节
 
-- 是。可以确定写成：RAG 的动机是让生成系统能使用外部知识、处理知识更新并保留 provenance / source traceability；工程 RAG 是一条 pipeline，而不是单个 prompt 技巧。初学者应先保证加载、切分、索引、检索、回答合成、citation/source 绑定和评测可观察；还要避免盲目固定检索，至少记录检索是否必要、passage 是否相关以及无证据时如何拒答或标记 `grounded=false`。真实 embedding、rerank、hybrid retrieval、Self-RAG/agentic RAG 的质量和成本仍需要实验比较。
+- 是。可以确定写成：RAG 的动机是让生成系统能使用外部知识、处理知识更新并保留 provenance / source traceability；工程 RAG 是一条 pipeline，而不是单个 prompt 技巧。初学者应先保证加载、切分、索引、检索、回答合成、citation/source 绑定和评测可观察；使用托管 File Search / vector store 时，也要显式记录检索结果、citations、metadata filters、ranking/chunking 设置、成本和延迟。真实 embedding、rerank、hybrid retrieval、Self-RAG/agentic RAG、File Search 的质量和成本仍需要实验比较。

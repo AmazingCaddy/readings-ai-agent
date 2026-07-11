@@ -7,7 +7,7 @@
 - Agent 和 Workflow 的边界如何定义才准确？窄结论已可入正文：二者是控制权、状态推进、工具调用顺序和运行时决策方式的连续谱，不是互斥阵营；仍需真实模型 / Agent framework / repo issue 实验验证具体架构收益。
 - “自治程度”是否可以作为分类维度？窄结论已可入正文：它可以作为控制权和风险面的连续谱维度，但不能写成能力等级；仍需真实模型 / 框架 / 成本 / 权限实验验证不同自治程度的实际收益和风险。
 - RAG 和 Memory 的边界如何解释给初学者？术语边界已升级为可入正文；仍需真实 RAG / memory framework / 多会话质量实验验证效果、成本和隐私风险。
-- RAG 是否只是一种 prompt 技巧？窄结论已可入正文：工程 RAG 是 loading、indexing、storing、querying/retrieval、response synthesis 和 evaluation 等阶段组成的可观察 pipeline；最小可治理 RAG 需要 chunk metadata、retrieval trace、citation/source 绑定和无证据拒答或 `grounded=false` 标记。仍需真实 embedding / vector store、chunk size/top-k/rerank、LLM synthesis faithfulness、citation correctness、latency 和 token cost 实验验证具体质量表现。
+- RAG 是否只是一种 prompt 技巧？窄结论已可入正文：工程 RAG 是 loading、indexing、storing、querying/retrieval、response synthesis 和 evaluation 等阶段组成的可观察 pipeline；最小可治理 RAG 需要 chunk metadata、retrieval trace、citation/source 绑定和无证据拒答或 `grounded=false` 标记。OpenAI File Search / Retrieval docs 已补托管 `file_search`、vector stores、included search results、metadata filtering、ranking、chunking 和成本边界。仍需真实 embedding / vector store / File Search、chunk size/top-k/rerank、LLM synthesis faithfulness、citation correctness、latency 和 token / storage cost 实验验证具体质量表现。
 
 ## 真实验证执行队列
 
@@ -18,7 +18,7 @@
 | P0 | 真实 tool-calling 参数校验与有限重试 | OpenAI Responses / Function Calling API | 可复现实验脚本、失败样例、trace、成本/延迟记录；harness 已准备，结果待跑 | 只能验证所选模型和 schema，不代表所有模型稳定修正 |
 | P0 | 真实 Structured Outputs / JSON mode / refusal 对比 | OpenAI Structured Outputs / Responses API | schema valid、semantic valid、refusal、retry 结果表；harness 已准备，结果待跑 | schema 通过不等于事实正确或业务正确 |
 | P0 | 真实 prompt injection + tool permission / HITL / detector | OpenAI Responses API 或一个轻量 tool agent；可扩展 Prompt Shields、Anthropic-style tool-output screening 或同类检测层 | 攻击样例、raw tool output / JSON-encoded tool result / detector-only / policy-enforced / HITL 对照、阻断/漏报/误报、审批、pause/resume、幂等执行、参数快照和 trace 脱敏结果；harness 已准备，结果待跑；标准库审批恢复实验已完成 | 不证明 guardrail、screening 或检测层完全安全，只能记录覆盖范围 |
-| P1 | 真实 RAG citation correctness / grounding | 轻量本地检索 + LLM synthesis；后续扩展到 LlamaIndex / vector store | chunk 配置、top-k、citation correctness、faithfulness、groundedness、成本/延迟；LLM synthesis harness 已准备，LlamaIndex examples 已复核但未试跑 | 不证明某个 chunk/rerank/grounding 策略默认最优 |
+| P1 | 真实 RAG citation correctness / grounding | 轻量本地检索 + LLM synthesis；后续扩展到 LlamaIndex / OpenAI File Search / vector store | chunk 配置、top-k、included search results、citation correctness、faithfulness、groundedness、metadata filters、ranking options、删除一致性、成本/延迟；LLM synthesis harness 已准备，LlamaIndex examples 和 OpenAI File Search docs 已复核但未试跑 | 不证明某个 chunk/rerank/grounding/File Search 策略默认最优 |
 | P1 | 真实 Agent trace-aware eval | Responses API toy agent trace；后续扩展到 OpenAI Evals / LangSmith / Phoenix | runs/traces、final-only vs trace-aware 对比、人工复核样例；真实模型 trace harness 已准备，结果待跑 | 自动评分不能当真值，需保留人工抽样 |
 | P1 | 真实 Browser Agent / computer-use action trace / permission eval | Playwright 固定 workflow；Browser Use browser agent；可选 Anthropic computer-use-style action loop | demo page、DOM/screenshot state、action trace、file upload、form submit、approval、profile/VM isolation、action validation/logging、screenshot injection case、classifier behavior、cost/latency、failure categories | 只能验证所选 demo page、模型、框架和 beta 工具，不代表真实网站、CAPTCHA/stealth、合规、classifier 效果或生产可靠性 |
 | P1 | 真实 MCP host/client/server trace | 本地 stdio JSON-RPC harness；后续扩展到 MCP SDK / host | tools/resources/prompts 调用 trace、approval/resource review、token/resource 泄露检查；stdio harness 已完成 | 不同 host 实现差异可能很大 |
@@ -58,7 +58,7 @@
 ## RAG 与 Memory
 
 - 长期记忆是否一定提升 Agent 表现？窄结论已可入正文：长期记忆可能有价值，但不能默认自动写入或默认提升表现，必须配套写入守门、生命周期权限、跨用户隔离和 trace 脱敏。已完成第一轮验证、标准库写入守门模拟和 lifecycle audit；仍需真实多会话 Agent / memory framework 实验验证哪些任务有收益、哪些任务会被污染。
-- Chunk size、embedding model、reranking 对结果的影响如何验证？RAG 的外部知识访问、知识更新、provenance 动机和工程 pipeline 窄边界已可入正文；LlamaIndex docs 和 examples 已完成第一轮工程流程 / source node 示例验证，标准库最小 pipeline 已验证 trace/citation 字段；真实 LLM citation synthesis harness 已准备但仍使用本地关键词检索，仍需真实 embedding / vector store / rerank 对比实验。
+- Chunk size、embedding model、reranking 对结果的影响如何验证？RAG 的外部知识访问、知识更新、provenance 动机和工程 pipeline 窄边界已可入正文；LlamaIndex docs/examples 和 OpenAI File Search / Retrieval docs 已完成第一轮工程流程、source/citation、vector store、metadata filtering、ranking 和 chunking 边界验证，标准库最小 pipeline 已验证 trace/citation 字段；真实 LLM citation synthesis harness 已准备但仍使用本地关键词检索，仍需真实 embedding / vector store / File Search / rerank 对比实验。
 - RAG 答案如何稳定带 source citation / source nodes？LlamaIndex `CitationQueryEngine` notebook 已抽样验证 `response.source_nodes` 示例形态，标准库模拟实验已验证 chunk-level citation 字段设计；真实 LLM citation synthesis harness 已准备；仍需实际运行验证 citation correctness / faithfulness，并扩展到真实 RAG stack。
 - Memory 写入守门和生命周期控制有哪些可复用设计？Letta/Zep 已提供第一轮工程模式参考，标准库模拟已验证显式写入、敏感信息拒绝、低置信推断拒绝、用户纠正、失效历史、查看、编辑、删除、删除后不召回、跨用户阻断和 trace 脱敏的最小流程；仍需真实 framework 的查看、编辑、删除、权限和隐私边界实验。
 - RAG paper 中的 non-parametric memory 与 Agent long-term memory 如何避免术语混淆？已完成第一轮边界解释和标准库 RAG / Memory 分流实验；后续仍需真实教程示例避免术语误用。
@@ -79,7 +79,7 @@
 
 ## 实践路线
 
-- 哪些 OpenAI Cookbook 示例最适合初学者作为项目模板？窄结论已可入正文：Cookbook 具体 recipe 可作为实践项目参考，但不能替代 API 文档、生产安全指南或本地实验；已完成第一轮验证：Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost、Rate limits 适合作为候选；标准库 smoke harness 已验证无模型验收结构；仍需真实 Cookbook / API 本地试跑确认依赖、成本和阻塞点。
+- 哪些 OpenAI Cookbook 示例最适合初学者作为项目模板？窄结论已可入正文：Cookbook 具体 recipe 可作为实践项目参考，但不能替代 API 文档、生产安全指南或本地实验；已完成第一轮验证：Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost、Rate limits 适合作为候选；OpenAI File Search / Retrieval 官方文档已补 API 边界；标准库 smoke harness 已验证无模型验收结构；仍需真实 Cookbook / API 本地试跑确认依赖、成本和阻塞点。
 - SWE-agent / mini-SWE-agent 是否适合作为 repo issue / coding agent 进阶项目？窄结论已可入正文：SWE-agent 论文和 README 支撑 agent-computer interface、仓库导航、文件编辑和测试执行的重要性；但 README 已提示当前推荐 mini-SWE-agent，真实试跑仍需 toy repo、sandbox、权限、diff/rollback、测试反馈、成本和人工确认实验。
 - 每个项目应使用哪个最小技术栈，才能降低环境成本？标准库 smoke harness 可作为无模型入门层；真实技术栈仍需基于本地试跑和 GitHub Pages 教程形态决定。
 - 如何为项目 7 设计可自动运行的 eval harness？标准库 smoke harness 已给出最小 eval cases / pass-fail 结构；仍需扩展到真实 OpenAI Evals 或轻量自定义 harness。
