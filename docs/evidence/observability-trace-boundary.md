@@ -28,14 +28,17 @@ Agent observability 不是普通日志的同义词。对会检索、调用工具
 - 一致点：OpenAI Evaluation best practices 强调 log everything、continuous evaluation 和用 human feedback 校准 automated scoring；这补强 trace 与 dataset / eval run / human review 之间的工作流关系。
 - 一致点：OpenAI Graders docs 列出 string check、text similarity、score model grader、Python grader 和 multigrader，并说明 tool-call grading 可以基于 `sample.output_tools` 检查工具名称和参数；2026-07-12 复核还确认 multigrader 当前标注为只用于 reinforcement fine-tuning，不能泛化为所有 eval workflow 的默认组合方式。
 - 一致点：OpenAI Graders docs 明确提示 grader hacking / reward hacking：模型可能在 model grader eval 上高分，但在人类专家评估中表现差；这直接支撑“自动评分不能当真值”的边界。
-- 一致点：LangSmith Observability 页面将 observability 定位为从 individual traces 到 production-wide performance metrics 的可见性，并覆盖 view traces、monitor performance、automations 和 feedback。
-- 一致点：LangSmith Evaluation concepts 明确将 offline evaluation 用于 pre-deployment testing、benchmarking、regression testing、unit testing、backtesting，将 online evaluation 用于 production monitoring、anomaly detection 和 production feedback。
-- 一致点：LangSmith 将 offline eval 目标定义为 dataset/examples，将 online eval 目标定义为 production runs/threads；run 包含 inputs、outputs、intermediate steps、metadata、feedback、latency 等信息。
-- 一致点：Phoenix overview 将 trace 定义为可捕获 model calls、retrieval、tool use 和 custom logic，用于 debug behavior 和理解 time spent；Phoenix tutorial 进一步列出 inputs、outputs、latency、token usage。
-- 一致点：Phoenix evaluation 支持用 LLM-based evaluators、code-based checks 或 human labels 给 traces/spans 打分；LangSmith 也列出 Human、Code、LLM-as-judge、Pairwise 等 evaluator 类型。
+- 一致点：LangSmith Observability 页面 2026-07-12 复核仍将 observability 定位为从 individual traces 到 production-wide performance metrics 的可见性，并覆盖 view traces、monitor performance、automations 和 feedback。
+- 一致点：LangSmith Evaluation concepts 2026-07-12 复核仍明确将 offline evaluation 用于 pre-deployment testing、benchmarking、regression testing、unit testing、backtesting，将 online evaluation 用于 production monitoring、anomaly detection 和 production feedback。
+- 一致点：LangSmith 将 offline eval 目标定义为 dataset/examples，将 online eval 目标定义为 production runs/threads；run 包含 inputs、outputs、intermediate steps、metadata、feedback、latency 等信息。2026-07-12 复核还补强 examples 的 inputs / optional reference outputs / metadata、experiments 捕获 outputs / evaluator scores / execution traces、evaluator feedback 字段，以及 annotation queues 可收集 human feedback 并把 annotated runs 导出回 datasets。
+- 一致点：LangSmith 明确 online runs/threads 不含 reference outputs，online evaluators 依赖 quality heuristics、safety checks 和 reference-free evaluation techniques；这支撑生产监控边界，但不能把 online evaluator 分数写成业务正确性真值。
+- 一致点：Phoenix overview 2026-07-12 复核仍将 trace 定义为可捕获 model calls、retrieval、tool use 和 custom logic，用于 debug behavior 和理解 time spent；Phoenix tutorial 进一步列出 inputs、outputs、latency、token usage。
+- 一致点：Phoenix overview 2026-07-12 复核补强 Phoenix 接收 OTLP traces，基于 OpenTelemetry / OpenInference，并提供常见框架、provider 和语言的 auto-instrumentation 入口；这支撑集成形态，不证明默认字段完备。
+- 一致点：Phoenix evaluation 支持用 LLM-based evaluators、code-based checks 或 human labels 给 traces/spans 打分；LangSmith 也列出 Human、Code、LLM-as-judge、Pairwise 等 evaluator 类型。Phoenix tutorial 同时明确 trace 显示 `200 OK` 不代表答案正确，需要 annotation/evaluation 才能衡量 response quality。
+- 一致点：Phoenix Datasets & Experiments 支持把 traces 组成 datasets、用不同版本 rerun 并比较 evaluation results；Prompt iteration 支持 prompt versions、dataset variants 和 replay LLM calls。这支撑版本化实验工作流，不证明 prompt 改动实际提升质量。
 - 一致点：OpenAI Cookbook 的 Agents SDK/Langfuse recipe 支撑 trace、online evaluation、offline evaluation、dataset evaluation 的工程示例，但第三方工具细节需单独复核。
 - 一致点：Browser Agent evidence 和 Playwright trace viewer docs 说明浏览器任务 trace 应能按 action 回放，并查看页面状态、log、source、network 和 DOM snapshot；这补强了“trace 字段按任务用途设计”的边界，尤其适用于 Web/Browser Agent。
-- 边界：LangSmith 和 Phoenix 都是平台/框架文档，支撑工程形态和字段设计，不证明任一平台默认最优。
+- 边界：LangSmith 和 Phoenix 都是平台/框架文档，支撑工程形态和字段设计，不证明任一平台默认最优、默认字段完备、online evaluator 业务正确或 prompt 改动实际有效。
 - 边界：LLM-as-judge 和在线 evaluator 需要抽样人工复核、误判分析、成本控制和隐私边界；不能把模型评审当作可靠真值。
 - 边界：OpenAI Evaluation guides 和 Graders docs 支撑 trace grading、grader 类型、typical / edge / adversarial cases、human-label calibration 和 eval workflow 的工程形态，但不证明任何 grader、judge model、平台 trace 或指标在具体业务中准确可靠；OpenAI deprecations 页面显示 Evals platform 2026-10-31 read-only、2026-11-30 shutdown，且 eval workflow 的 graders 属于该过渡，因此正文必须区分 eval 方法和具体平台入口。
 - 本地实验：标准库 trace-aware eval 实验显示，如果 trace 记录 tool call、tool result/error、approval 和 final response，就能用简单规则发现 final-only scoring 漏掉的过程错误；这支持正文中把 trace 作为调试、审计和回归输入，而不只是日志。
@@ -51,9 +54,9 @@ Agent observability 不是普通日志的同义词。对会检索、调用工具
 
 ## 结论状态
 
-- 可入正文：窄结论“对工具型或有副作用的 Agent，trace 是 eval、审计和回归输入，不只是 debug 日志”已完成第一轮交叉验证。论文/benchmark 支撑过程评测的重要性，OpenAI Evals repo / Evaluation guides / Graders docs 支撑 custom eval、dataset/registry、completion function、trace grading、tool-call grading、datasets/eval runs、continuous evaluation、typical / edge / adversarial cases、人工校准和 reward hacking 风险，LangSmith/Phoenix/Cookbook 支撑 trace、runs、spans、datasets、online/offline evaluation 和反馈工作流；标准库 trace-aware eval 和 Real Trace-Aware Eval scorer control 支撑 trace 能发现 final-only 漏掉的过程错误，grader audit 支撑自动评分器需要 edge cases、误判统计和人工校准。
+- 可入正文：窄结论“对工具型或有副作用的 Agent，trace 是 eval、审计和回归输入，不只是 debug 日志”已完成第一轮交叉验证。论文/benchmark 支撑过程评测的重要性，OpenAI Evals repo / Evaluation guides / Graders docs 支撑 custom eval、dataset/registry、completion function、trace grading、tool-call grading、datasets/eval runs、continuous evaluation、typical / edge / adversarial cases、人工校准和 reward hacking 风险，LangSmith/Phoenix/Cookbook 支撑 trace、runs/threads、spans、datasets/examples、online/offline evaluation、experiments、annotation/human feedback、sessions 和 prompt replay 工作流；标准库 trace-aware eval 和 Real Trace-Aware Eval scorer control 支撑 trace 能发现 final-only 漏掉的过程错误，grader audit 支撑自动评分器需要 edge cases、误判统计和人工校准。
 - 可入正文：窄结论“trace 不能只保存最终输入输出；字段应按用途覆盖关键工具调用、检索、浏览器动作、页面状态、错误、审批/副作用、版本、延迟/token/成本、dataset/case、citation、隐私脱敏、访问范围和保留策略等信息”已完成第一轮验证。trace schema audit 显示 minimal log 无法支撑 debug/audit/regression/cost/RAG/privacy，debug trace 不等于 audit trace，audit trace 不等于 regression trace，字段够多但未脱敏仍可能隐私失败；Playwright trace viewer 补强了浏览器动作回放、DOM snapshot、log/source/network 等 Web Agent trace 维度。
-- 部分验证：完整通用 trace schema、平台字段覆盖、真实 Agent / RAG traces、真实 LLM-as-judge 误判分析和人工复核设计仍需真实运行与平台对照；不能写成任何平台默认覆盖这些字段，也不能把这份字段清单写成所有 Agent 系统的唯一标准。OpenAI Evals / graders platform 退役不影响 eval 方法本身，但会影响具体平台教程、工具入口和旧 API 路线。
+- 部分验证：完整通用 trace schema、平台字段覆盖、真实 Agent / RAG traces、online evaluator 业务正确性、真实 LLM-as-judge 误判分析和人工复核设计仍需真实运行与平台对照；不能写成任何平台默认覆盖这些字段，也不能把这份字段清单写成所有 Agent 系统的唯一标准。OpenAI Evals / graders platform 退役不影响 eval 方法本身，但会影响具体平台教程、工具入口和旧 API 路线。
 
 ## 可进入章节
 

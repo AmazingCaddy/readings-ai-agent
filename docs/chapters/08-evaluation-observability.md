@@ -52,7 +52,7 @@ Trace 是一次任务执行的完整记录。它像一条时间线，记录 Agen
 
 没有 trace，很多失败只能看到“结果错了”，很难知道是检索错、工具参数错、模型理解错，还是权限设计错。
 
-工程实践里，trace 往往还会记录延迟、token 或成本、版本、metadata、用户反馈和人工标注。LangSmith 和 Phoenix 这类 observability 工具都把 trace/runs/spans、datasets、evaluators、feedback 和 experiments 放在同一条工作流里；这说明 trace 不只是 debug 日志，也是 eval 和回归的输入。
+工程实践里，trace 往往还会记录延迟、token 或成本、版本、metadata、用户反馈和人工标注。LangSmith 和 Phoenix 这类 observability 工具都把 trace/runs/spans、datasets、evaluators、feedback、annotation、sessions 和 experiments 放在同一条工作流里；这说明 trace 不只是 debug 日志，也是 eval 和回归的输入。但这仍是平台工作流边界，不等于平台字段天然完整，也不等于 evaluator 分数就是业务真值。
 
 OpenAI Agent evals guide 也把 trace 放在调试 workflow behavior 的起点：一次 trace 应能还原 model calls、tool calls、guardrails 和 handoffs。等你知道什么样的 trace 算“好”，再把样例沉淀成 dataset 和 eval runs，用来比较 prompt、工具、路由或 guardrail 的改动。
 
@@ -225,7 +225,7 @@ OpenAI Graders 文档还提供了更具体的评分器类型：string check、te
 - OpenAI Evals repo 已于 2026-07-12 复核 GitHub metadata、README、build-eval 和 completion-fns docs，可支撑 custom/private eval、dataset + registry/YAML、model-graded eval human-label/meta-eval、completion function 和 tool/prompt-chain eval 的工程思路；但 README 的 Dashboard 入口必须和官方 Evals platform 退役时间线一起读，不能写成长期稳定教程。Real Trace-Aware Eval harness 已完成本地 deterministic scorer control，验证 final-only scoring 会放过缺工具调用、缺 tool error trace 和缺 approval rejection 的过程错误；当前无 API key，真实模型 completed run 仍待做，具体实践仍需结合当前文档、LLM-as-judge 误判和人工复核实验。
 - OpenAI Evaluation best practices、Agent evals guide 和 deprecations 页面已于 2026-07-12 复核，可支撑 eval-driven development、task-specific eval、trace grading、datasets/eval runs、tool selection、data precision、handoff accuracy、edge/adversarial cases、LLM-as-judge human-label calibration 和 Evals platform 退役边界。它们不证明任何 grader、judge model、平台 trace 或指标在真实业务中可靠。
 - OpenAI Graders docs 和 deprecations 页面已完成 2026-07-12 复核，可支撑 grader 类型、tool-call grading、Python grader 执行约束、score model grader、multigrader 的 RFT-only 边界、reward hacking 风险，以及 Evals/graders 退役时间线。它不证明 graders / LLM-as-judge 在真实业务中稳定准确，也不能绕过人工校准或旧平台迁移。
-- LangSmith 与 Phoenix 文档已完成第一轮精读，可支撑 offline/online eval、datasets、runs/traces/spans、human feedback、LLM-as-judge、code evaluators、experiments 和 sessions 等工程工作流。
+- LangSmith 与 Phoenix 文档已于 2026-07-12 复核，可支撑 offline/online eval、datasets/examples、runs/threads、traces/spans、human feedback、annotation queues、LLM-as-judge、code evaluators、experiments、prompt replay、OpenTelemetry/OpenInference 和 sessions 等工程工作流。LangSmith 文档还提醒 online eval 在没有 reference outputs 的 production runs/threads 上更偏向 quality patterns、safety 和 real-world behavior；Phoenix tutorial 也明确 trace 显示 `200 OK` 不代表答案正确。它们支撑工作流和字段设计，不证明平台字段覆盖、在线 evaluator、LLM-as-judge 或 prompt 改动在真实业务中可靠。
 - 本地标准库 trace-aware eval 实验显示，final-answer-only scoring 通过 3/3，而 trace-aware scoring 只通过 1/3；过程评分发现了无审批副作用工具和工具错误未恢复。Real Trace-Aware Eval harness 的本地 scorer control 进一步显示，在 4 条 deterministic trace fixture 中 final-only 4/4 通过、trace-aware 1/4 通过，3 个 score delta 分别来自缺工具调用、缺 tool error trace 和缺 approval rejection。它们支撑“Agent eval 不应只看最终答案”的工程建议。真实模型 trace-aware eval completed run 仍未完成，仍需要真实 LLM-as-judge、人工复核和平台对照实验。
 - 本地标准库 grader misalignment / reward hacking 实验显示，`string_check` 会漏掉语义等价答案并放过过程错误，关键词式 judge 会被 verbose / reward-hacked 输出骗过，tool-call rule 会放过纯文本错误，majority multigrader 也不能自动消除共享偏差。该实验支撑“自动 grader 需要人工校准、edge cases、误判统计和抽样复核”的流程设计；真实 LLM-as-judge、平台 grader、成本和延迟仍需实验。
 - “Agent trace 不能只保存最终输入输出，字段要按 debug、audit、regression、cost/latency、RAG 和 privacy 等用途设计”已升级为可入正文：本地标准库 trace schema audit 显示，debug、audit、regression、cost/latency、RAG 和 privacy 需要不同字段集合；debug 够用不代表 audit/eval/privacy 够用。该实验不证明任何真实平台默认覆盖这些字段，也不能定义所有 Agent 系统的通用 schema。
