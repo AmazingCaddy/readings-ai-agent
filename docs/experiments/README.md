@@ -124,7 +124,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 26. Real Framework Same-Task Comparison 实验
     - 目标：用同一个本地退款政策检索 + 审批退款任务，对比 OpenAI Agents SDK、LangGraph、LlamaIndex 和 Semantic Kernel 的真实 runtime surface，并拆分 framework-owned 与 application-owned capabilities。
-    - 状态：真实 harness 已完成 4 adapter 本地 run，见 [Real Framework Same-Task Comparison](real-framework-same-task-comparison/README.md) 和 [2026-07-12 结果](real-framework-same-task-comparison/results-2026-07-12.md)。本次记录 OpenAI Agents SDK `FunctionTool` schema / `needs_approval` / direct `ToolContext` invocation、LangGraph `StateGraph` / conditional edge、LlamaIndex `VectorStoreIndex` / retriever source nodes、Semantic Kernel plugin metadata / `Kernel.invoke()`；四个 adapter 均阻断未审批退款、执行一次已审批退款且 trace 未泄露示例 secret。由于 `openai-agents==0.18.2` 与 `semantic-kernel==1.36.0` 在同一临时环境中存在 pydantic import 组合问题，结果使用两组命令覆盖 4 个 adapter。它不证明真实模型行为、成本、延迟、hosted tracing、HITL UI、部署恢复、OpenAPI/MCP plugin 或生产安全，也不能推出框架排名。
+    - 状态：真实 harness 已完成 4 adapter 本地 run，见 [Real Framework Same-Task Comparison](real-framework-same-task-comparison/README.md) 和 [2026-07-12 结果](real-framework-same-task-comparison/results-2026-07-12.md)。本次记录 OpenAI Agents SDK `FunctionTool` schema / `needs_approval` / direct `ToolContext` invocation / fake-model `Runner` approval-resume loop、LangGraph `StateGraph` / conditional edge、LlamaIndex `VectorStoreIndex` / retriever source nodes、Semantic Kernel plugin metadata / `Kernel.invoke()`；四个 adapter 均阻断未审批退款、执行一次已审批退款且 trace 未泄露示例 secret。由于 `openai-agents==0.18.2` 与 `semantic-kernel==1.36.0` 在同一临时环境中存在 pydantic import 组合问题，结果使用两组命令覆盖 4 个 adapter。它不证明真实模型行为、成本、延迟、hosted tracing、真实 HITL UI、部署恢复、OpenAPI/MCP plugin 或生产安全，也不能推出框架排名。
 
 ## 实验记录要求
 

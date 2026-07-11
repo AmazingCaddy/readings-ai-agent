@@ -114,8 +114,13 @@ def build_adapter_result(
 def run_openai_agents_adapter() -> dict[str, Any]:
     try:
         import agents
-        from agents import RunConfig, function_tool
+        from agents import Agent, Model, ModelResponse, ModelSettings, ModelTracing, RunConfig, Runner, function_tool
+        from agents.agent_output import AgentOutputSchemaBase
+        from agents.handoffs import Handoff
+        from agents.items import ResponseFunctionToolCall, ResponseOutputMessage, ResponseOutputText
         from agents.tool_context import ToolContext
+        from agents.tool import Tool
+        from agents.usage import Usage
     except ImportError as exc:
         return {
             "framework": "openai-agents-sdk",
@@ -152,6 +157,73 @@ def run_openai_agents_adapter() -> dict[str, Any]:
         trace.append(redact({"framework": "openai-agents-sdk", "op": "function_tool_issue_refund", "side_effect_count": len(side_effects)}))
         return f"refund_issued:{order_id}:{amount:.2f}"
 
+    runner_side_effects: list[dict[str, Any]] = []
+
+    @function_tool(name_override="runner_issue_refund", needs_approval=True)
+    def runner_issue_refund(order_id: str, amount: float) -> str:
+        """Issue a refund after Runner approval."""
+        runner_side_effects.append({"order_id": order_id, "amount": amount})
+        trace.append(
+            redact(
+                {
+                    "framework": "openai-agents-sdk",
+                    "op": "runner_function_tool_issue_refund",
+                    "side_effect_count": len(runner_side_effects),
+                }
+            )
+        )
+        return f"refund_issued:{order_id}:{amount:.2f}"
+
+    class FakeApprovalModel(Model):
+        def __init__(self) -> None:
+            self.call_count = 0
+            self.inputs_seen: list[Any] = []
+
+        async def get_response(
+            self,
+            system_instructions: str | None,
+            input: str | list[Any],
+            model_settings: ModelSettings,
+            tools: list[Tool],
+            output_schema: AgentOutputSchemaBase | None,
+            handoffs: list[Handoff],
+            tracing: ModelTracing,
+            *,
+            previous_response_id: str | None,
+            conversation_id: str | None,
+            prompt: Any | None,
+        ) -> ModelResponse:
+            self.call_count += 1
+            self.inputs_seen.append(input)
+            serialized_input = json.dumps(input, default=str, ensure_ascii=False)
+            if "function_call_output" in serialized_input:
+                message = ResponseOutputMessage(
+                    id="msg_runner_final",
+                    content=[
+                        ResponseOutputText(
+                            annotations=[],
+                            text="Runner observed approved refund tool result.",
+                            type="output_text",
+                        )
+                    ],
+                    role="assistant",
+                    status="completed",
+                    type="message",
+                )
+                return ModelResponse(output=[message], usage=Usage(), response_id=f"resp_runner_{self.call_count}")
+            tool_call = ResponseFunctionToolCall(
+                arguments='{"order_id":"order-10","amount":18.5}',
+                call_id="call_runner_refund",
+                name="runner_issue_refund",
+                type="function_call",
+                id="fc_runner_refund",
+                status="completed",
+            )
+            return ModelResponse(output=[tool_call], usage=Usage(), response_id=f"resp_runner_{self.call_count}")
+
+        def stream_response(self, *args: Any, **kwargs: Any) -> Any:
+            raise NotImplementedError
+
     def tool_context(tool_name: str, raw_arguments: str) -> ToolContext[Any]:
         return ToolContext(
             context=None,
@@ -164,7 +236,7 @@ def run_openai_agents_adapter() -> dict[str, Any]:
     async def run_tool(tool: Any, raw_arguments: str) -> str:
         return str(await tool.on_invoke_tool(tool_context(tool.name, raw_arguments), raw_arguments))
 
-    async def run_async() -> tuple[dict[str, Any], str, str, int, str]:
+    async def run_async() -> tuple[dict[str, Any], str, str, int, str, dict[str, Any]]:
         read_raw = '{"query":"refund approval policy"}'
         read_result = json.loads(await run_tool(read_refund_policy, read_raw))
 
@@ -184,9 +256,40 @@ def run_openai_agents_adapter() -> dict[str, Any]:
         side_effect_count_after_blocked = len(side_effects)
         invalid_result = await run_tool(issue_refund, '{"order_id":"order-9","amount":"not-a-number"}')
         approved = await run_tool(issue_refund, '{"order_id":"order-9","amount":42.0}')
-        return read_result, blocked, invalid_result, side_effect_count_after_blocked, approved
 
-    read_result, blocked, invalid_result, side_effect_count_after_blocked, approved = asyncio.run(run_async())
+        fake_model = FakeApprovalModel()
+        runner_agent = Agent(
+            name="refund-runner-agent",
+            instructions="Use the refund tool when needed.",
+            tools=[runner_issue_refund],
+            model=fake_model,
+        )
+        first_result = await Runner.run(
+            runner_agent,
+            "Issue refund for order-10 after approval.",
+            run_config=RunConfig(tracing_disabled=True, trace_include_sensitive_data=False),
+        )
+        runner_side_effect_count_before_approval = len(runner_side_effects)
+        approved_state = first_result.to_state()
+        if first_result.interruptions:
+            approved_state.approve(first_result.interruptions[0])
+        resumed_result = await Runner.run(
+            runner_agent,
+            approved_state,
+            run_config=RunConfig(tracing_disabled=True, trace_include_sensitive_data=False),
+        )
+        runner_observation = {
+            "first_result_interruption_count": len(first_result.interruptions),
+            "side_effect_count_before_approval": runner_side_effect_count_before_approval,
+            "side_effect_count_after_resume": len(runner_side_effects),
+            "final_output": resumed_result.final_output,
+            "model_call_count": fake_model.call_count,
+            "new_item_types_after_resume": [type(item).__name__ for item in resumed_result.new_items],
+        }
+        trace.append(redact({"framework": "openai-agents-sdk", "op": "runner_approval_resume", **runner_observation}))
+        return read_result, blocked, invalid_result, side_effect_count_after_blocked, approved, runner_observation
+
+    read_result, blocked, invalid_result, side_effect_count_after_blocked, approved, runner_observation = asyncio.run(run_async())
     schema = issue_refund.params_json_schema
     required = sorted(schema.get("required", []))
     invalid_rejected_without_side_effect = "Invalid JSON input" in invalid_result and len(side_effects) == 1
@@ -221,20 +324,46 @@ def run_openai_agents_adapter() -> dict[str, Any]:
             "passed": approved == "refund_issued:order-9:42.00" and len(side_effects) == 1,
             "side_effect_count": len(side_effects),
         },
+        {
+            "name": "runner_interrupts_before_approval",
+            "passed": runner_observation["first_result_interruption_count"] == 1
+            and runner_observation["side_effect_count_before_approval"] == 0,
+            "interruption_count": runner_observation["first_result_interruption_count"],
+            "side_effect_count_before_approval": runner_observation["side_effect_count_before_approval"],
+        },
+        {
+            "name": "runner_approved_resume_executes_and_finishes",
+            "passed": runner_observation["side_effect_count_after_resume"] == 1
+            and runner_observation["final_output"] == "Runner observed approved refund tool result."
+            and runner_observation["model_call_count"] == 2,
+            "side_effect_count_after_resume": runner_observation["side_effect_count_after_resume"],
+            "model_call_count": runner_observation["model_call_count"],
+            "new_item_types_after_resume": runner_observation["new_item_types_after_resume"],
+        },
     ]
 
     return build_adapter_result(
         framework="openai-agents-sdk",
         version=getattr(agents, "__version__", package_version("openai-agents")),
-        native_surface="FunctionTool schema + direct ToolContext invocation",
-        framework_owned_capabilities=["function_tool_schema", "needs_approval_flag", "tool_argument_validation", "tool_context_invoke"],
+        native_surface="FunctionTool schema + direct ToolContext invocation + Runner approval resume",
+        framework_owned_capabilities=[
+            "function_tool_schema",
+            "needs_approval_flag",
+            "runner_approval_interruption",
+            "runner_managed_tool_loop",
+            "run_state_approve_resume",
+            "tool_argument_validation",
+            "tool_context_invoke",
+        ],
         application_owned_capabilities=["keyword_retrieval", "approval_policy", "refund_side_effect", "trace_redaction"],
         cases=cases,
         trace=trace,
         notes=[
             "OpenAI Agents SDK FunctionTool exposed JSON schema and needs_approval metadata without a model call.",
-            "This harness directly invoked FunctionTool with ToolContext; it did not run Runner, managed agent loop, hosted tracing, or a real model.",
-            "Approval policy and trace redaction were application code in this harness.",
+            "This harness directly invoked FunctionTool with ToolContext and also ran Runner with a deterministic fake Model.",
+            "Runner produced an approval interruption before side effect, RunState.approve() resumed execution, and the fake model observed a function_call_output before final answer.",
+            "The fake model is not a real OpenAI model; hosted tracing and production approval UI were not exercised.",
+            "Trace redaction was application code in this harness.",
         ],
     )
 

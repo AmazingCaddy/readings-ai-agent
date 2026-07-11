@@ -33,7 +33,7 @@ uv run --with langgraph --with llama-index-core --with semantic-kernel python do
 
 ## 观察点
 
-- OpenAI Agents SDK 是否能把同一任务表达为 `FunctionTool` schema、`needs_approval` metadata 和直接 `ToolContext` invocation。
+- OpenAI Agents SDK 是否能把同一任务表达为 `FunctionTool` schema、`needs_approval` metadata、直接 `ToolContext` invocation，以及 fake-model `Runner` approval / resume loop。
 - LangGraph 是否能把同一任务表达为 state graph、node 和 conditional edge。
 - LlamaIndex 是否能把同一任务中的文档检索部分表达为 `VectorStoreIndex` / retriever / source-node metadata。
 - Semantic Kernel 是否能把同一任务表达为 native plugin functions 和 `Kernel.invoke()`。
@@ -45,5 +45,5 @@ uv run --with langgraph --with llama-index-core --with semantic-kernel python do
 ## 结论状态
 
 - 当前状态：已完成 OpenAI Agents SDK 0.18.2、LangGraph 1.2.9、LlamaIndex Core 0.14.23、Semantic Kernel 1.36.0 的本地同任务 adapter run；由于 OpenAI Agents SDK / Semantic Kernel 依赖组合冲突，4 个 adapter 通过两组命令覆盖。
-- 可支撑：同一任务可以拆成框架原生 runtime surface 与应用层治理代码两部分观察；框架比较应记录 native surface、framework-owned capabilities、application-owned capabilities、trace 和失败边界。
-- 不能支撑：不能证明任一框架默认更好、更安全、更便宜、更快，也不能证明真实模型 tool selection、真实 RAG answer quality、真实 HITL UI、部署恢复、hosted tracing 或生产可靠性。
+- 可支撑：同一任务可以拆成框架原生 runtime surface 与应用层治理代码两部分观察；框架比较应记录 native surface、framework-owned capabilities、application-owned capabilities、trace 和失败边界。OpenAI Agents SDK adapter 已覆盖 `Runner` 在 fake model 下的 approval interruption、`RunState.approve()` resume、tool output 回传和 final answer。
+- 不能支撑：不能证明任一框架默认更好、更安全、更便宜、更快，也不能证明真实模型 tool selection、真实 RAG answer quality、真实 HITL UI、部署恢复、hosted tracing 或生产可靠性。OpenAI Agents SDK `Runner` case 使用 deterministic fake model，不代表真实 OpenAI model 行为。
