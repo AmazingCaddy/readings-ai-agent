@@ -22,6 +22,14 @@ class ChecklistItem:
     reason: str
 
 
+@dataclass(frozen=True)
+class DataFlowItem:
+    surface_id: str
+    source_refs: tuple[str, ...]
+    required_fields: tuple[str, ...]
+    reason: str
+
+
 CHECKLIST = [
     ChecklistItem(
         "moderation_policy_signals",
@@ -86,6 +94,72 @@ CHECKLIST = [
 ]
 
 
+DATA_FLOW_CHECKS = [
+    DataFlowItem(
+        "remote_mcp_tool",
+        ("OpenAI Data Controls", "Anthropic MCP docs"),
+        (
+            "data_sent",
+            "third_party_retention",
+            "authorization_owner",
+            "allowlist_or_denylist",
+            "user_disclosure",
+            "trace_redaction",
+        ),
+        "Remote MCP tools are third-party data flows and need explicit authorization, exposure, retention, and trace notes.",
+    ),
+    DataFlowItem(
+        "hosted_code_or_shell",
+        ("OpenAI Data Controls",),
+        (
+            "input_artifacts",
+            "container_state",
+            "expiration_or_delete",
+            "secret_policy",
+            "audit_owner",
+        ),
+        "Hosted execution tools can create temporary application state and need cleanup and secret-handling boundaries.",
+    ),
+    DataFlowItem(
+        "file_or_vector_store",
+        ("OpenAI Data Controls", "OpenAI File Search / Retrieval docs"),
+        (
+            "uploaded_objects",
+            "vector_store_owner",
+            "expiration_policy",
+            "delete_path",
+            "citation_trace",
+            "residency_review",
+        ),
+        "Files and vector stores are application-state objects, not just prompt text, so retention, deletion, and citation trace need separate records.",
+    ),
+    DataFlowItem(
+        "prompt_caching",
+        ("OpenAI Batch / Flex / Prompt Caching docs", "OpenAI Data Controls"),
+        (
+            "cache_eligible_prefix",
+            "sensitive_prefix_policy",
+            "cache_usage_fields",
+            "retention_boundary_review",
+        ),
+        "Prompt caching changes observability and retention questions for repeated prefixes; sensitive prefixes need an explicit policy.",
+    ),
+    DataFlowItem(
+        "browser_or_computer_use",
+        ("Anthropic Computer Use docs", "Browser Use / Playwright docs"),
+        (
+            "profile_scope",
+            "uploaded_files",
+            "external_site_data",
+            "approval_required_actions",
+            "screenshot_redaction",
+            "failure_review_owner",
+        ),
+        "Browser and computer-use runs expose profile state, uploads, screenshots, and external sites, so they need an object-level data-flow review.",
+    ),
+]
+
+
 PROJECTS: dict[str, dict[str, Any]] = {
     "naive_project": {
         "moderation_stage": "inline",
@@ -145,6 +219,72 @@ PROJECTS: dict[str, dict[str, Any]] = {
 }
 
 
+DATA_FLOW_CONFIGS: dict[str, dict[str, dict[str, Any]]] = {
+    "naive_project": {
+        "remote_mcp_tool": {
+            "data_sent": ["customer_email", "order_notes"],
+            "allowlist_or_denylist": ["crm.example-mcp.com"],
+        },
+        "hosted_code_or_shell": {
+            "input_artifacts": ["support_export.csv"],
+            "container_state": "temporary_files",
+        },
+        "file_or_vector_store": {
+            "uploaded_objects": ["policy.pdf"],
+            "citation_trace": "file_citation_annotations",
+        },
+        "prompt_caching": {
+            "cache_eligible_prefix": "shared_system_prompt_and_tool_schema",
+            "cache_usage_fields": ["cached_tokens", "cache_write_tokens"],
+        },
+        "browser_or_computer_use": {
+            "profile_scope": "default_browser_profile",
+            "uploaded_files": ["invoice.csv"],
+            "approval_required_actions": ["submit_order"],
+        },
+    },
+    "governed_project": {
+        "remote_mcp_tool": {
+            "data_sent": ["customer_email", "order_notes"],
+            "third_party_retention": "vendor_dpa_section_4",
+            "authorization_owner": "security-platform",
+            "allowlist_or_denylist": ["crm.example-mcp.com"],
+            "user_disclosure": "admin_config_page",
+            "trace_redaction": "hash_customer_email_and_drop_oauth_token",
+        },
+        "hosted_code_or_shell": {
+            "input_artifacts": ["support_export.csv"],
+            "container_state": "temporary_files_and_process_logs",
+            "expiration_or_delete": "container_expiration_plus_delete_runbook",
+            "secret_policy": "block_env_secret_export_and_scan_uploads",
+            "audit_owner": "data-governance",
+        },
+        "file_or_vector_store": {
+            "uploaded_objects": ["policy.pdf"],
+            "vector_store_owner": "knowledge-platform",
+            "expiration_policy": "90_day_expiration_or_document_owner_delete",
+            "delete_path": "delete_file_and_vector_store_object",
+            "citation_trace": "file_search_call_results_and_file_citations",
+            "residency_review": "project_region_and_feature_support_checked",
+        },
+        "prompt_caching": {
+            "cache_eligible_prefix": "stable_public_policy_prompt_and_tool_schema",
+            "sensitive_prefix_policy": "no_customer_secrets_or_unique_personal_data_in_cached_prefix",
+            "cache_usage_fields": ["cached_tokens", "cache_write_tokens"],
+            "retention_boundary_review": "review_current_data_controls_before_enablement",
+        },
+        "browser_or_computer_use": {
+            "profile_scope": "ephemeral_context_with_domain_allowlist",
+            "uploaded_files": ["redacted_invoice.csv"],
+            "external_site_data": "only_approved_demo_domain",
+            "approval_required_actions": ["submit_order", "send_email", "purchase"],
+            "screenshot_redaction": "mask_account_and_customer_identifiers",
+            "failure_review_owner": "browser-automation-oncall",
+        },
+    },
+}
+
+
 def audit_project(project_name: str, config: dict[str, Any]) -> list[dict[str, Any]]:
     results: list[dict[str, Any]] = []
     for item in CHECKLIST:
@@ -163,22 +303,69 @@ def audit_project(project_name: str, config: dict[str, Any]) -> list[dict[str, A
     return results
 
 
+def audit_data_flows(project_name: str, config: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+    results: list[dict[str, Any]] = []
+    for item in DATA_FLOW_CHECKS:
+        surface_config = config.get(item.surface_id, {})
+        missing = [field for field in item.required_fields if not surface_config.get(field)]
+        results.append(
+            {
+                "project": project_name,
+                "surface_id": item.surface_id,
+                "source_refs": list(item.source_refs),
+                "passed": not missing,
+                "missing_fields": missing,
+                "required_fields": list(item.required_fields),
+                "reason": item.reason,
+            }
+        )
+    return results
+
+
 def summarize(results: list[dict[str, Any]]) -> dict[str, Any]:
+    def result_id(item: dict[str, Any]) -> str:
+        return item["item_id"] if "item_id" in item else item["surface_id"]
+
     summary: dict[str, Any] = {}
     for project in sorted({result["project"] for result in results}):
         items = [result for result in results if result["project"] == project]
         summary[project] = {
             "passed": sum(1 for item in items if item["passed"]),
             "total": len(items),
-            "failed_items": [item["item_id"] for item in items if not item["passed"]],
+            "failed_items": [result_id(item) for item in items if not item["passed"]],
             "missing_field_count": sum(len(item["missing_fields"]) for item in items),
         }
     return summary
 
 
 def main() -> None:
-    results = [result for name, config in PROJECTS.items() for result in audit_project(name, config)]
-    print(json.dumps({"summary": summarize(results), "results": results}, ensure_ascii=False, indent=2))
+    checklist_results = [result for name, config in PROJECTS.items() for result in audit_project(name, config)]
+    data_flow_results = [
+        result for name, config in DATA_FLOW_CONFIGS.items() for result in audit_data_flows(name, config)
+    ]
+    all_passed = all(item["passed"] for item in checklist_results if item["project"] == "governed_project") and all(
+        item["passed"] for item in data_flow_results if item["project"] == "governed_project"
+    )
+    print(
+        json.dumps(
+            {
+                "status": "completed",
+                "control": "deterministic_safety_data_governance_fixtures",
+                "real_project_validated": False,
+                "all_passed": all_passed,
+                "summary": summarize(checklist_results),
+                "data_flow_summary": summarize(data_flow_results),
+                "results": checklist_results,
+                "data_flow_results": data_flow_results,
+                "limitations": [
+                    "This deterministic audit validates checklist and object-level data-flow fields only.",
+                    "It does not inspect a real OpenAI project, organization settings, API logs, third-party tool retention, object deletion, data residency, moderation quality, or compliance status.",
+                ],
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

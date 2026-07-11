@@ -103,8 +103,8 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
     - 状态：已完成标准库 toy runtime，见 [Real Agentic Security Regression Set 实验](real-agentic-security-regression-set/README.md) 和 [2026-07-11 结果](real-agentic-security-regression-set/results-2026-07-11.md)。尚未运行真实模型或真实框架；不能证明任何 mitigation、detector、guardrail、HITL、sandbox、runtime containment 或 monitoring 有效。
 
 21. Production safety / data governance checklist 实验
-    - 目标：把 Moderation、Safety Best Practices 和 Data Controls 文档中的生产安全与数据治理边界整理成可审计 checklist。
-    - 状态：已完成标准库 checklist audit，见 [Production Safety / Data Governance Checklist](production-safety-data-governance/README.md) 和 [2026-07-11 结果](production-safety-data-governance/results-2026-07-11.md)。尚未读取真实 project / account 配置；不能证明任何 moderation、HITL、数据保留、data residency 或合规方案有效。
+    - 目标：把 Moderation、Safety Best Practices 和 Data Controls 文档中的生产安全与数据治理边界整理成可审计 checklist 和对象级 data-flow 模板。
+    - 状态：已完成标准库 checklist + object-level data-flow audit，见 [Production Safety / Data Governance Checklist](production-safety-data-governance/README.md) 和 [2026-07-11 结果](production-safety-data-governance/results-2026-07-11.md)。本地 fixtures 覆盖 moderation policy signal、streaming timing、`safety_identifier`、API key revoke、abuse logs / application state、remote MCP、hosted execution、file/vector store、prompt caching、browser/computer-use、data residency 和 red-team 回流字段。尚未读取真实 project / account 配置；不能证明任何 moderation、HITL、数据保留、对象删除、data residency、trace 脱敏或合规方案有效。
 
 22. Production cost / latency / rate-limit audit 实验
     - 目标：把 Production、Cost、Latency、Rate Limits、Token Counting、Batch、Flex 和 Prompt Caching 文档中的生产质量边界整理成可审计字段表。

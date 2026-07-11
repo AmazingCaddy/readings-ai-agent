@@ -185,7 +185,7 @@ Moderation 可以作为检测层，但不要把它写成自动安全闸门。Ope
 
 Remote MCP tools 和第三方 tool servers 也属于生产权限面。接入前要确认 server 由谁运营、需要什么授权、会看到哪些用户数据、数据保留政策是什么、是否支持最小 scope，以及是否能按工具做 allowlist 或 denylist。
 
-OpenAI Data controls 文档也明确：通过 remote MCP server tool 发送给 MCP server 的数据受第三方服务的数据保留政策影响。因此 remote MCP、web search、hosted shell、code interpreter、hosted skills、browser/computer-use 这类工具都要进入数据流审查，而不是只看 OpenAI API 本身的数据保留说明。
+OpenAI Data controls 文档也明确：通过 remote MCP server tool 发送给 MCP server 的数据受第三方服务的数据保留政策影响。因此 remote MCP、web search、hosted shell、code interpreter、hosted skills、files/vector stores、prompt caching、browser/computer-use 这类工具和对象都要进入数据流审查，而不是只看 OpenAI API 本身的数据保留说明。
 
 以 Anthropic MCP connector 为例，文档支持 `mcp_servers`、`mcp_toolset`、OAuth bearer token、allowlist、denylist 和 per-tool configuration，也说明 MCP connector 不适用于 Zero Data Retention。它还明确第三方 remote MCP servers 不由 Anthropic 拥有、运营或背书。因此，remote MCP server 不能因为“能被模型调用”就被当成可信后端。
 
@@ -248,7 +248,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - 本地标准库 production cost / latency / rate-limit audit 显示，生产成本、延迟和限流检查表应把 usage/token accounting、rate-limit headers、bounded retry、latency distribution、budget gate、model/output controls、Batch status / `custom_id` / expiration、Flex fallback 和 Prompt Caching read/write 拆成可审计字段。Real Production Cost / Latency / Rate-Limit harness 的本地 accounting control 进一步验证 usage/cache/latency/cost/budget 汇总逻辑。它们支撑字段设计和本地汇总检查，但不证明真实 API 成本、P95 latency、吞吐、缓存命中率、优化收益或生产可靠性。
 - Real Batch / Flex / Prompt Caching harness 已完成 no-key 本地 deterministic cache/flex/batch metadata control，验证 cache usage 字段聚合、Flex fallback 记录、Batch JSONL metadata、`custom_id` 唯一性和 required result fields；Prompt Caching / Flex 仍需要真实 API key 才能观测真实 usage、cache read/write、resource unavailable 或 fallback，Batch job 提交默认 opt-in。该入口不证明任何真实收益或成本/延迟改善。
 - OpenAI Moderation 和 Safety / Data Controls 文档已补充安全和数据治理资料，可支撑 moderation signals、generated/input/output moderation、tool-calling moderation 覆盖限制、streaming moderation 限制、red-team、HITL、输入/输出约束、用户举报、`safety_identifier`、API key revoke、abuse monitoring logs、application state、ZDR/MAM、endpoint retention、remote MCP third-party retention、hosted container state 和 data residency 的工程边界。它们不证明任意检测层、数据控制配置或合规方案充分有效。
-- 本地标准库 production safety / data governance checklist audit 显示，生产安全检查表应把 moderation policy signal、tool-calling 覆盖边界、streaming score 时机、`safety_identifier`、API key revoke、abuse logs / application state、remote MCP 第三方数据流、hosted tool state、data residency 和 red-team / 用户举报回流拆成可审计字段。Real Moderation Safety harness 已完成本地 policy-signal control，记录 `flagged`、categories、scores、latency、expected mismatch 和 policy decision，并覆盖误报 / 漏报分支。它们支撑 checklist、记录入口和应用层分支设计，但不证明真实 moderation、HITL、数据保留、data residency 或合规方案有效。
+- 本地标准库 production safety / data governance checklist + object-level data-flow audit 显示，生产安全检查表应把 moderation policy signal、tool-calling 覆盖边界、streaming score 时机、`safety_identifier`、API key revoke、abuse logs / application state、remote MCP 第三方数据流、hosted execution state、file/vector store 对象、prompt caching prefix、browser/computer-use 数据面、data residency 和 red-team / 用户举报回流拆成可审计字段。Real Moderation Safety harness 已完成本地 policy-signal control，记录 `flagged`、categories、scores、latency、expected mismatch 和 policy decision，并覆盖误报 / 漏报分支。它们支撑 checklist、记录入口和应用层分支设计，但不证明真实 moderation、HITL、数据保留、对象删除、trace 脱敏、data residency 或合规方案有效。
 - Tool use、MCP、Memory 和 Eval 章节中的风险边界都与生产化相关，生产章节应作为前面章节的收束，而不是独立安全清单。
 
 ## 待验证问题
@@ -261,9 +261,9 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - agentic-specific 安全 regression set 应如何覆盖 goal hijacking、tool misuse、identity / privilege abuse、memory poisoning、insecure inter-agent communication、cascading failures 和 rogue agent / runaway loop 停止条件？
 - 哪些日志字段既能支持审计，又不会引入新的隐私风险？已完成 observability/trace 第一轮验证，仍需脱敏和访问控制实验。
 - 成本和延迟应该如何纳入 Agent eval？已补 OpenAI 官方 production / rate limit / cost / latency / token counting / Batch / Flex / Prompt Caching 边界，标准库字段 audit、真实 cost-latency 本地 accounting control 和 Batch/Flex/Caching 本地 metadata control 已完成；仍需真实 API / Cookbook 练习记录 token、usage、rate-limit headers、retry、平均/P95 latency、cost estimate、budget threshold、cache read/write 和失败样例。
-- OpenAI API、remote MCP、hosted tools、files/vector stores 和 browser/computer-use 工具的数据保留边界如何落到项目 checklist？已补 OpenAI Safety / Data Controls 官方边界，仍需真实项目按 endpoint、对象删除、third-party server、trace 字段和 project data controls 复核。
+- OpenAI API、remote MCP、hosted tools、files/vector stores、prompt caching 和 browser/computer-use 工具的数据保留边界如何落到项目 checklist？已补 OpenAI Safety / Data Controls 官方边界，并补标准库 object-level data-flow 字段模板；仍需真实项目按 endpoint、对象删除、third-party server、trace 字段和 project data controls 复核。
 - Moderation-only、policy-enforced 和 HITL 组合在真实 prompt injection / tool calling 场景中的误报、漏报、延迟和人工复核负担如何测量？已补 OpenAI Moderation 官方边界和 Real Moderation Safety 本地 policy-signal control；当前仍需 API key completed run 与对照实验。
-- Safety / data governance checklist 在真实 project 中哪些字段能从平台配置直接确认，哪些需要应用日志、runbook 或人工审计证明？标准库 checklist audit 已完成，仍需真实账户 / 项目验证。
+- Safety / data governance checklist 在真实 project 中哪些字段能从平台配置直接确认，哪些需要应用日志、runbook 或人工审计证明？标准库 checklist + object-level data-flow audit 已完成，仍需真实账户 / 项目验证。
 
 ## 本章小结
 
