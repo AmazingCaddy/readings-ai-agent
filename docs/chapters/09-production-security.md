@@ -198,6 +198,7 @@ Browser Agent 是另一类高风险工具连接。它可能复用真实浏览器
 - NIST AI RMF 的概述段落已完成第一轮精读，可支撑生产化章节的风险管理和治理视角；它不是 Agent 专用工程指南。
 - “Prompt injection 不能只靠 prompt 解决；外部内容应被当作不可信数据，工具权限和写操作审批必须由应用/系统层控制”已升级为可入正文。Indirect Prompt Injection paper 支撑外部检索数据中的恶意 prompt 可影响应用行为和 API 调用的风险边界；OWASP 支撑风险分类，NIST 支撑全生命周期风险治理，Microsoft Prompt Shields 支撑 user prompt attack / document attack 分类、生成前检测接口和误报/漏报边界，OpenAI 工具调用文档支撑应用侧执行和控制边界。
 - Microsoft Prompt Shields 文档已补充检测层工程资料：`shieldPrompt` API 可以分析 `userPrompt` 和 `documents`，返回 `attackDetected` 字段；但文档也明确提示可能出现 false positives / negatives，并建议 additional validation layers。因此它只能支撑“检测层应纳入安全 workflow”，不能支撑“接入检测后就安全”。
+- Anthropic jailbreak / prompt injection mitigation 文档已补充另一组官方工程资料：直接 jailbreak / prompt injection 和 indirect prompt injection 是不同 threat model；网页、邮件、文档、OCR 输出和 tool results 等第三方内容应作为不可信数据处理；工程上可结合 `tool_result` 边界、来源说明、JSON encoding、tool output screening、最小权限、red-team 和持续监控。它支撑这些防护层应进入系统设计，但不证明任意 classifier、prompt、JSON encoding 或 computer-use 机制的真实拦截率。
 - OpenAI Agents SDK 和 Semantic Kernel 文档已补充第一轮工程资料，可支撑 guardrails、human approval、tool approval、sensitive trace 控制和 task automation approval 的保守表述；标准库 prompt injection / tool permission 实验、安全 regression set 和审批状态恢复实验已覆盖最小权限、trace 脱敏、误报/漏报字段、多类风险 case、审批恢复、参数快照和幂等执行。“高风险工具应使用最小权限、参数校验、guardrails、人工确认、审批状态恢复和审计 trace 的组合”已升级为可入正文。真实 prompt injection / permission harness 已准备，但结果待跑，仍需真实模型 / 框架 guardrail 与 HITL 实验验证误报、漏报和覆盖范围。
 - Anthropic MCP connector / tunnels 文档已补充 remote MCP tools 和私有网络 MCP server 的产品集成证据：allowlist/denylist、per-tool config、OAuth bearer token、third-party server trust review、data retention、outbound-only tunnel、inner TLS、allowed IPs、凭据保护和 shared responsibility。它们支撑“远程工具连接也要纳入权限、数据保留和审计设计”的窄边界，但不证明 connector、tunnel 或任意 MCP server 默认安全或生产可靠。
 - Browser Use / Playwright 资料已补充 browser agent 的工程边界：浏览器动作、登录态 profile、文件上传、表单提交、custom tools、human-in-the-loop 和 Playwright action trace 都需要纳入权限、审计和脱敏设计。它们不能证明真实网站任务、CAPTCHA/stealth、合规或生产可靠性。
@@ -231,6 +232,7 @@ Browser Agent 是另一类高风险工具连接。它可能复用真实浏览器
 - [OWASP Top 10 for Large Language Model Applications](../sources/source-cards/2026-owasp-llm-top-10.md)
 - [NIST AI Risk Management Framework](../sources/source-cards/2026-nist-ai-rmf.md)
 - [Microsoft Prompt Shields Documentation](../sources/source-cards/2026-microsoft-prompt-shields-docs.md)
+- [Anthropic Jailbreak and Prompt Injection Mitigation Documentation](../sources/source-cards/2026-anthropic-jailbreak-mitigation-docs.md)
 - [Google Cloud Responsible AI Documentation](../sources/source-cards/2026-google-responsible-ai-docs.md)
 - [Anthropic MCP Connector and Tunnels Documentation](../sources/source-cards/2026-anthropic-mcp-docs.md)
 - [Browser Use and Playwright Browser Automation References](../sources/source-cards/2026-browser-use-playwright.md)
