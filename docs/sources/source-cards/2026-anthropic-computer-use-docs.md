@@ -3,13 +3,13 @@
 - 来源链接：https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool.md
 - 页面链接：https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool
 - 作者 / 机构：Anthropic
-- 发布时间：文档持续更新；computer use beta header 包含 `computer-use-2025-11-24` 和旧版 `computer-use-2025-01-24`
-- 最后复核日期：2026-07-11
+- 发布时间：文档持续更新；当前 computer use beta header 包含 `computer-use-2025-11-24`，旧版 `computer-use-2025-01-24` 仅覆盖 Claude Sonnet 4.5、Claude Haiku 4.5 和若干 deprecated / retired 模型
+- 最后复核日期：2026-07-12
 - 类型：Official Docs / Tool Use / Browser and Desktop Automation
 - 主题：Computer Use / Browser Agent / Desktop Automation / Security / Trace
 - 适合阶段：进阶 / Browser Agent 与 Production 安全
 - 可信度等级：A
-- 是否已验证：官方 Markdown 页面和 HTTP metadata 已复核；标准库 Browser Action Trace Audit 已完成字段审计；支撑 computer use beta、screenshot / mouse / keyboard action model、client-side tool execution、container / VM isolation、minimal privileges、sensitive data avoidance、domain allowlist、human confirmation、screenshot prompt injection classifiers、action validation、action logging、latency / vision / coordinate / reliability limitations、data retention、token overhead、trace 脱敏和失败分类边界；不证明真实网页/桌面任务成功率、点击精度、classifier 拦截率、成本、延迟、合规或生产可靠性
+- 是否已验证：官方 Markdown 页面和 HTML 页面 HTTP metadata 已于 2026-07-12 复核；标准库 Browser Action Trace Audit 已完成字段审计；支撑 computer use beta、`computer-use-2025-11-24` / `computer-use-2025-01-24` header 边界、screenshot / mouse / keyboard action model、client-side tool execution、`tool_result` agent loop、container / VM isolation、minimal privileges、sensitive data avoidance、domain allowlist、human confirmation、screenshot prompt injection classifiers、action validation、action logging、latency / vision / coordinate / reliability limitations、client-side data storage、ZDR eligibility、token overhead、trace 脱敏和失败分类边界；不证明真实网页/桌面任务成功率、点击精度、classifier 拦截率、真实成本、延迟、合规或生产可靠性
 
 ## 一句话总结
 
@@ -17,7 +17,7 @@ Anthropic computer use 文档适合说明“让模型看屏幕并操作鼠标键
 
 ## 核心结论
 
-- Computer use 是 beta 功能，向 Claude 暴露 screenshot capture、mouse control、keyboard input 和 desktop automation 能力。
+- Computer use 是 beta 功能，向 Claude 暴露 screenshot capture、mouse control、keyboard input 和 desktop automation 能力；当前文档要求使用 beta header，主 header 为 `computer-use-2025-11-24`，旧 `computer-use-2025-01-24` 只覆盖较旧或退役模型。
 - 文档说明 computer use 可以与 bash、text editor 等工具组合，但 computer use 专指看见并控制 desktop environments 的工具能力。
 - Security considerations 明确指出 computer use 有不同于标准 API 的独特风险，联网时风险更高。
 - 文档建议使用 dedicated virtual machine 或 container，并配置 minimal privileges，以降低直接系统攻击或事故风险。
@@ -26,17 +26,18 @@ Anthropic computer use 文档适合说明“让模型看屏幕并操作鼠标键
 - 对可能产生 meaningful real-world consequences 或需要 affirmative consent 的任务，例如接受 cookies、完成金融交易、同意服务条款，文档建议要求人工确认。
 - 文档明确说明 Claude 在某些情况下会跟随网页或图片中的指令，即使这些指令与开发者指令冲突；这直接支撑 browser/computer-use 场景中的 prompt injection 风险。
 - Anthropic 为 computer use 增加了 screenshot prompt injection classifier，检测到潜在注入时会引导模型在下一步动作前请求用户确认；但文档同时强调即使有 classifier defense layer，上述防护仍然重要。
-- How computer use works 说明 API 返回 `tool_use`，开发者需要在自己的 computer/container/VM 中执行工具请求，再把 screenshot 或 command output 作为 `tool_result` 回传。
+- How computer use works 说明 API 返回 `tool_use`，开发者需要在自己的 computer/container/VM 中执行工具请求，再把 screenshot 或 command output 作为 `tool_result` 回传；循环重复到不再有工具请求或达到应用侧限制。
 - Implementation best practices 包括验证 action 是否安全有效、记录 action type / params / result、处理截图尺寸和坐标缩放、控制截图历史以管理上下文和缓存。
 - Limitations 明确包括 latency、computer vision accuracy、tool selection reliability、scrolling reliability、spreadsheet interaction、账号创建/社交平台内容限制、vulnerabilities、illegal actions 等。
-- Data retention 段落说明 computer use 是 client-side tool，screenshots、mouse actions、keyboard inputs 和 session files 存储在开发者环境中；Anthropic 按 API data retention 处理 API 请求。
-- Pricing 段落说明 computer use beta 会增加 system prompt overhead，tool definition 也有 token 开销，截图和 tool execution results 会产生额外 token 消耗。
+- Data retention 段落说明 computer use 是 client-side tool，screenshots、mouse actions、keyboard inputs 和 session files 存储在开发者环境中；Anthropic 实时处理 API 调用中的 screenshot images 和 action requests，并按 API data retention 处理这些请求；文档还说明该功能 eligible for ZDR，但需要组织已有 ZDR arrangement。
+- Pricing 段落说明 computer use beta 会增加 466-499 tokens 的 system prompt overhead；Claude 4.x computer-use tool definition 每个工具定义为 735 input tokens；截图和 tool execution results 会产生额外 token 消耗。
 - 本地标准库 Browser Action Trace Audit 把上述安全和 logging 边界拆成 action trace、DOM/screenshot state、side-effect approval、profile isolation、file upload control、external content untrusted boundary、sensitive trace redaction 和 failure classification 字段模板。
 
 ## 支撑证据
 
-- 2026-07-11 使用 `curl -L --no-progress-meter` 抓取官方 Markdown URL 成功，页面标题为 `Computer use tool`。
-- 2026-07-11 使用 `curl -L -I` 复核页面 URL，返回 HTTP 200。
+- 2026-07-12 使用 `curl -L` 抓取官方 Markdown URL 成功，页面标题为 `Computer use tool`，响应 `content-type: text/markdown; charset=utf-8`，`x-middleware-rewrite: /docs/as-markdown/en/agents-and-tools/tool-use/computer-use-tool`。
+- 2026-07-12 使用 `curl -L -I` 复核页面 URL，返回 HTTP 200，HTML 页面响应 `content-type: text/html; charset=utf-8`。
+- 页面开头的 beta header 段落列出 `computer-use-2025-11-24` 和旧 `computer-use-2025-01-24` 的模型范围；Quick start 示例使用 `computer-use-2025-11-24`。
 - 页面开头说明 computer use provides screenshot capabilities and mouse/keyboard control for autonomous desktop interaction。
 - Security considerations warning 列出 VM/container、minimal privileges、避免敏感数据、domain allowlist 和 human confirmation。
 - Prompt injection 段落说明 webpages 或 images 中的指令可能 override your instructions or cause Claude to make mistakes，并要求隔离敏感数据和动作。
@@ -45,16 +46,17 @@ Anthropic computer use 文档适合说明“让模型看屏幕并操作鼠标键
 - Computing environment 段落说明 reference implementation 使用 Docker container，并由应用接收 Claude tool use request、转换为环境动作、捕获 screenshot / command output、回传 Claude。
 - Best practices 段落给出 validate actions before running them 和 log actions for debugging 的应用侧代码形态。
 - Limitations 段落明确 computer use is in beta，并列出 latency、vision accuracy、tool selection reliability 和 vulnerabilities 等限制。
-- Data retention 段落说明 computer use data 由开发者应用控制存储位置和方式，ZDR eligibility 取决于相应安排和 API data retention。
+- Data retention 段落说明 computer use data 由开发者应用控制存储位置和方式，Anthropic 按 API data retention 处理实时 API 请求；ZDR eligibility 取决于组织是否有 ZDR arrangement。
+- Pricing 段落说明 computer use beta 增加 466-499 tokens 的 system prompt overhead，Claude 4.x computer use tool definition 为 735 input tokens，并且 screenshot images / tool execution results 会带来额外 token consumption。
 - 2026-07-11 运行 [Browser Action Trace Audit](../../experiments/browser-action-trace-audit/README.md) 成功；`naive_trace` 0/8 通过，`governed_trace` 8/8 通过。该结果只支撑 browser/computer-use action trace 字段设计，不调用 Anthropic API、不启动真实 VM/container，也不验证 screenshot classifier 行为。
 
 ## 可能的问题
 
 - 这是 Anthropic 产品文档，不是独立评测；不能证明真实点击精度、任务完成率、跨网站稳定性、classifier 拦截率或生产安全效果。
-- Screenshot prompt injection classifier 是供应商实现细节；正文只能写成“可以作为一层防护”，不能写成通用浏览器 Agent 默认能力。
+- Screenshot prompt injection classifier 是供应商实现细节；正文只能写成“Anthropic computer use 文档中描述的一层防护”，不能写成通用浏览器 Agent 默认能力，也不能写成已验证拦截效果。
 - Browser Action Trace Audit 是标准库字段审计，不是 Anthropic computer use 实测；它不能证明真实点击精度、坐标/滚动可靠性、classifier 拦截率、成本、延迟或生产安全效果。
 - Computer use 涉及真实桌面、网页、文件、账号和外部副作用；初学者练习应使用 demo site、测试账号、隔离 profile、最小权限和人工确认。
-- 文档给出 token overhead 和 screenshot token 消耗方向，但本手册未实测具体成本、延迟或缓存效果。
+- 文档给出 token overhead 数字和 screenshot token 消耗方向，但本手册未实测具体账户成本、延迟、缓存收益或质量影响。
 
 ## 初学者阅读建议
 

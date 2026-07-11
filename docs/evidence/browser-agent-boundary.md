@@ -23,13 +23,15 @@ Browser Agent 是高风险的工具型 Agent：它把模型决策连接到真实
 - 一致点：WebArena 摘要强调 web agent 任务是 long-horizon、diverse、需要 functional correctness 的端到端环境；这支持“浏览器 Agent 不能只看最终文本，需要看网页状态和过程”的评测边界。
 - 一致点：Anthropic computer use 文档把 screenshot、mouse、keyboard 和 desktop automation 作为工具动作面，并说明开发者需要在自己的 computer / container / VM 中执行 tool request，再把 screenshot 或 command output 作为 `tool_result` 回传。这与 Playwright / Browser Use 的“动作层和 trace 层必须由应用治理”的边界一致。
 - 一致点：Anthropic computer use security considerations 建议 dedicated VM/container、minimal privileges、避免敏感登录信息、domain allowlist，以及对金融交易、同意条款、接受 cookies 等有现实后果或需要 affirmative consent 的任务做人工确认。这补强了浏览器/桌面 Agent 的权限隔离和确认边界。
-- 一致点：Anthropic 文档明确说明网页或图片中的指令可能 override 开发者指令或 cause mistakes，并提到 screenshot prompt injection classifier 会引导模型在继续动作前请求用户确认；但文档同时强调即使有 classifier defense layer，隔离和确认仍然重要。
+- 一致点：Anthropic 文档明确说明网页或图片中的指令可能 override 开发者指令或 cause mistakes，并提到 screenshot prompt injection classifier 会引导模型在继续动作前请求用户确认；但文档同时强调即使有 classifier defense layer，隔离和确认仍然重要，且 classifier 是 Anthropic computer use 文档中的供应商防护层，不是通用浏览器 Agent 默认能力。
 - 一致点：Anthropic 文档给出 validate actions before running them 和 log actions for debugging 的应用侧模式，并在 limitations 中列出 latency、computer vision accuracy、tool selection reliability、coordinate / scrolling / spreadsheet limitations 和 vulnerabilities。这支持“真实 browser/computer-use 任务必须看 action log、页面状态、坐标/视觉错误和失败分类”的评测设计。
+- 一致点：Anthropic 文档的 data retention 段落把 computer use 定义为 client-side tool：screenshots、mouse actions、keyboard inputs 和 session files 存在开发者环境中；同时 Anthropic 会实时处理 API 请求中的 screenshot images 和 action requests，保留边界按 API data retention 执行。文档还说明功能 eligible for ZDR，但需要组织已有 ZDR arrangement。
+- 一致点：Anthropic 文档的 pricing 段落给出 system prompt overhead 466-499 tokens、Claude 4.x tool definition 735 input tokens，并提醒 screenshot images 和 tool execution results 会产生额外 token consumption。这支持把 browser/computer-use 的成本记录纳入 trace，而不是只记录动作是否成功。
 - 一致点：Agent eval evidence 和 trace evidence 已确认，对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全；关键 trajectory / trace 应进入 eval、审计和回归输入。浏览器 Agent 是这一边界的典型场景。
 - 一致点：tool permission evidence 支持高风险动作要使用最小权限、参数校验、人工确认、审批状态恢复和审计 trace。浏览器 Agent 的表单提交、购物、文件上传、登录态操作和删除/发布按钮都应归入高风险动作集合。
 - 边界：Browser Use README 中的 benchmark、leaderboard、速度、云服务和 CAPTCHA/stealth 相关 claim 来自项目自身材料，当前没有独立复现；不能用作本手册中真实质量、成本、延迟或生产可靠性的确定性证据。
 - 边界：Playwright 是执行和测试工具，不是 Agent runtime；它能支撑 browser action / trace 设计，不能证明模型的网页规划、任务理解或错误恢复能力。
-- 边界：Anthropic computer use 是 beta 产品文档；screenshot classifier、模型点击精度、真实桌面任务成功率、成本、延迟、ZDR/data-retention 安排和生产可靠性都需要真实试跑或合同/配置层复核，不能自动泛化到其他 browser agent。
+- 边界：Anthropic computer use 是 beta 产品文档；screenshot classifier、模型点击精度、真实桌面任务成功率、真实成本、延迟、ZDR/data-retention 安排和生产可靠性都需要真实试跑或合同/配置层复核，不能自动泛化到其他 browser agent。
 
 ## 实验验证
 
