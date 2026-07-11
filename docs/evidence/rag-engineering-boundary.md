@@ -11,6 +11,7 @@
 - Source 3：[Evidence Note: RAG 与 Memory 边界](rag-memory-boundary.md)
 - Source 4：[Evidence Note: 上下文工程与结构化输出边界](context-structured-output-boundary.md)
 - Source 5：[RAG 最小 Pipeline 与 Citation 实验结果](../experiments/rag-pipeline/results-2026-07-11.md)
+- Source 6：[上下文策略对比实验结果](../experiments/context-strategy-comparison/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -23,6 +24,7 @@
 - 边界：LlamaIndex 是框架文档，支撑现代工程术语和流程，但不能证明某个 chunk size、embedding、vector store、retriever 或 reranker 在所有任务中最优。
 - 边界：本次 LlamaIndex 文档搜索未找到直接可用的 source citation / source_nodes 页面证据，因此“答案必须带可追溯 references”的工程实现仍需后续具体示例或实验补强。
 - 本地实验：标准库最小 RAG pipeline 把 3 个文档加载为带 metadata 的 chunks，用关键词 overlap 检索，输出绑定到 `chunk_id`、`source_id`、`title`、`url` 的 citations，并在无检索证据时返回 `grounded=false`。这支持“最小 RAG 应记录 chunk / retrieve / synthesize trace，并把 answer citation 绑定到具体 chunk”的工程建议。
+- 本地实验：标准库上下文策略对比实验中，基础 `keyword_rag` 在一个 case 里找对产品文档，但在退款争议 case 中把外部注入 attachment 排到前面，导致错误答案和错误 human-review gate。这支持“RAG retrieval 需要 trust/freshness metadata、filter、citation 校验和权限边界”的工程建议。
 
 ## 实验验证
 
@@ -32,7 +34,7 @@
 
 ## 结论状态
 
-- 部分验证：RAG paper 支撑外部检索增强的基础动机，LlamaIndex 支撑现代工程流程和组件边界；标准库模拟实验支撑最小 pipeline trace 和 chunk-level citation 设计。仍缺真实 RAG stack、chunk size/top-k/rerank 对比、LLM faithfulness 和成本/延迟实验。
+- 部分验证：RAG paper 支撑外部检索增强的基础动机，LlamaIndex 支撑现代工程流程和组件边界；标准库模拟实验支撑最小 pipeline trace、chunk-level citation、trust/freshness metadata 和 human gate 设计。仍缺真实 RAG stack、chunk size/top-k/rerank 对比、LLM faithfulness 和成本/延迟实验。
 
 ## 可进入章节
 

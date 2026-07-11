@@ -58,7 +58,7 @@
 
 ## Eval 与生产化
 
-- 上下文工程中的输出解析、Structured Outputs、JSON mode 和长上下文失败模式如何设计最小实验？已完成 OpenAI 官方文档第一轮验证和标准库输出解析 / 上下文治理模拟实验；真实 Structured Outputs / JSON mode harness 已准备；仍需实际运行验证 refusal、semantic validator、retry loop、长上下文 token/latency/cost 和跨模型稳定性。
+- 上下文工程中的输出解析、Structured Outputs、JSON mode 和长上下文失败模式如何设计最小实验？已完成 OpenAI 官方文档第一轮验证、标准库输出解析 / 上下文治理模拟实验和上下文策略对比实验；真实 Structured Outputs / JSON mode harness 已准备；仍需实际运行验证 refusal、semantic validator、retry loop、真实长上下文 / RAG / 摘要 token/latency/cost 和跨模型稳定性。
 - Agent eval 应该优先评估最终结果还是完整 trajectory？已确认 AgentBench/WebArena/OpenAI Evals/LangSmith/Phoenix 支撑过程与交互评测的重要性，标准库 trace-aware eval 已验证 final-only 会漏掉无审批副作用工具和工具错误未恢复；真实模型 trace-aware eval harness 已准备，仍需实际运行和平台对照实验。
 - 通用 benchmark 对真实业务 agent 的代表性有多强？已确认公开 benchmark 可学习评测思想，但业务系统仍需 custom/private eval。
 - Trace 字段如何设计，才能同时支持调试、审计、回归和隐私控制？已完成 LangSmith/Phoenix/Cookbook 第一轮验证，标准库 trace-aware eval 已覆盖 tool call/result/error/approval/final response；真实模型 trace-aware eval harness 已准备；候选字段仍包括输入、输出、中间步骤、工具调用、检索、错误、延迟、token/cost、反馈、版本、metadata；仍需实际运行真实 RAG/tool traces 和隐私脱敏策略。

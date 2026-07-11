@@ -8,7 +8,7 @@
 - 主题：Text Generation / Prompt Engineering / Message Roles / Context Window
 - 适合阶段：入门 / 工程实践
 - 可信度等级：A
-- 是否已验证：text generation 页面已复核；上下文工程边界已完成第一轮交叉验证；上下文治理与结构化输出标准库实验已完成
+- 是否已验证：text generation 页面已复核；上下文工程边界已完成第一轮交叉验证；上下文治理与结构化输出标准库实验、上下文策略对比实验已完成
 
 ## 一句话总结
 
@@ -40,7 +40,9 @@ OpenAI Text Generation 文档适合解释模型输入、输出数组、message r
 
 ## 可复现实验
 
-- 已完成标准库上下文治理与结构化输出实验，验证输出解析和长上下文治理的最小失败模式。后续仍需真实 Responses API 请求，记录纯文本输出、tool call 输出、structured output、refusal 和长上下文成本。
+- 已完成标准库上下文治理与结构化输出实验，验证输出解析和长上下文治理的最小失败模式。
+- 已完成标准库上下文策略对比实验，比较 full stuffing、recency-only、lossy summary、keyword RAG 和 governed context，验证 source id、trust/freshness 和 human gate trace 的最小边界。
+- 后续仍需真实 Responses API 请求，记录纯文本输出、tool call 输出、structured output、refusal 和长上下文 / RAG / 摘要成本。
 
 ## 是否进入正文
 

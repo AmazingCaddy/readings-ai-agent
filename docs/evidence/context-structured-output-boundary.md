@@ -14,6 +14,7 @@ LLM 应用不能把模型调用理解成“输入一段 prompt，取回一段文
 - Source 6：[Evidence Note: RAG 与 Memory 边界](rag-memory-boundary.md)
 - Source 7：[Evidence Note: Prompt Injection 与权限边界](prompt-injection-permission-boundary.md)
 - Source 8：[上下文治理与结构化输出实验结果](../experiments/context-structured-output/results-2026-07-11.md)
+- Source 9：[上下文策略对比实验结果](../experiments/context-strategy-comparison/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -27,6 +28,7 @@ LLM 应用不能把模型调用理解成“输入一段 prompt，取回一段文
 - 关联点：RAG/Memory evidence 说明外部知识检索、状态和长期记忆治理各有边界；Prompt Injection evidence 说明外部内容不能只靠 prompt 处理。这些资料共同支持“长上下文不能替代检索、摘要、状态、权限和评测”。
 - 本地实验：标准库输出解析实验中，`free_text` 只有 1/3 语义有效，`json_mode` 有 2/3 schema valid 但只有 1/3 semantic valid，`schema_validated` 全部 schema valid 但仍有 1 个语义错误。这支持“结构化输出提升解析和 schema adherence，不等于业务正确”。
 - 本地实验：标准库上下文治理实验中，`naive_long_context` 同时使用旧政策和外部注入，输出自动退款和导出 token；`governed_context` 选择最新可信政策并隔离外部 attachment。这支持“长上下文不能替代来源、时效、信任和权限治理”。
+- 本地实验：标准库上下文策略对比实验中，`full_context`、`recency_only`、`lossy_summary` 和 `keyword_rag` 分别暴露旧政策/外部注入、最新但不可信材料、source id 丢失和基础检索召回不可信文档等失败模式；`governed_context` 保留可信 citation、隔离外部 attachment 并维护 human gate。这支持“长上下文、摘要和 RAG 都需要治理”的边界。
 
 ## 实验验证
 
@@ -36,7 +38,7 @@ LLM 应用不能把模型调用理解成“输入一段 prompt，取回一段文
 
 ## 结论状态
 
-- 部分验证：OpenAI 官方文档直接支撑输入/输出结构、message roles、Structured Outputs、JSON mode 和 context window 的 API 边界；RAG/Memory 和 Prompt Injection evidence 支撑“长上下文不能替代治理”的交叉边界；标准库实验验证了 schema-valid semantic error 和 naive long context 的旧资料/外部指令风险。仍缺真实 API / 模型 / 长上下文成本实验。
+- 部分验证：OpenAI 官方文档直接支撑输入/输出结构、message roles、Structured Outputs、JSON mode 和 context window 的 API 边界；RAG/Memory 和 Prompt Injection evidence 支撑“长上下文不能替代治理”的交叉边界；标准库实验验证了 schema-valid semantic error、naive long context 的旧资料/外部指令风险，以及摘要/RAG 策略的 provenance 和 trust 失败模式。仍缺真实 API / 模型 / 长上下文成本实验。
 
 ## 可进入章节
 
