@@ -20,6 +20,7 @@
 - Source 12：[Anthropic MCP Connector and Tunnels Documentation](../sources/source-cards/2026-anthropic-mcp-docs.md)
 - Source 13：[LangGraph Documentation](../sources/source-cards/2026-langgraph-docs.md)
 - Source 14：[OWASP Agentic AI Security Resources](../sources/source-cards/2026-owasp-agentic-ai-security.md)
+- Source 15：[MITRE ATLAS](../sources/source-cards/2026-mitre-atlas.md)
 
 ## 交叉验证结果
 
@@ -37,10 +38,12 @@
 - 一致点：LangGraph persistence 文档支持 checkpointer 按 `thread_id` 保存 graph state snapshots，用于 conversation continuity、HITL、time travel 和 fault tolerance；thinking-in-langgraph 文档也建议 user-fixable errors 用 `interrupt()` 暂停，并在 human review node 开头放置 `interrupt()`。
 - 一致点：OWASP Agentic AI resources 把 tool misuse、identity / privilege abuse、memory poisoning、insecure inter-agent communication、cascading failures、trust exploitation 和 rogue agents 列为 agentic-specific 风险方向；这补强了“工具权限、身份、记忆、多 Agent 通信、级联失败和停止条件都应进入安全测试矩阵”的边界。
 - 一致点：OWASP Agentic AI crosswalk 摘要把 runtime containment、architectural monitoring、supply chain attestation 和 schema controls 列为 priority gap areas；这与运行时隔离、trace / monitoring、依赖 / 工具供应链审查和 schema 校验的工程边界一致。
+- 一致点：MITRE ATLAS latest v6 YAML 把 Agentic AI 定义为可自主 plan、decide、execute multi-step actions 的平台，并包含 `AI Agent Tool Invocation`、`AI Agent Tool Poisoning`、MCP / remote tool、memory poisoning、computer-use destructive action 等 technique / case-study 线索；这补强了工具权限、远程工具、记忆和 computer-use action 都应进入安全 regression set 的边界。
 - 边界：OpenAI Agents SDK tool guardrails 明确不覆盖 hosted tools、built-in execution tools 和 handoffs 等所有执行面；因此框架 guardrail 不能被写成全局安全边界。
 - 边界：LangGraph interrupt/resume 不是“任意位置安全暂停”。文档明确 resume 时 node 会从头重新执行，`interrupt()` 前的代码会再次运行；不要重排或条件跳过同一 node 的 interrupt；不要把 interrupt 包在 broad try/except 中；interrupt payload 必须 JSON-serializable；side effects before interrupt 必须幂等，最好放在 interrupt 之后或拆到独立 node。
 - 边界：LangGraph 内存型 checkpointer 只适合教程或进程内实验，进程重启后不会保留 checkpoints；生产恢复需要持久化 checkpointer，并考虑长会话 checkpoint 增长、保留和清理策略。
 - 边界：OWASP Agentic AI resources 当前只复核公开摘要；白皮书全文未精读，不能直接支撑完整控制清单或 mitigation 有效性。
+- 边界：MITRE ATLAS mitigations 只能作为控制候选和 checklist 来源；不能单独证明任何权限继承、工具确认、segmentation、memory hardening、validation 或 monitoring 在真实 Agent 系统中有效。
 - 边界：NIST 和 OWASP 支撑风险治理视角，OpenAI/Semantic Kernel 支撑工程机制，但是否有效仍需对具体工具、数据和权限模型做本地攻击/失败实验。
 - 本地实验：标准库 prompt injection / permission 模拟显示，写工具在应用层审批前阻断后不会产生 `refund_issued` 副作用；同一 trace 还演示了敏感字段在写入审计前脱敏。这支持“审批和 trace 隐私治理需要在工具执行路径上实现”的工程表述。
 - 本地实验：标准库安全 regression set 把安全 case 拆成 expected decision、actual decision、risk tags、false positive、false negative 和 secret leak 字段；它覆盖外部注入、跨用户读取、高金额退款、敏感邮件、破坏性工具、重复提交和 benign read。这支持“上线前安全 regression set 应同时检查阻断、审批、放行和误伤”的工程表述。
@@ -54,7 +57,7 @@
 
 ## 结论状态
 
-- 可入正文：窄结论“高风险工具不能只依赖模型自觉或安全 prompt；最小权限、应用层参数校验、写操作确认/审批、审批状态恢复和审计 trace 应进入工具执行路径”已完成第一轮交叉验证。风险资料、OpenAI API/SDK 文档、Anthropic MCP connector 文档、Semantic Kernel 文档、LangGraph 文档和 OWASP Agentic AI resources 共同支撑工具权限、审批、guardrails、remote tool allowlist/denylist、data retention、interrupt/resume、checkpointer、`thread_id` 恢复、runtime containment、agent identity、memory poisoning、多 Agent 通信风险和敏感 trace 控制的工程边界；标准库实验支撑只读/写工具分离、审批拒绝、trace 脱敏、安全 regression set、审批状态恢复、参数快照校验和幂等执行的最小流程。
+- 可入正文：窄结论“高风险工具不能只依赖模型自觉或安全 prompt；最小权限、应用层参数校验、写操作确认/审批、审批状态恢复和审计 trace 应进入工具执行路径”已完成第一轮交叉验证。风险资料、OpenAI API/SDK 文档、Anthropic MCP connector 文档、Semantic Kernel 文档、LangGraph 文档、OWASP Agentic AI resources 和 MITRE ATLAS 共同支撑工具权限、审批、guardrails、remote tool allowlist/denylist、data retention、interrupt/resume、checkpointer、`thread_id` 恢复、runtime containment、agent identity、memory poisoning、多 Agent 通信风险、Agentic AI tool invocation / tool poisoning / computer-use action 和敏感 trace 控制的工程边界；标准库实验支撑只读/写工具分离、审批拒绝、trace 脱敏、安全 regression set、审批状态恢复、参数快照校验和幂等执行的最小流程。
 - 部分验证：真实框架 guardrail/HITL 的覆盖范围、真实误报/漏报、成本、延迟和跨框架对比仍待实际运行验证。
 
 ## 可进入章节

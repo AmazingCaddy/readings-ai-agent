@@ -36,6 +36,8 @@ OWASP 把 prompt injection 列为 LLM 应用风险项，并把不安全插件设
 
 OWASP Agentic Security Initiative 的公开资源还把 Agentic AI 风险扩展到目标劫持、工具误用、身份和权限滥用、记忆污染、多 Agent 通信不安全、级联失败和失控 Agent。这里不能得出“某个缓解方案已经有效”的结论，但可以提醒你：生产安全不只是挡住 prompt injection，还要检查身份、权限、记忆、运行时隔离、schema 校验、停止条件和监控。
 
+MITRE ATLAS 可以作为更具体的攻击技术和案例库。它把 AI / Agentic AI 攻击组织成 tactics、techniques、mitigations 和 case studies，并标注 platform 与 maturity。对初学者来说，它最适合用来扩展安全 regression set：例如 prompt injection、agent tool invocation、tool poisoning、memory poisoning、MCP / remote tool abuse 和 computer-use 破坏性动作；不要把 ATLAS mitigation 条目直接当成“用了就安全”。
+
 ### 权限模型
 
 权限模型决定 Agent 能访问什么数据、能调用什么工具、能执行什么动作、哪些动作需要人类确认。
@@ -216,6 +218,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 
 - Indirect Prompt Injection paper 和 OWASP LLM Top 10 的关键风险项已完成第一轮精读，可支撑外部内容模糊数据/指令边界、prompt injection、敏感信息泄露、工具/插件访问控制和 excessive agency 的保守风险表述。
 - OWASP Agentic AI Security Resources 的公开资源页、HTTP metadata 和 WP JSON 摘要已复核，可支撑 goal hijacking、tool misuse、identity / privilege abuse、memory poisoning、insecure inter-agent communication、cascading failures、rogue agents、runtime containment、architectural monitoring 和 schema controls 等 agentic-specific 风险边界。白皮书下载受限，全文未精读，因此不能支撑完整缓解清单或具体控制效果。
+- MITRE ATLAS 的主页、manifest、latest v6 YAML、HTTP metadata 和 term catalog 已复核，可支撑 LLM Prompt Injection、AI Agent Tool Invocation、AI Agent Tool Poisoning、memory / MCP / computer-use case-study-derived regression set、Agentic AI platform 和 maturity 的保守边界。它不能支撑任意 mitigation、guardrail、detector、HITL 或监控方案的真实效果。
 - NIST AI RMF 的概述段落已完成第一轮精读，可支撑生产化章节的风险管理和治理视角；它不是 Agent 专用工程指南。
 - “Prompt injection 不能只靠 prompt 解决；外部内容应被当作不可信数据，工具权限和写操作审批必须由应用/系统层控制”已升级为可入正文。Indirect Prompt Injection paper 支撑外部检索数据中的恶意 prompt 可影响应用行为和 API 调用的风险边界；OWASP 支撑风险分类，NIST 支撑全生命周期风险治理，Microsoft Prompt Shields 支撑 user prompt attack / document attack 分类、生成前检测接口和误报/漏报边界，OpenAI 工具调用文档支撑应用侧执行和控制边界。
 - Microsoft Prompt Shields 文档已补充检测层工程资料：`shieldPrompt` API 可以分析 `userPrompt` 和 `documents`，返回 `attackDetected` 字段；但文档也明确提示可能出现 false positives / negatives，并建议 additional validation layers。因此它只能支撑“检测层应纳入安全 workflow”，不能支撑“接入检测后就安全”。
@@ -259,6 +262,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 
 - [OWASP Top 10 for Large Language Model Applications](../sources/source-cards/2026-owasp-llm-top-10.md)
 - [OWASP Agentic AI Security Resources](../sources/source-cards/2026-owasp-agentic-ai-security.md)
+- [MITRE ATLAS](../sources/source-cards/2026-mitre-atlas.md)
 - [NIST AI Risk Management Framework](../sources/source-cards/2026-nist-ai-rmf.md)
 - [Microsoft Prompt Shields Documentation](../sources/source-cards/2026-microsoft-prompt-shields-docs.md)
 - [Anthropic Jailbreak and Prompt Injection Mitigation Documentation](../sources/source-cards/2026-anthropic-jailbreak-mitigation-docs.md)
