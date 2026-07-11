@@ -35,4 +35,4 @@ uv run python docs/experiments/mcp-trace/mcp_trace_simulation.py
 ## 结论状态
 
 - 支撑：可以把 MCP 章节中的 trace 字段和职责边界从纯文档推导升级为“本地最小模拟已验证”。
-- 仍缺：真实 MCP SDK/host 的行为验证、工具确认 UI、URL mode elicitation、token redaction、remote authorization 和跨 host 差异比较。
+- 仍缺：真实 host UI 的行为验证、工具确认 UI、URL mode elicitation、token redaction、remote authorization 和跨 host 差异比较。官方 MCP Python SDK / FastMCP stdio 对照见 [Real MCP SDK Trace](../real-mcp-sdk-trace/README.md)。

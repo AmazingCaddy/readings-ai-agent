@@ -54,6 +54,7 @@ HARNESSES = [
         ROOT / "docs/experiments/real-moderation-safety-validation/real_moderation_safety_validation.py",
     ),
     Harness("mcp_stdio_trace", ROOT / "docs/experiments/real-mcp-stdio-trace/mcp_stdio_trace.py"),
+    Harness("mcp_sdk_trace", ROOT / "docs/experiments/real-mcp-sdk-trace/mcp_sdk_trace.py"),
 ]
 
 
@@ -87,6 +88,13 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "checkpointer",
         "persistent_restart_tested",
         "mismatch_count",
+        "sdk",
+        "protocol_version",
+        "tool_count",
+        "resource_count",
+        "prompt_count",
+        "rejected_write_tool_forwarded",
+        "malicious_resource_review",
         "leaked_secret_in_trace",
     ]:
         if key in payload:

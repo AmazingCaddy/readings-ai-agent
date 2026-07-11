@@ -10,15 +10,15 @@
 uv run python docs/experiments/validation-harness-runner/run_validation_harnesses.py
 ```
 
-没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；没有 Playwright 时，真实浏览器 harness 应返回 `skipped`；没有 LangGraph 时，真实 LangGraph harness 应返回 `skipped`；Batch 提交必须显式 opt-in；不依赖 API 的本地 stdio MCP harness 应返回 `completed`。
+没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；没有 Playwright 时，真实浏览器 harness 应返回 `skipped`；没有 LangGraph 时，真实 LangGraph harness 应返回 `skipped`；没有 `mcp` Python package 时，官方 MCP SDK harness 应返回 `skipped`；Batch 提交必须显式 opt-in；不依赖 API 的本地 stdio MCP harness 应返回 `completed`。
 
-若要在不修改项目依赖的情况下运行 LangGraph 和 Playwright harness，可使用临时依赖：
+若要在不修改项目依赖的情况下运行 LangGraph、Playwright 和官方 MCP SDK harness，可使用临时依赖：
 
 ```bash
-uv run --with playwright --with langgraph --with langchain-core --with langgraph-checkpoint-sqlite python docs/experiments/validation-harness-runner/run_validation_harnesses.py
+uv run --with playwright --with mcp --with langgraph --with langchain-core --with langgraph-checkpoint-sqlite python docs/experiments/validation-harness-runner/run_validation_harnesses.py
 ```
 
-最新记录：见 [2026-07-11 结果](results-2026-07-11.md)。本次运行验证了统一入口、API harness 的 skip 分支、Real Browser Playwright 固定 demo page completed run、LangGraph `MemorySaver` 最小 run、`SqliteSaver` 同进程本地 SQLite graph 重建恢复 case、`SqliteSaver` 双本地 Python 进程 prepare/resume case、`SqliteSaver` 双本地 Python 进程并发 resume case 和本地 MCP stdio harness；没有完成真实 API 行为验证。
+最新记录：见 [2026-07-11 结果](results-2026-07-11.md)。本次运行验证了统一入口、API harness 的 skip 分支、Real Browser Playwright 固定 demo page completed run、LangGraph `MemorySaver` 最小 run、`SqliteSaver` 同进程本地 SQLite graph 重建恢复 case、`SqliteSaver` 双本地 Python 进程 prepare/resume case、`SqliteSaver` 双本地 Python 进程并发 resume case、本地 MCP stdio harness 和官方 MCP Python SDK stdio harness；没有完成真实 API 行为验证。
 
 ## 覆盖范围
 
@@ -33,6 +33,7 @@ uv run --with playwright --with langgraph --with langchain-core --with langgraph
 - Real LangGraph Interrupt Recovery
 - Real Moderation Safety Validation
 - Real MCP Stdio Trace
+- Real MCP SDK Trace
 
 ## 结论状态
 

@@ -11,6 +11,7 @@ MCP 是模型应用和外部上下文/工具能力之间的协议层；它定义
 - Source 3：[OpenAI Function Calling / Tool Calling Documentation](../sources/source-cards/2026-openai-function-calling-docs.md)
 - Source 4：[Anthropic MCP Connector and Tunnels Documentation](../sources/source-cards/2026-anthropic-mcp-docs.md)
 - Source 5：[MCP 最小 Trace 实验结果](../experiments/mcp-trace/results-2026-07-11.md)
+- Source 6：[Real MCP SDK Trace 结果](../experiments/real-mcp-sdk-trace/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -26,13 +27,13 @@ MCP 是模型应用和外部上下文/工具能力之间的协议层；它定义
 
 - 是否需要实验：是
 - 实验设计：接入一个只读 MCP server，记录 host 配置、client 连接、server 暴露的 tools/resources，以及一次 `tools/list` 和 `tools/call` trace。
-- 结果：已完成标准库模拟实验和本地 stdio JSON-RPC harness。脚本复现了 `roots/list`、`initialize`、`tools/list`、`tools/call`、`resources/list`、`resources/read` 和 host approval/review trace。它支持职责边界、进程消息流和 trace 字段设计，但不是完整 MCP SDK 或真实 host 行为验证。
+- 结果：已完成标准库模拟实验、本地 stdio JSON-RPC harness 和官方 MCP Python SDK / FastMCP stdio harness。脚本复现了 `roots/list`、`initialize`、`tools/list`、`tools/call`、`resources/list`、`resources/read`、`prompts/list`、`prompts/get` 和 host approval/review trace。它支持职责边界、进程消息流、SDK tools/resources/prompts 流程和 trace 字段设计，但不是真实 host UI 行为验证。
 
 ## 结论状态
 
-- 可入正文：窄结论“MCP 是 context exchange protocol 和工具/资源连接层，不是完整 Agent 框架；host、client、server 有官方定义的职责边界”由 MCP 官方文档直接支撑，并被 servers repo、Function Calling 边界、Anthropic 产品集成边界和本地 trace / stdio harness 交叉支撑。
-- 部分验证：真实 MCP SDK / host 的权限呈现、approval UI、URL mode、OAuth、恶意 resource/prompt 展示和 trace 字段仍待验证。
+- 可入正文：窄结论“MCP 是 context exchange protocol 和工具/资源连接层，不是完整 Agent 框架；host、client、server 有官方定义的职责边界”由 MCP 官方文档直接支撑，并被 servers repo、Function Calling 边界、Anthropic 产品集成边界、本地 trace / stdio harness 和官方 MCP Python SDK / FastMCP stdio harness 交叉支撑。
+- 部分验证：真实 host 的权限呈现、approval UI、URL mode、OAuth、sampling、roots / filesystem sandbox、恶意 resource/prompt 展示和跨 host trace 字段仍待验证。
 
 ## 可进入章节
 
-- 是。可以写成：MCP 是 context exchange protocol 和工具/资源连接层，不是完整 Agent 框架；host/client/server 职责有官方定义；最小 trace 可记录 actor、method、decision、关键参数摘要和时间戳；本地 stdio JSON-RPC harness 可验证最小进程消息流，但真实 host 行为仍需实测。
+- 是。可以写成：MCP 是 context exchange protocol 和工具/资源连接层，不是完整 Agent 框架；host/client/server 职责有官方定义；最小 trace 可记录 actor、method、decision、关键参数摘要和时间戳；本地 stdio JSON-RPC harness 和官方 MCP Python SDK / FastMCP stdio harness 可验证最小进程消息流与 SDK tools/resources/prompts 流程，但真实 host UI、OAuth、URL mode 和跨 host 行为仍需实测。

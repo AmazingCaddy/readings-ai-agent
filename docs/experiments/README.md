@@ -10,9 +10,9 @@
 uv run python docs/experiments/validation-harness-runner/run_validation_harnesses.py
 ```
 
-没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`。部分框架 harness 可以用 `uv run --with ...` 临时依赖运行。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
+没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`；官方 MCP SDK harness 在没有 `mcp` Python package 时应返回 `skipped`。部分框架 harness 可以用 `uv run --with ...` 临时依赖运行。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
 
-当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-11.md)：2026-07-11 运行覆盖 11 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，1 个本地 MCP stdio harness 完成。
+当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-11.md)：2026-07-11 运行覆盖 12 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，本地 MCP stdio harness 和官方 MCP Python SDK stdio harness 完成。
 
 ## 实验清单与状态
 
@@ -48,7 +48,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 7. MCP 最小 trace 实验
    - 目标：验证 host/client/server、`tools/list`、`tools/call`、`resources/list`、`resources/read`、roots 和 host approval trace 字段。
-   - 状态：已完成标准库模拟实验，见 [MCP 最小 Trace 实验](mcp-trace/README.md) 和 [2026-07-11 结果](mcp-trace/results-2026-07-11.md)；本地 stdio JSON-RPC harness 已完成，见 [Real MCP Stdio Trace 实验](real-mcp-stdio-trace/README.md) 和 [2026-07-11 结果](real-mcp-stdio-trace/results-2026-07-11.md)。本地结果支撑进程边界、JSON-RPC 消息流、host approval/resource review 和 trace 脱敏的窄结论；仍需真实 MCP SDK / host / OAuth / URL mode 实验。
+   - 状态：已完成标准库模拟实验，见 [MCP 最小 Trace 实验](mcp-trace/README.md) 和 [2026-07-11 结果](mcp-trace/results-2026-07-11.md)；本地 stdio JSON-RPC harness 已完成，见 [Real MCP Stdio Trace 实验](real-mcp-stdio-trace/README.md) 和 [2026-07-11 结果](real-mcp-stdio-trace/results-2026-07-11.md)；官方 MCP Python SDK stdio harness 已完成，见 [Real MCP SDK Trace 实验](real-mcp-sdk-trace/README.md) 和 [2026-07-11 结果](real-mcp-sdk-trace/results-2026-07-11.md)。本地结果支撑进程边界、JSON-RPC / SDK 消息流、tools/resources/prompts、host approval/resource review 和 trace 脱敏的窄结论；仍需真实 host UI / OAuth / URL mode / sampling / tunnel 实验。
 
 8. Trace-aware eval 最小实验
    - 目标：比较 final-answer-only scoring 和 trace-aware scoring 能发现的错误类型差异。
