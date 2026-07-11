@@ -24,6 +24,8 @@ OpenAI Cookbook 的具体 recipe 已于 2026-07-12 复核可访问性和页面 m
 
 OpenAI 的 Practical Guide to Building Agents PDF 适合补充本章的入门判断：先确认任务是否真的需要复杂决策、难维护规则或大量非结构化数据，再从单 Agent 和清晰工具定义开始，最后才按复杂度引入多 Agent、guardrails 和人工介入。它是学习路线和设计边界资料，不是最新 API 字段、真实模型效果或生产安全效果证明。
 
+Hugging Face Agents Course 适合作为外部跟学地图：Unit 0 给出 basic Python / basic LLM prerequisites 和每周 3-4 小时的节奏建议，Unit 1 用 agent、tools、actions / observations 和 agency spectrum 建立词汇，Unit 2 再进入 smolagents、LlamaIndex、LangGraph 等框架，bonus 单元覆盖 observability 和 evaluation。它能帮助初学者安排学习顺序和练习主题，但课程示例、Spaces、final assignment、leaderboard、框架质量、成本、延迟和生产可靠性都还没有在本仓库复现，正文只能把它作为“部分进入”的学习路线参考。
+
 ## 项目 1：最小问答应用
 
 ### 学习目标
@@ -377,6 +379,7 @@ OpenAI 的 Practical Guide to Building Agents PDF 适合补充本章的入门判
 - [OpenAI File Search and Retrieval Documentation](../sources/source-cards/2026-openai-file-search-retrieval-docs.md)
 - [OpenAI Cookbook](../sources/source-cards/2026-openai-cookbook.md)
 - [OpenAI Practical Guide to Building Agents](../sources/source-cards/2025-openai-practical-guide-building-agents.md)
+- [Hugging Face Agents Course](../sources/source-cards/2026-huggingface-agents-course.md)
 - [OpenAI Production, Cost, Latency and Rate Limit Documentation](../sources/source-cards/2026-openai-production-cost-latency-docs.md)
 - [OpenAI Batch, Flex Processing and Prompt Caching Documentation](../sources/source-cards/2026-openai-batch-flex-prompt-caching-docs.md)
 - [Real Batch / Flex / Prompt Caching Validation](../experiments/real-batch-flex-caching-validation/README.md)

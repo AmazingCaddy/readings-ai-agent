@@ -83,6 +83,7 @@ nav:
           - LlamaIndex docs: sources/source-cards/2026-llamaindex-docs.md
           - LlamaIndex examples repo: sources/source-cards/2026-llamaindex-examples-repo.md
           - NIST AI RMF: sources/source-cards/2026-nist-ai-rmf.md
+          - Hugging Face Agents Course: sources/source-cards/2026-huggingface-agents-course.md
           - OpenAI Agents SDK docs: sources/source-cards/2026-openai-agents-sdk-docs.md
           - OpenAI Production Cost/Latency docs: sources/source-cards/2026-openai-production-cost-latency-docs.md
           - OpenAI Safety/Data Controls docs: sources/source-cards/2026-openai-safety-data-controls-docs.md

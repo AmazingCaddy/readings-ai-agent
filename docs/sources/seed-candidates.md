@@ -84,6 +84,7 @@
 | 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |
 | --- | --- | --- | --- | --- |
 | Agent 入门 | DeepLearning.AI short courses on agents and tool use | Course | B | 待复核 |
+| Agent 入门 / 实践路线 | Hugging Face Agents Course | Course / Open Source Educational Material | B+ | 课程页面、Markdown、GitHub repo metadata / README、Agent definition、Tools、Frameworks 和 Observability / Evaluation bonus 单元已复核；source card 已创建；适合支撑初学者学习路线和实践项目结构，不支撑真实框架/模型效果或 leaderboard 质量 |
 | Agent 入门 | OpenAI A Practical Guide to Building Agents PDF | Official Guide | A | PDF CDN 直链、HTTP metadata 和关键段落已复核；source card 已创建；支撑初学者定义、适用场景、单 Agent 优先、guardrails 和 human intervention 边界；真实 API/SDK/模型效果待验证 |
 | RAG 入门 | DeepLearning.AI / framework courses on RAG | Course | B | 待复核 |
 | LLM 应用开发 | OpenAI cookbook examples | Official Examples | A/B | 链接已复核；source card 已创建 |
