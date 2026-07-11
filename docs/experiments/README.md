@@ -14,7 +14,13 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-11.md)：2026-07-11 运行覆盖 6 个入口，5 个真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，1 个本地 MCP stdio harness 完成。
 
-## 候选实验
+## 实验清单与状态
+
+下面的条目混合了三类状态：
+
+- `标准库模拟已完成`：可支撑流程、trace 字段和失败模式的窄结论，但不能证明真实模型或真实框架表现。
+- `真实 harness 已准备`：脚本入口已存在；无 API key 或未接入真实框架时只能说明入口可运行或会保守跳过。
+- `真实实验待跑`：需要真实 API、真实框架、真实数据、成本/延迟记录或人工复核后，才能升级更宽的工程结论。
 
 1. Tool calling 参数错误恢复
    - 目标：观察模型生成错误参数时，schema 校验和重试策略是否有效。
