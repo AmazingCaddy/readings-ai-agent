@@ -18,8 +18,8 @@
 | Tool Use / Function Calling | OpenAI function calling docs | Toolformer paper；OpenAI function calling docs；OpenAI Responses API docs | OpenAI cookbook 候选 | 关键段落已精读；部分验证 | 需要最小实验、SDK 文档和其他框架术语对照 |
 | Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；LangGraph docs | LangGraph examples 候选 | 部分链接已复核 | 需要 workflow-agent hybrid 工程来源 |
 | MCP | MCP official docs | MCP official docs | MCP servers repo | 关键段落已精读；部分验证 | 需要 spec 细节、安全边界和最小 trace 实验 |
-| RAG | 待补 | RAG paper；Self-RAG 候选；LlamaIndex docs | LlamaIndex examples 候选 | 部分链接已复核 | 需要现代 RAG 工程实践和 memory 对比 |
-| Memory / 知识库治理 | LangGraph memory docs | MemGPT；MemoryBank；Generative Agents；LangGraph memory docs | Letta docs；Zep docs | 部分链接和元数据已复核 | 仍缺写入守门、冲突治理、隐私边界的工程案例 |
+| RAG | 待补 | RAG paper；Self-RAG 候选；LlamaIndex docs | LlamaIndex examples 候选 | RAG paper 摘要已精读；部分验证 | 需要现代 RAG 工程实践和最小实验 |
+| Memory / 知识库治理 | LangGraph memory docs | MemGPT；MemoryBank；Generative Agents；LangGraph memory docs | Letta docs；Zep docs | LangGraph memory 关键段落已精读；部分验证 | 仍缺写入守门、冲突治理、隐私边界的工程案例 |
 | Planning / Orchestration | 待补 | Tree of Thoughts；Reflexion；LangGraph docs | LangGraph docs | 部分链接已复核 | 需要 planner/executor 和状态机工程资料 |
 | 多 Agent | 待补 | Multi-agent debate 候选；AutoGen docs；CrewAI docs | AutoGen docs；CrewAI docs | 部分链接已复核 | 需要真实工程边界和成本资料 |
 | Evaluation / Observability | 待补 | AgentBench；WebArena | OpenAI Evals；LangSmith；Phoenix 候选 | 部分链接已复核 | 需要 trace、trajectory、回归集资料 |

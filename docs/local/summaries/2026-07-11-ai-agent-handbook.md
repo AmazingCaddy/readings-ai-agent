@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 01:00 Asia/Shanghai
+**Last Updated:** 2026-07-11 01:15 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -25,15 +25,17 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 8. Started evidence-upgrade goal. Added OpenAI docs MCP globally, but current session still does not expose its tools until restart/new session; used official URL fetching as fallback.
 9. Completed first evidence upgrade for Tool Use / Function Calling boundary using OpenAI Function Calling docs, Responses API reference, and Toolformer arXiv abstract.
 10. Completed first evidence upgrade for MCP host/client/server boundary using MCP architecture, server concepts, client concepts, and MCP servers README.
+11. Completed first evidence upgrade for RAG vs Memory boundary using RAG paper abstract and LangGraph memory docs.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2026-mcp-official-docs.md`, `docs/sources/source-cards/2026-mcp-servers-repo.md`, `docs/evidence/mcp-role-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/05-mcp.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2020-rag-paper.md`, `docs/sources/source-cards/2026-langgraph-memory-docs.md`, `docs/evidence/rag-memory-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/06-rag-memory.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
 ## Open Questions
 - Run the minimal tool-calling experiment to upgrade the Function Calling boundary from partial verification toward `可入正文`.
 - Run a minimal read-only MCP trace experiment to upgrade the MCP role boundary from partial verification toward `可入正文`.
+- Run a minimal RAG vs short-term vs long-term memory comparison experiment.
 - In a new session, verify whether the newly added `openaiDeveloperDocs` MCP tools are exposed.
 
 ## Blockers
