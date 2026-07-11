@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 16:53 Asia/Shanghai
+**Last Updated:** 2026-07-11 16:57 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -46,16 +46,17 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 29. Completed a standard-library prompt injection / tool permission simulation under `docs/experiments/prompt-injection-permission/`. It compares `prompt_only` with `policy_enforced` on an external refund-policy document containing malicious instructions. Prompt-only issues a refund and leaks a fake secret into trace; policy-enforced allows read-only lookup, rejects write tools, records denial reasons, and redacts the fake secret. This supports permission-boundary and trace-redaction guidance but does not validate real model/framework guardrails or HITL approval behavior.
 30. Completed a standard-library memory governance simulation under `docs/experiments/memory-governance/`. It compares `auto_write` with `guarded_write` on explicit preferences, low-confidence inferred profile data, a fake secret, preference changes, assistant guesses, and user corrections. The result supports write-guard, invalidation-history, and trace-redaction guidance, but does not validate real multi-session Agent quality, real memory framework behavior, privacy controls, or user edit/delete flows.
 31. Completed a standard-library workflow / hybrid / ReAct-like comparison under `docs/experiments/workflow-agent-comparison/`. Fixed workflow succeeds on 2/3 fake issue triage tasks with 3 tool calls but misses a bug root cause requiring log/config/deploy evidence; workflow-agent hybrid succeeds on 3/3 with 7 tool calls; ReAct-like loop succeeds on 3/3 with 9 tool calls and extra feature-context lookup. This supports the control-boundary explanation but does not validate real models, frameworks, costs, permissions, or tool-error recovery.
+32. Completed a standard-library planner/executor comparison under `docs/experiments/planner-executor-comparison/`. Single checklist loop succeeds on 3/3 tasks with 9 tool calls; one-shot planner/executor succeeds on 2/3 with 8 tool calls because it misses migration evidence; planner/executor with feedback succeeds on 3/3 with one replan. This supports evidence validation and feedback replanning guidance but does not validate real models, frameworks, costs, permissions, tool failures, or human review.
 
 ## Technical Context
-- Files modified recently: `docs/chapters/01-agent-landscape.md`, `docs/chapters/04-agent-architecture.md`, `docs/chapters/12-source-map.md`, `docs/evidence/agent-workflow-boundary.md`, `docs/evidence/agent-architecture-pattern-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/workflow-agent-comparison/README.md`, `docs/experiments/workflow-agent-comparison/workflow_agent_comparison.py`, `docs/experiments/workflow-agent-comparison/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/chapters/04-agent-architecture.md`, `docs/chapters/07-planning-orchestration.md`, `docs/chapters/12-source-map.md`, `docs/evidence/agent-architecture-pattern-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/planner-executor-comparison/README.md`, `docs/experiments/planner-executor-comparison/planner_executor_comparison.py`, `docs/experiments/planner-executor-comparison/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
 ## Open Questions
 - Run a real Function Calling / Responses API experiment to upgrade the Function Calling boundary beyond the current standard-library simulation; compare whether a real model can repair validation errors and how tool execution errors are represented.
 - Run a real workflow vs workflow-agent hybrid vs agent loop comparison beyond the current standard-library simulation, using a real model/framework/repo issue and recording token, latency, cost, permission, tool-error, and trace-readability metrics.
-- Run planner/executor and reflection retry variants for the same issue-analysis task; the current standard-library comparison only covers fixed workflow, workflow-agent hybrid, and ReAct-like tool loop.
+- Run a real planner/executor comparison beyond the current standard-library simulation, and add reflection retry variants for the same issue-analysis task.
 - Run an output parsing experiment comparing free text, JSON mode, and Structured Outputs; include refusal and semantic-error handling.
 - Run a long-context failure-mode experiment covering irrelevant context, conflicting context, stale context, external prompt injection, truncation behavior, and token cost.
 - Run a single-agent vs planner/executor vs multi-agent comparison experiment for the same research/writing task.

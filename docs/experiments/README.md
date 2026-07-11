@@ -22,6 +22,7 @@
 
 5. Planner/Executor vs 单 Agent
    - 目标：验证任务拆解是否提高复杂任务完成率，还是增加错误传播。
+   - 状态：已完成标准库 Planner / Executor 与单循环对比实验，见 [Planner / Executor 与单循环对比实验](planner-executor-comparison/README.md) 和 [2026-07-11 结果](planner-executor-comparison/results-2026-07-11.md)。仍需真实模型 / Agent framework / repo issue / reflection retry 实验。
 
 6. Prompt injection 基线测试
    - 目标：验证工具型 Agent 在恶意文档或外部输入下是否会越权。
