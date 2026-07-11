@@ -90,9 +90,9 @@
 
 ### Production、安全与治理
 
-先读手册 09，再看 OWASP LLM Top 10 和 NIST AI RMF。
+先读手册 09，再看 OWASP LLM Top 10、NIST AI RMF、OpenAI Agents SDK guardrails / human-in-the-loop / tracing 文档，以及 Semantic Kernel Plugins 文档。
 
-阅读重点是 prompt injection、权限、数据边界、审计、人工确认、降级和风险管理。
+阅读重点是 prompt injection、权限、工具审批、guardrails 的执行位置、数据边界、审计、人工确认、降级、敏感 trace 控制和风险管理。
 
 ### 框架生态与实践
 
@@ -110,7 +110,7 @@
 - RAG：RAG paper、LlamaIndex。
 - Memory：MemGPT、MemoryBank、Generative Agents、LangGraph memory、Letta、Zep。
 - Eval / Observability：AgentBench、WebArena、OpenAI Evals repo、LangSmith、Phoenix。
-- Security / Production：OWASP LLM Top 10、NIST AI RMF。
+- Security / Production：OWASP LLM Top 10、NIST AI RMF、OpenAI Agents SDK、Semantic Kernel。
 - Frameworks：OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI、Semantic Kernel。
 - Practice：OpenAI Cookbook、MCP servers repo、OpenAI Evals repo。
 
@@ -140,13 +140,13 @@
 
 - 当前手册已经建立 source card index、coverage matrix 和 claim ledger，用于控制资料进入正文的门槛。
 - Source card index 明确记录了每张卡片的可信度、验证状态和下一步。
-- Coverage matrix 显示 Evaluation / Observability 已补 LangSmith 和 Phoenix 第一轮工程资料，但仍缺本地 trace-aware eval 实验；Production / Security、框架横向实验等主题仍需要继续补权限、审计、observability 对比和工程案例。
+- Coverage matrix 显示 Evaluation / Observability 已补 LangSmith 和 Phoenix 第一轮工程资料，但仍缺本地 trace-aware eval 实验；Production / Security 已补 OpenAI Agents SDK 和 Semantic Kernel 第一轮工程资料，但仍需要最小 prompt injection / tool permission 实验、跨框架权限对比和审计脱敏策略。
 - Cookbook 的具体 recipe 已能支撑实践项目路线，但仍需要本地试跑来确认依赖、成本、失败样例和初学者阻塞点。
 - Claim ledger 规定只有状态为“可入正文”的结论，才能写成确定性表述；其他结论需要保守表达。
 
 ## 待验证问题
 
-- 哪些安全资料最适合补充 prompt injection 的工程案例？
+- prompt injection / tool permission 的最小攻击实验应该如何覆盖 guardrails、HITL approval、敏感 trace 和审计字段？
 - trace-aware eval 的本地实验应如何设计，才能比较最终答案评分和过程评分的差异？
 - 是否需要为每个框架增加最小示例 source card？
 - 是否需要补充面向初学者的视频课程或书籍？

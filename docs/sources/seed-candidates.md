@@ -65,7 +65,7 @@
 | LLM 应用安全 | OWASP Top 10 for LLM Applications | Security Guidance | A | 链接已复核；source card 已创建 |
 | AI 风险管理 | NIST AI Risk Management Framework | Standard / Guidance | A | 链接已复核；source card 已创建 |
 | Prompt injection | Prompt injection papers and security writeups | Paper / Engineering | A/B | 待复核 |
-| Tool permissions | Framework security guidance for tools and agents | Official Docs | A/B | 待复核 |
+| Tool permissions | Framework security guidance for tools and agents | Official Docs | A/B | OpenAI Agents SDK / Semantic Kernel 已完成第一轮；仍需横向补充 |
 
 ## Courses / Beginner-Friendly Materials
 

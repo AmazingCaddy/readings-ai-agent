@@ -23,7 +23,7 @@
 | Planning / Orchestration | 待补 | Tree of Thoughts；Reflexion；LangGraph docs | LangGraph docs | 关键论文摘要和 LangGraph 段落已精读；部分验证 | 需要 planner/executor、状态机和 reflection 对比实验 |
 | 多 Agent | 待补 | Multi-agent debate 候选；AutoGen docs；CrewAI docs；AgentBench | AutoGen docs；CrewAI docs | 关键段落已精读；部分验证 | 需要最小对比实验、真实工程边界和成本资料 |
 | Evaluation / Observability | LangSmith docs；Phoenix docs | AgentBench；WebArena；LangSmith docs；Phoenix docs | OpenAI Evals；OpenAI Cookbook；LangSmith docs；Phoenix docs | 关键论文/README/工程文档已精读；部分验证 | 需要 trace-aware eval 最小实验、自动评分误判分析、回归集工程案例 |
-| Production / 安全 / 成本 | 待补 | OWASP LLM Top 10；NIST AI RMF | 框架安全文档候选 | 关键风险项已精读；部分验证 | 需要最小 prompt injection 实验、框架安全资料、审计资料 |
+| Production / 安全 / 成本 | OpenAI Agents SDK docs；OpenAI Cookbook | OWASP LLM Top 10；NIST AI RMF；OpenAI Agents SDK docs；Semantic Kernel docs | OpenAI Responses API docs；OpenAI Agents SDK docs；OpenAI Cookbook；Observability docs | 风险资料和框架工程资料已精读；部分验证 | 需要最小 prompt injection / tool permission 实验、跨框架权限对比、审计脱敏策略 |
 | 框架生态 | 待补 | OpenAI Agents SDK；LangGraph；LlamaIndex；AutoGen；Semantic Kernel；CrewAI | 官方 examples 候选 | 关键框架定位已精读；部分验证 | 需要同一任务横向实验、observability/permission 对比和官方 examples |
 | 实践项目路线 | OpenAI Cookbook | OpenAI Cookbook；OpenAI Function Calling docs；OpenAI Responses API docs；OpenAI Evals repo | OpenAI Cookbook；MCP servers repo；LangGraph examples 候选 | 具体 Cookbook recipe 已精读；部分验证 | 需要本地试跑最小项目、选择低成本技术栈、补 MCP/LangGraph examples |
 
@@ -33,7 +33,7 @@
 2. 精读并提取已经链接复核的论文、官方文档和安全资料。LLM / Context、Tool Use / Function Calling、MCP、RAG / Memory、Production / Security 已完成第一轮。
 3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。Eval 已完成 OpenAI Evals README、Cookbook、LangSmith 和 Phoenix 第一轮，仍需本地 trace-aware eval 实验。
 4. 为 Memory / 知识库治理补充长期记忆最小实验，并继续扩展隐私/权限工程资料。
-5. 为 Production / Security 补充 prompt injection 最小实验、工具权限工程案例和审计资料。
+5. 为 Production / Security 补充 prompt injection / tool permission 最小实验、跨框架权限对比和审计脱敏策略。
 6. 为实践项目路线试跑 Structured Outputs、RAG/File Search、eval harness、成本/限流练习，记录初学者阻塞点。
 
 ## 入正文门槛

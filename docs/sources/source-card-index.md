@@ -26,7 +26,7 @@
 | [Letta docs](source-cards/2026-letta-docs.md) | Agent memory / Stateful agents | Framework Docs | B | 链接已复核；待精读 | 和 MemGPT 论文及其他 memory 框架对照 |
 | [LlamaIndex docs](source-cards/2026-llamaindex-docs.md) | RAG / Data framework | Framework Docs | A | 链接已复核；待精读 | 提取 RAG 数据组件和 agent data framework 抽象 |
 | [NIST AI RMF](source-cards/2026-nist-ai-rmf.md) | Risk / Governance | Standard / Guidance | A | 链接已复核；待精读 | 提取生产化风险管理检查点 |
-| [OpenAI Agents SDK docs](source-cards/2026-openai-agents-sdk-docs.md) | Agent Framework | Official Docs | A | 链接已复核；待精读 | 提取 SDK 抽象、tools、handoffs、tracing |
+| [OpenAI Agents SDK docs](source-cards/2026-openai-agents-sdk-docs.md) | Agent Framework | Official Docs | A | 关键页面已精读；部分验证 | 继续做 guardrails/HITL/tool permission 最小实验和框架横向对比 |
 | [OpenAI Cookbook](source-cards/2026-openai-cookbook.md) | Examples / Practice | Official Examples | A/B | 具体 recipe 已复核；部分验证 | 本地试跑最小项目并记录成本、失败样例和初学者阻塞点 |
 | [OpenAI Evals repo](source-cards/2026-openai-evals-repo.md) | Eval / Source Code | Source Code | A | 链接已复核；待精读 | 提取 eval 数据结构和回归测试实践 |
 | [OpenAI Responses API docs](source-cards/2026-openai-responses-api-docs.md) | LLM 应用接口 | Official Docs | A | 链接已复核；待精读 | 提取输入输出、响应结构和工具调用接口 |

@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 16:32 Asia/Shanghai
+**Last Updated:** 2026-07-11 16:41 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -37,9 +37,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 20. Completed first evidence upgrade for framework landscape boundaries using Semantic Kernel overview, Agent Framework, Plugins, Process Framework docs, and existing OpenAI Agents SDK, LangGraph, LlamaIndex, AutoGen, CrewAI evidence.
 21. Completed first evidence upgrade for the practice roadmap using OpenAI Cookbook recipe pages: Structured Outputs, File Search RAG, OpenAI Evals, Agents SDK trace/eval with Langfuse, Usage/Cost API, and rate limits. The conclusion remains partial verification because local project trial runs, costs, dependencies, and beginner friction are still untested.
 22. Completed first evidence upgrade for observability/trace boundaries using LangSmith Observability, LangSmith Evaluation concepts, Arize Phoenix overview, Phoenix tracing tutorial, OpenAI Cookbook, OpenAI Evals, AgentBench, and WebArena. Trace field design and offline/online eval workflow are now partially verified; local trace-aware eval and LLM-as-judge misclassification analysis remain open.
+23. Completed first evidence upgrade for production tool permission and audit boundaries using OpenAI Agents SDK guardrails/tools/tracing/human-in-the-loop docs, OpenAI Responses API permission fields, Semantic Kernel plugin approval notes, OWASP, NIST, and observability evidence. Guardrails/HITL/sensitive trace controls are partially verified; local prompt-injection/tool-permission experiments and cross-framework comparisons remain open.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2026-langsmith-docs.md`, `docs/sources/source-cards/2026-arize-phoenix-docs.md`, `docs/evidence/observability-trace-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/08-evaluation-observability.md`, `docs/chapters/12-source-map.md`, `docs/sources/source-card-index.md`, `docs/sources/seed-candidates.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2026-openai-agents-sdk-docs.md`, `docs/evidence/tool-permission-audit-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/09-production-security.md`, `docs/chapters/12-source-map.md`, `docs/sources/source-card-index.md`, `docs/sources/seed-candidates.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
@@ -59,6 +60,7 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 - Run a minimal RAG pipeline experiment comparing chunk size, metadata, top-k, rerank/filter, citation correctness, answer faithfulness, latency, and token cost. LlamaIndex docs search did not directly verify source citation/source_nodes behavior in the latest docs.
 - Run a multi-session long-term memory governance experiment covering explicit write confirmation, automatic write failure modes, stale preference invalidation, conflicting facts, and sensitive information handling.
 - Run a minimal prompt-injection permission-boundary experiment covering external document injection, read/write tool separation, parameter validation, human confirmation, and audit logs.
+- Run a tool-permission and audit experiment covering OpenAI Agents SDK guardrails execution mode, function-tool guardrails, HITL approval pause/resume, MCP require_approval, sensitive trace disabling, and audit log redaction.
 - In a new session, verify whether the newly added `openaiDeveloperDocs` MCP tools are exposed.
 
 ## Blockers
