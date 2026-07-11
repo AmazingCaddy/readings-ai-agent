@@ -159,7 +159,7 @@ Prompt injection / tool permission 标准库模拟实验已经完成，可帮助
 - Agent 架构模式边界已补论文 / 框架资料和多组标准库对比实验，窄结论“复杂 Agent 架构不是默认更可靠，需要用 trace、成本、失败原因、权限和实验结果比较”已可入正文；仍缺真实模型 / 框架任务中的收益、成本、延迟和错误恢复实验。
 - Planner / Executor 已补标准库对比实验，窄结论“计划需要可执行，执行结果需要证据校验，失败需要反馈给 planner 并记录重规划 trace”已可入正文；Reflection / Retry 已补标准库错误反思实验，可支撑 verified feedback 与 unverified reflection memory 的边界；仍缺真实模型 / 框架 / repo issue、token/latency/cost、长期记忆和人工评审实验。
 - 多 Agent 已补标准库单流程 / 无控制多 Agent / Flow 控制多 Agent 对比实验，窄结论“多 Agent 不是复杂任务默认升级路径；引入前应明确角色边界、证据分配、冲突处理、review trace 和成本预算”已可入正文；仍缺真实模型、真实框架、token/latency/cost 和复杂任务实验。
-- MCP official docs 已补 2025-11-25 tools/resources/prompts/authorization/roots/elicitation/sampling spec 和 Security Best Practices 第一轮精读；MCP 最小 trace 标准库模拟实验已完成，可支撑最小审计字段和职责流设计；仍缺真实 MCP SDK / host trace、权限确认、URL mode / OAuth、恶意 resource/prompt 和 host 实现差异实验。
+- MCP official docs 已补 2025-11-25 tools/resources/prompts/authorization/roots/elicitation/sampling spec 和 Security Best Practices 第一轮精读；MCP 最小 trace 标准库模拟实验和本地 stdio JSON-RPC harness 已完成，窄结论“authorization 是 optional，roots 不等于 sandbox，token passthrough 被禁止，高风险能力仍需权限/隔离/审计/trace 脱敏”已可入正文；仍缺真实 MCP SDK / host trace、权限确认、URL mode / OAuth、恶意 resource/prompt 和 host 实现差异实验。
 - Tool Use / Function Calling 已补标准库参数校验/重试模拟实验，可支撑“应用层校验、错误回传、有限重试”的流程说明；仍缺真实 Function Calling / Responses API 实验和其他框架术语对照。
 - LLM / Context 已补官方文档精读、标准库输出解析 / 上下文治理模拟实验和上下文策略对比实验，窄结论“LLM 应用输入输出不只是字符串”“schema validation 不等于语义正确”和“长上下文不能替代来源、时效、权限治理”已可入正文；仍缺真实 Responses API / Structured Outputs、refusal、semantic validator、retry loop、长上下文 token/latency/cost 和跨模型稳定性实验。
 - RAG / Memory 已补标准库对比实验，可支撑外部知识、thread state、guarded long-term memory 和无安全来源拒答的分层边界；仍缺真实 RAG / memory framework / 多会话质量实验。

@@ -38,14 +38,14 @@
 | Agent 框架应按任务难点比较，不应写成“某个框架默认最好”。 | OpenAI Agents SDK docs；LangGraph docs；LlamaIndex docs；AutoGen docs；CrewAI docs；Semantic Kernel docs；Evidence Note: 框架生态定位边界；Evidence Note: 框架能力交叉表与选择边界；框架选择 Rubric Smoke Test 结果 | 部分验证 | 可作为框架生态章节核心边界；框架能力交叉表和标准库 rubric 支撑任务画像、主轴定位和比较维度设计，仍需真实同一任务横向实验。 |
 | 实践项目路线可以用 Cookbook 的具体 recipe 作为模板，但 Cookbook 不能替代 API 文档、生产安全指南或本地实验。 | OpenAI Cookbook；OpenAI Function Calling docs；OpenAI Responses API docs；OpenAI Evals repo；Evidence Note: 实践路线与 Cookbook 示例边界；实践路线 Smoke Harness 结果 | 部分验证 | 可作为第 11 章项目 reference；标准库 smoke harness 支撑验收标准、trace 和失败分类设计，仍需真实 Cookbook / API 试跑；必须引用具体 recipe，并提醒示例不是生产保证。 |
 | MCP 是连接工具和上下文能力的协议，不是 Agent 框架本身。 | MCP official docs；MCP servers repo；Evidence Note: MCP Host / Client / Server 职责边界；MCP 最小 Trace 实验结果；MCP stdio JSON-RPC harness | 可入正文 | 可作为第 05 章确定性职责边界写入正文；官方文档直接支撑 context exchange protocol、host/client/server 职责和 scope 边界。真实 MCP SDK / host 的权限呈现、approval UI、OAuth 和恶意 resource/prompt 行为仍属部分验证。 |
-| MCP 标准化了工具、资源、提示、授权、roots、elicitation 和 sampling 等协议能力，但安全不是协议接入后自动完成。 | MCP official docs；MCP Security Best Practices；Evidence Note: MCP 安全、授权与权限边界；Production permission evidence；MCP 最小 Trace 实验结果；MCP stdio JSON-RPC harness | 部分验证 | 可作为 MCP / Production 章节安全边界；需说明 authorization 是 optional，roots 不等于 sandbox，token passthrough 被禁止，模拟实验和 stdio harness 已验证 tool approval / resource review trace，仍需真实权限/URL/OAuth 实验。 |
+| MCP 标准化了工具、资源、提示、授权、roots、elicitation 和 sampling 等协议能力，但安全不是协议接入后自动完成。 | MCP official docs；MCP Security Best Practices；Evidence Note: MCP 安全、授权与权限边界；Production permission evidence；MCP 最小 Trace 实验结果；MCP stdio JSON-RPC harness | 可入正文 | 可作为第 05/09 章确定性安全边界写入正文；authorization 是 optional，roots 不等于 sandbox，token passthrough 被禁止，高风险 tools/resources/prompts 仍需要最小权限、用户确认、输入输出校验、audience 校验、sandbox/隔离、审计和 trace 脱敏。真实 MCP SDK / host 权限 UI、OAuth / URL mode 和 host 实现差异仍属部分验证。 |
 
 ## 待升级为可入正文的优先结论
 
 1. Agent vs Workflow / 自治程度的边界。窄结论“Agent 和 Workflow 是控制权与编排方式的连续谱，自治程度不是能力等级”已升级为可入正文；真实模型 / 框架 / repo issue、成本、权限和工具错误恢复仍待实际运行验证。
 2. Tool Use vs Function Calling 的边界。窄结论“Function Calling 本身不执行工具”已升级为可入正文；参数校验失败后真实模型能否稳定修正、真实 API 错误恢复和其他框架术语对照仍待实际运行验证。
 3. RAG vs Memory 的术语边界已升级为可入正文；工程 RAG 流程仍已完成第一轮论文/框架文档交叉验证、标准库 RAG / Memory 对比实验、最小 RAG pipeline / citation 模拟和真实 LLM citation harness 准备，待实际运行真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank、真实 memory framework 和成本/延迟实验。
-4. MCP server/client/host 的职责边界已升级为可入正文；MCP 安全/授权/权限边界已完成第一轮官方文档交叉验证、标准库最小 trace 模拟和本地 stdio JSON-RPC harness，待补真实 MCP SDK / host 的 trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验。
+4. MCP server/client/host 的职责边界已升级为可入正文；MCP 安全/授权/权限窄边界也已升级为可入正文：authorization 是 optional，roots 不等于 sandbox，token passthrough 被禁止，高风险能力仍需最小权限、用户确认、audience 校验、隔离、审计和 trace 脱敏。待补真实 MCP SDK / host 的 trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验。
 5. Agent eval 为什么要看 trajectory。窄结论“对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全”已升级为可入正文；trajectory 自动评分、LLM-as-judge 误判分析、真实 Agent trace 和人工复核流程仍待实际运行验证。
 6. Prompt injection 为什么需要权限和隔离，而不是只靠提示词。窄结论“prompt 不是充分安全边界，外部内容和高风险工具必须由系统层权限/审批/审计控制”已升级为可入正文；真实模型 / 框架 guardrail / HITL approval 误报漏报、成本和延迟仍待实际运行验证。
 7. 长期记忆的收益与治理风险边界。窄结论“长期记忆可能有价值，但不能默认自动写入或默认提升表现，必须配套写入守门、生命周期权限、跨用户隔离和 trace 脱敏”已升级为可入正文；待补真实多会话 Agent / memory framework 收益、污染、权限和用户控制实验。
