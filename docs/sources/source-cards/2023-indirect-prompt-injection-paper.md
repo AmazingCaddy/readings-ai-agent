@@ -52,4 +52,4 @@
 
 - 本手册已经完成标准库 prompt injection / permission 模拟实验，复现“外部文档注入诱导写工具”的最小失败模式。
 - 已完成标准库安全 regression set 和审批状态恢复实验，覆盖外部注入、跨用户读取、高金额审批、敏感字段脱敏、破坏性工具和幂等性。
-- 已准备真实 prompt injection / permission harness；无 API key 时跳过，配置后可记录真实模型是否请求高风险写工具、策略层是否阻断以及 trace 是否脱敏。该 harness 仍待真实运行。
+- 已准备真实 prompt injection / permission harness；无 API key 时完成本地 deterministic tool-permission control，覆盖固定 tool calls、危险写工具请求计数、prompt-only toy side effects、policy-enforced 写工具拒绝和 trace 脱敏，并标记未验证真实模型或真实 API。配置 API key 后可记录真实模型是否请求高风险写工具、策略层是否阻断以及 trace 是否脱敏；真实 API run 仍待完成。
