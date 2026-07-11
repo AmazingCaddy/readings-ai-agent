@@ -39,8 +39,9 @@ Agent observability 不是普通日志的同义词。对会检索、调用工具
 
 ## 结论状态
 
-- 部分验证：论文/benchmark 支撑过程评测的重要性，OpenAI Evals 支撑 custom eval，LangSmith/Phoenix/Cookbook 支撑 trace、runs、spans、datasets、online/offline evaluation 和反馈工作流；标准库实验支撑 trace-aware scoring 能发现 final-only 漏掉的过程错误，并支撑 trace 字段按 debug/audit/regression/cost/RAG/privacy 用途设计。仍缺真实 Agent / RAG traces、自动评分误判分析和人工复核设计。
+- 可入正文：窄结论“对工具型或有副作用的 Agent，trace 是 eval、审计和回归输入，不只是 debug 日志”已完成第一轮交叉验证。论文/benchmark 支撑过程评测的重要性，OpenAI Evals 支撑 custom eval，LangSmith/Phoenix/Cookbook 支撑 trace、runs、spans、datasets、online/offline evaluation 和反馈工作流；标准库 trace-aware eval 支撑 trace 能发现 final-only 漏掉的过程错误。
+- 部分验证：完整 trace 字段集合、平台字段覆盖、真实 Agent / RAG traces、自动评分误判分析和人工复核设计仍需真实运行与平台对照。trace schema audit 只能支持“字段要按用途设计”的工程边界，不能定义通用 schema。
 
 ## 可进入章节
 
-- 是。可以写成：Agent eval 应同时保存任务、trace、工具调用、检索、错误、成本/延迟和反馈；offline eval 更适合回归和版本对比，online eval 更适合监控生产流量中的异常和质量退化。不能写成“上了 observability 平台就可靠”。
+- 是。可以写成：Agent eval 应同时保存任务、关键 trace、工具调用、检索、错误、成本/延迟和反馈；offline eval 更适合回归和版本对比，online eval 更适合监控生产流量中的异常和质量退化。不能写成“上了 observability 平台就可靠”，也不能把任何 trace 字段清单写成通用标准。

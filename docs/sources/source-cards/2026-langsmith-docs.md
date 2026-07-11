@@ -9,7 +9,7 @@
 - 主题：Observability / Evaluation / Tracing
 - 适合阶段：工程实践
 - 可信度等级：B
-- 是否已验证：Observability 与 Evaluation concepts Markdown 页面已复核；关键段落已精读；已结合 Phoenix / OpenAI Evals、trace-aware eval 和 trace schema audit 标准库实验完成部分验证
+- 是否已验证：Observability 与 Evaluation concepts Markdown 页面已复核；关键段落已精读；已结合 Phoenix / OpenAI Evals、trace-aware eval 和 trace schema audit 标准库实验将 trace 作为 eval/审计/回归输入的窄边界升级为可入正文；其余结论部分验证
 
 ## 一句话总结
 
@@ -51,4 +51,4 @@ LangSmith 文档适合学习 LLM/Agent 应用的 tracing、offline eval、online
 ## 是否进入正文
 
 - 结论：部分进入
-- 原因：可支撑 observability 和 eval 工程流程；不应作为唯一平台推荐或自动评分正确性的证明。
+- 原因：可支撑 observability 和 eval 工程流程，并与 trace-aware eval 实验共同支撑“trace 不只是 debug 日志，也是工具/副作用 Agent 的 eval、审计和回归输入”的窄结论；不应作为唯一平台推荐或自动评分正确性的证明。

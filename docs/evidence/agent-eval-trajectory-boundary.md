@@ -29,8 +29,9 @@ Agent eval 不能只看最终答案。对会调用工具、跨多步环境行动
 
 ## 结论状态
 
-- 部分验证：AgentBench 和 WebArena 支撑交互环境、长程任务、工具/外部知识和失败原因分析的重要性；OpenAI Evals 支撑为具体 LLM 系统和 tool-using agents 设计 custom eval；标准库实验支撑 final-only 与 trace-aware scoring 的错误发现差异。仍缺真实 Agent trace、LLM-as-judge 误判分析和人工复核实验。
+- 可入正文：窄结论“对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全；关键 trajectory / trace 应作为 eval、审计和回归输入”已完成第一轮交叉验证。AgentBench 和 WebArena 支撑交互环境、长程任务、工具/外部知识和失败原因分析的重要性；OpenAI Evals 支撑为具体 LLM 系统和 tool-using agents 设计 custom eval；标准库实验复现了 final-only scoring 漏掉无审批副作用工具和工具错误未恢复。
+- 部分验证：trajectory 自动评分、LLM-as-judge 可靠性、真实 Agent trace 字段覆盖、真实业务质量与公开 benchmark 的相关性仍待真实模型、平台映射和人工复核实验。
 
 ## 可进入章节
 
-- 是，但应保守表达：Agent eval 不应只看最终文本，还应记录并检查关键过程。trajectory/trace 是诊断、安全审计和回归测试的重要输入，但自动评分方法需要按任务单独验证。
+- 是。可以确定写成：对会调用工具或产生外部副作用的 Agent，只看最终文本不足以验证过程安全；关键 trajectory / trace 应进入 eval、审计和回归输入。仍需保守写明：trajectory 自动评分方法、LLM-as-judge 和真实平台字段覆盖必须按任务单独验证。
