@@ -13,10 +13,12 @@ import hashlib
 import importlib.metadata
 import json
 import sys
+import tempfile
 import time
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any, TypedDict
 
 
@@ -98,7 +100,7 @@ def has_secret_leak(value: Any) -> bool:
 
 
 def versions() -> dict[str, str | None]:
-    packages = ["langgraph", "langchain-core"]
+    packages = ["langgraph", "langchain-core", "langgraph-checkpoint-sqlite"]
     result: dict[str, str | None] = {}
     for package in packages:
         try:
@@ -109,10 +111,13 @@ def versions() -> dict[str, str | None]:
     return result
 
 
-def build_graph(ledger: ToolLedger) -> Any:
+def build_graph(ledger: ToolLedger, checkpointer: Any | None = None) -> Any:
     from langgraph.checkpoint.memory import MemorySaver
     from langgraph.graph import END, StateGraph
     from langgraph.types import interrupt
+
+    if checkpointer is None:
+        checkpointer = MemorySaver()
 
     def prepare_refund(state: RefundState) -> RefundState:
         prepared: RefundState = {
@@ -178,13 +183,22 @@ def build_graph(ledger: ToolLedger) -> Any:
     graph.set_entry_point("prepare_refund")
     graph.add_edge("prepare_refund", "review_and_execute")
     graph.add_edge("review_and_execute", END)
-    return graph.compile(checkpointer=MemorySaver())
+    return graph.compile(checkpointer=checkpointer)
 
 
 def invoke_until_interrupt(graph: Any, initial_state: RefundState, thread_id: str) -> dict[str, Any]:
     config = {"configurable": {"thread_id": thread_id}}
     result = graph.invoke(initial_state, config=config)
     return {"config": config, "result": result}
+
+
+def extract_interrupt_payload(pending_result: Any) -> dict[str, Any] | None:
+    interrupts = pending_result.get("__interrupt__", []) if isinstance(pending_result, dict) else []
+    if not interrupts:
+        return None
+    first = interrupts[0]
+    interrupt_payload = getattr(first, "value", first)
+    return interrupt_payload if isinstance(interrupt_payload, dict) else None
 
 
 def resume_graph(graph: Any, config: dict[str, Any], decision: dict[str, Any]) -> RefundState:
@@ -210,18 +224,13 @@ def run_case(case_name: str, decision: str) -> dict[str, Any]:
     started = time.perf_counter()
     thread_id = f"thread_{case_name}_{uuid.uuid4().hex[:8]}"
     pending = invoke_until_interrupt(graph, base_state(), thread_id)
-    pending_result = pending["result"]
-    interrupts = pending_result.get("__interrupt__", []) if isinstance(pending_result, dict) else []
-    interrupt_payload = None
-    if interrupts:
-        first = interrupts[0]
-        interrupt_payload = getattr(first, "value", first)
+    interrupt_payload = extract_interrupt_payload(pending["result"])
     if not isinstance(interrupt_payload, dict):
         return {
             "case": case_name,
             "status": "failed",
             "reason": "interrupt_payload_missing",
-            "raw_result_type": type(pending_result).__name__,
+            "raw_result_type": type(pending["result"]).__name__,
         }
     approval_decision = {
         "approved": decision == "approved",
@@ -259,6 +268,64 @@ def run_side_effect_risk_case() -> dict[str, Any]:
     }
 
 
+def run_sqlite_restart_case() -> dict[str, Any]:
+    try:
+        import langgraph.checkpoint.sqlite  # noqa: F401
+        from langgraph.checkpoint.sqlite import SqliteSaver
+    except ImportError:
+        return {
+            "case": "sqlite_process_restart",
+            "status": "skipped",
+            "reason": "langgraph_checkpoint_sqlite_not_installed",
+        }
+
+    started = time.perf_counter()
+    thread_id = f"thread_sqlite_restart_{uuid.uuid4().hex[:8]}"
+    with tempfile.TemporaryDirectory(prefix="langgraph-checkpoint-") as tmpdir:
+        db_path = Path(tmpdir) / "checkpoints.sqlite"
+        conn_string = str(db_path)
+
+        setup_ledger = ToolLedger()
+        with SqliteSaver.from_conn_string(conn_string) as setup_saver:
+            setup_graph = build_graph(setup_ledger, checkpointer=setup_saver)
+            pending = invoke_until_interrupt(setup_graph, base_state(), thread_id)
+            interrupt_payload = extract_interrupt_payload(pending["result"])
+
+        if not isinstance(interrupt_payload, dict):
+            return {
+                "case": "sqlite_process_restart",
+                "status": "failed",
+                "reason": "interrupt_payload_missing",
+                "raw_result_type": type(pending["result"]).__name__,
+            }
+
+        resume_ledger = ToolLedger()
+        with SqliteSaver.from_conn_string(conn_string) as resume_saver:
+            restarted_graph = build_graph(resume_ledger, checkpointer=resume_saver)
+            final_state = resume_graph(
+                restarted_graph,
+                pending["config"],
+                {"approved": True, "args_hash": interrupt_payload["args_hash"]},
+            )
+
+    trace = final_state.get("trace", []) if isinstance(final_state, dict) else []
+    return {
+        "case": "sqlite_process_restart",
+        "status": "completed",
+        "thread_id": thread_id,
+        "checkpointer": "SqliteSaver",
+        "approval_status": final_state.get("approval_status") if isinstance(final_state, dict) else None,
+        "blocked_reason": final_state.get("blocked_reason") if isinstance(final_state, dict) else None,
+        "tool_execution_count_before_restart": len(setup_ledger.executions),
+        "tool_execution_count_after_restart": len(resume_ledger.executions),
+        "trace_event_count": len(trace),
+        "secret_leaked_in_trace": has_secret_leak(trace) or has_secret_leak(interrupt_payload),
+        "new_graph_instance": True,
+        "same_thread_id": True,
+        "latency_ms": int((time.perf_counter() - started) * 1000),
+    }
+
+
 def run_validation() -> dict[str, Any]:
     try:
         import langgraph  # noqa: F401
@@ -274,16 +341,20 @@ def run_validation() -> dict[str, Any]:
         run_case("rejected_resume", "rejected"),
         run_case("tampered_args", "tampered"),
         run_side_effect_risk_case(),
+        run_sqlite_restart_case(),
     ]
+    persistent_restart_tested = any(
+        case.get("case") == "sqlite_process_restart" and case.get("status") == "completed" for case in cases
+    )
     return {
         "status": "completed",
         "versions": versions(),
-        "checkpointer": "MemorySaver",
-        "persistent_restart_tested": False,
+        "checkpointer": "MemorySaver + optional SqliteSaver",
+        "persistent_restart_tested": persistent_restart_tested,
         "case_count": len(cases),
         "cases": cases,
         "limitations": [
-            "This harness uses MemorySaver; it does not validate persistent checkpointer recovery across process restart.",
+            "The SQLite restart case rebuilds the saver and graph in one Python process; it is a minimal local persistence proxy, not a full multi-process deployment test.",
             "The refund tool is local and fake; no real payment, database, email, or external API is called.",
             "Results only cover the selected LangGraph version, Python version, graph shape, and local runtime.",
         ],

@@ -12,7 +12,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`。部分框架 harness 可以用 `uv run --with ...` 临时依赖运行。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
 
-当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-11.md)：2026-07-11 运行覆盖 11 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，Playwright harness 因本地依赖缺失保守跳过，LangGraph harness 通过临时依赖完成 `MemorySaver` 最小 run，1 个本地 MCP stdio harness 完成。
+当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-11.md)：2026-07-11 运行覆盖 11 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，Playwright harness 因本地依赖缺失保守跳过，LangGraph harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite graph 重建恢复 case，1 个本地 MCP stdio harness 完成。
 
 ## 实验清单与状态
 
@@ -44,7 +44,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 6. Prompt injection 基线测试
    - 目标：验证工具型 Agent 在恶意文档或外部输入下是否会越权。
-   - 状态：已完成标准库 prompt injection / tool permission 模拟实验，见 [Prompt Injection 与工具权限最小实验](prompt-injection-permission/README.md) 和 [2026-07-11 结果](prompt-injection-permission/results-2026-07-11.md)；已完成标准库安全 regression set 最小实验，见 [安全 Regression Set 最小实验](security-regression-set/README.md) 和 [2026-07-11 结果](security-regression-set/results-2026-07-11.md)；已完成标准库审批状态恢复与幂等性实验，见 [审批状态恢复与幂等性实验](approval-state-recovery/README.md) 和 [2026-07-11 结果](approval-state-recovery/results-2026-07-11.md)；已完成 Real LangGraph Interrupt Recovery `MemorySaver` 最小 run；真实 API harness 已准备，见 [Real Prompt Injection 与工具权限实验](real-prompt-injection-permission/README.md) 和 [2026-07-11 结果](real-prompt-injection-permission/results-2026-07-11.md)。当前无 API key，真实 prompt-injection API 运行结果为 `skipped`；仍需配置 API key 后记录真实模型 / 框架 guardrail / 持久化 HITL approval 结果。
+   - 状态：已完成标准库 prompt injection / tool permission 模拟实验，见 [Prompt Injection 与工具权限最小实验](prompt-injection-permission/README.md) 和 [2026-07-11 结果](prompt-injection-permission/results-2026-07-11.md)；已完成标准库安全 regression set 最小实验，见 [安全 Regression Set 最小实验](security-regression-set/README.md) 和 [2026-07-11 结果](security-regression-set/results-2026-07-11.md)；已完成标准库审批状态恢复与幂等性实验，见 [审批状态恢复与幂等性实验](approval-state-recovery/README.md) 和 [2026-07-11 结果](approval-state-recovery/results-2026-07-11.md)；已完成 Real LangGraph Interrupt Recovery `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite graph 重建恢复 case；真实 API harness 已准备，见 [Real Prompt Injection 与工具权限实验](real-prompt-injection-permission/README.md) 和 [2026-07-11 结果](real-prompt-injection-permission/results-2026-07-11.md)。当前无 API key，真实 prompt-injection API 运行结果为 `skipped`；仍需配置 API key 后记录真实模型 / 框架 guardrail / 真实多进程 HITL approval 结果。
 
 7. MCP 最小 trace 实验
    - 目标：验证 host/client/server、`tools/list`、`tools/call`、`resources/list`、`resources/read`、roots 和 host approval trace 字段。
@@ -84,7 +84,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 16. LangGraph interrupt recovery 实验
     - 目标：验证 LangGraph `interrupt()`、checkpointer、`thread_id` 和 `Command(resume=...)` 在高风险工具审批流程中的恢复、幂等和审计边界。
-    - 状态：真实 harness 已完成 `MemorySaver` 最小 run，见 [Real LangGraph Interrupt Recovery 实验](real-langgraph-interrupt-recovery/README.md) 和 [2026-07-11 结果](real-langgraph-interrupt-recovery/results-2026-07-11.md)。它覆盖批准、拒绝、参数 hash、重复恢复不重复执行和 trace 脱敏观察；不能证明 LangGraph interrupt、checkpointer 或任何 HITL 框架默认生产安全，持久化 checkpointer 和真实副作用仍待验证。
+    - 状态：真实 harness 已完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite graph 重建恢复 case，见 [Real LangGraph Interrupt Recovery 实验](real-langgraph-interrupt-recovery/README.md) 和 [2026-07-11 结果](real-langgraph-interrupt-recovery/results-2026-07-11.md)。它覆盖批准、拒绝、参数 hash、重复恢复不重复执行、trace 脱敏和本地持久化恢复代理观察；不能证明 LangGraph interrupt、checkpointer 或任何 HITL 框架默认生产安全，真实多进程重启、并发恢复和真实副作用仍待验证。
 
 17. Agentic security regression set 实验
     - 目标：把 MITRE ATLAS 和 OWASP Agentic AI resources 中的 agentic-specific 风险整理成可迁移到真实模型 / 框架的安全 case matrix。
