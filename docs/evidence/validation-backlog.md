@@ -86,7 +86,7 @@
 
 - 哪些 OpenAI Cookbook 示例最适合初学者作为项目模板？窄结论已可入正文：Cookbook 具体 recipe 可作为实践项目参考，但不能替代 API 文档、生产安全指南或本地实验；已完成第一轮验证：Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost、Rate limits 适合作为候选；OpenAI File Search / Retrieval 官方文档已补 API 边界；OpenAI Evaluation guides 已补 eval 流程、trace grading 和 Evals platform 退役边界；标准库 smoke harness 已验证无模型验收结构；仍需真实 Cookbook / API 本地试跑确认依赖、成本和阻塞点。
 - 生产化练习中应如何记录成本、延迟和限流？OpenAI Production / Cost / Latency / Rate Limit docs 和 Batch / Flex / Prompt Caching docs 已补官方 source cards，可支撑 usage dashboard、token counting、rate-limit headers、exponential backoff、`max_tokens`、streaming、batching、Batch、Flex、Prompt Caching、项目隔离和预算阈值的工程边界；仍需真实练习记录 API key / project 设置、请求日志、rate-limit response、retry 行为、平均/P95 latency、cost estimate、cache read/write 和预算阻断体验。
-- SWE-agent / mini-SWE-agent 是否适合作为 repo issue / coding agent 进阶项目？窄结论已可入正文：SWE-agent 论文和 README 支撑 agent-computer interface、仓库导航、文件编辑和测试执行的重要性；但 README 已提示当前推荐 mini-SWE-agent，真实试跑仍需 toy repo、sandbox、权限、diff/rollback、测试反馈、成本和人工确认实验。
+- SWE-agent / mini-SWE-agent 是否适合作为 repo issue / coding agent 进阶项目？窄结论已可入正文：SWE-agent 论文和 README 支撑 agent-computer interface、仓库导航、文件编辑和测试执行的重要性；mini-SWE-agent README、docs 和源码补强当前轻量 coding agent 入口、bash-only 最小控制流、confirm/yolo/human 模式、trajectory、cost/call limit 和 sandbox 配置边界。真实试跑仍需 toy repo、sandbox、权限、diff/rollback、测试反馈、成本和人工确认实验。
 - 每个项目应使用哪个最小技术栈，才能降低环境成本？标准库 smoke harness 可作为无模型入门层；真实技术栈仍需基于本地试跑和 GitHub Pages 教程形态决定。
 - 如何为项目 7 设计可自动运行的 eval harness？标准库 smoke harness 已给出最小 eval cases / pass-fail 结构；OpenAI Evaluation guides 支撑 trace grading、dataset / eval run 和人工校准流程；仍需扩展到真实轻量自定义 harness，并复核当前平台入口。
 - 如何把 Cookbook recipe 改写成初学者可跟练教程，同时保留 references、trace、失败样例和成本记录？
