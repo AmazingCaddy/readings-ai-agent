@@ -2,7 +2,7 @@
 
 ## 本章适合谁
 
-如果你已经知道 Agent 的核心组件，但面对 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI、Semantic Kernel 等框架不知道怎么选，这一章适合阅读。
+如果你已经知道 Agent 的核心组件，但面对 OpenAI Agents SDK、smolagents、LangGraph、LlamaIndex、AutoGen、CrewAI、Semantic Kernel 等框架不知道怎么选，这一章适合阅读。
 
 本章不做“最佳框架排行榜”。框架更新很快，初学者更应该先学会比较维度，再根据任务选择。
 
@@ -90,11 +90,12 @@ Enterprise integration 更强调和现有系统、权限、插件、业务流程
 
 下面是基于当前 source cards 和第一轮 evidence notes 的保守定位。关键框架定位已经完成第一轮精读，但仍不能写成“最佳框架排行榜”，因为还缺同一任务的横向实验。
 
-框架能力交叉表把这些框架先按“主轴”粗分：OpenAI Agents SDK 偏轻量 agent runtime，LangGraph 偏状态编排，LlamaIndex 偏 RAG / data framework，AutoGen 和 CrewAI 偏多 Agent 协作，Semantic Kernel 偏企业插件和业务流程集成。这个表适合帮助初学者缩小阅读范围，但不等于性能、成本或可靠性排名。
+框架能力交叉表把这些框架先按“主轴”粗分：OpenAI Agents SDK 偏轻量 agent runtime，smolagents 适合观察 code action 与 structured tool calling 的取舍，LangGraph 偏状态编排，LlamaIndex 偏 RAG / data framework，AutoGen 和 CrewAI 偏多 Agent 协作，Semantic Kernel 偏企业插件和业务流程集成。这个表适合帮助初学者缩小阅读范围，但不等于性能、成本或可靠性排名。
 
 | 任务难点 | 优先观察的框架方向 | 仍要检查什么 |
 | --- | --- | --- |
 | 最小工具调用、trace、handoff | 轻量 SDK / agent runtime | 工具权限、错误恢复、成本和 eval。 |
+| 代码动作、动态组合、结构化 tool calling 对照 | Code-agent / tool-calling agent 框架 | 本地代码执行风险、sandbox、Hub/MCP 工具信任边界和参数/输出校验。 |
 | 状态、分支、审批、恢复 | Workflow / graph runtime | 状态持久化、HITL、重试和 trace 可读性。 |
 | 文档、检索、引用、知识库 | RAG / data framework | chunk metadata、citation correctness、rerank 和无证据拒答。 |
 | 角色协作、多视角 review | Multi-agent framework | 协调成本、冲突处理、重复工作和最终责任边界。 |
@@ -107,6 +108,14 @@ Enterprise integration 更强调和现有系统、权限、插件、业务流程
 需要注意：SDK 抽象不等于 Agent 的全部理论，也不替代权限和评测设计。
 
 本手册的 Real OpenAI Agents SDK Guardrail Validation 已用 `openai-agents==0.18.2` 和 deterministic fake model 观察到一组本地 runtime surface：input guardrail 可以在模型调用前阻断，output guardrail 在模型调用后阻断，function-tool input guardrail 可以在本地函数工具副作用前拒绝，function-tool output guardrail 在函数执行后替换输出，`needs_approval=True` metadata 可观察。2026-07-12 复核的 Agents SDK 文档进一步说明 tool guardrails 只覆盖 `function_tool` 创建的 function tools，不覆盖 hosted tools、built-in execution tools、handoff call 本身或 `Agent.as_tool()` 的直接 tool-guardrail options；hosted-container `ShellTool` 不支持 `needs_approval` / `on_approval`；tracing 默认包含敏感数据，serialized `RunState` 也要当作持久化敏感数据处理。这说明比较框架时不能只看“是否支持 guardrails / approval”这个勾选项，还要看它们覆盖哪类工具、发生在副作用前还是副作用后，以及哪些 policy、审批状态、side effect、state persistence 和 trace 脱敏仍由应用层负责。这个实验不覆盖真实模型、hosted tools、MCP tools、Shell / ApplyPatch tools、真实 HITL UI、生产 tracing、成本或延迟。
+
+### smolagents
+
+适合作为 code action 和 structured tool calling 的对照样本。它的文档把 `CodeAgent` 和 `ToolCallingAgent` 并列：前者让 LLM 把 action 写成 Python code snippets，适合组合、循环、条件和动态逻辑；后者输出 JSON/text tool calls，更接近常见结构化工具调用方式。
+
+这个对照对初学者很有价值，因为它把一个核心权衡讲得很直接：表达能力提高时，执行风险也扩大。smolagents 文档和 README 都提醒，默认 `CodeAgent` 会在本地环境执行 LLM-generated code；`LocalPythonExecutor` 有 AST、import allowlist、submodule restriction 和 operation cap 等限制，但 README 明确说它不是 security sandbox / security boundary。需要更强隔离时，要考虑 Blaxel、E2B、Modal 或 Docker；而只把 code snippets 放进 sandbox 与把整个 agentic system 放进 sandbox，又会带来 state transfer、multi-agent support 和 API key 处置上的不同边界。
+
+smolagents 还适合学习工具信任边界：tool 需要 name、description、inputs 和 output_type，`output_schema` 当前只作 informational use；从 Hub 或 MCP server 加载 tool 可能下载并本地执行代码，`trust_remote_code=True` 只能在信任来源且理解风险时使用。这些证据只支持框架定位、执行面和 sandbox/trust boundary；本手册尚未本地运行 smolagents，也不能引用 README benchmark 或文档宣传来证明它真实更好、更快、更便宜、更安全或更适合生产。
 
 ### LangGraph
 
@@ -226,7 +235,7 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 - 多 Agent 框架适合学习角色协作和任务分配，但“多 Agent 默认更好”没有被框架文档证明。“多 Agent 不是复杂任务默认升级路径；引入前应明确角色边界、证据分配、冲突处理、review trace 和成本预算”已升级为可入正文。标准库多 Agent 对比实验已验证无控制角色协作会带来重复读取、缺证据和冲突风险；Real Multi-Agent Framework Validation 已补 AutoGen AgentChat / CrewAI 的本地 fake-model runtime surface 观察，也补了 LangGraph deterministic `StateGraph` multi-role surface 观察。真实模型、多轮冲突合并、成本、延迟、trace 可读性和成功率仍需同任务对比验证。
 - LlamaIndex source card 明确其适合 RAG、数据连接、索引和 agent data framework；需区分通用 RAG 概念和框架实现。
 - Semantic Kernel source card 已于 2026-07-12 复核 overview、TOC、plugins、task automation、agent framework、process framework 和 experimental attribute，可支撑 enterprise integration、plugins/functions、native/OpenAPI/MCP plugin 导入、agent framework、human-in-the-loop filter 和 process orchestration 的框架定位；Real Semantic Kernel Plugin Validation 已补 native plugin runtime 的 metadata、参数处理和应用层审批 wrapper 观察；其 Process Framework 当前入口是 `frameworks/process/process-framework`，旧 `frameworks/process/` 返回 404，且 package 仍标注 experimental，只能作为方向性参考。
-- “Agent 框架应按任务难点和能力边界比较，不应写成某个框架默认最好”已升级为可入正文：框架生态定位边界、框架能力交叉表和标准库 rubric smoke test 支撑各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；Real OpenAI Agents SDK Guardrail Validation、Real Framework Same-Task Comparison 和 Real Multi-Agent Framework Validation 进一步支撑同任务 run 应拆分 framework-owned capabilities 和 application-owned capabilities，并区分 guardrail / approval 发生在模型调用前后、工具副作用前后、hosted/local 工具面还是应用层 wrapper 中；Agents SDK 2026-07-12 复核还补强了 function-tool-only guardrail、hosted shell approval 限制、trace 敏感数据默认捕获和 serialized RunState 治理边界；但不能从文档、rubric 或本地 fake-model / deterministic-node run 直接推出真实成本、可靠性或性能排名，也不能把 fake-model Agents SDK `Runner`、AutoGen team loop、CrewAI sequential crew 或 LangGraph local node graph 行为等同于真实模型、hosted tracing、hosted/MCP/Shell/ApplyPatch 工具覆盖或生产审批 UI。
+- “Agent 框架应按任务难点和能力边界比较，不应写成某个框架默认最好”已升级为可入正文：框架生态定位边界、框架能力交叉表和标准库 rubric smoke test 支撑各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；smolagents 2026-07-12 复核补强了 `CodeAgent` / `ToolCallingAgent`、本地 code execution、`LocalPythonExecutor` 非安全边界、sandbox 取舍、Hub/MCP tool `trust_remote_code` 和 tool metadata 边界；Real OpenAI Agents SDK Guardrail Validation、Real Framework Same-Task Comparison 和 Real Multi-Agent Framework Validation 进一步支撑同任务 run 应拆分 framework-owned capabilities 和 application-owned capabilities，并区分 guardrail / approval 发生在模型调用前后、工具副作用前后、hosted/local 工具面还是应用层 wrapper 中；Agents SDK 2026-07-12 复核还补强了 function-tool-only guardrail、hosted shell approval 限制、trace 敏感数据默认捕获和 serialized RunState 治理边界；但不能从文档、rubric 或本地 fake-model / deterministic-node run 直接推出真实成本、可靠性或性能排名，也不能把 smolagents README benchmark、fake-model Agents SDK `Runner`、AutoGen team loop、CrewAI sequential crew 或 LangGraph local node graph 行为等同于真实模型、hosted tracing、hosted/MCP/Shell/ApplyPatch 工具覆盖或生产审批 UI。
 - Anthropic Building effective agents 补强框架抽象边界：框架能降低上手成本，但可能遮蔽底层 prompt/response、增加调试难度并诱导过早复杂化；这支持本章“先按任务难点和可调试性选框架”的写法，但不证明简单实现或任何特定框架默认更可靠。
 - 框架能力交叉表已把 6 个常见框架的主轴、适合学习内容、不应误读点和真实实验缺口整理到 evidence note；它支撑本章的定位表，但仍不能替代真实框架横向实验。
 - Tool / Function / Plugin 术语对照已完成第一轮文档交叉验证，可支撑“框架术语不能直接当成行业通用定义”的保守表述。OpenAI API 的 function/tool calling、OpenAI Agents SDK 的 runtime tools / agent-as-tool、Semantic Kernel 的 plugins/functions、LlamaIndex 的 retriever/query engine、LangGraph 的 state graph、AutoGen/CrewAI 的 multi-agent / Flow 抽象处在不同层级；Semantic Kernel native plugin 已有本地 runtime 观察，但真实框架默认错误处理、权限、HITL、trace 和成本仍需同任务实验。
@@ -252,6 +261,7 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 ### Framework Docs
 
 - [OpenAI Agents SDK Documentation](../sources/source-cards/2026-openai-agents-sdk-docs.md)
+- [Hugging Face smolagents Documentation and Source](../sources/source-cards/2026-smolagents-docs.md)
 - [Anthropic Building effective agents](../sources/source-cards/2024-anthropic-building-effective-agents.md)
 - [LangGraph Documentation](../sources/source-cards/2026-langgraph-docs.md)
 - [Real LangGraph Interrupt Recovery](../experiments/real-langgraph-interrupt-recovery/README.md)

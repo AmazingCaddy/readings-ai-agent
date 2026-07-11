@@ -26,6 +26,8 @@ OpenAI 的 Practical Guide to Building Agents PDF 适合补充本章的入门判
 
 Hugging Face Agents Course 适合作为外部跟学地图：Unit 0 给出 basic Python / basic LLM prerequisites 和每周 3-4 小时的节奏建议，Unit 1 用 agent、tools、actions / observations 和 agency spectrum 建立词汇，Unit 2 再进入 smolagents、LlamaIndex、LangGraph 等框架，bonus 单元覆盖 observability 和 evaluation。它能帮助初学者安排学习顺序和练习主题，但课程示例、Spaces、final assignment、leaderboard、框架质量、成本、延迟和生产可靠性都还没有在本仓库复现，正文只能把它作为“部分进入”的学习路线参考。
 
+如果沿着 Hugging Face 课程尝试 smolagents，建议把它当作“同一任务的两种工具调用表达方式”来练：先用只读 mock tool 对比 `CodeAgent` 和 `ToolCallingAgent`，记录 Python code snippet、JSON/text tool call、参数校验、错误恢复和 trace。`CodeAgent` 的默认本地执行不应接触重要目录、真实账号或高权限工具；`LocalPythonExecutor` 不是安全边界，Hub/MCP tools 和 `trust_remote_code=True` 也要单独做信任审查。没有 Docker/E2B/Blaxel/Modal 等 sandbox 或明确的临时目录策略时，不要把它作为第一个真实环境练习。
+
 ## 项目 1：最小问答应用
 
 ### 学习目标
@@ -338,6 +340,7 @@ Hugging Face Agents Course 适合作为外部跟学地图：Unit 0 给出 basic 
 - OpenAI Moderation 和 Safety / Data Controls docs 可支撑项目 8 的安全和数据治理记录项：moderation signals、categories/scores、tool-calling moderation 覆盖限制、streaming moderation 限制、red-team、HITL、用户举报、`safety_identifier`、API key revoke、abuse monitoring logs、application state、endpoint retention、remote MCP third-party retention、hosted container state 和 data residency。标准库 production safety / data governance checklist + object-level data-flow audit 已验证这些字段以及 remote MCP、hosted execution、file/vector store、prompt caching、browser/computer-use 数据面可以拆成可运行检查表；Real Moderation Safety harness 已补本地 deterministic policy-signal control，覆盖 `flagged`、categories、scores、expected mismatch 和 allow / review / false-positive / false-negative 分支。它们不证明任何真实检测层、数据控制配置、对象删除、trace 脱敏或合规方案充分有效。
 - OpenAI File Search / Retrieval docs 可作为 File Search RAG 项目的 API 边界 reference：托管 `file_search` 仍需要记录 included search results、citations、filters、ranking/chunking、batch ingestion、attributes、rate limits、storage pricing、ZDR/data residency、成本、延迟和删除一致性。
 - OpenAI Practical Guide to Building Agents PDF 可支撑实践路线中的入门判断：先验证 use case 是否真的需要 Agent，先最大化单 Agent 能力，再在复杂逻辑、工具重叠或职责切分需要时考虑多 Agent；同时用 tool risk rating、guardrails 和 human intervention 控制高风险动作。它不证明真实 API / SDK 行为、guardrail 或 moderation 效果、成本、延迟或生产可靠性。
+- Hugging Face Agents Course 和 smolagents docs 可支撑一个可选框架练习：用同一只读 mock task 对比 `CodeAgent` 的 code action 和 `ToolCallingAgent` 的 structured tool calling，并记录 sandbox、Hub/MCP tool trust、`trust_remote_code`、tool metadata、trace 和失败样例。smolagents 文档明确 `LocalPythonExecutor` 不是 security boundary，Tools reference 也说明 `output_schema` 当前只作 informational use；因此它们不证明 code agents 默认更好、真实 sandbox 隔离充分、Hub/MCP tool 安全、成本更低或生产可靠。
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源：2026-07-12 复核确认当前 reference servers 包括 Everything、Fetch、Filesystem、Git、Memory、Sequential Thinking 和 Time；Filesystem 可学习 allowed directories、Roots 和 ToolAnnotations，Git 可学习为什么写仓库工具需要审批和审计。但具体 server 的权限、安全假设、host UI、rollback 和 trace 脱敏仍需要逐个检查。
 - OpenAI Evals repo、OpenAI Evaluation guides 和 OpenAI Graders docs 可作为小型回归测试、dataset + registry/YAML、completion function、trace grading、dataset / eval run、tool-call grading、edge/adversarial cases、LLM-as-judge 校准和 reward hacking 风险的结构参考；标准库 grader misalignment / reward hacking audit 可作为无模型时的最小误判样本模板；Agent eval 仍应结合 trace、业务任务、human labels 和人工复核。OpenAI Evals / graders platform 正在退役，具体 dashboard/API/CLI 入口不能写成长期稳定教程。
@@ -360,6 +363,7 @@ Hugging Face Agents Course 适合作为外部跟学地图：Unit 0 给出 basic 
 - MCP 实验应选择哪个只读 server 作为最小示例？
 - 如何把这些项目逐步发布成 GitHub Pages 的可跟练教程？
 - 如何把安全 regression set 迁移到真实 tool-calling / Agents SDK / MCP 工具练习？
+- smolagents 练习应先试 `CodeAgent` / `ToolCallingAgent` 的只读 mock task，还是先试 Docker/E2B/Blaxel/Modal sandbox？需要记录安装依赖、模型 provider/API key、sandbox cleanup、state/secret transfer、trace 和失败样例。
 - Repo Issue Agent 应优先用 mini-SWE-agent、OpenAI Agents SDK、LangGraph 还是固定 workflow 做最小对比？固定 workflow baseline、确定性 workflow-agent hybrid baseline、mini-SWE-agent CLI surface validation 和 deterministic fake-model runtime surface validation 已完成；SWE-agent 已更适合作为 maintenance-mode / historical tool 对照；仍需真实模型驱动 hybrid、mini-SWE-agent confirm-mode repo issue run 和可选 SWE-agent 对照运行记录成本、sandbox、回滚、测试反馈、trajectory 脱敏和人工确认负担。
 - Browser Use / browser agent 与固定 Playwright workflow 在同一 demo site 上的成功率、步骤数、失败原因、成本、延迟、trace 可读性和审批负担有什么差异？标准库 browser action trace audit 已给出字段模板，Browser Use package surface、固定 Playwright demo run 和 deterministic coordinate-loop 已完成；Browser Use agent / 模型驱动 computer-use-style 对照仍待做。
 
@@ -380,6 +384,7 @@ Hugging Face Agents Course 适合作为外部跟学地图：Unit 0 给出 basic 
 - [OpenAI Cookbook](../sources/source-cards/2026-openai-cookbook.md)
 - [OpenAI Practical Guide to Building Agents](../sources/source-cards/2025-openai-practical-guide-building-agents.md)
 - [Hugging Face Agents Course](../sources/source-cards/2026-huggingface-agents-course.md)
+- [Hugging Face smolagents Documentation and Source](../sources/source-cards/2026-smolagents-docs.md)
 - [OpenAI Production, Cost, Latency and Rate Limit Documentation](../sources/source-cards/2026-openai-production-cost-latency-docs.md)
 - [OpenAI Batch, Flex Processing and Prompt Caching Documentation](../sources/source-cards/2026-openai-batch-flex-prompt-caching-docs.md)
 - [Real Batch / Flex / Prompt Caching Validation](../experiments/real-batch-flex-caching-validation/README.md)

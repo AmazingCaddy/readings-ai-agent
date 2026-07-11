@@ -17,6 +17,7 @@
 | Microsoft AutoGen | Microsoft AutoGen documentation | Framework Docs | A | 链接已复核；source card 已创建 |
 | Semantic Kernel | Microsoft Semantic Kernel documentation | Framework Docs | A | 链接已复核；source card 已创建 |
 | CrewAI | CrewAI documentation | Framework Docs | B | 链接已复核；source card 已创建 |
+| Hugging Face smolagents | smolagents documentation and source | Framework Docs / Source | B+ | 官方 docs index、Guided Tour、Secure Code Execution、Tools reference、GitHub repo metadata 和 README 已复核；source card 已创建；适合支撑 CodeAgent / ToolCallingAgent、sandbox 和 Hub/MCP trust boundary，不支撑真实框架质量或 benchmark claim |
 | Anthropic Agent 架构 | Building effective agents | Engineering Guide / Official Blog | A | 页面 metadata、发布日期、摘要和关键正文段落已复核；source card 已创建；适合支撑 workflow / agent 区分、简单优先和常见 workflow patterns，不支撑真实模型/框架效果 |
 
 ## Papers
