@@ -38,8 +38,9 @@ ReAct、Reflection / Reflexion、Tree of Thoughts、状态图和 workflow-agent 
 
 ## 结论状态
 
-- 部分验证：三篇论文支撑关键架构模式的研究脉络；LangGraph 和 OpenAI Agents SDK 支撑现代工程编排边界；已有 Agent/Workflow、多 Agent evidence、标准库 workflow / ReAct-like、planner/executor 和 reflection/retry 对比支撑“从可控 workflow-agent hybrid 起步，为 planning/reflection 加入校验反馈”的保守路线。仍缺真实模型 / 框架对比实验。
+- 可入正文：窄结论“Planner / Executor 不能只停留在一次性计划；计划需要可执行，执行结果需要证据校验，失败需要反馈给 planner 并记录重规划 trace”已完成第一轮交叉验证。LangGraph 和 OpenAI Agents SDK 支撑现代工程编排、状态和 trace 边界；标准库 planner/executor 对比复现了一次性计划漏掉 migration evidence，而带 validation feedback 的流程通过 `validation_failed` 和 `plan_revised` 补齐证据。
+- 部分验证：ReAct、Reflection / Reflexion、Tree of Thoughts、状态图和 workflow-agent hybrid 的真实任务收益、成本、延迟、工具错误恢复和人工介入仍缺真实模型 / 框架对比实验；不能写成复杂架构默认更可靠。
 
 ## 可进入章节
 
-- 是。可以写成：ReAct、Reflection、Tree of Thoughts、状态图和 workflow-agent hybrid 解决的问题不同；初学者应先理解任务边界、状态、工具权限、trace 和停止条件，再决定是否引入更复杂的规划、反思或搜索机制。
+- 是。可以确定写成：Planner / Executor 要有可执行计划、证据校验、失败反馈和重规划 trace；计划本身不是质量保证。也可以保守写成：ReAct、Reflection、Tree of Thoughts、状态图和 workflow-agent hybrid 解决的问题不同；初学者应先理解任务边界、状态、工具权限、trace 和停止条件，再决定是否引入更复杂的规划、反思或搜索机制。

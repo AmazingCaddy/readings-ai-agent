@@ -8,7 +8,7 @@
 - 主题：Planning / Search / Reasoning
 - 适合阶段：进阶
 - 可信度等级：A
-- 是否已验证：来源链接、arXiv 元数据和摘要已复核；Agent 架构模式边界已完成第一轮交叉验证
+- 是否已验证：来源链接、arXiv 元数据和摘要已复核；Agent 架构模式边界已完成第一轮交叉验证；ToT 效果仍部分验证
 
 ## 一句话总结
 
@@ -34,4 +34,4 @@ Tree of Thoughts 可用于解释搜索式规划和多候选推理路径，但需
 ## 可能的问题
 
 - ToT 是推理/搜索框架，不应直接等同于生产 Agent 的任务编排。
-- 已和实际 orchestration 框架资料完成第一轮交叉验证；Planner / Executor 与 Reflection / Retry 标准库实验只覆盖相邻 planning/retry 模式，仍需 ToT-style search 实验验证搜索式规划的成本和收益。
+- 已和实际 orchestration 框架资料完成第一轮交叉验证；Planner / Executor 可执行计划边界已由标准库实验和 orchestration evidence 支撑，但这不等于验证 ToT-style search。仍需 ToT-style search 实验验证搜索式规划的成本和收益。
