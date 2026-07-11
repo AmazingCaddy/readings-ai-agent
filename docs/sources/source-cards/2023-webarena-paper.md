@@ -3,12 +3,12 @@
 - 来源链接：https://arxiv.org/abs/2307.13854
 - 作者 / 机构：Shuyan Zhou, Frank F. Xu, Hao Zhu, Xuhui Zhou, Robert Lo, Abishek Sridhar, Xianyi Cheng, Tianyue Ou, Yonatan Bisk, Daniel Fried, Uri Alon, Graham Neubig
 - 发布时间：2023-07-25；arXiv v4 updated 2024-04-16
-- 最后复核日期：2026-07-11
+- 最后复核日期：2026-07-12
 - 类型：论文 / Benchmark
 - 主题：Web Agent / Evaluation
 - 适合阶段：进阶
 - 可信度等级：A
-- 是否已验证：来源链接和 arXiv 元数据已复核；摘要已精读；支撑公开 benchmark 不能直接代表真实业务 Agent 质量和过程/交互评测窄结论；其余结论部分验证
+- 是否已验证：arXiv API 元数据、HTTP metadata、摘要、项目页和 GitHub README 已于 2026-07-12 复核；支撑公开 benchmark 不能直接代表真实业务 Agent 质量和过程/交互评测窄结论；其余结论部分验证
 
 ## 一句话总结
 
@@ -23,11 +23,13 @@ WebArena 适合用于理解 Web Agent 的评测环境和真实任务复杂度。
 
 ## 支撑证据
 
-- arXiv 页面返回 HTTP 200；metadata 显示 submitted on 2023-07-25，last revised 2024-04-16。
-- 摘要写明 WebArena 建立 highly realistic and reproducible 的 language-guided agent 环境。
-- 摘要写明环境包含 fully functional websites，并配有 tools 和 external knowledge bases。
-- 摘要写明任务关注 functional correctness of task completions，且 diverse、long-horizon。
-- 摘要报告最佳 GPT-4-based agent end-to-end task success rate 为 14.41%，human performance 为 78.24%。
+- 2026-07-12 抓取 arXiv 页面返回 HTTP 200；响应头 `last-modified: Wed, 01 May 2024 16:23:12 GMT`。
+- arXiv API 返回有效条目：`2307.13854v4`，published `2023-07-25T22:59:32Z`，updated `2024-04-16T15:13:18Z`，primary category `cs.AI`。
+- arXiv comment 标注 code、data、environment reproduction resources 和 video demonstrations 公开于 `https://webarena.dev/`。
+- API 摘要写明 WebArena 建立 highly realistic and reproducible 的 language-guided agent 环境，包含 fully functional websites、tools 和 external knowledge bases。
+- API 摘要写明任务关注 functional correctness of task completions，且 diverse、long-horizon；摘要中的 14.41% / 78.24% 只能作为论文实验设置下的历史观察，不能外推为当前模型能力。
+- `https://webarena.dev/` 于 2026-07-12 返回 HTTP 200；页面列出 WebArena、WebArena-Infinity、VisualWebArena 和 TheAgentCompany 等项目，WebArena 卡片描述为 autonomous web agents 的 realistic web environment。
+- GitHub README 于 2026-07-12 可达，说明 WebArena 是 self-hostable web environment；2024-12-05 更新提示 canonical implementation 可复现论文结果，但强烈建议使用 AgentLab / BrowserGym 等增强框架做实验；end-to-end evaluation 需要自建网站环境、配置 URL、生成测试数据、auto-login cookies 和 API key。
 
 ## 是否进入正文
 
