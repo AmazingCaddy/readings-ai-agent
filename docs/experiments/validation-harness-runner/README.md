@@ -12,7 +12,13 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；没有 Playwright 时，真实浏览器 harness 应返回 `skipped`；没有 LangGraph 时，真实 LangGraph harness 应返回 `skipped`；Batch 提交必须显式 opt-in；不依赖 API 的本地 stdio MCP harness 应返回 `completed`。
 
-最新记录：见 [2026-07-11 结果](results-2026-07-11.md)。本次运行验证了统一入口、API harness 的 skip 分支和本地 MCP stdio harness；没有完成真实 API 行为验证。
+若要在不修改项目依赖的情况下运行 LangGraph harness，可使用临时依赖：
+
+```bash
+uv run --with langgraph --with langchain-core python docs/experiments/validation-harness-runner/run_validation_harnesses.py
+```
+
+最新记录：见 [2026-07-11 结果](results-2026-07-11.md)。本次运行验证了统一入口、API harness 的 skip 分支、LangGraph `MemorySaver` 最小 run 和本地 MCP stdio harness；没有完成真实 API 行为验证。
 
 ## 覆盖范围
 
