@@ -13,6 +13,7 @@
 - Source 5：[Zep Documentation](../sources/source-cards/2026-zep-docs.md)
 - Source 6：[OWASP LLM Top 10](../sources/source-cards/2026-owasp-llm-top-10.md)
 - Source 7：[NIST AI Risk Management Framework](../sources/source-cards/2026-nist-ai-rmf.md)
+- Source 8：[长期记忆写入守门与治理实验结果](../experiments/memory-governance/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -24,17 +25,18 @@
 - 一致点：OWASP LLM Top 10 中的 sensitive information disclosure、insecure plugin design 和 excessive agency 风险，支持长期记忆系统需要隐私、访问控制和过度授权边界。
 - 一致点：NIST AI RMF 支持把 AI 风险放到 design、development、use 和 evaluation 的治理流程中处理，而不是把 memory 风险视为单点 prompt 问题。
 - 边界：论文主要支撑“长期记忆可能有价值”和“需要记忆管理机制”；产品文档主要支撑具体工程治理模式；安全资料支撑隐私和权限风险。三类资料互补，但不能单独证明“长期记忆一定提升 Agent 表现”。
+- 本地实验：标准库 memory governance 模拟中，`auto_write` 持久化了假 secret 和低置信模型推断，并在 trace 中泄露假 secret；`guarded_write` 拒绝敏感信息、低置信推断和助手猜测，保留用户明确偏好/纠正事实，并在偏好变化时 invalidates 旧版本。这支持“长期记忆需要写入守门、失效历史和 trace 脱敏”的工程建议。
 
 ## 实验验证
 
 - 是否需要实验：是
 - 实验设计：设计一个多会话学习助手任务，比较三个 baseline：无长期记忆、用户显式确认写入的长期记忆、模型自动写入的长期记忆。测试偏好变化、错误事实写入、旧偏好过期、敏感信息误写入和后续任务污染。
 - 指标：个性化命中率、错误记忆写入率、过时记忆使用率、用户可纠错性、敏感信息进入上下文次数、最终任务质量。
-- 结果：待执行
+- 结果：已完成标准库最小写入守门模拟实验。实验覆盖自动写入、显式写入守门、敏感信息拒绝、低置信推断拒绝、用户偏好变化、事实纠正、失效历史和 trace 脱敏。尚未覆盖真实多会话 Agent、真实 memory framework、收益指标或长期污染评测。
 
 ## 结论状态
 
-- 部分验证：论文和工程文档共同支撑长期记忆的潜在价值与治理必要性；OWASP/NIST 支撑隐私和风险治理边界。仍缺本地最小实验，不能升级为“可入正文”的强结论。
+- 部分验证：论文和工程文档共同支撑长期记忆的潜在价值与治理必要性；OWASP/NIST 支撑隐私和风险治理边界；标准库实验支撑写入守门、冲突/失效处理和敏感 trace 脱敏的最小流程。仍缺真实多会话 Agent 和 memory framework 实验，不能写成“长期记忆一定提升表现”。
 
 ## 可进入章节
 

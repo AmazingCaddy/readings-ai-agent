@@ -32,10 +32,10 @@
 
 ## RAG 与 Memory
 
-- 长期记忆是否一定提升 Agent 表现？已完成第一轮验证：不能写成“一定提升”，仍需多会话实验验证在哪些任务中可能造成污染。
+- 长期记忆是否一定提升 Agent 表现？已完成第一轮验证和标准库写入守门模拟：不能写成“一定提升”；仍需真实多会话 Agent / memory framework 实验验证哪些任务有收益、哪些任务会被污染。
 - Chunk size、embedding model、reranking 对结果的影响如何验证？LlamaIndex 已完成第一轮工程流程验证，标准库最小 pipeline 已验证 trace/citation 字段；仍需真实 embedding / vector store / rerank 对比实验。
 - RAG 答案如何稳定带 source citation / source nodes？标准库模拟实验已验证 chunk-level citation 字段设计；仍需真实 RAG stack 和 LLM synthesis 下的 citation correctness / faithfulness 实验。
-- Memory 写入守门有哪些可复用设计？Letta/Zep 已提供第一轮工程模式参考，仍需结合本地实验验证。
+- Memory 写入守门有哪些可复用设计？Letta/Zep 已提供第一轮工程模式参考，标准库模拟已验证显式写入、敏感信息拒绝、低置信推断拒绝、用户纠正和失效历史的最小流程；仍需真实 framework 的查看、编辑、删除、权限和隐私边界实验。
 - RAG paper 中的 non-parametric memory 与 Agent long-term memory 如何避免术语混淆？
 
 ## Eval 与生产化

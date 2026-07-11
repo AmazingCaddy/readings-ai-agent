@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 18:13 Asia/Shanghai
+**Last Updated:** 2026-07-11 16:51 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -44,9 +44,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 27. Completed a standard-library RAG pipeline / citation simulation under `docs/experiments/rag-pipeline/`. The script loads three source-card notes, creates chunks with `chunk_id/source_id/title/url`, performs keyword retrieval, synthesizes answers with citations, and returns `grounded=false` for unsupported questions. This supports minimal RAG trace/citation design but does not validate embedding/vector-store/rerank/LLM synthesis quality, latency, token cost, or citation correctness in a real stack.
 28. Completed a standard-library trace-aware eval simulation under `docs/experiments/trace-aware-eval/`. The script compares final-answer-only scoring with trace-aware scoring on three toy refund runs. Final-only passes 3/3, while trace-aware passes 1/3 and catches side-effect tool execution without approval plus unrecovered tool errors. This supports the handbook's process-eval boundary but does not validate real Agent traces, LLM-as-judge, human review, or observability platform behavior.
 29. Completed a standard-library prompt injection / tool permission simulation under `docs/experiments/prompt-injection-permission/`. It compares `prompt_only` with `policy_enforced` on an external refund-policy document containing malicious instructions. Prompt-only issues a refund and leaks a fake secret into trace; policy-enforced allows read-only lookup, rejects write tools, records denial reasons, and redacts the fake secret. This supports permission-boundary and trace-redaction guidance but does not validate real model/framework guardrails or HITL approval behavior.
+30. Completed a standard-library memory governance simulation under `docs/experiments/memory-governance/`. It compares `auto_write` with `guarded_write` on explicit preferences, low-confidence inferred profile data, a fake secret, preference changes, assistant guesses, and user corrections. The result supports write-guard, invalidation-history, and trace-redaction guidance, but does not validate real multi-session Agent quality, real memory framework behavior, privacy controls, or user edit/delete flows.
 
 ## Technical Context
-- Files modified recently: `docs/chapters/09-production-security.md`, `docs/chapters/12-source-map.md`, `docs/evidence/prompt-injection-permission-boundary.md`, `docs/evidence/tool-permission-audit-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/prompt-injection-permission/README.md`, `docs/experiments/prompt-injection-permission/prompt_injection_permission.py`, `docs/experiments/prompt-injection-permission/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/chapters/06-rag-memory.md`, `docs/chapters/12-source-map.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/memory-governance-risk-boundary.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/memory-governance/README.md`, `docs/experiments/memory-governance/memory_governance.py`, `docs/experiments/memory-governance/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
@@ -65,7 +66,7 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 - Run a real MCP security experiment covering user rejection, roots behavior, URL mode elicitation, malicious resource/prompt content, token/log redaction, and a simulated write tool requiring confirmation.
 - Run a minimal RAG vs short-term vs long-term memory comparison experiment.
 - Run a real RAG stack experiment beyond the current standard-library simulation, comparing chunk size, metadata, top-k, rerank/filter, citation correctness, answer faithfulness, latency, and token cost. LlamaIndex docs search did not directly verify source citation/source_nodes behavior in the latest docs.
-- Run a multi-session long-term memory governance experiment covering explicit write confirmation, automatic write failure modes, stale preference invalidation, conflicting facts, and sensitive information handling.
+- Run a real multi-session long-term memory governance experiment beyond the current standard-library simulation, covering no-memory vs guarded-memory vs auto-memory, real model/framework behavior, user viewing/editing/deleting memories, privacy/permission boundaries, task quality, stale preference invalidation, conflicting facts, and sensitive information handling.
 - Run a real model/framework prompt-injection permission-boundary experiment beyond the current standard-library simulation, covering external document injection, read/write tool separation, parameter validation, human confirmation, and audit logs.
 - Run a real tool-permission and audit experiment covering OpenAI Agents SDK guardrails execution mode, function-tool guardrails, HITL approval pause/resume, MCP require_approval, sensitive trace disabling, and audit log redaction.
 - In a new session, verify whether the newly added `openaiDeveloperDocs` MCP tools are exposed.
