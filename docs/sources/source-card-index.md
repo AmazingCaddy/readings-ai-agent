@@ -13,7 +13,7 @@
 | [MemGPT paper](source-cards/2023-memgpt-paper.md) | Memory management / Context | Paper | A | 摘要和显式 memory management 方向已精读；RAG/Memory 与长期记忆治理窄边界已引用；真实 memory 行为仍部分验证 | 补真实 memory tier / context management 实验 |
 | [Toolformer paper](source-cards/2023-toolformer-paper.md) | Tool Use | Paper | A | 摘要和研究式 tool use 边界已精读；Function Calling evidence 已引用；部分验证 | 补真实 API tool-calling validation / retry 实验 |
 | [Tree of Thoughts paper](source-cards/2023-tree-of-thoughts-paper.md) | Planning | Paper | A | 摘要和搜索式推理边界已精读；支撑复杂架构不是默认更可靠的窄边界；Planner/Executor 边界另由实验和编排 evidence 支撑；ToT 效果仍部分验证 | 补真实 planning/search 与 workflow 对比实验 |
-| [Reflexion paper](source-cards/2023-reflexion-paper.md) | Reflection / Eval | Paper | A | 摘要和语言反馈/反思边界已精读；reflection retry 实验已完成；支撑复杂架构不是默认更可靠的窄边界；Reflection 效果仍部分验证 | 补真实 critic、长期 episodic memory、成本和人工评审实验 |
+| [Reflexion paper](source-cards/2023-reflexion-paper.md) | Reflection / Eval | Paper | A | 摘要和语言反馈/反思边界已精读；reflection retry 实验已完成；支撑复杂架构不是默认更可靠和 Reflection 需要可校验反馈/范围控制/trace 的窄边界；真实效果仍部分验证 | 补真实 critic、长期 episodic memory、成本和人工评审实验 |
 | [AgentBench paper](source-cards/2023-agentbench-paper.md) | Eval / Benchmark | Paper | A | 摘要和 benchmark / trajectory 边界已精读；支撑公开 benchmark 不能直接代表真实业务 Agent 质量、工具/副作用 Agent 不能只看最终答案的窄结论；其余部分验证 | 补真实 Agent trace、LLM-as-judge 和人工复核实验 |
 | [WebArena paper](source-cards/2023-webarena-paper.md) | Web Agent / Eval | Paper | A | 摘要和 Web Agent 评测复杂度已精读；支撑公开 benchmark 不能直接代表真实业务 Agent 质量和过程/交互评测窄结论；其余部分验证 | 补真实 web/tool trace 评测和失败分类实验 |
 | [AutoGen docs](source-cards/2026-autogen-docs.md) | Multi-agent / Framework | Framework Docs | A | 关键多 Agent/Teams/GraphFlow 段落已精读；支撑多 Agent 不是默认升级路径和框架应按任务难点比较的窄边界；真实 AutoGen 表现仍部分验证 | 补真实 AutoGen / CrewAI / LangGraph 同任务横向实验 |
