@@ -28,7 +28,8 @@
 | Memory 不等于 RAG，也不等于把完整历史塞进 prompt。 | RAG paper；MemGPT；MemoryBank；LangGraph memory docs；Evidence Note: RAG 与 Memory 边界 | 部分验证 | 可作为术语边界写入正文；需提醒 RAG paper 中的 non-parametric memory 不是 Agent 长期记忆治理。 |
 | 长期记忆可能提升持续交互体验，但也会引入错误写入、过时和隐私风险。 | MemoryBank；MemGPT；Generative Agents；Letta docs；Zep docs；OWASP LLM Top 10；NIST AI RMF；Evidence Note: 长期记忆治理与风险边界 | 部分验证 | 可作为长期记忆章节的保守边界；不应写成“长期记忆总是提升 Agent”。 |
 | Benchmark 不能直接代表真实业务 Agent 质量。 | AgentBench；WebArena；OpenAI Evals repo；Evidence Note: Agent Eval 与 Trajectory 边界 | 部分验证 | 可作为 Eval 章节核心提醒；公开 benchmark 可学习评测思想，但业务系统仍需 custom/private eval 和 trace。 |
-| Agent eval 不应只看最终答案，还应检查关键 trajectory / trace。 | AgentBench；WebArena；OpenAI Evals repo；Evidence Note: Agent Eval 与 Trajectory 边界 | 部分验证 | 可写入 Eval 章节；需说明 trajectory 自动评分方法仍待任务级验证。 |
+| Agent eval 不应只看最终答案，还应检查关键 trajectory / trace。 | AgentBench；WebArena；OpenAI Evals repo；LangSmith docs；Phoenix docs；OpenAI Cookbook；Evidence Note: Agent Eval 与 Trajectory 边界；Evidence Note: Observability 与 Trace 工程边界 | 部分验证 | 可写入 Eval 章节；trace 字段和 offline/online eval 工作流已有工程资料支撑，但自动评分方法仍待任务级验证。 |
+| Agent trace 应记录输入、输出、中间步骤、工具调用、检索、错误、延迟/成本、反馈和版本信息，才能支撑调试、审计、回归和在线/离线评测。 | LangSmith docs；Phoenix docs；OpenAI Cookbook；OpenAI Evals repo；Evidence Note: Observability 与 Trace 工程边界 | 部分验证 | 可作为第 08/09/11 章工程建议；需提醒平台不等于可靠性，LLM-as-judge 需抽样复核。 |
 | Prompt injection 不能只靠 prompt 解决。 | OWASP LLM Top 10；NIST AI RMF；OpenAI Function Calling docs；Evidence Note: Prompt Injection 与权限边界 | 部分验证 | 可作为生产安全章节的核心提醒；需明确 prompt 有帮助但不是充分安全边界，仍待最小实验和框架安全资料。 |
 | 多 Agent 不是默认更好，会带来成本、调试和协调复杂度。 | AutoGen docs；CrewAI docs；AgentBench；Evidence Note: 多 Agent 不是默认更好 | 部分验证 | 可作为 Planning / Orchestration 和框架生态章节的核心提醒；仍需最小对比实验验证收益是否抵消成本。 |
 | Agent 框架应按任务难点比较，不应写成“某个框架默认最好”。 | OpenAI Agents SDK docs；LangGraph docs；LlamaIndex docs；AutoGen docs；CrewAI docs；Semantic Kernel docs；Evidence Note: 框架生态定位边界 | 部分验证 | 可作为框架生态章节核心边界；仍需同一任务横向实验。 |
@@ -41,7 +42,7 @@
 2. Tool Use vs Function Calling 的边界。已完成第一轮官方文档交叉验证，待补最小实验。
 3. RAG vs Memory 的边界与工程 RAG 流程。已完成第一轮论文和框架文档交叉验证，待补最小 RAG pipeline 实验。
 4. MCP server/client/host 的职责边界。已完成第一轮官方文档交叉验证，待补最小 MCP trace 实验。
-5. Agent eval 为什么要看 trajectory。已完成第一轮 benchmark 和 eval framework 交叉验证，待补最小实验和 observability 资料。
+5. Agent eval 为什么要看 trajectory。已完成第一轮 benchmark、eval framework 和 observability 工程资料交叉验证，待补最小 trace-aware eval 实验。
 6. Prompt injection 为什么需要权限和隔离，而不是只靠提示词。已完成第一轮风险资料交叉验证，待补最小实验和框架安全资料。
 7. 长期记忆的收益与治理风险边界。已完成第一轮论文、工程文档和安全资料交叉验证，待补最小多会话记忆实验。
 8. 上下文工程与结构化输出边界。已完成第一轮官方文档交叉验证，待补输出解析和长上下文失败模式实验。

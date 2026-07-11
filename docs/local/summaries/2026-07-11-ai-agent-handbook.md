@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 16:22 Asia/Shanghai
+**Last Updated:** 2026-07-11 16:32 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -36,9 +36,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 19. Completed first evidence upgrade for RAG engineering flow using RAG paper, LlamaIndex framework overview, RAG overview, Documents / Nodes, Indexing, Retriever, and Query Engine docs.
 20. Completed first evidence upgrade for framework landscape boundaries using Semantic Kernel overview, Agent Framework, Plugins, Process Framework docs, and existing OpenAI Agents SDK, LangGraph, LlamaIndex, AutoGen, CrewAI evidence.
 21. Completed first evidence upgrade for the practice roadmap using OpenAI Cookbook recipe pages: Structured Outputs, File Search RAG, OpenAI Evals, Agents SDK trace/eval with Langfuse, Usage/Cost API, and rate limits. The conclusion remains partial verification because local project trial runs, costs, dependencies, and beginner friction are still untested.
+22. Completed first evidence upgrade for observability/trace boundaries using LangSmith Observability, LangSmith Evaluation concepts, Arize Phoenix overview, Phoenix tracing tutorial, OpenAI Cookbook, OpenAI Evals, AgentBench, and WebArena. Trace field design and offline/online eval workflow are now partially verified; local trace-aware eval and LLM-as-judge misclassification analysis remain open.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2026-openai-cookbook.md`, `docs/evidence/practice-roadmap-cookbook-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/11-practice-roadmap.md`, `docs/chapters/12-source-map.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2026-langsmith-docs.md`, `docs/sources/source-cards/2026-arize-phoenix-docs.md`, `docs/evidence/observability-trace-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/08-evaluation-observability.md`, `docs/chapters/12-source-map.md`, `docs/sources/source-card-index.md`, `docs/sources/seed-candidates.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
@@ -52,6 +53,7 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 - Run a same-task framework comparison across OpenAI Agents SDK, LangGraph, LlamaIndex, AutoGen/CrewAI, and Semantic Kernel, covering implementation effort, trace readability, permissions/human approval, state recovery, and error handling.
 - Run the practice roadmap examples locally: Structured Outputs, File Search/RAG, OpenAI Evals or a tiny eval harness, usage/cost monitoring, and rate-limit handling. Record dependency friction, cost, trace shape, failure examples, and beginner-facing instructions.
 - Run a toy Agent eval experiment comparing final-answer-only scoring with trajectory/trace-aware scoring.
+- Run LLM-as-judge and online evaluator misclassification checks with human spot review, cost tracking, and privacy/redaction constraints.
 - Run a minimal read-only MCP trace experiment to upgrade the MCP role boundary from partial verification toward `可入正文`.
 - Run a minimal RAG vs short-term vs long-term memory comparison experiment.
 - Run a minimal RAG pipeline experiment comparing chunk size, metadata, top-k, rerank/filter, citation correctness, answer faithfulness, latency, and token cost. LlamaIndex docs search did not directly verify source citation/source_nodes behavior in the latest docs.

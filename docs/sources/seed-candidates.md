@@ -39,8 +39,8 @@
 
 | 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |
 | --- | --- | --- | --- | --- |
-| Agent traces | LangSmith documentation and examples | Engineering Docs | B | 待复核 |
-| Observability | Arize Phoenix documentation | Engineering Docs | B | 待复核 |
+| Agent traces | LangSmith documentation and examples | Engineering Docs | B | 关键页面已复核；source card 已创建 |
+| Observability | Arize Phoenix documentation | Engineering Docs | B | 关键页面已复核；source card 已创建 |
 | Evals | OpenAI Evals repository | Source Code | A | 链接已复核；source card 已创建 |
 | Browser agents | Playwright / browser-use related examples | Source / Engineering | B/C | 待复核 |
 | RAG implementation | LlamaIndex examples repository | Source Code | A/B | 待复核 |
