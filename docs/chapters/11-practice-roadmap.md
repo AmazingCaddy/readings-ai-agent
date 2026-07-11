@@ -22,6 +22,8 @@
 
 OpenAI Cookbook 的具体 recipe 已于 2026-07-12 复核可访问性和页面 metadata，可作为本章项目参考；但 notebook 示例输出、Usage/Cost dashboard 原型和 Rate limits 重试代码都不等于本地已复现或生产已验证。没有真实 API run、真实账户用量和真实 429/fallback 对照时，只能把它们当作字段和流程模板。
 
+OpenAI 的 Practical Guide to Building Agents PDF 适合补充本章的入门判断：先确认任务是否真的需要复杂决策、难维护规则或大量非结构化数据，再从单 Agent 和清晰工具定义开始，最后才按复杂度引入多 Agent、guardrails 和人工介入。它是学习路线和设计边界资料，不是最新 API 字段、真实模型效果或生产安全效果证明。
+
 ## 项目 1：最小问答应用
 
 ### 学习目标
@@ -137,6 +139,7 @@ OpenAI Cookbook 的具体 recipe 已于 2026-07-12 复核可访问性和页面 m
 - 中断后可以从状态恢复。
 - 高风险结论需要标记为待验证。
 - 工具失败时不会编造结果。
+- 每个工具都要标注只读/写入、是否可逆、权限范围、财务或数据影响，以及是否需要人工确认。
 
 ### 关联章节
 
@@ -332,6 +335,7 @@ OpenAI Cookbook 的具体 recipe 已于 2026-07-12 复核可访问性和页面 m
 - Real Batch / Flex / Prompt Caching harness 已准备，可作为项目 8 的真实 API 观测入口：Prompt Caching 记录 cache read/write usage，Flex 记录成功或 resource unavailable / fallback，Batch 默认只准备 JSONL metadata，只有显式 opt-in 才提交 job。当前无 API key 时已完成本地 deterministic metadata control，验证 cache usage 字段、Flex fallback 记录和 Batch JSONL / `custom_id` 检查；它不能替代真实 API completed run。
 - OpenAI Moderation 和 Safety / Data Controls docs 可支撑项目 8 的安全和数据治理记录项：moderation signals、categories/scores、tool-calling moderation 覆盖限制、streaming moderation 限制、red-team、HITL、用户举报、`safety_identifier`、API key revoke、abuse monitoring logs、application state、endpoint retention、remote MCP third-party retention、hosted container state 和 data residency。标准库 production safety / data governance checklist + object-level data-flow audit 已验证这些字段以及 remote MCP、hosted execution、file/vector store、prompt caching、browser/computer-use 数据面可以拆成可运行检查表；Real Moderation Safety harness 已补本地 deterministic policy-signal control，覆盖 `flagged`、categories、scores、expected mismatch 和 allow / review / false-positive / false-negative 分支。它们不证明任何真实检测层、数据控制配置、对象删除、trace 脱敏或合规方案充分有效。
 - OpenAI File Search / Retrieval docs 可作为 File Search RAG 项目的 API 边界 reference：托管 `file_search` 仍需要记录 included search results、citations、filters、ranking/chunking、batch ingestion、attributes、rate limits、storage pricing、ZDR/data residency、成本、延迟和删除一致性。
+- OpenAI Practical Guide to Building Agents PDF 可支撑实践路线中的入门判断：先验证 use case 是否真的需要 Agent，先最大化单 Agent 能力，再在复杂逻辑、工具重叠或职责切分需要时考虑多 Agent；同时用 tool risk rating、guardrails 和 human intervention 控制高风险动作。它不证明真实 API / SDK 行为、guardrail 或 moderation 效果、成本、延迟或生产可靠性。
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源：2026-07-12 复核确认当前 reference servers 包括 Everything、Fetch、Filesystem、Git、Memory、Sequential Thinking 和 Time；Filesystem 可学习 allowed directories、Roots 和 ToolAnnotations，Git 可学习为什么写仓库工具需要审批和审计。但具体 server 的权限、安全假设、host UI、rollback 和 trace 脱敏仍需要逐个检查。
 - OpenAI Evals repo、OpenAI Evaluation guides 和 OpenAI Graders docs 可作为小型回归测试、dataset + registry/YAML、completion function、trace grading、dataset / eval run、tool-call grading、edge/adversarial cases、LLM-as-judge 校准和 reward hacking 风险的结构参考；标准库 grader misalignment / reward hacking audit 可作为无模型时的最小误判样本模板；Agent eval 仍应结合 trace、业务任务、human labels 和人工复核。OpenAI Evals / graders platform 正在退役，具体 dashboard/API/CLI 入口不能写成长期稳定教程。
@@ -372,6 +376,7 @@ OpenAI Cookbook 的具体 recipe 已于 2026-07-12 复核可访问性和页面 m
 - [OpenAI Function Calling / Tool Calling Documentation](../sources/source-cards/2026-openai-function-calling-docs.md)
 - [OpenAI File Search and Retrieval Documentation](../sources/source-cards/2026-openai-file-search-retrieval-docs.md)
 - [OpenAI Cookbook](../sources/source-cards/2026-openai-cookbook.md)
+- [OpenAI Practical Guide to Building Agents](../sources/source-cards/2025-openai-practical-guide-building-agents.md)
 - [OpenAI Production, Cost, Latency and Rate Limit Documentation](../sources/source-cards/2026-openai-production-cost-latency-docs.md)
 - [OpenAI Batch, Flex Processing and Prompt Caching Documentation](../sources/source-cards/2026-openai-batch-flex-prompt-caching-docs.md)
 - [Real Batch / Flex / Prompt Caching Validation](../experiments/real-batch-flex-caching-validation/README.md)
