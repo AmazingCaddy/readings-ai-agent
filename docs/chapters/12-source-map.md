@@ -96,6 +96,7 @@ Trace-aware eval 标准库模拟实验已经完成，可帮助理解为什么 fi
 先读手册 09，再看 OWASP LLM Top 10、NIST AI RMF、OpenAI Agents SDK guardrails / human-in-the-loop / tracing 文档，以及 Semantic Kernel Plugins 文档。
 
 阅读重点是 prompt injection、权限、工具审批、guardrails 的执行位置、数据边界、审计、人工确认、降级、敏感 trace 控制和风险管理。
+Prompt injection / tool permission 标准库模拟实验已经完成，可帮助理解 prompt-only 风险、只读/写工具分离、写工具审批拒绝和 trace 脱敏；真实模型、框架 guardrail 和 HITL approval 仍需后续实验。
 
 ### 框架生态与实践
 
@@ -148,6 +149,7 @@ Trace-aware eval 标准库模拟实验已经完成，可帮助理解为什么 fi
 - Tool Use / Function Calling 已补标准库参数校验/重试模拟实验，可支撑“应用层校验、错误回传、有限重试”的流程说明；仍缺真实 Function Calling / Responses API 实验和其他框架术语对照。
 - RAG 已补标准库最小 pipeline / citation 模拟实验，可支撑 chunk metadata、retrieval trace、chunk-level citations 和 `grounded=false` 拒答流程；仍缺真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank 对比、citation correctness 和成本/延迟实验。
 - Evaluation / Observability 已补标准库 trace-aware eval 模拟实验，可支撑 final-answer-only 与 trace-aware scoring 的差异说明；仍缺真实 Agent trace、LLM-as-judge 误判分析、人工复核和回归集工程案例。
+- Production / Security 已补标准库 prompt injection / tool permission 模拟实验，可支撑 prompt-only 风险、写工具阻断和 trace 脱敏流程；仍缺真实模型 / 框架 guardrail / HITL approval 实验、跨框架权限对比和审计脱敏策略。
 - Cookbook 的具体 recipe 已能支撑实践项目路线，但仍需要本地试跑来确认依赖、成本、失败样例和初学者阻塞点。
 - Claim ledger 规定只有状态为“可入正文”的结论，才能写成确定性表述；其他结论需要保守表达。
 
@@ -159,6 +161,7 @@ Trace-aware eval 标准库模拟实验已经完成，可帮助理解为什么 fi
 - 真实 RAG stack 中，chunk size、top-k、rerank/filter 和 LLM synthesis 如何影响 citation correctness、faithfulness、latency 和 token cost？
 - 真实 Agent trace 中，规则评分、LLM-as-judge 和人工评审如何组合，才能发现过程错误并控制误判率？
 - 真实 Agent trace-aware eval 应如何覆盖 RAG、工具调用、权限确认、成本/延迟和人工反馈？
+- 真实模型 / 框架 guardrail 下，prompt injection 防护如何测量误报、漏报、审批负担、延迟和敏感 trace 泄露？
 - 是否需要为每个框架增加最小示例 source card？
 - 是否需要补充面向初学者的视频课程或书籍？
 - 哪些论文结论已经被现代框架吸收，哪些仍主要是研究方向？

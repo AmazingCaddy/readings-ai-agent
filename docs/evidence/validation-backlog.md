@@ -45,8 +45,8 @@
 - 通用 benchmark 对真实业务 agent 的代表性有多强？已确认公开 benchmark 可学习评测思想，但业务系统仍需 custom/private eval。
 - Trace 字段如何设计，才能同时支持调试、审计、回归和隐私控制？已完成 LangSmith/Phoenix/Cookbook 第一轮验证，标准库 trace-aware eval 已覆盖 tool call/result/error/approval/final response；候选字段仍包括输入、输出、中间步骤、工具调用、检索、错误、延迟、token/cost、反馈、版本、metadata；仍需真实 RAG/tool traces 和隐私脱敏策略。
 - LLM-as-judge、online evaluator 和自动化规则的误判率、成本与抽样人工复核比例如何设计？
-- Prompt injection 防护有哪些已验证的工程方法？已确认 OWASP/NIST 支撑风险边界，OpenAI Agents SDK/Semantic Kernel/Responses API 支撑 guardrails、approval、require_approval、sensitive trace 控制等工程边界；仍需补最小攻击/失败实验。
-- 安全 regression set 应该如何覆盖外部文档注入、工具参数越权、敏感信息泄露和 excessive agency？
+- Prompt injection 防护有哪些已验证的工程方法？已确认 OWASP/NIST 支撑风险边界，OpenAI Agents SDK/Semantic Kernel/Responses API 支撑 guardrails、approval、require_approval、sensitive trace 控制等工程边界；标准库最小攻击实验已验证 prompt-only 风险和 policy-enforced 写工具阻断/trace 脱敏流程；仍需真实模型 / 框架 guardrail 误报漏报实验。
+- 安全 regression set 应该如何覆盖外部文档注入、工具参数越权、敏感信息泄露和 excessive agency？标准库实验已覆盖外部文档注入、写工具越权和 trace 假 secret 泄露；仍需扩展到更多真实工具和多样攻击样例。
 - Guardrails、HITL approval、tool approval 和 sensitive trace 配置在不同框架中的覆盖范围有什么差异？OpenAI Agents SDK 已确认 tool guardrails 不覆盖所有工具类型，仍需横向比较。
 
 ## 实践路线

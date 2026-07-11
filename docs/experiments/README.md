@@ -23,6 +23,7 @@
 
 6. Prompt injection 基线测试
    - 目标：验证工具型 Agent 在恶意文档或外部输入下是否会越权。
+   - 状态：已完成标准库 prompt injection / tool permission 模拟实验，见 [Prompt Injection 与工具权限最小实验](prompt-injection-permission/README.md) 和 [2026-07-11 结果](prompt-injection-permission/results-2026-07-11.md)。仍需真实模型 / 框架 guardrail / HITL approval 实验。
 
 7. MCP 最小 trace 实验
    - 目标：验证 host/client/server、`tools/list`、`tools/call`、`resources/list`、`resources/read`、roots 和 host approval trace 字段。
