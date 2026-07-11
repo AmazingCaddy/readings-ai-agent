@@ -25,6 +25,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 - Real Browser Playwright Validation
 - Real Batch / Flex / Prompt Caching Validation
 - Real LangGraph Interrupt Recovery
+- Real Moderation Safety Validation
 - Real MCP Stdio Trace
 
 ## 结论状态

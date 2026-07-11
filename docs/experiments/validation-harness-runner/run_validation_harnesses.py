@@ -49,6 +49,10 @@ HARNESSES = [
         "real_langgraph_interrupt_recovery",
         ROOT / "docs/experiments/real-langgraph-interrupt-recovery/real_langgraph_interrupt_recovery.py",
     ),
+    Harness(
+        "real_moderation_safety",
+        ROOT / "docs/experiments/real-moderation-safety-validation/real_moderation_safety_validation.py",
+    ),
     Harness("mcp_stdio_trace", ROOT / "docs/experiments/real-mcp-stdio-trace/mcp_stdio_trace.py"),
 ]
 
@@ -82,6 +86,7 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "trace_zip_member_count",
         "checkpointer",
         "persistent_restart_tested",
+        "mismatch_count",
         "leaked_secret_in_trace",
     ]:
         if key in payload:

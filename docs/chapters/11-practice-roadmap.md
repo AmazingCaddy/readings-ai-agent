@@ -324,7 +324,7 @@
 - 当前已复核的 Cookbook recipe 可以支撑以下练习方向：Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits。
 - OpenAI Production / Cost / Latency / Rate Limit docs 和 Batch / Flex / Prompt Caching docs 可支撑项目 8 的生产质量记录项：token/usage、request/token rate limits、rate-limit headers、重试、平均/P95 latency、model choice、budget threshold、Batch status、Flex fallback、`cached_tokens` / `cache_write_tokens` 和降级策略。它们不证明任何具体优化默认有效，真实 cost / latency / throughput / quality tradeoff 仍需练习项目实测。
 - Real Batch / Flex / Prompt Caching harness 已准备，可作为项目 8 的真实 API 观测入口：Prompt Caching 记录 cache read/write usage，Flex 记录成功或 resource unavailable / fallback，Batch 默认只准备 JSONL metadata，只有显式 opt-in 才提交 job。当前无 API key 只验证 skip 分支，不能替代真实 completed run。
-- OpenAI Moderation 和 Safety / Data Controls docs 可支撑项目 8 的安全和数据治理记录项：moderation signals、categories/scores、tool-calling moderation 覆盖限制、streaming moderation 限制、red-team、HITL、用户举报、`safety_identifier`、API key revoke、abuse monitoring logs、application state、endpoint retention、remote MCP third-party retention、hosted container state 和 data residency。标准库 production safety / data governance checklist audit 已验证这些字段可以拆成可运行检查表；它不证明任何检测层、数据控制配置或合规方案充分有效。
+- OpenAI Moderation 和 Safety / Data Controls docs 可支撑项目 8 的安全和数据治理记录项：moderation signals、categories/scores、tool-calling moderation 覆盖限制、streaming moderation 限制、red-team、HITL、用户举报、`safety_identifier`、API key revoke、abuse monitoring logs、application state、endpoint retention、remote MCP third-party retention、hosted container state 和 data residency。标准库 production safety / data governance checklist audit 已验证这些字段可以拆成可运行检查表；Real Moderation Safety harness 已准备真实 Moderation API 观测入口，当前无 API key 只验证 skip 分支。它们不证明任何检测层、数据控制配置或合规方案充分有效。
 - OpenAI File Search / Retrieval docs 可作为 File Search RAG 项目的 API 边界 reference：托管 `file_search` 仍需要记录 included search results、citations、filters、ranking/chunking、成本、延迟和删除一致性。
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源，但具体 server 的权限和安全假设需要逐个检查。
@@ -340,7 +340,7 @@
 - 这些 Cookbook recipe 真实本地试跑时的依赖、成本、失败样例和初学者阻塞点是什么？
 - 真实项目 8 中，token、usage、rate-limit headers、retry、平均/P95 latency、cost estimate、budget threshold、Batch/Flex/Prompt Caching 字段和降级策略应该如何记录成初学者能复用的模板？真实 Batch/Flex/Caching harness 已准备，completed run 仍待做。
 - 真实项目 8 中，API key、`safety_identifier`、abuse logs、application state、对象删除、third-party tool data flow 和 data retention controls 应如何记录成初学者能复用的模板？
-- 真实项目 8 中，moderation-only、policy-enforced 和 HITL 如何对照记录误报、漏报、延迟、成本和人工复核负担？
+- 真实项目 8 中，moderation-only、policy-enforced 和 HITL 如何对照记录误报、漏报、延迟、成本和人工复核负担？Real Moderation Safety harness 已准备入口，completed run 仍待做。
 - 每个项目应使用哪个最小技术栈，才能降低环境成本？
 - 如何为项目 7 设计可自动运行的轻量 eval harness，并把 trace grading、dataset / eval run、grader 误判统计和人工复核串起来？标准库 grader audit 已给出最小误判样本，真实 judge / 平台对照仍待做。
 - MCP 实验应选择哪个只读 server 作为最小示例？
@@ -370,6 +370,7 @@
 - [OpenAI Moderation Documentation](../sources/source-cards/2026-openai-moderation-docs.md)
 - [OpenAI Safety Best Practices and Data Controls Documentation](../sources/source-cards/2026-openai-safety-data-controls-docs.md)
 - [Production Safety / Data Governance Checklist](../experiments/production-safety-data-governance/README.md)
+- [Real Moderation Safety Validation](../experiments/real-moderation-safety-validation/README.md)
 - [MCP servers repo](../sources/source-cards/2026-mcp-servers-repo.md)
 - [OpenAI Evals Repository](../sources/source-cards/2026-openai-evals-repo.md)
 - [OpenAI Evaluation Guides](../sources/source-cards/2026-openai-evaluation-guides.md)

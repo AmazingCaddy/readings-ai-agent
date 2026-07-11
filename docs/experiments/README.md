@@ -110,6 +110,10 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
     - 目标：为 Batch API、Flex processing 和 Prompt Caching 准备真实 API 观测入口，记录 `custom_id` / batch status、Flex fallback、`cached_tokens` / `cache_write_tokens`、latency 和 rate-limit headers。
     - 状态：真实 harness 已准备，见 [Real Batch / Flex / Prompt Caching Validation](real-batch-flex-caching-validation/README.md) 和 [2026-07-11 结果](real-batch-flex-caching-validation/results-2026-07-11.md)。当前无 API key，运行结果为 `skipped`；Batch job 提交默认 opt-in，尚未产生真实 completed run，不能证明 Batch / Flex / Prompt Caching 的收益、命中率、成本、延迟、质量取舍或生产可靠性。
 
+23. Real Moderation safety validation 实验
+    - 目标：为 OpenAI Moderation API 准备真实安全信号观测入口，记录 `flagged`、categories、scores、latency、expected mismatch、tool arguments / tool output 覆盖和 policy decision。
+    - 状态：真实 harness 已准备，见 [Real Moderation Safety Validation](real-moderation-safety-validation/README.md) 和 [2026-07-11 结果](real-moderation-safety-validation/results-2026-07-11.md)。当前无 API key，运行结果为 `skipped`；尚未产生真实 moderation completed run，不能证明误报、漏报、阈值策略、人工复核流程或生产安全效果。
+
 ## 实验记录要求
 
 - 明确假设。
