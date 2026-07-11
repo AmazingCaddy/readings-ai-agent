@@ -19,9 +19,9 @@
 | Tree of Thoughts 支持搜索式推理路径，但不等同于生产 Agent 编排框架。 | Tree of Thoughts paper；LangGraph docs；Evidence Note: Agent 架构模式边界 | 部分验证 | 可作为规划/搜索思路解释；不能写成复杂任务默认应使用 ToT。 |
 | 复杂 Agent 架构不是默认更可靠，需用 trace、成本、失败原因和实验比较。 | ReAct；Reflexion；Tree of Thoughts；LangGraph docs；Agent/Workflow evidence；Multi-agent evidence；Workflow / Hybrid / ReAct-like 对比实验结果；Planner / Executor 对比实验结果；Reflection / Retry 实验结果 | 部分验证 | 可作为第 04/07 章核心提醒；标准库实验已覆盖固定 workflow、hybrid、ReAct-like tool loop、planner/executor 和 reflection/retry 的工具调用/失败原因/重规划/错误反思比较，仍需真实框架对比实验。 |
 | Planner / Executor 需要可执行计划、证据校验和失败反馈；一次性计划可能传播遗漏。 | Agent 架构模式 evidence；Planner / Executor 对比实验结果；LangGraph docs | 部分验证 | 可作为第 04/07 章工程边界；标准库实验已验证 missing evidence 与 plan revision 流程，真实模型 / 框架 / repo issue 仍待验证。 |
-| LLM 应用的输入输出不只是字符串，Responses 等 API 会把 message roles、content items、tool calls、refusals 和 structured outputs 建模为结构化对象。 | OpenAI Text Generation docs；OpenAI Responses API docs；Evidence Note: 上下文工程与结构化输出边界 | 部分验证 | 可作为第 02 章基础解释；其他供应商字段名可能不同。 |
-| 结构化输出能提升解析和 schema 校验可靠性，但不保证事实正确。 | OpenAI Structured Outputs docs；OpenAI Responses API docs；OpenAI Function Calling docs；Evidence Note: 上下文工程与结构化输出边界 | 部分验证 | 可写入第 02/03 章；需提醒 schema adherence 不等于业务正确。 |
-| 长上下文不能替代上下文治理。 | OpenAI Text Generation docs；OpenAI Responses API docs；RAG / Memory evidence；Prompt Injection evidence；Evidence Note: 上下文工程与结构化输出边界 | 部分验证 | 可作为上下文工程核心提醒；仍需最小实验验证失败模式和成本。 |
+| LLM 应用的输入输出不只是字符串，Responses 等 API 会把 message roles、content items、tool calls、refusals 和 structured outputs 建模为结构化对象。 | OpenAI Text Generation docs；OpenAI Responses API docs；Evidence Note: 上下文工程与结构化输出边界；上下文治理与结构化输出实验结果 | 部分验证 | 可作为第 02 章基础解释；标准库实验支持结构化解析和校验字段设计，其他供应商字段名可能不同。 |
+| 结构化输出能提升解析和 schema 校验可靠性，但不保证事实正确。 | OpenAI Structured Outputs docs；OpenAI Responses API docs；OpenAI Function Calling docs；Evidence Note: 上下文工程与结构化输出边界；上下文治理与结构化输出实验结果 | 部分验证 | 可写入第 02/03 章；标准库实验显示 schema valid 仍可能有业务/权限/citation 语义错误；仍需真实 API / 模型实验。 |
+| 长上下文不能替代上下文治理。 | OpenAI Text Generation docs；OpenAI Responses API docs；RAG / Memory evidence；Prompt Injection evidence；Evidence Note: 上下文工程与结构化输出边界；上下文治理与结构化输出实验结果 | 部分验证 | 可作为上下文工程核心提醒；标准库实验验证旧资料和外部注入的最小失败模式，仍需真实长上下文 / RAG / 摘要 / 成本对比实验。 |
 | Tool use 可以让模型连接外部 API、搜索、计算器等工具。 | Toolformer paper；OpenAI Function Calling docs；OpenAI Responses API docs | 部分验证 | 可入门解释，但要区分研究训练方案和 API schema 机制。 |
 | Function calling 本身不执行工具，执行发生在应用程序或工具运行时。 | OpenAI Function Calling docs；OpenAI Responses API docs；Evidence Note: Tool Use 与 Function Calling 边界；Tool Calling 参数校验与重试实验结果 | 部分验证 | 可作为工程边界写入正文；标准库模拟实验已验证参数校验、错误回传和有限重试流程，仍需真实模型 / API 实验。 |
 | RAG 的动机包括外部知识访问、知识更新和 provenance。 | RAG paper；LlamaIndex docs；Evidence Note: RAG 与 Memory 边界；Evidence Note: RAG 工程流程边界 | 部分验证 | 可作为 RAG 章节基础动机；现代工程流程需结合框架文档和实验。 |
@@ -48,7 +48,7 @@
 5. Agent eval 为什么要看 trajectory。已完成第一轮 benchmark、eval framework、observability 工程资料交叉验证和标准库 trace-aware eval 模拟，待补真实 Agent trace、LLM-as-judge 误判分析和人工复核实验。
 6. Prompt injection 为什么需要权限和隔离，而不是只靠提示词。已完成第一轮风险资料、框架工程资料交叉验证和标准库攻击/权限模拟，待补真实模型 / 框架 guardrail / HITL approval 误报漏报实验。
 7. 长期记忆的收益与治理风险边界。已完成第一轮论文、工程文档、安全资料交叉验证和标准库写入守门模拟，待补真实多会话 Agent / memory framework 收益与污染实验。
-8. 上下文工程与结构化输出边界。已完成第一轮官方文档交叉验证，待补输出解析和长上下文失败模式实验。
+8. 上下文工程与结构化输出边界。已完成第一轮官方文档交叉验证和标准库输出解析 / 上下文治理模拟实验，待补真实 Responses API / Structured Outputs、真实长上下文、RAG / 摘要 / 成本对比和跨模型稳定性实验。
 9. Agent 架构模式边界。已完成 ReAct、Reflexion、Tree of Thoughts、LangGraph、已有 workflow/multi-agent evidence 第一轮交叉验证、标准库 workflow / ReAct-like、planner/executor 和 reflection/retry 对比，待补真实框架实验。
 10. 框架生态定位边界。已完成主要框架文档第一轮交叉验证，待补同一任务横向实验。
 11. 实践项目路线。已完成 OpenAI Cookbook 具体 recipe 第一轮验证，待补本地最小项目试跑、成本估算和初学者跟练体验验证。

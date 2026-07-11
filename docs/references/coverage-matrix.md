@@ -14,7 +14,7 @@
 | 主题 | 入门资料 | 高可信 reference | 工程/源码 reference | 当前状态 | 缺口 |
 | --- | --- | --- | --- | --- | --- |
 | AI Agent 定义与边界 | 待补 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper | Workflow / Hybrid / ReAct-like 对比实验 | 关键段落已精读；标准库 workflow-agent 对比已完成；部分验证 | 需要真实模型 / Agent framework / repo issue 实验和更多框架横向资料 |
-| LLM 与上下文工程 | OpenAI Text Generation docs；OpenAI Responses API docs | OpenAI Text Generation docs；OpenAI Structured Outputs docs；OpenAI Responses API docs | OpenAI cookbook 候选 | 关键段落已精读；部分验证 | 需要输出解析、结构化输出和长上下文失败模式最小实验 |
+| LLM 与上下文工程 | OpenAI Text Generation docs；OpenAI Responses API docs | OpenAI Text Generation docs；OpenAI Structured Outputs docs；OpenAI Responses API docs | 上下文治理与结构化输出实验；OpenAI cookbook 候选 | 关键段落已精读；标准库输出解析 / 上下文治理模拟实验已完成；部分验证 | 需要真实 Responses API / Structured Outputs、长上下文 / RAG / 摘要 / 成本对比和跨模型稳定性实验 |
 | Tool Use / Function Calling | OpenAI function calling docs | Toolformer paper；OpenAI function calling docs；OpenAI Responses API docs | Tool calling 参数校验模拟实验；OpenAI cookbook 候选 | 关键段落已精读；标准库模拟实验已完成；部分验证 | 需要真实模型 / API 实验、SDK 文档和其他框架术语对照 |
 | Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；OpenAI Agents SDK docs；LangGraph docs | Workflow / Hybrid / ReAct-like 对比实验；Planner / Executor 对比实验；Reflection / Retry 实验；LangGraph examples 候选 | 关键论文摘要和框架段落已精读；标准库 workflow / ReAct-like、planner/executor 和 reflection/retry 对比已完成；部分验证 | 需要真实模型和真实框架对比实验 |
 | MCP | MCP official docs | MCP official docs；MCP 2025-11-25 spec；MCP Security Best Practices | MCP servers repo；MCP 最小 trace 模拟实验 | spec / 安全 / 授权关键段落已精读；标准库模拟实验已完成；部分验证 | 需要真实 MCP SDK / host trace、权限确认、URL mode / OAuth、恶意 resource/prompt 实验和 host 实现差异对比 |
@@ -30,7 +30,7 @@
 ## 当前优先级
 
 1. 补齐基础定义和术语边界的高可信 references。Agent/Workflow 已完成标准库 workflow / hybrid / ReAct-like 对比，仍需真实模型 / 框架 / repo issue 实验。
-2. 精读并提取已经链接复核的论文、官方文档和安全资料。LLM / Context、Tool Use / Function Calling、MCP、RAG / Memory、Production / Security 已完成第一轮。
+2. 精读并提取已经链接复核的论文、官方文档和安全资料。LLM / Context、Tool Use / Function Calling、MCP、RAG / Memory、Production / Security 已完成第一轮；LLM / Context 已补标准库输出解析 / 上下文治理模拟实验，仍需真实 API 和长上下文成本实验。
 3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。MCP 已完成官方 spec、安全、授权第一轮和标准库 trace 模拟，仍需真实 MCP SDK / host trace 与权限实验；Tool Use 已完成参数校验/重试标准库模拟，仍需真实模型 / API 实验和框架对照；Eval 已完成 OpenAI Evals README、Cookbook、LangSmith、Phoenix 和标准库 trace-aware eval 第一轮，仍需真实 Agent trace、自动评分误判和人工复核实验。
 4. 为 Memory / 知识库治理补充真实多会话 Agent / memory framework 实验。标准库写入守门模拟已完成，仍需扩展隐私、权限、查看、编辑和删除工程资料。
 5. 为 Production / Security 补充真实模型 / 框架 guardrail / HITL approval 实验、跨框架权限对比和审计脱敏策略。标准库 prompt injection / tool permission 模拟已完成。

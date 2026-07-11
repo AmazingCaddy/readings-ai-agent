@@ -44,6 +44,10 @@
     - 目标：验证多角色协作是否抵消通信、重复读取和冲突处理成本。
     - 状态：已完成标准库多 Agent / Flow 控制模拟实验，见 [多 Agent 与 Flow 控制对比实验](multi-agent-comparison/README.md) 和 [2026-07-11 结果](multi-agent-comparison/results-2026-07-11.md)。仍需真实模型 / AutoGen / CrewAI / LangGraph 横向实验。
 
+11. 上下文治理与结构化输出实验
+    - 目标：比较 free text、JSON mode、schema validation 和 naive/governed context 的失败模式。
+    - 状态：已完成标准库上下文治理与结构化输出模拟实验，见 [上下文治理与结构化输出实验](context-structured-output/README.md) 和 [2026-07-11 结果](context-structured-output/results-2026-07-11.md)。仍需真实 Responses API / Structured Outputs / 长上下文成本实验。
+
 ## 实验记录要求
 
 - 明确假设。

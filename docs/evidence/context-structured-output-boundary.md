@@ -13,6 +13,7 @@ LLM 应用不能把模型调用理解成“输入一段 prompt，取回一段文
 - Source 5：[Evidence Note: Tool Use 与 Function Calling 边界](tool-use-function-calling-boundary.md)
 - Source 6：[Evidence Note: RAG 与 Memory 边界](rag-memory-boundary.md)
 - Source 7：[Evidence Note: Prompt Injection 与权限边界](prompt-injection-permission-boundary.md)
+- Source 8：[上下文治理与结构化输出实验结果](../experiments/context-structured-output/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -24,16 +25,18 @@ LLM 应用不能把模型调用理解成“输入一段 prompt，取回一段文
 - 一致点：Structured Outputs 文档明确 structured output 仍可能包含 mistakes；这支持“结构化输出提升可解析性，不等于保证事实正确”的边界。
 - 一致点：Text Generation 文档说明 context window 是模型一次请求可处理的数据上限；Responses API reference 提供 `context_management` 和 `truncation` 参数。这支持“上下文窗口是限制和治理对象，不是可靠性保证”的表述。
 - 关联点：RAG/Memory evidence 说明外部知识检索、状态和长期记忆治理各有边界；Prompt Injection evidence 说明外部内容不能只靠 prompt 处理。这些资料共同支持“长上下文不能替代检索、摘要、状态、权限和评测”。
+- 本地实验：标准库输出解析实验中，`free_text` 只有 1/3 语义有效，`json_mode` 有 2/3 schema valid 但只有 1/3 semantic valid，`schema_validated` 全部 schema valid 但仍有 1 个语义错误。这支持“结构化输出提升解析和 schema adherence，不等于业务正确”。
+- 本地实验：标准库上下文治理实验中，`naive_long_context` 同时使用旧政策和外部注入，输出自动退款和导出 token；`governed_context` 选择最新可信政策并隔离外部 attachment。这支持“长上下文不能替代来源、时效、信任和权限治理”。
 
 ## 实验验证
 
 - 是否需要实验：是
 - 实验设计：用同一批输入构建三个最小实验：自由文本输出、JSON mode、Structured Outputs；再构建一个包含长历史、冲突资料和外部文档注入的上下文实验。记录解析失败、schema 不匹配、refusal、语义错误、过时信息使用、外部指令误遵循和 token 成本。
-- 结果：待执行
+- 结果：已完成标准库最小实验。实验覆盖 free text、JSON-mode-like valid JSON、schema validation、schema-valid semantic error、旧资料使用和外部文档注入隔离。尚未覆盖真实 Responses API / Structured Outputs、refusal、token/latency/cost、跨模型差异或真实外部攻击样本。
 
 ## 结论状态
 
-- 部分验证：OpenAI 官方文档直接支撑输入/输出结构、message roles、Structured Outputs、JSON mode 和 context window 的 API 边界；RAG/Memory 和 Prompt Injection evidence 支撑“长上下文不能替代治理”的交叉边界。仍缺本地最小实验验证失败模式。
+- 部分验证：OpenAI 官方文档直接支撑输入/输出结构、message roles、Structured Outputs、JSON mode 和 context window 的 API 边界；RAG/Memory 和 Prompt Injection evidence 支撑“长上下文不能替代治理”的交叉边界；标准库实验验证了 schema-valid semantic error 和 naive long context 的旧资料/外部指令风险。仍缺真实 API / 模型 / 长上下文成本实验。
 
 ## 可进入章节
 
