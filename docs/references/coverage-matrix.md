@@ -15,6 +15,8 @@
 
 Claim Boundary Consistency Audit 会检查 coverage matrix 的主题行是否保留缺口字段，以及 `可入正文` 状态摘要是否仍带有部分验证 / 待验证 / 不证明等边界措辞。这个 audit 只防文本边界回归，不验证外部事实或真实系统表现。
 
+Source Reference Integrity Audit 会检查 source-card index、source card 元数据、章节 References 和本地 Markdown links 的结构完整性。它能防漏索引和本地断链，但不联网验证外部 URL 或资料事实。
+
 ## 主题覆盖
 
 | 主题 | 入门资料 | 高可信 reference | 工程/源码 reference | 当前状态 | 缺口 |

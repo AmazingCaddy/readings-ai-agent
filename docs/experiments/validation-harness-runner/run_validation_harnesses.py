@@ -103,6 +103,10 @@ HARNESSES = [
         "claim_boundary_consistency",
         ROOT / "docs/experiments/claim-boundary-consistency-audit/claim_boundary_consistency_audit.py",
     ),
+    Harness(
+        "source_reference_integrity",
+        ROOT / "docs/experiments/source-reference-integrity-audit/source_reference_integrity_audit.py",
+    ),
 ]
 
 
@@ -272,7 +276,9 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "leaked_secret_in_trace",
         "control",
         "real_fact_validation",
+        "external_url_checked",
         "check_count",
+        "source_card_count",
         "failed_checks",
     ]:
         if key in payload:

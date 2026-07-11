@@ -2,6 +2,8 @@
 
 本索引用来汇总每张 source card 的状态。source card 只有完成精读和交叉验证后，才能把关键结论迁移进章节正文。
 
+Source Reference Integrity Audit 会检查本索引与 `source-cards/` 目录的双向一致性、source card 基础元数据和章节结构、章节 References 以及本地 Markdown 链接是否断开。该 audit 只验证本地引用结构，不验证外部 URL 当前可访问或资料内容正确。
+
 ## 已创建卡片
 
 | Source card | 主题 | 类型 | 可信度 | 当前验证状态 | 下一步 |
