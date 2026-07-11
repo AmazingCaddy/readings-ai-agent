@@ -60,6 +60,7 @@
 | 长期记忆 | MemoryBank: Enhancing Large Language Models with Long-Term Memory | Paper | A | 元数据已复核；source card 已创建 |
 | 上下文与记忆管理 | MemGPT: Towards LLMs as Operating Systems | Paper | A | 元数据已复核；source card 已创建 |
 | Stateful agents | Letta documentation | Framework Docs | B | 链接已复核；source card 已创建 |
+| Long-term memory operations | Mem0 documentation and paper | Framework Docs / Source / Paper metadata | B | docs、`llms.txt`、GitHub repo、README 和 arXiv metadata 已复核；source card 已创建；真实 API/SDK 行为和效果收益待实验 |
 | Agent memory 平台 | Zep documentation | Framework Docs | B | 链接已复核；source card 已创建 |
 | 短期/长期记忆边界 | LangGraph memory documentation | Framework Docs | A | 链接已复核；source card 已创建 |
 
