@@ -8,7 +8,7 @@
 - 主题：Text Generation / Prompt Engineering / Message Roles / Context Window
 - 适合阶段：入门 / 工程实践
 - 可信度等级：A
-- 是否已验证：text generation 页面已复核；上下文工程边界已完成第一轮交叉验证；上下文治理与结构化输出标准库实验、上下文策略对比实验已完成
+- 是否已验证：text generation 页面已复核；输入输出不是简单字符串的窄边界可入正文；上下文治理与结构化输出标准库实验、上下文策略对比实验已完成；真实运行行为仍部分验证
 
 ## 一句话总结
 
@@ -26,7 +26,7 @@ OpenAI Text Generation 文档适合解释模型输入、输出数组、message r
 ## 支撑证据
 
 - 2026-07-11 抓取 `https://developers.openai.com/api/docs/guides/text.md` 成功；页面包含 output array、Structured Outputs、message roles、instructions、developer/user priority、tests/evals 和 context window 等关键段落。
-- 已与 Responses API reference、Structured Outputs docs、Tool Calling docs、RAG/Memory evidence 和 Prompt Injection evidence 交叉验证上下文工程边界。
+- 已与 Responses API reference、Structured Outputs docs、Tool Calling docs、RAG/Memory evidence 和 Prompt Injection evidence 交叉验证上下文工程边界；output array、message roles、instructions 和 context window 支撑“LLM 应用输入输出不只是字符串”的窄结论。
 
 ## 可能的问题
 
@@ -47,4 +47,4 @@ OpenAI Text Generation 文档适合解释模型输入、输出数组、message r
 ## 是否进入正文
 
 - 结论：进入
-- 原因：第 02 章需要官方文档支撑模型输入输出、角色优先级、上下文窗口和测试/eval 边界。
+- 原因：第 02 章需要官方文档支撑模型输入输出、角色优先级、上下文窗口和测试/eval 边界；可与 Responses API reference 共同支撑“输入输出不是简单字符串函数”的确定性工程边界。

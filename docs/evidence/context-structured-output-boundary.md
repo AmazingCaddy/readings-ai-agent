@@ -38,9 +38,10 @@ LLM 应用不能把模型调用理解成“输入一段 prompt，取回一段文
 
 ## 结论状态
 
+- 可入正文：窄结论“LLM 应用的输入输出不只是字符串；Responses 等 API 会把 message roles、content items、tool calls、refusals、structured outputs 和 context management 建模为结构化对象”由 OpenAI Text Generation 文档和 Responses API reference 直接支撑，并被 Tool Calling / Structured Outputs 资料交叉支撑。
 - 可入正文：窄结论“Structured Outputs / schema validation 提升可解析性和 schema adherence，但不保证事实正确、权限正确或业务正确”由 OpenAI Structured Outputs 文档直接支撑，并被 Responses API / Function Calling source cards 和标准库 schema-valid semantic error 实验交叉支撑。
-- 部分验证：真实 Responses API / Structured Outputs 的 refusal、retry、跨模型稳定性、真实长上下文成本和真实外部攻击样本仍待验证；“长上下文不能替代治理”已有交叉支撑和标准库失败模式，但仍需真实长上下文 / RAG / 摘要对比实验。
+- 部分验证：真实 Responses API / Structured Outputs 的 refusal、retry、跨模型稳定性、真实长上下文成本和真实外部攻击样本仍待验证；其他供应商和框架可能有不同字段名；“长上下文不能替代治理”已有交叉支撑和标准库失败模式，但仍需真实长上下文 / RAG / 摘要对比实验。
 
 ## 可进入章节
 
-- 是。可以写成：结构化输出让系统更容易解析、校验和执行模型结果，但它不是事实正确性的保证；长上下文能容纳更多信息，但系统仍需要选择、压缩、标注、检索、状态管理、权限隔离和评测。
+- 是。可以写成：现代 LLM 应用不是简单的字符串输入输出函数；系统需要按 API 结构处理角色、内容项、工具调用、拒绝、结构化输出和上下文管理。结构化输出让系统更容易解析、校验和执行模型结果，但它不是事实正确性的保证；长上下文能容纳更多信息，但系统仍需要选择、压缩、标注、检索、状态管理、权限隔离和评测。
