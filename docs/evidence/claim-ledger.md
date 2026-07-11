@@ -22,7 +22,7 @@
 | 结构化输出能提升解析和 schema 校验可靠性，但不保证事实正确。 | OpenAI Structured Outputs docs；OpenAI Responses API docs；OpenAI Function Calling docs；Evidence Note: 上下文工程与结构化输出边界 | 部分验证 | 可写入第 02/03 章；需提醒 schema adherence 不等于业务正确。 |
 | 长上下文不能替代上下文治理。 | OpenAI Text Generation docs；OpenAI Responses API docs；RAG / Memory evidence；Prompt Injection evidence；Evidence Note: 上下文工程与结构化输出边界 | 部分验证 | 可作为上下文工程核心提醒；仍需最小实验验证失败模式和成本。 |
 | Tool use 可以让模型连接外部 API、搜索、计算器等工具。 | Toolformer paper；OpenAI Function Calling docs；OpenAI Responses API docs | 部分验证 | 可入门解释，但要区分研究训练方案和 API schema 机制。 |
-| Function calling 本身不执行工具，执行发生在应用程序或工具运行时。 | OpenAI Function Calling docs；OpenAI Responses API docs；Evidence Note: Tool Use 与 Function Calling 边界 | 部分验证 | 可作为工程边界写入正文；仍建议用最小实验验证错误回传和重试流程。 |
+| Function calling 本身不执行工具，执行发生在应用程序或工具运行时。 | OpenAI Function Calling docs；OpenAI Responses API docs；Evidence Note: Tool Use 与 Function Calling 边界；Tool Calling 参数校验与重试实验结果 | 部分验证 | 可作为工程边界写入正文；标准库模拟实验已验证参数校验、错误回传和有限重试流程，仍需真实模型 / API 实验。 |
 | RAG 的动机包括外部知识访问、知识更新和 provenance。 | RAG paper；LlamaIndex docs；Evidence Note: RAG 与 Memory 边界；Evidence Note: RAG 工程流程边界 | 部分验证 | 可作为 RAG 章节基础动机；现代工程流程需结合框架文档和实验。 |
 | 工程 RAG 是 loading、indexing、storing、querying、evaluation 等阶段组成的 pipeline，不是单个 prompt 技巧。 | LlamaIndex docs；RAG paper；Evidence Note: RAG 工程流程边界 | 部分验证 | 可作为第 06 章工程流程解释；chunking、retrieval 和 rerank 策略仍需实验。 |
 | Memory 不等于 RAG，也不等于把完整历史塞进 prompt。 | RAG paper；MemGPT；MemoryBank；LangGraph memory docs；Evidence Note: RAG 与 Memory 边界 | 部分验证 | 可作为术语边界写入正文；需提醒 RAG paper 中的 non-parametric memory 不是 Agent 长期记忆治理。 |
@@ -41,7 +41,7 @@
 ## 待升级为可入正文的优先结论
 
 1. Agent vs Workflow 的边界。已完成第一轮 OpenAI Agents SDK、LangGraph 和 ReAct 交叉验证，待补最小对比实验。
-2. Tool Use vs Function Calling 的边界。已完成第一轮官方文档交叉验证，待补最小实验。
+2. Tool Use vs Function Calling 的边界。已完成第一轮官方文档交叉验证和标准库参数校验/重试模拟，待补真实模型 / API 实验和其他框架术语对照。
 3. RAG vs Memory 的边界与工程 RAG 流程。已完成第一轮论文和框架文档交叉验证，待补最小 RAG pipeline 实验。
 4. MCP server/client/host 的职责边界与安全/授权/权限边界。已完成第一轮官方文档交叉验证和标准库最小 trace 模拟，待补真实 MCP SDK / host 的 trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验。
 5. Agent eval 为什么要看 trajectory。已完成第一轮 benchmark、eval framework 和 observability 工程资料交叉验证，待补最小 trace-aware eval 实验。

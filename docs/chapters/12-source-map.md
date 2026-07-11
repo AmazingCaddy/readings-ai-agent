@@ -63,6 +63,7 @@
 先读手册 02 和 03，再看 Responses API、Function Calling docs 和 Toolformer。
 
 阅读重点是区分：模型生成工具调用参数，应用程序执行工具，工具结果再回到模型上下文。
+Tool Calling 参数校验与重试的标准库模拟实验已经完成，可帮助理解应用层校验、错误回传、有限重试和 trace 字段；真实模型 / API 稳定性仍需后续实验。
 
 ### MCP 与工具生态
 
@@ -142,6 +143,7 @@
 - Source card index 明确记录了每张卡片的可信度、验证状态和下一步。
 - Coverage matrix 显示 Evaluation / Observability 已补 LangSmith 和 Phoenix 第一轮工程资料，但仍缺本地 trace-aware eval 实验；Production / Security 已补 OpenAI Agents SDK 和 Semantic Kernel 第一轮工程资料，但仍需要最小 prompt injection / tool permission 实验、跨框架权限对比和审计脱敏策略。
 - MCP official docs 已补 2025-11-25 tools/resources/prompts/authorization/roots/elicitation/sampling spec 和 Security Best Practices 第一轮精读；MCP 最小 trace 标准库模拟实验已完成，可支撑最小审计字段和职责流设计；仍缺真实 MCP SDK / host trace、权限确认、URL mode / OAuth、恶意 resource/prompt 和 host 实现差异实验。
+- Tool Use / Function Calling 已补标准库参数校验/重试模拟实验，可支撑“应用层校验、错误回传、有限重试”的流程说明；仍缺真实 Function Calling / Responses API 实验和其他框架术语对照。
 - Cookbook 的具体 recipe 已能支撑实践项目路线，但仍需要本地试跑来确认依赖、成本、失败样例和初学者阻塞点。
 - Claim ledger 规定只有状态为“可入正文”的结论，才能写成确定性表述；其他结论需要保守表达。
 
@@ -149,6 +151,7 @@
 
 - prompt injection / tool permission 的最小攻击实验应该如何覆盖 guardrails、HITL approval、敏感 trace 和审计字段？
 - 真实 MCP SDK / host trace 实验应如何覆盖 `tools/list`、`tools/call`、`resources/list`、`resources/read`、用户拒绝、roots、URL mode elicitation 和敏感日志脱敏？
+- 真实 Function Calling / Responses API 实验中，模型能否稳定根据 tool validation error 修正参数？不同框架如何表示 tool execution error？
 - trace-aware eval 的本地实验应如何设计，才能比较最终答案评分和过程评分的差异？
 - 是否需要为每个框架增加最小示例 source card？
 - 是否需要补充面向初学者的视频课程或书籍？

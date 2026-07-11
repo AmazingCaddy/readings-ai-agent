@@ -19,7 +19,7 @@
 | [AutoGen docs](source-cards/2026-autogen-docs.md) | Multi-agent / Framework | Framework Docs | A | 链接已复核；待精读 | 提取多 Agent 协作抽象和适用边界 |
 | [CrewAI docs](source-cards/2026-crewai-docs.md) | Multi-agent / Framework | Framework Docs | B | 链接已复核；待精读 | 和 AutoGen / LangGraph 横向比较 |
 | [MCP servers repo](source-cards/2026-mcp-servers-repo.md) | MCP / Examples | Source Code | A | 链接已复核；待精读 | 提取 MCP server 示例结构和权限假设 |
-| [OpenAI Function Calling docs](source-cards/2026-openai-function-calling-docs.md) | Tool Use / Function Calling | Official Docs | A | 链接已复核；待精读 | 提取 tool schema、参数生成和工具结果回传机制 |
+| [OpenAI Function Calling docs](source-cards/2026-openai-function-calling-docs.md) | Tool Use / Function Calling | Official Docs | A | 关键段落已精读；参数校验/重试模拟实验已完成；部分验证 | 补真实模型 / API 实验和其他框架术语对照 |
 | [MCP official docs](source-cards/2026-mcp-official-docs.md) | MCP | Official Docs / Spec | A | 关键 spec / security / authorization 页面已精读；部分验证 | 运行最小 MCP trace、权限确认和恶意 resource/prompt 实验 |
 | [LangGraph docs](source-cards/2026-langgraph-docs.md) | Agent 架构 / Orchestration | Framework Docs | A | 链接已复核；待精读 | 提取 state graph、workflow 和持久化相关抽象 |
 | [LangGraph memory docs](source-cards/2026-langgraph-memory-docs.md) | Short-term / Long-term memory | Framework Docs | A | 链接已复核；待精读 | 提取短期/长期记忆边界和状态管理实践 |

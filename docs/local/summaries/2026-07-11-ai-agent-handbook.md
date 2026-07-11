@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 17:36 Asia/Shanghai
+**Last Updated:** 2026-07-11 17:45 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -40,14 +40,15 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 23. Completed first evidence upgrade for production tool permission and audit boundaries using OpenAI Agents SDK guardrails/tools/tracing/human-in-the-loop docs, OpenAI Responses API permission fields, Semantic Kernel plugin approval notes, OWASP, NIST, and observability evidence. Guardrails/HITL/sensitive trace controls are partially verified; local prompt-injection/tool-permission experiments and cross-framework comparisons remain open.
 24. Completed first evidence upgrade for MCP security, authorization, permissions, roots, elicitation, sampling, and tools/resources/prompts spec details using MCP 2025-11-25 specification pages and MCP Security Best Practices. The MCP chapter now distinguishes model-controlled tools, application-driven resources, user-controlled prompts, optional transport-level authorization, token audience validation, token passthrough prohibition, roots not being a sandbox, and HITL/privacy requirements for elicitation/sampling. Status remains partial verification pending local MCP trace and host implementation experiments.
 25. Completed a standard-library MCP-style trace simulation under `docs/experiments/mcp-trace/`. The script covers `roots/list`, `tools/list`, read-only `tools/call`, rejected write-tool approval, `resources/list`, ordinary resource review, and malicious resource review. Results support minimal trace field design (`actor`, `method`, `decision`, details, timestamp) but do not validate real MCP SDK, real host UI, OAuth, URL mode elicitation, or token redaction behavior.
+26. Completed a standard-library Tool Calling validation/retry simulation under `docs/experiments/tool-calling-validation/`. The script uses a fake model to produce an invalid `get_weather(unit=kelvin)` call, has the application reject it with a validation error, then accepts a corrected `unit=celsius` call and records final response. This supports application-side validation/error feedback/retry flow but does not validate real model/API stability.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2026-mcp-official-docs.md`, `docs/evidence/mcp-role-boundary.md`, `docs/evidence/mcp-security-permission-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/05-mcp.md`, `docs/chapters/12-source-map.md`, `docs/experiments/README.md`, `docs/experiments/mcp-trace/README.md`, `docs/experiments/mcp-trace/mcp_trace_simulation.py`, `docs/experiments/mcp-trace/results-2026-07-11.md`, `docs/sources/source-card-index.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/chapters/03-tool-use.md`, `docs/chapters/12-source-map.md`, `docs/evidence/tool-use-function-calling-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/tool-calling-validation/README.md`, `docs/experiments/tool-calling-validation/tool_calling_validation.py`, `docs/experiments/tool-calling-validation/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/2026-openai-function-calling-docs.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
 ## Open Questions
-- Run the minimal tool-calling experiment to upgrade the Function Calling boundary from partial verification toward `可入正文`.
+- Run a real Function Calling / Responses API experiment to upgrade the Function Calling boundary beyond the current standard-library simulation; compare whether a real model can repair validation errors and how tool execution errors are represented.
 - Run a workflow vs workflow-agent hybrid vs agent loop comparison experiment for the same task.
 - Run a fixed workflow vs ReAct tool loop vs planner/executor vs reflection retry experiment for the same issue-analysis task.
 - Run an output parsing experiment comparing free text, JSON mode, and Structured Outputs; include refusal and semantic-error handling.

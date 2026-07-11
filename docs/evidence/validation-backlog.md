@@ -18,9 +18,9 @@
 ## 工具调用
 
 - Function calling、tool use、structured output 在不同框架中的术语差异是什么？OpenAI API 层和 Structured Outputs 边界已完成第一轮验证，仍需补其他框架术语对照。
-- 工具参数校验和重试的最佳实践有哪些官方或工程 references？
+- 工具参数校验和重试的最佳实践有哪些官方或工程 references？已完成标准库模拟实验，支持“应用层校验、错误回传、有限重试”的流程；仍需真实 API / SDK 资料和框架默认行为对照。
 - 工具调用权限应该如何设计确认边界？
-- 最小 tool-calling 实验中，参数校验失败后模型能否稳定修正？
+- 真实 tool-calling 实验中，参数校验失败后模型能否稳定修正？标准库 fake model 已复现流程，但不能证明真实模型稳定性。
 
 ## MCP
 
