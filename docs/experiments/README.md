@@ -46,7 +46,7 @@
 
 11. 上下文治理与结构化输出实验
     - 目标：比较 free text、JSON mode、schema validation 和 naive/governed context 的失败模式。
-    - 状态：已完成标准库上下文治理与结构化输出模拟实验，见 [上下文治理与结构化输出实验](context-structured-output/README.md) 和 [2026-07-11 结果](context-structured-output/results-2026-07-11.md)。仍需真实 Responses API / Structured Outputs / 长上下文成本实验。
+    - 状态：已完成标准库上下文治理与结构化输出模拟实验，见 [上下文治理与结构化输出实验](context-structured-output/README.md) 和 [2026-07-11 结果](context-structured-output/results-2026-07-11.md)；真实 API harness 已准备，见 [Real Structured Outputs / JSON Mode 对比实验](real-structured-output-validation/README.md)。仍需配置 API key 后记录真实 Responses API / Structured Outputs / 长上下文成本结果。
 
 12. 实践路线 smoke harness
     - 目标：验证初学者实践项目是否能拆成结构化输出、工具校验、RAG 引用、eval cases 和成本闸门等可运行验收单元。
