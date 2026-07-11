@@ -214,7 +214,7 @@
 
 成本和延迟记录也不要只写“看起来还行”。最小记录表应包含：input tokens、output tokens、request count、model、rate-limit headers、retry count、平均 latency、P95 latency、cost estimate、budget threshold、超预算后的停止或降级行为。先把这些字段记录下来，再讨论减少输出 token、换模型、streaming、Batch、Flex、Prompt Caching 或异步处理是否真的改善了你的任务。
 
-数据治理记录也要具体。最小记录表应包含：是否产生服务端 application state、对象如何删除、trace 是否脱敏、是否发送 `safety_identifier`、API key 如何存放和撤销、remote MCP / web search / hosted tool / browser 工具会看到哪些数据，以及这些第三方服务的数据保留政策由谁负责。
+数据治理记录也要具体。最小记录表应包含：是否产生服务端 application state、对象如何删除、trace 是否脱敏、是否发送 `safety_identifier`、API key 如何存放和撤销、remote MCP / web search / hosted tool / browser 工具会看到哪些数据，以及这些第三方服务的数据保留政策由谁负责。标准库 production safety / data governance checklist audit 可以作为无 API key 时的字段模板；真实项目仍要用平台配置、应用日志和 runbook 复核。
 
 ### 关联章节
 
@@ -320,7 +320,7 @@
 - “OpenAI Cookbook 的具体 recipe 可以作为初学者实践项目参考，但不能替代 API 文档、生产安全指南或本地实验”已升级为可入正文。正文应引用具体 recipe，而不是笼统引用整个站点；Cookbook 是示例集合，不是 API 规范或生产保证。
 - 当前已复核的 Cookbook recipe 可以支撑以下练习方向：Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits。
 - OpenAI Production / Cost / Latency / Rate Limit docs 和 Batch / Flex / Prompt Caching docs 可支撑项目 8 的生产质量记录项：token/usage、request/token rate limits、rate-limit headers、重试、平均/P95 latency、model choice、budget threshold、Batch status、Flex fallback、`cached_tokens` / `cache_write_tokens` 和降级策略。它们不证明任何具体优化默认有效，真实 cost / latency / throughput / quality tradeoff 仍需练习项目实测。
-- OpenAI Moderation 和 Safety / Data Controls docs 可支撑项目 8 的安全和数据治理记录项：moderation signals、categories/scores、tool-calling moderation 覆盖限制、streaming moderation 限制、red-team、HITL、用户举报、`safety_identifier`、API key revoke、abuse monitoring logs、application state、endpoint retention、remote MCP third-party retention、hosted container state 和 data residency。它们不证明任何检测层、数据控制配置或合规方案充分有效。
+- OpenAI Moderation 和 Safety / Data Controls docs 可支撑项目 8 的安全和数据治理记录项：moderation signals、categories/scores、tool-calling moderation 覆盖限制、streaming moderation 限制、red-team、HITL、用户举报、`safety_identifier`、API key revoke、abuse monitoring logs、application state、endpoint retention、remote MCP third-party retention、hosted container state 和 data residency。标准库 production safety / data governance checklist audit 已验证这些字段可以拆成可运行检查表；它不证明任何检测层、数据控制配置或合规方案充分有效。
 - OpenAI File Search / Retrieval docs 可作为 File Search RAG 项目的 API 边界 reference：托管 `file_search` 仍需要记录 included search results、citations、filters、ranking/chunking、成本、延迟和删除一致性。
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源，但具体 server 的权限和安全假设需要逐个检查。
@@ -363,6 +363,7 @@
 - [OpenAI Batch, Flex Processing and Prompt Caching Documentation](../sources/source-cards/2026-openai-batch-flex-prompt-caching-docs.md)
 - [OpenAI Moderation Documentation](../sources/source-cards/2026-openai-moderation-docs.md)
 - [OpenAI Safety Best Practices and Data Controls Documentation](../sources/source-cards/2026-openai-safety-data-controls-docs.md)
+- [Production Safety / Data Governance Checklist](../experiments/production-safety-data-governance/README.md)
 - [MCP servers repo](../sources/source-cards/2026-mcp-servers-repo.md)
 - [OpenAI Evals Repository](../sources/source-cards/2026-openai-evals-repo.md)
 - [OpenAI Evaluation Guides](../sources/source-cards/2026-openai-evaluation-guides.md)

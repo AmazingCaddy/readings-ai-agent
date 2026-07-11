@@ -235,6 +235,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - OpenAI Production / Cost / Latency / Rate Limit 文档已补充生产成本和性能治理资料，可支撑“成本、延迟和限流是生产质量的一部分”的工程边界：上线前应记录 token/usage、request/token rate limits、rate-limit headers、重试、平均/P95 延迟、模型选择、预算阈值和降级策略。真实 API / 应用中的成本、延迟、吞吐、质量取舍和具体优化效果仍需实验。
 - OpenAI Batch / Flex / Prompt Caching 文档已补充异步批处理、低优先级处理和缓存前缀资料，可支撑“优化手段需要按 workload 选择并记录观测字段”的边界：Batch 应记录 status、error file、`custom_id` 映射和过期；Flex 应记录 timeout、`429 Resource Unavailable` 和 fallback；Prompt Caching 应记录 `cached_tokens`、`cache_write_tokens` 和 cache miss 原因。
 - OpenAI Moderation 和 Safety / Data Controls 文档已补充安全和数据治理资料，可支撑 moderation signals、generated/input/output moderation、tool-calling moderation 覆盖限制、streaming moderation 限制、red-team、HITL、输入/输出约束、用户举报、`safety_identifier`、API key revoke、abuse monitoring logs、application state、ZDR/MAM、endpoint retention、remote MCP third-party retention、hosted container state 和 data residency 的工程边界。它们不证明任意检测层、数据控制配置或合规方案充分有效。
+- 本地标准库 production safety / data governance checklist audit 显示，生产安全检查表应把 moderation policy signal、tool-calling 覆盖边界、streaming score 时机、`safety_identifier`、API key revoke、abuse logs / application state、remote MCP 第三方数据流、hosted tool state、data residency 和 red-team / 用户举报回流拆成可审计字段。该实验支撑 checklist 字段设计，但不证明真实 moderation、HITL、数据保留、data residency 或合规方案有效。
 - Tool use、MCP、Memory 和 Eval 章节中的风险边界都与生产化相关，生产章节应作为前面章节的收束，而不是独立安全清单。
 
 ## 待验证问题
@@ -249,6 +250,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - 成本和延迟应该如何纳入 Agent eval？已补 OpenAI 官方 production / rate limit / cost / latency / token counting / Batch / Flex / Prompt Caching 边界，仍需真实 API / Cookbook 练习记录 token、usage、rate-limit headers、retry、平均/P95 latency、cost estimate、budget threshold、cache read/write 和失败样例。
 - OpenAI API、remote MCP、hosted tools、files/vector stores 和 browser/computer-use 工具的数据保留边界如何落到项目 checklist？已补 OpenAI Safety / Data Controls 官方边界，仍需真实项目按 endpoint、对象删除、third-party server、trace 字段和 project data controls 复核。
 - Moderation-only、policy-enforced 和 HITL 组合在真实 prompt injection / tool calling 场景中的误报、漏报、延迟和人工复核负担如何测量？已补 OpenAI Moderation 官方边界，仍需真实 harness 记录。
+- Safety / data governance checklist 在真实 project 中哪些字段能从平台配置直接确认，哪些需要应用日志、runbook 或人工审计证明？标准库 checklist audit 已完成，仍需真实账户 / 项目验证。
 
 ## 本章小结
 
@@ -294,4 +296,5 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - [审批状态恢复与幂等性实验结果](../experiments/approval-state-recovery/results-2026-07-11.md)
 - [Real Prompt Injection 与工具权限实验](../experiments/real-prompt-injection-permission/README.md)
 - [Real Agentic Security Regression Set](../experiments/real-agentic-security-regression-set/README.md)
+- [Production Safety / Data Governance Checklist](../experiments/production-safety-data-governance/README.md)
 - [References 覆盖矩阵](../references/coverage-matrix.md)
