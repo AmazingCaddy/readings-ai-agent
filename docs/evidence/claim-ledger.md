@@ -40,19 +40,21 @@
 | MCP 是连接工具和上下文能力的协议，不是 Agent 框架本身。 | MCP official docs；MCP servers repo；Evidence Note: MCP Host / Client / Server 职责边界；MCP 最小 Trace 实验结果；MCP stdio JSON-RPC harness | 可入正文 | 可作为第 05 章确定性职责边界写入正文；官方文档直接支撑 context exchange protocol、host/client/server 职责和 scope 边界。真实 MCP SDK / host 的权限呈现、approval UI、OAuth 和恶意 resource/prompt 行为仍属部分验证。 |
 | MCP 标准化了工具、资源、提示、授权、roots、elicitation 和 sampling 等协议能力，但安全不是协议接入后自动完成。 | MCP official docs；MCP Security Best Practices；Evidence Note: MCP 安全、授权与权限边界；Production permission evidence；MCP 最小 Trace 实验结果；MCP stdio JSON-RPC harness | 可入正文 | 可作为第 05/09 章确定性安全边界写入正文；authorization 是 optional，roots 不等于 sandbox，token passthrough 被禁止，高风险 tools/resources/prompts 仍需要最小权限、用户确认、输入输出校验、audience 校验、sandbox/隔离、审计和 trace 脱敏。真实 MCP SDK / host 权限 UI、OAuth / URL mode 和 host 实现差异仍属部分验证。 |
 
-## 待升级为可入正文的优先结论
+## 已可入正文的窄结论与仍待验证范围
 
-1. Agent vs Workflow / 自治程度的边界。窄结论“Agent 和 Workflow 是控制权与编排方式的连续谱，自治程度不是能力等级”已升级为可入正文；真实模型 / 框架 / repo issue、成本、权限和工具错误恢复仍待实际运行验证。
-2. Tool Use vs Function Calling 的边界。窄结论“Function Calling 本身不执行工具”已升级为可入正文；参数校验失败后真实模型能否稳定修正、真实 API 错误恢复和其他框架术语对照仍待实际运行验证。
-3. RAG vs Memory 的术语边界已升级为可入正文；工程 RAG 流程仍已完成第一轮论文/框架文档交叉验证、标准库 RAG / Memory 对比实验、最小 RAG pipeline / citation 模拟和真实 LLM citation harness 准备，待实际运行真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank、真实 memory framework 和成本/延迟实验。
-4. MCP server/client/host 的职责边界已升级为可入正文；MCP 安全/授权/权限窄边界也已升级为可入正文：authorization 是 optional，roots 不等于 sandbox，token passthrough 被禁止，高风险能力仍需最小权限、用户确认、audience 校验、隔离、审计和 trace 脱敏。待补真实 MCP SDK / host 的 trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验。
-5. Agent eval 为什么要看 trajectory。窄结论“对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全”已升级为可入正文；trajectory 自动评分、LLM-as-judge 误判分析、真实 Agent trace 和人工复核流程仍待实际运行验证。
-6. Prompt injection 为什么需要权限和隔离，而不是只靠提示词。窄结论“prompt 不是充分安全边界，外部内容和高风险工具必须由系统层权限/审批/审计控制”已升级为可入正文；真实模型 / 框架 guardrail / HITL approval 误报漏报、成本和延迟仍待实际运行验证。
-7. 长期记忆的收益与治理风险边界。窄结论“长期记忆可能有价值，但不能默认自动写入或默认提升表现，必须配套写入守门、生命周期权限、跨用户隔离和 trace 脱敏”已升级为可入正文；待补真实多会话 Agent / memory framework 收益、污染、权限和用户控制实验。
-8. 上下文工程与结构化输出边界。窄结论“LLM 应用输入输出不只是字符串”“schema valid 不等于事实/权限/业务正确”和“长上下文不能替代上下文治理”已升级为可入正文；待实际运行真实 Responses API / Structured Outputs、真实长上下文、RAG / 摘要 / 成本对比和跨模型稳定性实验。
-9. Agent 架构模式边界。已完成 ReAct、Reflexion、Tree of Thoughts、LangGraph、已有 workflow/multi-agent evidence 第一轮交叉验证、标准库 workflow / ReAct-like、planner/executor 和 reflection/retry 对比，待补真实框架实验。
-10. 框架生态定位边界。已完成主要框架文档第一轮交叉验证、框架能力交叉表和标准库 rubric smoke test，待补真实同一任务横向实验。
-11. 实践项目路线。已完成 OpenAI Cookbook 具体 recipe 第一轮验证和标准库 smoke harness，待补真实 Cookbook / API 最小项目试跑、成本估算和初学者跟练体验验证。
+当前台账中的结论都已达到 `可入正文` 门槛，但这只表示对应的窄口径概念、协议或工程边界可以写成确定性表述。每条结论仍必须保留正文写法中的限制条件；真实质量、成本、延迟、稳定性、框架优劣、模型收益和生产可靠性仍需实验或更强 references 支撑。
+
+1. Agent vs Workflow / 自治程度的边界。窄结论“Agent 和 Workflow 是控制权与编排方式的连续谱，自治程度不是能力等级”可入正文；真实模型 / 框架 / repo issue、成本、权限和工具错误恢复仍待实际运行验证。
+2. Tool Use vs Function Calling 的边界。窄结论“tool use 可以连接外部工具能力”和“Function Calling 本身不执行工具”可入正文；参数校验失败后真实模型能否稳定修正、真实 API 错误恢复和其他框架术语对照仍待实际运行验证。
+3. RAG vs Memory 与 RAG 工程边界。RAG 动机、RAG / Memory 术语边界和工程 RAG pipeline 的窄结论可入正文；真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank、真实 memory framework、citation correctness、成本和延迟仍待验证。
+4. MCP 职责与安全边界。MCP server/client/host 职责、authorization optional、roots 不是 sandbox、token passthrough 禁止和高风险能力需要权限/隔离/审计/trace 脱敏的窄结论可入正文；真实 MCP SDK / host trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验仍待验证。
+5. Agent eval / observability 边界。公开 benchmark 的用途边界、trajectory / trace 进入 eval 和 trace 字段用途设计的窄结论可入正文；trajectory 自动评分、LLM-as-judge 误判分析、真实 Agent trace、平台字段映射和人工复核流程仍待验证。
+6. Prompt injection / tool permission 边界。prompt 不是充分安全边界，外部内容和高风险工具必须由系统层权限、审批、审计和恢复状态控制的窄结论可入正文；真实模型 / 框架 guardrail / HITL approval 误报漏报、成本和延迟仍待验证。
+7. 长期记忆治理边界。长期记忆可能有价值但不能默认自动写入或默认提升表现，必须配套写入守门、生命周期权限、跨用户隔离和 trace 脱敏的窄结论可入正文；真实多会话 Agent / memory framework 收益、污染、权限和用户控制实验仍待验证。
+8. 上下文工程与结构化输出边界。LLM 应用输入输出不只是字符串、schema valid 不等于事实/权限/业务正确、长上下文不能替代上下文治理的窄结论可入正文；真实 Responses API / Structured Outputs、refusal、真实长上下文、RAG / 摘要 / 成本对比和跨模型稳定性仍待验证。
+9. Agent 架构模式边界。ReAct、Reflection、Tree of Thoughts、Planner / Executor、复杂架构和多 Agent 的机制边界可入正文；真实框架任务中的收益、成本、延迟、权限和错误恢复仍待验证。
+10. 框架生态定位边界。框架应按任务难点和能力边界比较，不能写成某个框架默认最好的窄结论可入正文；真实同一任务横向实验、observability / permission 对比和维护成本仍待验证。
+11. 实践项目路线。Cookbook recipe 可作为初学者实践参考但不能替代 API 文档、生产安全指南或本地实验的窄结论可入正文；真实 Cookbook / API 最小项目试跑、成本估算和初学者跟练体验仍待验证。
 
 ## 升级流程
 

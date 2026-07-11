@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 20:31 CST
+**Last Updated:** 2026-07-11 20:45 CST
 **Status:** In Progress
 
 ## Objective
@@ -78,9 +78,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 61. Promoted the narrow Reflection / Reflexion mechanism boundary claim to `可入正文`: Reflection can use task feedback and reflective text for later attempts, but it must be tied to verifiable feedback, scope control, and trace; unverified reflections should not be written directly into long-term memory or future strategy. Updated agent architecture evidence, claim ledger, coverage matrix, validation backlog, chapters 04/07/12, source-card index, and Reflexion source card. Real model/critic behavior, long-term episodic memory, stable quality gains, token/latency/cost, and human review remain partially verified or pending.
 62. Promoted narrow ReAct and Tree of Thoughts mechanism boundary claims to `可入正文`: ReAct is an interleaving of reasoning traces and task-specific actions; Tree of Thoughts supports search over intermediate thoughts and reasoning paths, but is not the same thing as a production Agent orchestration framework. Updated agent architecture evidence, claim ledger, coverage matrix, validation backlog, chapters 04/07/12, source-card index, and ReAct / Tree of Thoughts source cards. Real task benefits, cost, latency, tool-error recovery, and whether either pattern outperforms simpler workflows remain partially verified or pending.
 63. Promoted the remaining narrow Tool Use and RAG motivation claims to `可入正文`: tool use can connect models to external tools such as APIs, search, calculators, calendars, and databases through application/runtime mechanisms; RAG's basic motivations include external knowledge access, knowledge updates, and provenance/source traceability. Updated tool-use and RAG evidence, claim ledger, coverage matrix, validation backlog, chapters 03/06/12, source-card index, and Toolformer / RAG paper source cards. Real API behavior, tool reliability, RAG stack quality, citation correctness, latency, cost, and cross-framework terminology remain partially verified or pending.
+64. Clarified the validation-status wording after all current claim-ledger rows reached `可入正文`. The claim ledger now says these are narrow concept/protocol/engineering-boundary claims, while real quality, cost, latency, stability, framework superiority, and production reliability still require experiments. The coverage matrix now explicitly distinguishes narrow `可入正文` status from broad real-world partial verification, and the source-map chapter summary no longer says most materials still need deep reading.
 
 ## Technical Context
-- Files modified recently: `docs/evidence/tool-use-function-calling-boundary.md`, `docs/evidence/rag-engineering-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/references/coverage-matrix.md`, `docs/evidence/validation-backlog.md`, `docs/chapters/03-tool-use.md`, `docs/chapters/06-rag-memory.md`, `docs/chapters/12-source-map.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/2023-toolformer-paper.md`, `docs/sources/source-cards/2020-rag-paper.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/evidence/claim-ledger.md`, `docs/references/coverage-matrix.md`, `docs/chapters/12-source-map.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
