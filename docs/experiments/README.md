@@ -28,6 +28,10 @@
    - 目标：验证 host/client/server、`tools/list`、`tools/call`、`resources/list`、`resources/read`、roots 和 host approval trace 字段。
    - 状态：已完成标准库模拟实验，见 [MCP 最小 Trace 实验](mcp-trace/README.md) 和 [2026-07-11 结果](mcp-trace/results-2026-07-11.md)。仍需真实 MCP SDK / host 实验。
 
+8. Trace-aware eval 最小实验
+   - 目标：比较 final-answer-only scoring 和 trace-aware scoring 能发现的错误类型差异。
+   - 状态：已完成标准库模拟实验，见 [Trace-Aware Eval 最小实验](trace-aware-eval/README.md) 和 [2026-07-11 结果](trace-aware-eval/results-2026-07-11.md)。仍需真实 Agent trace、LLM-as-judge 误判和人工复核实验。
+
 ## 实验记录要求
 
 - 明确假设。

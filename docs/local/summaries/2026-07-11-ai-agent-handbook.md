@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 17:55 Asia/Shanghai
+**Last Updated:** 2026-07-11 18:03 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -42,9 +42,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 25. Completed a standard-library MCP-style trace simulation under `docs/experiments/mcp-trace/`. The script covers `roots/list`, `tools/list`, read-only `tools/call`, rejected write-tool approval, `resources/list`, ordinary resource review, and malicious resource review. Results support minimal trace field design (`actor`, `method`, `decision`, details, timestamp) but do not validate real MCP SDK, real host UI, OAuth, URL mode elicitation, or token redaction behavior.
 26. Completed a standard-library Tool Calling validation/retry simulation under `docs/experiments/tool-calling-validation/`. The script uses a fake model to produce an invalid `get_weather(unit=kelvin)` call, has the application reject it with a validation error, then accepts a corrected `unit=celsius` call and records final response. This supports application-side validation/error feedback/retry flow but does not validate real model/API stability.
 27. Completed a standard-library RAG pipeline / citation simulation under `docs/experiments/rag-pipeline/`. The script loads three source-card notes, creates chunks with `chunk_id/source_id/title/url`, performs keyword retrieval, synthesizes answers with citations, and returns `grounded=false` for unsupported questions. This supports minimal RAG trace/citation design but does not validate embedding/vector-store/rerank/LLM synthesis quality, latency, token cost, or citation correctness in a real stack.
+28. Completed a standard-library trace-aware eval simulation under `docs/experiments/trace-aware-eval/`. The script compares final-answer-only scoring with trace-aware scoring on three toy refund runs. Final-only passes 3/3, while trace-aware passes 1/3 and catches side-effect tool execution without approval plus unrecovered tool errors. This supports the handbook's process-eval boundary but does not validate real Agent traces, LLM-as-judge, human review, or observability platform behavior.
 
 ## Technical Context
-- Files modified recently: `docs/chapters/06-rag-memory.md`, `docs/chapters/12-source-map.md`, `docs/evidence/rag-engineering-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/rag-pipeline/README.md`, `docs/experiments/rag-pipeline/rag_pipeline_simulation.py`, `docs/experiments/rag-pipeline/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/2026-llamaindex-docs.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/chapters/08-evaluation-observability.md`, `docs/chapters/12-source-map.md`, `docs/evidence/agent-eval-trajectory-boundary.md`, `docs/evidence/observability-trace-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/trace-aware-eval/README.md`, `docs/experiments/trace-aware-eval/trace_aware_eval.py`, `docs/experiments/trace-aware-eval/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
@@ -57,7 +58,7 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 - Run a single-agent vs planner/executor vs multi-agent comparison experiment for the same research/writing task.
 - Run a same-task framework comparison across OpenAI Agents SDK, LangGraph, LlamaIndex, AutoGen/CrewAI, and Semantic Kernel, covering implementation effort, trace readability, permissions/human approval, state recovery, and error handling.
 - Run the practice roadmap examples locally: Structured Outputs, File Search/RAG, OpenAI Evals or a tiny eval harness, usage/cost monitoring, and rate-limit handling. Record dependency friction, cost, trace shape, failure examples, and beginner-facing instructions.
-- Run a toy Agent eval experiment comparing final-answer-only scoring with trajectory/trace-aware scoring.
+- Run a real Agent eval experiment beyond the current standard-library simulation, comparing final-answer-only scoring with trajectory/trace-aware scoring on actual generated traces.
 - Run LLM-as-judge and online evaluator misclassification checks with human spot review, cost tracking, and privacy/redaction constraints.
 - Run a real MCP SDK / host trace experiment to upgrade the MCP role boundary beyond the current standard-library simulation, covering `tools/list`, `tools/call`, `resources/list`, `resources/read`, host/client/server trace fields, and how the host presents tool inputs/results.
 - Run a real MCP security experiment covering user rejection, roots behavior, URL mode elicitation, malicious resource/prompt content, token/log redaction, and a simulated write tool requiring confirmation.

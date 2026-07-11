@@ -28,8 +28,8 @@
 | Memory 不等于 RAG，也不等于把完整历史塞进 prompt。 | RAG paper；MemGPT；MemoryBank；LangGraph memory docs；Evidence Note: RAG 与 Memory 边界 | 部分验证 | 可作为术语边界写入正文；需提醒 RAG paper 中的 non-parametric memory 不是 Agent 长期记忆治理。 |
 | 长期记忆可能提升持续交互体验，但也会引入错误写入、过时和隐私风险。 | MemoryBank；MemGPT；Generative Agents；Letta docs；Zep docs；OWASP LLM Top 10；NIST AI RMF；Evidence Note: 长期记忆治理与风险边界 | 部分验证 | 可作为长期记忆章节的保守边界；不应写成“长期记忆总是提升 Agent”。 |
 | Benchmark 不能直接代表真实业务 Agent 质量。 | AgentBench；WebArena；OpenAI Evals repo；Evidence Note: Agent Eval 与 Trajectory 边界 | 部分验证 | 可作为 Eval 章节核心提醒；公开 benchmark 可学习评测思想，但业务系统仍需 custom/private eval 和 trace。 |
-| Agent eval 不应只看最终答案，还应检查关键 trajectory / trace。 | AgentBench；WebArena；OpenAI Evals repo；LangSmith docs；Phoenix docs；OpenAI Cookbook；Evidence Note: Agent Eval 与 Trajectory 边界；Evidence Note: Observability 与 Trace 工程边界 | 部分验证 | 可写入 Eval 章节；trace 字段和 offline/online eval 工作流已有工程资料支撑，但自动评分方法仍待任务级验证。 |
-| Agent trace 应记录输入、输出、中间步骤、工具调用、检索、错误、延迟/成本、反馈和版本信息，才能支撑调试、审计、回归和在线/离线评测。 | LangSmith docs；Phoenix docs；OpenAI Cookbook；OpenAI Evals repo；Evidence Note: Observability 与 Trace 工程边界 | 部分验证 | 可作为第 08/09/11 章工程建议；需提醒平台不等于可靠性，LLM-as-judge 需抽样复核。 |
+| Agent eval 不应只看最终答案，还应检查关键 trajectory / trace。 | AgentBench；WebArena；OpenAI Evals repo；LangSmith docs；Phoenix docs；OpenAI Cookbook；Evidence Note: Agent Eval 与 Trajectory 边界；Evidence Note: Observability 与 Trace 工程边界；Trace-Aware Eval 最小实验结果 | 部分验证 | 可写入 Eval 章节；标准库实验已验证 final-only 会漏掉无审批副作用工具和工具错误未恢复，真实 Agent trace / LLM-as-judge / 人工复核仍待验证。 |
+| Agent trace 应记录输入、输出、中间步骤、工具调用、检索、错误、延迟/成本、反馈和版本信息，才能支撑调试、审计、回归和在线/离线评测。 | LangSmith docs；Phoenix docs；OpenAI Cookbook；OpenAI Evals repo；Evidence Note: Observability 与 Trace 工程边界；Trace-Aware Eval 最小实验结果 | 部分验证 | 可作为第 08/09/11 章工程建议；标准库实验覆盖 tool call/result/error/approval/final response，仍需真实 RAG traces、latency/token/cost 和平台对照。 |
 | Prompt injection 不能只靠 prompt 解决。 | OWASP LLM Top 10；NIST AI RMF；OpenAI Function Calling docs；OpenAI Agents SDK docs；Semantic Kernel docs；Evidence Note: Prompt Injection 与权限边界；Evidence Note: 工具权限、人工确认与审计边界 | 部分验证 | 可作为生产安全章节的核心提醒；需明确 prompt 有帮助但不是充分安全边界，仍待最小攻击/失败实验。 |
 | 高风险工具应使用最小权限、参数校验、guardrails、人工确认、审批状态恢复和审计 trace 的组合，而不是只靠模型自觉。 | OWASP LLM Top 10；OpenAI Responses API docs；OpenAI Agents SDK docs；Semantic Kernel docs；Observability evidence；Evidence Note: 工具权限、人工确认与审计边界 | 部分验证 | 可作为第 09/11 章工程建议；需说明 guardrails/HITL 覆盖范围有限，仍需本地实验。 |
 | 多 Agent 不是默认更好，会带来成本、调试和协调复杂度。 | AutoGen docs；CrewAI docs；AgentBench；Evidence Note: 多 Agent 不是默认更好 | 部分验证 | 可作为 Planning / Orchestration 和框架生态章节的核心提醒；仍需最小对比实验验证收益是否抵消成本。 |
@@ -44,7 +44,7 @@
 2. Tool Use vs Function Calling 的边界。已完成第一轮官方文档交叉验证和标准库参数校验/重试模拟，待补真实模型 / API 实验和其他框架术语对照。
 3. RAG vs Memory 的边界与工程 RAG 流程。已完成第一轮论文和框架文档交叉验证及标准库最小 RAG pipeline / citation 模拟，待补真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank 和成本/延迟实验。
 4. MCP server/client/host 的职责边界与安全/授权/权限边界。已完成第一轮官方文档交叉验证和标准库最小 trace 模拟，待补真实 MCP SDK / host 的 trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验。
-5. Agent eval 为什么要看 trajectory。已完成第一轮 benchmark、eval framework 和 observability 工程资料交叉验证，待补最小 trace-aware eval 实验。
+5. Agent eval 为什么要看 trajectory。已完成第一轮 benchmark、eval framework、observability 工程资料交叉验证和标准库 trace-aware eval 模拟，待补真实 Agent trace、LLM-as-judge 误判分析和人工复核实验。
 6. Prompt injection 为什么需要权限和隔离，而不是只靠提示词。已完成第一轮风险资料和框架工程资料交叉验证，待补最小攻击/失败实验。
 7. 长期记忆的收益与治理风险边界。已完成第一轮论文、工程文档和安全资料交叉验证，待补最小多会话记忆实验。
 8. 上下文工程与结构化输出边界。已完成第一轮官方文档交叉验证，待补输出解析和长上下文失败模式实验。
