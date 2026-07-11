@@ -8,7 +8,7 @@
 - 主题：Short-term Memory / Long-term Memory / Stateful Agents
 - 适合阶段：入门后 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接和 canonical 迁移已复核；关键段落已精读；RAG / Memory 术语边界、短期/长期记忆边界和长期记忆治理窄边界可入正文；真实 memory framework 行为仍部分验证
+- 是否已验证：来源链接和 canonical 迁移已复核；关键段落已精读；RAG / Memory 术语边界、短期/长期记忆边界和长期记忆治理窄边界可入正文；本地 LangGraph `InMemoryStore` run 已完成；真实 memory framework 质量和生产行为仍部分验证
 
 ## 一句话总结
 
@@ -28,11 +28,13 @@ LangGraph memory 文档适合用于解释工程框架中短期记忆、长期记
 - 旧链接 `https://langchain-ai.github.io/langgraph/concepts/memory/` 重定向到 `https://docs.langchain.com/oss/python/langgraph/memory`，页面 canonical 指向 `https://docs.langchain.com/oss/python/concepts/memory`。
 - 2026-07-11 抓取 `https://docs.langchain.com/oss/python/concepts/memory.md` 成功；页面包含 short-term memory、long-term memory、semantic/episodic/procedural memory 和 writing memories 段落。
 - 已与 MemoryBank、MemGPT、Letta、Zep、OWASP/NIST 和标准库 memory governance / lifecycle audit 实验交叉验证长期记忆治理边界；long-term memory 的 one-size-fits-all 风险和 hot path / background 写入权衡支持保守正文写法。
+- 2026-07-12 运行 Real LangGraph Memory Store Validation：使用 LangGraph `InMemoryStore` 跑通 namespace、`put`、`get`、`search`、`delete`、应用层 invalidated history wrapper 和 trace 脱敏；结果 `all_passed=true`、`cross_user_broad_prefix_seen=true`、`deleted_item_recalled=false`、`secret_leaked_in_trace=false`。
 
 ## 可能的问题
 
 - LangGraph 的 memory 分类和接口属于框架抽象，需要和其他资料交叉验证。
 - 文档中的 memory store 和 namespace 是 LangGraph/LangChain 实现抽象，不应被写成所有 Agent 系统的通用实现要求。
+- 本地 `InMemoryStore` run 显示 broad prefix search 可看到多个 user namespace；跨用户授权、敏感过滤、编辑历史、合规删除和 trace 脱敏不能写成 store 默认自动保证。
 
 ## 初学者阅读建议
 
@@ -40,9 +42,10 @@ LangGraph memory 文档适合用于解释工程框架中短期记忆、长期记
 
 ## 可复现实验
 
-- 用同一任务比较 thread-local short-term memory 和跨会话 long-term memory 的行为差异。
+- 已完成本地 `InMemoryStore` namespace / put / get / search / delete harness。
+- 后续仍需用同一任务比较 thread-local short-term memory 和跨会话 long-term memory 的行为差异。
 
 ## 是否进入正文
 
 - 结论：进入；术语边界可入正文
-- 原因：Memory 章节需要现代框架文档支撑短期/长期记忆边界和写入治理权衡；真实 memory framework 的收益、污染、用户编辑/删除和权限行为仍需实验。
+- 原因：Memory 章节需要现代框架文档支撑短期/长期记忆边界和写入治理权衡；本地 `InMemoryStore` run 可支撑 store 原语和应用层 namespace/删除/历史包装的窄观察；真实 memory framework 的收益、污染、用户编辑/删除 UI、权限、持久化和生产行为仍需实验。

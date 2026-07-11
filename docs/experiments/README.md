@@ -12,7 +12,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`；官方 MCP SDK harness 在没有 `mcp` Python package 时应返回 `skipped`；LlamaIndex harness 在没有 `llama-index-core` 时应返回 `skipped`。部分框架 harness 可以用 `uv run --with ...` 临时依赖运行。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
 
-当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-11.md)：2026-07-11 运行覆盖 13 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，LlamaIndex harness 通过临时依赖完成本地 `VectorStoreIndex` / retriever / source-node metadata run，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，本地 MCP stdio harness 和官方 MCP Python SDK stdio harness 完成。
+当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-12.md)：2026-07-12 运行覆盖 14 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，LlamaIndex harness 通过临时依赖完成本地 `VectorStoreIndex` / retriever / source-node metadata run，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph interrupt recovery harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，LangGraph memory store harness 完成本地 `InMemoryStore` namespace / put / get / search / delete run，本地 MCP stdio harness 和官方 MCP Python SDK stdio harness 完成。
 
 ## 实验清单与状态
 
@@ -86,31 +86,35 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
     - 目标：验证 LangGraph `interrupt()`、checkpointer、`thread_id` 和 `Command(resume=...)` 在高风险工具审批流程中的恢复、幂等和审计边界。
     - 状态：真实 harness 已完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，见 [Real LangGraph Interrupt Recovery 实验](real-langgraph-interrupt-recovery/README.md) 和 [2026-07-11 结果](real-langgraph-interrupt-recovery/results-2026-07-11.md)。它覆盖批准、拒绝、参数 hash、重复恢复不重复执行、trace 脱敏和本地 SQLite 同进程/双进程恢复和并发 resume 观察；不能证明 LangGraph interrupt、checkpointer 或任何 HITL 框架默认生产安全，部署式服务重启、真实服务并发恢复和真实副作用仍待验证。
 
-17. Agentic security regression set 实验
+17. LangGraph memory store 实验
+    - 目标：验证 LangGraph `InMemoryStore` 的 namespace、`put` / `get` / `search` / `delete`、应用层编辑历史和 trace 脱敏边界。
+    - 状态：真实 harness 已完成本地 `InMemoryStore` run，见 [Real LangGraph Memory Store Validation](real-langgraph-memory-store-validation/README.md) 和 [2026-07-12 结果](real-langgraph-memory-store-validation/results-2026-07-12.md)。它支撑 store 原语和应用层治理包装的窄观察；同时显示 broad prefix search 可看到多个 user namespace，跨用户授权不能假设由 store 自动完成。真实多会话质量、模型使用记忆、持久化、UI、合规删除、成本和延迟仍待验证。
+
+18. Agentic security regression set 实验
     - 目标：把 MITRE ATLAS 和 OWASP Agentic AI resources 中的 agentic-specific 风险整理成可迁移到真实模型 / 框架的安全 case matrix。
     - 状态：已完成标准库 toy runtime，见 [Real Agentic Security Regression Set 实验](real-agentic-security-regression-set/README.md) 和 [2026-07-11 结果](real-agentic-security-regression-set/results-2026-07-11.md)。尚未运行真实模型或真实框架；不能证明任何 mitigation、detector、guardrail、HITL、sandbox、runtime containment 或 monitoring 有效。
 
-18. Production safety / data governance checklist 实验
+19. Production safety / data governance checklist 实验
     - 目标：把 Moderation、Safety Best Practices 和 Data Controls 文档中的生产安全与数据治理边界整理成可审计 checklist。
     - 状态：已完成标准库 checklist audit，见 [Production Safety / Data Governance Checklist](production-safety-data-governance/README.md) 和 [2026-07-11 结果](production-safety-data-governance/results-2026-07-11.md)。尚未读取真实 project / account 配置；不能证明任何 moderation、HITL、数据保留、data residency 或合规方案有效。
 
-19. Production cost / latency / rate-limit audit 实验
+20. Production cost / latency / rate-limit audit 实验
     - 目标：把 Production、Cost、Latency、Rate Limits、Token Counting、Batch、Flex 和 Prompt Caching 文档中的生产质量边界整理成可审计字段表。
     - 状态：已完成标准库 field audit，见 [Production Cost / Latency / Rate-Limit Audit](production-cost-latency-rate-limit/README.md) 和 [2026-07-11 结果](production-cost-latency-rate-limit/results-2026-07-11.md)；真实 API harness 已准备，见 [Real Production Cost / Latency / Rate-Limit Validation](real-production-cost-latency-validation/README.md)、[2026-07-11 结果](real-production-cost-latency-validation/results-2026-07-11.md)、[Real Batch / Flex / Prompt Caching Validation](real-batch-flex-caching-validation/README.md) 和 [2026-07-11 结果](real-batch-flex-caching-validation/results-2026-07-11.md)。当前无 API key，真实 harness 只验证 skip 分支；尚未调用真实 API、读取真实 rate-limit headers、提交 Batch job、使用 Flex 或触发 Prompt Caching；不能证明任何真实成本、P95 latency、吞吐、缓存命中率、优化收益或生产可靠性。
 
-20. Browser action trace audit 实验
+21. Browser action trace audit 实验
     - 目标：把 Browser Use、Playwright、Anthropic Computer Use 和权限 / observability evidence 中的 browser agent 边界整理成可审计 action trace 字段表。
     - 状态：已完成标准库 field audit，见 [Browser Action Trace Audit](browser-action-trace-audit/README.md) 和 [2026-07-11 结果](browser-action-trace-audit/results-2026-07-11.md)。标准库 audit 不启动真实浏览器；真实浏览器固定 workflow 已由下一项 Playwright harness 覆盖。该 audit 不能证明真实网页任务成功率、点击精度、classifier 效果、CAPTCHA/2FA/stealth、成本、延迟、合规或生产可靠性。
 
-21. Real Browser Playwright validation 实验
+22. Real Browser Playwright validation 实验
     - 目标：在本地 demo page 上用固定 Playwright workflow 收集真实 browser action trace、DOM/screenshot state、文件上传、提交审批和失败分类，作为 Browser Use / computer-use-style action loop 的后续对照组。
     - 状态：真实 harness 已完成固定本地 demo page run，见 [Real Browser Playwright Validation](real-browser-playwright-validation/README.md) 和 [2026-07-11 结果](real-browser-playwright-validation/results-2026-07-11.md)。本次记录 4 条 action record、DOM/screenshot hash、redacted invoice 文件上传、submit order 审批阻断和 trace.zip metadata；它只证明固定 Playwright workflow 的动作/trace 记录入口，不证明 Browser Use、Anthropic computer use、任何模型、真实网站或生产网页任务表现。
 
-22. Real Batch / Flex / Prompt Caching validation 实验
+23. Real Batch / Flex / Prompt Caching validation 实验
     - 目标：为 Batch API、Flex processing 和 Prompt Caching 准备真实 API 观测入口，记录 `custom_id` / batch status、Flex fallback、`cached_tokens` / `cache_write_tokens`、latency 和 rate-limit headers。
     - 状态：真实 harness 已准备，见 [Real Batch / Flex / Prompt Caching Validation](real-batch-flex-caching-validation/README.md) 和 [2026-07-11 结果](real-batch-flex-caching-validation/results-2026-07-11.md)。当前无 API key，运行结果为 `skipped`；Batch job 提交默认 opt-in，尚未产生真实 completed run，不能证明 Batch / Flex / Prompt Caching 的收益、命中率、成本、延迟、质量取舍或生产可靠性。
 
-23. Real Moderation safety validation 实验
+24. Real Moderation safety validation 实验
     - 目标：为 OpenAI Moderation API 准备真实安全信号观测入口，记录 `flagged`、categories、scores、latency、expected mismatch、tool arguments / tool output 覆盖和 policy decision。
     - 状态：真实 harness 已准备，见 [Real Moderation Safety Validation](real-moderation-safety-validation/README.md) 和 [2026-07-11 结果](real-moderation-safety-validation/results-2026-07-11.md)。当前无 API key，运行结果为 `skipped`；尚未产生真实 moderation completed run，不能证明误报、漏报、阈值策略、人工复核流程或生产安全效果。
 

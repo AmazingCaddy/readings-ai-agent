@@ -145,6 +145,8 @@ LlamaIndex examples repo 也提供了代码层参考：`CitationQueryEngine` 示
 
 写入守门只是第一步。长期记忆还需要完整生命周期：用户应该能查看、编辑、删除自己的记忆；系统应该阻断跨用户查看和召回；删除后的敏感记录不应继续进入 active memory 或后续 recall；trace 和历史记录也要脱敏。本手册的生命周期与权限审计实验中，`naive_memory` 只通过 1/6 个操作，失败点集中在跨用户访问、编辑无历史、删除不生效、删除后仍召回和 trace 泄露；`governed_memory` 通过 6/6 个操作，说明最小治理设计至少要覆盖 inspect、edit、delete、recall 四类操作。
 
+Real LangGraph Memory Store Validation 把其中一部分迁移到了真实框架 store 层：本地 `InMemoryStore` 支持 namespace、`put`、`get`、`search` 和 `delete`，删除 active secret item 后不再通过 `get` / `search` 召回；应用层 wrapper 可以在覆盖 active memory 前写入 invalidated history，并对 trace 脱敏。这个实验也暴露了一个重要边界：如果应用使用过宽的 `("memories",)` prefix search，就能看到多个 user namespace，所以跨用户授权和敏感过滤不能假设由 store 自动完成。
+
 ### 区分事实、偏好和推断
 
 “用户说他喜欢中文解释”是偏好。“用户是初学者”可能是推断。推断写入长期记忆前需要更谨慎。
@@ -192,6 +194,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 - 本地标准库 RAG / Memory 对比实验显示：RAG 适合外部知识和 citation，short-term memory 适合当前 thread state，guarded long-term memory 适合用户确认的跨会话偏好和纠正事实；敏感且无安全来源的问题应拒答。该实验支撑分层治理边界，但不证明真实框架质量。
 - LangGraph memory 文档按 recall scope 区分 short-term/thread-scoped memory 和 long-term/cross-session memory，可作为短期/长期记忆工程边界的参考。
 - LangGraph memory 文档强调 long-term memory 没有 one-size-fits-all solution，写入方式有 hot path 和 background 两类权衡。
+- Real LangGraph Memory Store Validation 已完成本地 `InMemoryStore` run：4 个 case 全部通过，user-scoped namespace search 只返回当前用户 namespace，broad prefix search 可看到多个 user namespace，应用层 wrapper 可记录 invalidated history，delete 后 active item 不再召回，trace 未泄露示例 secret。它支撑真实框架 store 原语和应用层治理包装的最小观察，但不证明长期记忆提升质量、真实模型正确使用记忆、持久化、UI、组织权限、合规删除、成本或延迟。
 - MemGPT、MemoryBank、Generative Agents 支持长期记忆和记忆管理的研究方向，但不能泛化为“加长期记忆总是更好”。
 - 长期记忆治理与风险边界已升级为可入正文：长期记忆可能适合持续交互、个性化和跨会话任务，但不能默认自动写入或默认提升表现；系统必须配套写入守门、冲突/失效处理、用户可检查/可编辑/可删除、跨用户权限隔离和敏感 trace 脱敏。真实多会话 Agent / memory framework 的收益、污染率、成本、延迟和用户控制体验仍需实验。
 - 本地标准库 memory governance 实验显示，自动写入会持久化敏感信息和低置信推断；写入守门可以拒绝敏感数据、低置信推断和助手猜测，并保留偏好变化的失效历史。该实验支撑治理流程设计，但不证明长期记忆提升任务质量。
@@ -250,3 +253,5 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 - [Evidence Note: 长期记忆治理与风险边界](../evidence/memory-governance-risk-boundary.md)
 - [长期记忆写入守门与治理实验结果](../experiments/memory-governance/results-2026-07-11.md)
 - [长期记忆生命周期与权限审计实验结果](../experiments/memory-lifecycle-audit/results-2026-07-11.md)
+- [Real LangGraph Memory Store Validation](../experiments/real-langgraph-memory-store-validation/README.md)
+- [Real LangGraph Memory Store Validation 结果](../experiments/real-langgraph-memory-store-validation/results-2026-07-12.md)
