@@ -42,7 +42,7 @@
 | Agent traces | LangSmith documentation and examples | Engineering Docs | B | 关键页面已复核；source card 已创建 |
 | Observability | Arize Phoenix documentation | Engineering Docs | B | 关键页面已复核；source card 已创建 |
 | Evals | OpenAI Evals repository | Source Code | A | 链接已复核；source card 已创建 |
-| Browser agents | Playwright / browser-use related examples | Source / Engineering | B/C | Browser Use GitHub metadata、README、docs llms.txt 和 Playwright actions/trace viewer 已复核；source card 已创建；真实浏览器 Agent 试跑待做 |
+| Browser agents | Playwright / browser-use related examples；Anthropic computer use documentation | Source / Engineering | A/B | Browser Use GitHub metadata、README、docs llms.txt、Playwright actions/trace viewer 和 Anthropic computer use official docs 已复核；source cards 已创建；真实浏览器 / computer-use Agent 试跑待做 |
 | RAG implementation | LlamaIndex examples repository | Source Code | A/B | GitHub 仓库元数据、README、examples index 和关键 notebook 抽样已复核；source card 已创建；真实试跑待做 |
 | LangGraph examples | LangGraph examples repository | Source Code | A/B | GitHub 仓库元数据、current docs quickstart、examples README 和历史 notebook 抽样已复核；source card 已创建；examples 目录已归档，真实试跑应使用当前 docs |
 | MCP examples | MCP official example servers | Source Code | A | 链接已复核；source card 已创建 |

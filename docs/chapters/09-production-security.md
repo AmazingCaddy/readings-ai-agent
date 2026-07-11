@@ -201,7 +201,7 @@ Browser Agent 是另一类高风险工具连接。它可能复用真实浏览器
 - Anthropic jailbreak / prompt injection mitigation 文档已补充另一组官方工程资料：直接 jailbreak / prompt injection 和 indirect prompt injection 是不同 threat model；网页、邮件、文档、OCR 输出和 tool results 等第三方内容应作为不可信数据处理；工程上可结合 `tool_result` 边界、来源说明、JSON encoding、tool output screening、最小权限、red-team 和持续监控。它支撑这些防护层应进入系统设计，但不证明任意 classifier、prompt、JSON encoding 或 computer-use 机制的真实拦截率。
 - OpenAI Agents SDK 和 Semantic Kernel 文档已补充第一轮工程资料，可支撑 guardrails、human approval、tool approval、sensitive trace 控制和 task automation approval 的保守表述；标准库 prompt injection / tool permission 实验、安全 regression set 和审批状态恢复实验已覆盖最小权限、trace 脱敏、误报/漏报字段、多类风险 case、审批恢复、参数快照和幂等执行。“高风险工具应使用最小权限、参数校验、guardrails、人工确认、审批状态恢复和审计 trace 的组合”已升级为可入正文。真实 prompt injection / permission harness 已准备，但结果待跑，仍需真实模型 / 框架 guardrail 与 HITL 实验验证误报、漏报和覆盖范围。
 - Anthropic MCP connector / tunnels 文档已补充 remote MCP tools 和私有网络 MCP server 的产品集成证据：allowlist/denylist、per-tool config、OAuth bearer token、third-party server trust review、data retention、outbound-only tunnel、inner TLS、allowed IPs、凭据保护和 shared responsibility。它们支撑“远程工具连接也要纳入权限、数据保留和审计设计”的窄边界，但不证明 connector、tunnel 或任意 MCP server 默认安全或生产可靠。
-- Browser Use / Playwright 资料已补充 browser agent 的工程边界：浏览器动作、登录态 profile、文件上传、表单提交、custom tools、human-in-the-loop 和 Playwright action trace 都需要纳入权限、审计和脱敏设计。它们不能证明真实网站任务、CAPTCHA/stealth、合规或生产可靠性。
+- Browser Use / Playwright / Anthropic Computer Use 资料已补充 browser agent 和 computer-use agent 的工程边界：浏览器动作、登录态 profile、截图、鼠标键盘控制、文件上传、表单提交、custom tools、human-in-the-loop、VM/container 隔离、domain allowlist、action validation/logging 和 Playwright action trace 都需要纳入权限、审计和脱敏设计。Anthropic 文档还提示网页或图片中的指令可能造成 prompt injection，并提供 screenshot classifier 作为一层确认机制；这些资料不能证明真实网站任务、点击精度、classifier 效果、CAPTCHA/stealth、合规或生产可靠性。
 - 本地标准库 prompt injection / tool permission 实验显示，prompt-only 模式会产生退款副作用并泄露假 secret 到 trace；应用层权限策略可以阻断写工具、记录拒绝原因并脱敏敏感字段。该实验支撑最小权限、写工具审批和 trace 脱敏的流程设计；真实 API harness 已准备但结果待跑，仍需真实模型和框架 guardrail 实验。
 - 本地标准库安全 regression set 显示，回归测试应同时覆盖 prompt injection、授权、数据边界、金额阈值、敏感信息、破坏性工具、幂等性和 benign case；该实验支撑安全测试矩阵设计，但不证明真实 guardrail 拦截率。
 - 本地标准库审批状态恢复实验显示，HITL approval 需要保存审批状态、参数快照和执行状态；重复恢复应返回已执行，拒绝后恢复应阻断，参数被篡改后恢复应阻断，trace 应脱敏。该实验支撑审批恢复和幂等性设计，但不证明真实框架的 HITL 行为。
@@ -236,6 +236,7 @@ Browser Agent 是另一类高风险工具连接。它可能复用真实浏览器
 - [Google Cloud Responsible AI Documentation](../sources/source-cards/2026-google-responsible-ai-docs.md)
 - [Anthropic MCP Connector and Tunnels Documentation](../sources/source-cards/2026-anthropic-mcp-docs.md)
 - [Browser Use and Playwright Browser Automation References](../sources/source-cards/2026-browser-use-playwright.md)
+- [Anthropic Computer Use Tool Documentation](../sources/source-cards/2026-anthropic-computer-use-docs.md)
 
 ### Related Chapters
 
