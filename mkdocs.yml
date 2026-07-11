@@ -60,6 +60,7 @@ nav:
           - WebArena paper: sources/source-cards/2023-webarena-paper.md
           - Indirect Prompt Injection paper: sources/source-cards/2023-indirect-prompt-injection-paper.md
           - Multiagent Debate paper: sources/source-cards/2023-multiagent-debate-paper.md
+          - Voyager paper: sources/source-cards/2023-voyager-paper.md
           - AutoGen docs: sources/source-cards/2026-autogen-docs.md
           - CrewAI docs: sources/source-cards/2026-crewai-docs.md
           - MCP servers repo: sources/source-cards/2026-mcp-servers-repo.md

@@ -24,6 +24,7 @@
 | P1 | 真实 Anthropic MCP connector / tunnels trace | Anthropic Messages API MCP connector；可选 MCP tunnels research preview | `mcp_tool_use` / `mcp_tool_result`、allowlist/denylist、authorization token handling、data retention note、tunnel OAuth / allowed IP / token-certificate rotation 检查 | 只能验证 Anthropic 产品集成面，不代表 MCP 通用 host 行为；tunnels 是 research preview，不能推出生产可靠性 |
 | P2 | 真实 memory framework 多会话对比 | LangGraph memory / Letta / Zep 中至少一种 | 写入、查看、编辑、删除、失效历史、跨用户隔离、删除后召回、污染样例；标准库 lifecycle audit 已覆盖最小验收结构 | 不写成长期记忆一定提升质量 |
 | P2 | 同一任务框架横向对比 | OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel | 相同任务实现、LOC、trace、权限、错误恢复、成本/延迟；LangGraph current docs / quickstart 已复核，历史 examples 已确认归档 | 不得推出“某框架默认最好” |
+| P2 | Voyager-style toy embodied agent | 小型 grid-world / 文件系统环境；可选 Voyager 原仓库小样本 | automatic curriculum、executable skill library、environment feedback、execution error、自我验证、skill reuse、sandbox、停止条件、成本/trace | 只能验证所选 toy environment 或 Minecraft 设置，不能推出开放式 Agent / 技能库默认适合生产 |
 | P2 | Cookbook 初学者项目试跑 | Structured Outputs、File Search/RAG、Eval、Cost/Rate limit recipes | 环境步骤、阻塞点、费用、失败样例、可跟练教程草稿 | Cookbook 是练习入口，不是生产保证 |
 
 统一运行入口：`uv run python docs/experiments/validation-harness-runner/run_validation_harnesses.py`。无 API key 时，API 类 harness 应返回 `skipped`；本地 stdio / 标准库 harness 应返回 `completed`。runner 结果只说明入口可运行，不代表真实验证完成。
@@ -34,6 +35,7 @@
 - ReAct 在哪些任务中确实优于单次提示或简单 workflow？窄结论已可入正文：ReAct 的核心思想是交替生成 reasoning traces 和 task-specific actions；已完成论文摘要第一轮验证和标准库 ReAct-like tool loop 对比；仍需真实模型、真实工具和真实任务实验验证收益、成本和错误恢复。
 - Plan-and-Execute / Tree of Thoughts 等规划和搜索模式的收益是否足以抵消额外成本和错误传播？窄结论已可入正文：Tree of Thoughts 支持搜索式推理路径但不等同于生产 Agent 编排框架；Planner / Executor 需要可执行计划、证据校验、失败反馈和重规划 trace；一次性计划可能传播遗漏。已完成相关架构模式第一轮验证、标准库 planner/executor 对比实验和 reflection retry 对照；仍需真实模型 / Agent framework / repo issue 实验验证收益、成本和错误恢复。
 - Reflection / Critic 模式在真实任务中是否稳定提升质量？窄结论已可入正文：Reflection 可以利用任务反馈和文字反思改进后续尝试，但必须绑定可校验反馈、范围控制和 trace；未验证反思不应直接写入长期记忆或后续策略。Reflexion 已完成论文摘要第一轮验证，标准库 reflection/retry 实验已验证 verified feedback 可补证据、unverified reflection 会重复错误；仍需结合真实模型、长期 episodic memory、成本和人工评审实验验证真实收益。
+- Embodied / open-ended Agent 是否能迁移到普通业务 Agent 设计？Voyager 已完成 arXiv、项目站点和 README 第一轮验证，可支撑 automatic curriculum、可执行技能库、环境反馈、执行错误和自我验证的研究机制边界；仍需 toy environment 或 Voyager 小样本试跑验证环境依赖、成本、skill library 污染、停止条件、sandbox 和 Minecraft 外泛化风险。
 - 多 Agent 的收益是否足以抵消通信成本、协调复杂度和调试难度？窄结论已可入正文：多 Agent 不是复杂任务默认升级路径，必须先明确角色边界、证据分配、冲突处理、review trace 和成本预算。已完成 AutoGen/CrewAI 第一轮资料验证和标准库单流程 / 无控制多 Agent / Flow 控制多 Agent 对比；仍需真实模型、真实框架、token/latency/cost 和复杂多视角任务实验。
 
 ## 工具调用

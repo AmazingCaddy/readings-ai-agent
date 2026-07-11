@@ -33,7 +33,7 @@
 | Agent benchmark | AgentBench: Evaluating LLMs as Agents | Paper / Benchmark | A | 元数据已复核；source card 已创建 |
 | Tool-use eval | Tau-bench / tool-agent benchmark materials | Benchmark | A/B | arXiv 元数据和 GitHub README 已复核；source card 已创建；原 repo 已提示任务过期，真实试跑应看 τ³-bench |
 | Software agents | SWE-agent paper and repository | Paper / Source | A | arXiv 元数据和 GitHub README 已复核；source card 已创建；README 已提示当前推荐 mini-SWE-agent |
-| Embodied agents | Voyager: An Open-Ended Embodied Agent with LLMs | Paper | A | 待复核 |
+| Embodied agents | Voyager: An Open-Ended Embodied Agent with LLMs | Paper / Source | A | arXiv 元数据、项目站点、GitHub repo metadata 和 README 已复核；source card 已创建；真实复现和 Minecraft 外泛化待验证 |
 
 ## Engineering / Source Code
 
