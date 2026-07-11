@@ -36,13 +36,14 @@
 | Agent 框架应按任务难点比较，不应写成“某个框架默认最好”。 | OpenAI Agents SDK docs；LangGraph docs；LlamaIndex docs；AutoGen docs；CrewAI docs；Semantic Kernel docs；Evidence Note: 框架生态定位边界 | 部分验证 | 可作为框架生态章节核心边界；仍需同一任务横向实验。 |
 | 实践项目路线可以用 Cookbook 的具体 recipe 作为模板，但 Cookbook 不能替代 API 文档、生产安全指南或本地实验。 | OpenAI Cookbook；OpenAI Function Calling docs；OpenAI Responses API docs；OpenAI Evals repo；Evidence Note: 实践路线与 Cookbook 示例边界 | 部分验证 | 可作为第 11 章项目 reference；必须引用具体 recipe，并提醒示例不是生产保证。 |
 | MCP 是连接工具和上下文能力的协议，不是 Agent 框架本身。 | MCP official docs；MCP servers repo；Evidence Note: MCP Host / Client / Server 职责边界 | 部分验证 | 可作为 MCP 章节核心边界；仍建议补最小 MCP trace 实验。 |
+| MCP 标准化了工具、资源、提示、授权、roots、elicitation 和 sampling 等协议能力，但安全不是协议接入后自动完成。 | MCP official docs；MCP Security Best Practices；Evidence Note: MCP 安全、授权与权限边界；Production permission evidence | 部分验证 | 可作为 MCP / Production 章节安全边界；需说明 authorization 是 optional，roots 不等于 sandbox，token passthrough 被禁止，仍需本地权限/trace 实验。 |
 
 ## 待升级为可入正文的优先结论
 
 1. Agent vs Workflow 的边界。已完成第一轮 OpenAI Agents SDK、LangGraph 和 ReAct 交叉验证，待补最小对比实验。
 2. Tool Use vs Function Calling 的边界。已完成第一轮官方文档交叉验证，待补最小实验。
 3. RAG vs Memory 的边界与工程 RAG 流程。已完成第一轮论文和框架文档交叉验证，待补最小 RAG pipeline 实验。
-4. MCP server/client/host 的职责边界。已完成第一轮官方文档交叉验证，待补最小 MCP trace 实验。
+4. MCP server/client/host 的职责边界与安全/授权/权限边界。已完成第一轮官方文档交叉验证，待补最小 MCP trace、权限确认和恶意 resource/prompt 实验。
 5. Agent eval 为什么要看 trajectory。已完成第一轮 benchmark、eval framework 和 observability 工程资料交叉验证，待补最小 trace-aware eval 实验。
 6. Prompt injection 为什么需要权限和隔离，而不是只靠提示词。已完成第一轮风险资料和框架工程资料交叉验证，待补最小攻击/失败实验。
 7. 长期记忆的收益与治理风险边界。已完成第一轮论文、工程文档和安全资料交叉验证，待补最小多会话记忆实验。

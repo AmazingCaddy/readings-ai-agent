@@ -17,7 +17,7 @@
 | LLM 与上下文工程 | OpenAI Text Generation docs；OpenAI Responses API docs | OpenAI Text Generation docs；OpenAI Structured Outputs docs；OpenAI Responses API docs | OpenAI cookbook 候选 | 关键段落已精读；部分验证 | 需要输出解析、结构化输出和长上下文失败模式最小实验 |
 | Tool Use / Function Calling | OpenAI function calling docs | Toolformer paper；OpenAI function calling docs；OpenAI Responses API docs | OpenAI cookbook 候选 | 关键段落已精读；部分验证 | 需要最小实验、SDK 文档和其他框架术语对照 |
 | Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；OpenAI Agents SDK docs；LangGraph docs | LangGraph examples 候选 | 关键论文摘要和框架段落已精读；部分验证 | 需要固定 workflow、ReAct、planner/executor、reflection 最小对比实验 |
-| MCP | MCP official docs | MCP official docs | MCP servers repo | 关键段落已精读；部分验证 | 需要 spec 细节、安全边界和最小 trace 实验 |
+| MCP | MCP official docs | MCP official docs；MCP 2025-11-25 spec；MCP Security Best Practices | MCP servers repo | spec / 安全 / 授权关键段落已精读；部分验证 | 需要最小 trace / 权限确认 / 恶意 resource/prompt 实验和 host 实现差异对比 |
 | RAG | LlamaIndex RAG docs | RAG paper；LlamaIndex docs；Self-RAG 候选 | LlamaIndex examples 候选 | RAG paper 摘要和 LlamaIndex 核心页面已精读；部分验证 | 需要最小 RAG pipeline 实验和 citation/source 追溯示例 |
 | Memory / 知识库治理 | LangGraph memory docs | MemGPT；MemoryBank；Generative Agents；LangGraph memory docs；OWASP LLM Top 10；NIST AI RMF | Letta docs；Zep docs | 关键论文、框架文档和风险资料已精读；部分验证 | 仍缺多会话长期记忆最小实验和更多隐私/权限工程资料 |
 | Planning / Orchestration | 待补 | Tree of Thoughts；Reflexion；LangGraph docs | LangGraph docs | 关键论文摘要和 LangGraph 段落已精读；部分验证 | 需要 planner/executor、状态机和 reflection 对比实验 |
@@ -31,7 +31,7 @@
 
 1. 补齐基础定义和术语边界的高可信 references。
 2. 精读并提取已经链接复核的论文、官方文档和安全资料。LLM / Context、Tool Use / Function Calling、MCP、RAG / Memory、Production / Security 已完成第一轮。
-3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。Eval 已完成 OpenAI Evals README、Cookbook、LangSmith 和 Phoenix 第一轮，仍需本地 trace-aware eval 实验。
+3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。MCP 已完成官方 spec、安全、授权第一轮，仍需本地 MCP trace / 权限实验；Eval 已完成 OpenAI Evals README、Cookbook、LangSmith 和 Phoenix 第一轮，仍需本地 trace-aware eval 实验。
 4. 为 Memory / 知识库治理补充长期记忆最小实验，并继续扩展隐私/权限工程资料。
 5. 为 Production / Security 补充 prompt injection / tool permission 最小实验、跨框架权限对比和审计脱敏策略。
 6. 为实践项目路线试跑 Structured Outputs、RAG/File Search、eval harness、成本/限流练习，记录初学者阻塞点。

@@ -68,7 +68,7 @@
 
 先读手册 05，再看 MCP official docs 和 MCP servers repo。
 
-阅读重点是 host、client、server、tools、resources 和权限边界。
+阅读重点是 host、client、server、tools、resources、prompts、authorization、roots、elicitation、sampling 和权限边界。尤其要注意：authorization 是 optional transport-level capability，roots 不等于 sandbox，token passthrough 被官方安全最佳实践禁止。
 
 ### RAG 与 Memory
 
@@ -141,12 +141,14 @@
 - 当前手册已经建立 source card index、coverage matrix 和 claim ledger，用于控制资料进入正文的门槛。
 - Source card index 明确记录了每张卡片的可信度、验证状态和下一步。
 - Coverage matrix 显示 Evaluation / Observability 已补 LangSmith 和 Phoenix 第一轮工程资料，但仍缺本地 trace-aware eval 实验；Production / Security 已补 OpenAI Agents SDK 和 Semantic Kernel 第一轮工程资料，但仍需要最小 prompt injection / tool permission 实验、跨框架权限对比和审计脱敏策略。
+- MCP official docs 已补 2025-11-25 tools/resources/prompts/authorization/roots/elicitation/sampling spec 和 Security Best Practices 第一轮精读；MCP 章节可支撑协议职责与安全边界的保守表述，但仍缺本地 trace、权限确认、恶意 resource/prompt 和 host 实现差异实验。
 - Cookbook 的具体 recipe 已能支撑实践项目路线，但仍需要本地试跑来确认依赖、成本、失败样例和初学者阻塞点。
 - Claim ledger 规定只有状态为“可入正文”的结论，才能写成确定性表述；其他结论需要保守表达。
 
 ## 待验证问题
 
 - prompt injection / tool permission 的最小攻击实验应该如何覆盖 guardrails、HITL approval、敏感 trace 和审计字段？
+- MCP trace / 权限实验应如何覆盖 `tools/list`、`tools/call`、`resources/list`、`resources/read`、用户拒绝、roots、URL mode elicitation 和敏感日志脱敏？
 - trace-aware eval 的本地实验应如何设计，才能比较最终答案评分和过程评分的差异？
 - 是否需要为每个框架增加最小示例 source card？
 - 是否需要补充面向初学者的视频课程或书籍？
