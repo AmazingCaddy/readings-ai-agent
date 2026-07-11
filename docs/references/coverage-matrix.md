@@ -17,15 +17,15 @@
 | LLM 与上下文工程 | OpenAI Responses API docs | OpenAI Responses API docs | OpenAI cookbook 候选 | 部分链接已复核 | 需要结构化输出和上下文失败模式资料 |
 | Tool Use / Function Calling | OpenAI function calling docs | Toolformer paper；OpenAI function calling docs | OpenAI cookbook 候选 | 部分链接已复核 | 需要精读现代 API 文档和 SDK 文档 |
 | Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；LangGraph docs | LangGraph examples 候选 | 部分链接已复核 | 需要 workflow-agent hybrid 工程来源 |
-| MCP | MCP official docs | MCP official docs | MCP example servers 候选 | 部分链接已复核 | 需要官方 spec 细读和安全边界资料 |
+| MCP | MCP official docs | MCP official docs | MCP servers repo | 部分链接已复核 | 需要官方 spec 细读和安全边界资料 |
 | RAG | 待补 | RAG paper；Self-RAG 候选；LlamaIndex docs | LlamaIndex examples 候选 | 部分链接已复核 | 需要现代 RAG 工程实践和 memory 对比 |
 | Memory / 知识库治理 | 待补 | 待补 | 待补 | 缺口较大 | 需要长期记忆、写入守门、冲突治理资料 |
 | Planning / Orchestration | 待补 | Tree of Thoughts；Reflexion；LangGraph docs | LangGraph docs | 部分链接已复核 | 需要 planner/executor 和状态机工程资料 |
-| 多 Agent | 待补 | Multi-agent debate 候选 | AutoGen docs 候选 | 候选 | 需要真实工程边界和成本资料 |
+| 多 Agent | 待补 | Multi-agent debate 候选；AutoGen docs；CrewAI docs | AutoGen docs；CrewAI docs | 部分链接已复核 | 需要真实工程边界和成本资料 |
 | Evaluation / Observability | 待补 | AgentBench；WebArena | OpenAI Evals；LangSmith；Phoenix 候选 | 部分链接已复核 | 需要 trace、trajectory、回归集资料 |
 | Production / 安全 / 成本 | 待补 | OWASP LLM Top 10；NIST AI RMF | 框架安全文档候选 | 部分链接已复核 | 需要 prompt injection、权限、审计资料 |
-| 框架生态 | 待补 | OpenAI Agents SDK；LangGraph；LlamaIndex；AutoGen；Semantic Kernel | 官方 examples 候选 | 部分链接已复核 | 需要统一比较维度 |
-| 实践项目路线 | 待补 | 待补 | OpenAI cookbook；MCP examples；LangGraph examples 候选 | 候选 | 需要按学习阶段拆项目 |
+| 框架生态 | 待补 | OpenAI Agents SDK；LangGraph；LlamaIndex；AutoGen；Semantic Kernel；CrewAI | 官方 examples 候选 | 部分链接已复核 | 需要统一比较维度 |
+| 实践项目路线 | OpenAI Cookbook | 待补 | OpenAI Cookbook；MCP servers repo；LangGraph examples 候选 | 部分链接已复核 | 需要按学习阶段拆项目 |
 
 ## 当前优先级
 

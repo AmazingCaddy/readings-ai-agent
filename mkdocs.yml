@@ -35,14 +35,20 @@ nav:
           - Toolformer paper: sources/source-cards/2023-toolformer-paper.md
           - Tree of Thoughts paper: sources/source-cards/2023-tree-of-thoughts-paper.md
           - WebArena paper: sources/source-cards/2023-webarena-paper.md
+          - AutoGen docs: sources/source-cards/2026-autogen-docs.md
+          - CrewAI docs: sources/source-cards/2026-crewai-docs.md
+          - MCP servers repo: sources/source-cards/2026-mcp-servers-repo.md
           - OpenAI Function Calling docs: sources/source-cards/2026-openai-function-calling-docs.md
           - MCP official docs: sources/source-cards/2026-mcp-official-docs.md
           - LangGraph docs: sources/source-cards/2026-langgraph-docs.md
           - LlamaIndex docs: sources/source-cards/2026-llamaindex-docs.md
           - NIST AI RMF: sources/source-cards/2026-nist-ai-rmf.md
           - OpenAI Agents SDK docs: sources/source-cards/2026-openai-agents-sdk-docs.md
+          - OpenAI Cookbook: sources/source-cards/2026-openai-cookbook.md
+          - OpenAI Evals repo: sources/source-cards/2026-openai-evals-repo.md
           - OpenAI Responses API docs: sources/source-cards/2026-openai-responses-api-docs.md
           - OWASP LLM Top 10: sources/source-cards/2026-owasp-llm-top-10.md
+          - Semantic Kernel docs: sources/source-cards/2026-semantic-kernel-docs.md
   - References:
       - 覆盖矩阵: references/coverage-matrix.md
   - 证据与实验:

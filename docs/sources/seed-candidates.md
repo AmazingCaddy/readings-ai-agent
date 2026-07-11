@@ -13,9 +13,9 @@
 | MCP 概念 | Anthropic MCP documentation | Official Docs | A | 待复核 |
 | LangGraph | LangGraph documentation | Framework Docs | A | 链接已复核；source card 已创建 |
 | LlamaIndex Agents | LlamaIndex agent documentation | Framework Docs | A | 链接已复核；source card 已创建 |
-| Microsoft AutoGen | Microsoft AutoGen documentation | Framework Docs | A | 待复核 |
-| Semantic Kernel | Microsoft Semantic Kernel documentation | Framework Docs | A | 待复核 |
-| CrewAI | CrewAI documentation | Framework Docs | B | 待复核 |
+| Microsoft AutoGen | Microsoft AutoGen documentation | Framework Docs | A | 链接已复核；source card 已创建 |
+| Semantic Kernel | Microsoft Semantic Kernel documentation | Framework Docs | A | 链接已复核；source card 已创建 |
+| CrewAI | CrewAI documentation | Framework Docs | B | 链接已复核；source card 已创建 |
 
 ## Papers
 
@@ -41,11 +41,11 @@
 | --- | --- | --- | --- | --- |
 | Agent traces | LangSmith documentation and examples | Engineering Docs | B | 待复核 |
 | Observability | Arize Phoenix documentation | Engineering Docs | B | 待复核 |
-| Evals | OpenAI Evals repository | Source Code | A | 待复核 |
+| Evals | OpenAI Evals repository | Source Code | A | 链接已复核；source card 已创建 |
 | Browser agents | Playwright / browser-use related examples | Source / Engineering | B/C | 待复核 |
 | RAG implementation | LlamaIndex examples repository | Source Code | A/B | 待复核 |
 | LangGraph examples | LangGraph examples repository | Source Code | A/B | 待复核 |
-| MCP examples | MCP official example servers | Source Code | A | 待复核 |
+| MCP examples | MCP official example servers | Source Code | A | 链接已复核；source card 已创建 |
 
 ## Security / Risk
 
@@ -62,7 +62,7 @@
 | --- | --- | --- | --- | --- |
 | Agent 入门 | DeepLearning.AI short courses on agents and tool use | Course | B | 待复核 |
 | RAG 入门 | DeepLearning.AI / framework courses on RAG | Course | B | 待复核 |
-| LLM 应用开发 | OpenAI cookbook examples | Official Examples | A/B | 待复核 |
+| LLM 应用开发 | OpenAI cookbook examples | Official Examples | A/B | 链接已复核；source card 已创建 |
 | LangChain/LangGraph 入门 | LangChain Academy materials | Course | B | 待复核 |
 
 ## 下一步处理方式
