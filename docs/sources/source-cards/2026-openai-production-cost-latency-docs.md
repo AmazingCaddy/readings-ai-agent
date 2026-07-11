@@ -61,6 +61,7 @@
 
 - 已完成标准库 practice roadmap smoke harness，其中包含预算阻断 case；该实验只验证本地验收结构，不证明真实 API 成本或延迟。
 - 已完成标准库 production cost / latency / rate-limit audit：`naive_run` 0/9 通过，`governed_run` 9/9 通过。该实验验证 usage/token accounting、rate-limit headers、bounded retry、latency distribution、budget gate、model/output controls 等字段可以被审计，不证明真实 API 成本、P95 latency、吞吐、质量或优化收益。
+- 已准备真实 API harness：`docs/experiments/real-production-cost-latency-validation/real_production_cost_latency_validation.py`。无 `OPENAI_API_KEY` 时返回 `skipped`；配置 API key 后可记录 usage、rate-limit headers、平均/P95 latency、成本估算状态和 budget action。
 - 后续应实际运行一个最小 API / Cookbook 练习，记录 input tokens、output tokens、model、request count、rate-limit headers、retry count、平均/P95 latency、cost estimate、budget threshold 和失败样例。
 - 后续应把同一任务在较小模型、较少输出 token、streaming、batch / non-batch、flex / standard、prompt caching / non-caching、parallel / sequential 等条件下做对照，先看质量和 trace，再谈优化。
 

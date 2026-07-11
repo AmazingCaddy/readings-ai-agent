@@ -33,6 +33,10 @@ HARNESSES = [
     ),
     Harness("real_rag_citation", ROOT / "docs/experiments/real-rag-citation-validation/real_rag_citation_validation.py"),
     Harness("real_trace_aware_eval", ROOT / "docs/experiments/real-trace-aware-eval/real_trace_aware_eval.py"),
+    Harness(
+        "real_production_cost_latency",
+        ROOT / "docs/experiments/real-production-cost-latency-validation/real_production_cost_latency_validation.py",
+    ),
     Harness("mcp_stdio_trace", ROOT / "docs/experiments/real-mcp-stdio-trace/mcp_stdio_trace.py"),
 ]
 
@@ -57,6 +61,10 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "tool_calls_seen",
         "final_only_passes",
         "trace_aware_passes",
+        "request_count",
+        "average_latency_ms",
+        "p95_latency_ms",
+        "rate_limit_headers_seen",
         "leaked_secret_in_trace",
     ]:
         if key in payload:

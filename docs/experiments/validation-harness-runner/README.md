@@ -21,6 +21,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 - Real Prompt Injection 与工具权限
 - Real RAG Citation Synthesis
 - Real Trace-Aware Eval
+- Real Production Cost / Latency / Rate-Limit Validation
 - Real MCP Stdio Trace
 
 ## 结论状态
