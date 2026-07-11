@@ -20,7 +20,7 @@
 | Memory 不等于 RAG，也不等于把完整历史塞进 prompt。 | RAG paper；MemGPT；MemoryBank；LangGraph memory docs；Evidence Note: RAG 与 Memory 边界 | 部分验证 | 可作为术语边界写入正文；需提醒 RAG paper 中的 non-parametric memory 不是 Agent 长期记忆治理。 |
 | 长期记忆可能提升持续交互体验，但也会引入错误写入、过时和隐私风险。 | MemoryBank；MemGPT；OWASP LLM Top 10；NIST AI RMF | 候选结论 | 不应写成“长期记忆总是提升 Agent”。 |
 | Benchmark 不能直接代表真实业务 Agent 质量。 | AgentBench；WebArena；OpenAI Evals repo | 候选结论 | 可作为 Eval 章节核心提醒，需补 trace/业务 eval references。 |
-| Prompt injection 不能只靠 prompt 解决。 | OWASP LLM Top 10；NIST AI RMF | 候选结论 | 待补工具权限和隔离案例后升级。 |
+| Prompt injection 不能只靠 prompt 解决。 | OWASP LLM Top 10；NIST AI RMF；OpenAI Function Calling docs；Evidence Note: Prompt Injection 与权限边界 | 部分验证 | 可作为生产安全章节的核心提醒；需明确 prompt 有帮助但不是充分安全边界，仍待最小实验和框架安全资料。 |
 | 多 Agent 不是默认更好，会带来成本、调试和协调复杂度。 | AutoGen docs；CrewAI docs；AgentBench | 候选结论 | 需要工程案例或实验对比后再写成正文建议。 |
 | MCP 是连接工具和上下文能力的协议，不是 Agent 框架本身。 | MCP official docs；MCP servers repo；Evidence Note: MCP Host / Client / Server 职责边界 | 部分验证 | 可作为 MCP 章节核心边界；仍建议补最小 MCP trace 实验。 |
 
@@ -31,7 +31,7 @@
 3. RAG vs Memory 的边界。已完成第一轮论文和框架文档交叉验证，待补最小实验。
 4. MCP server/client/host 的职责边界。已完成第一轮官方文档交叉验证，待补最小 MCP trace 实验。
 5. Agent eval 为什么要看 trajectory。
-6. Prompt injection 为什么需要权限和隔离，而不是只靠提示词。
+6. Prompt injection 为什么需要权限和隔离，而不是只靠提示词。已完成第一轮风险资料交叉验证，待补最小实验和框架安全资料。
 
 ## 升级流程
 

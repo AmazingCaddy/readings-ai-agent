@@ -39,4 +39,5 @@
 
 - Agent eval 应该优先评估最终结果还是完整 trajectory？
 - 通用 benchmark 对真实业务 agent 的代表性有多强？
-- Prompt injection 防护有哪些已验证的工程方法？
+- Prompt injection 防护有哪些已验证的工程方法？已确认 OWASP/NIST 支撑风险边界，仍需补最小实验和框架级权限/隔离资料。
+- 安全 regression set 应该如何覆盖外部文档注入、工具参数越权、敏感信息泄露和 excessive agency？
