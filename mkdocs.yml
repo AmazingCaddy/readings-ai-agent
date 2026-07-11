@@ -61,6 +61,7 @@ nav:
           - WebArena paper: sources/source-cards/2023-webarena-paper.md
           - Indirect Prompt Injection paper: sources/source-cards/2023-indirect-prompt-injection-paper.md
           - AgentDojo paper: sources/source-cards/2024-agentdojo-paper.md
+          - CaMeL prompt injection paper: sources/source-cards/2025-camel-prompt-injection-paper.md
           - Multiagent Debate paper: sources/source-cards/2023-multiagent-debate-paper.md
           - Voyager paper: sources/source-cards/2023-voyager-paper.md
           - Browser Use and Playwright: sources/source-cards/2026-browser-use-playwright.md
