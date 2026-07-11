@@ -6,13 +6,13 @@
 
 | 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |
 | --- | --- | --- | --- | --- |
-| OpenAI Agent 构建 | OpenAI Agents SDK documentation | Official Docs | A | 待复核 |
-| OpenAI API 工具调用 | OpenAI tool calling / function calling documentation | Official Docs | A | 待复核 |
-| OpenAI Responses API | OpenAI Responses API documentation | Official Docs | A | 待复核 |
-| MCP 协议 | Model Context Protocol official specification | Spec | A | 待复核 |
+| OpenAI Agent 构建 | OpenAI Agents SDK documentation | Official Docs | A | 链接已复核；source card 已创建 |
+| OpenAI API 工具调用 | OpenAI tool calling / function calling documentation | Official Docs | A | 链接已复核；source card 已创建 |
+| OpenAI Responses API | OpenAI Responses API documentation | Official Docs | A | 链接已复核；source card 已创建 |
+| MCP 协议 | Model Context Protocol official specification | Spec | A | 链接已复核；source card 已创建 |
 | MCP 概念 | Anthropic MCP documentation | Official Docs | A | 待复核 |
-| LangGraph | LangGraph documentation | Framework Docs | A | 待复核 |
-| LlamaIndex Agents | LlamaIndex agent documentation | Framework Docs | A | 待复核 |
+| LangGraph | LangGraph documentation | Framework Docs | A | 链接已复核；source card 已创建 |
+| LlamaIndex Agents | LlamaIndex agent documentation | Framework Docs | A | 链接已复核；source card 已创建 |
 | Microsoft AutoGen | Microsoft AutoGen documentation | Framework Docs | A | 待复核 |
 | Semantic Kernel | Microsoft Semantic Kernel documentation | Framework Docs | A | 待复核 |
 | CrewAI | CrewAI documentation | Framework Docs | B | 待复核 |
@@ -21,16 +21,16 @@
 
 | 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |
 | --- | --- | --- | --- | --- |
-| ReAct | ReAct: Synergizing Reasoning and Acting in Language Models | Paper | A | 待复核 |
-| Tool use | Toolformer: Language Models Can Teach Themselves to Use Tools | Paper | A | 待复核 |
+| ReAct | ReAct: Synergizing Reasoning and Acting in Language Models | Paper | A | 元数据已复核；source card 已创建 |
+| Tool use | Toolformer: Language Models Can Teach Themselves to Use Tools | Paper | A | 元数据已复核；source card 已创建 |
 | Modular tool reasoning | MRKL Systems: A modular, neuro-symbolic architecture | Paper | A | 待复核 |
-| RAG | Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks | Paper | A | 待复核 |
+| RAG | Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks | Paper | A | 元数据已复核；source card 已创建 |
 | Self-RAG | Self-RAG: Learning to Retrieve, Generate, and Critique | Paper | A | 待复核 |
-| Planning | Tree of Thoughts: Deliberate Problem Solving with Large Language Models | Paper | A | 待复核 |
-| Reflection | Reflexion: Language Agents with Verbal Reinforcement Learning | Paper | A | 待复核 |
+| Planning | Tree of Thoughts: Deliberate Problem Solving with Large Language Models | Paper | A | 元数据已复核；source card 已创建 |
+| Reflection | Reflexion: Language Agents with Verbal Reinforcement Learning | Paper | A | 元数据已复核；source card 已创建 |
 | Multi-agent debate | Improving Factuality and Reasoning in Language Models through Multiagent Debate | Paper | A | 待复核 |
-| Web agents | WebArena: A Realistic Web Environment for Building Autonomous Agents | Paper / Benchmark | A | 待复核 |
-| Agent benchmark | AgentBench: Evaluating LLMs as Agents | Paper / Benchmark | A | 待复核 |
+| Web agents | WebArena: A Realistic Web Environment for Building Autonomous Agents | Paper / Benchmark | A | 元数据已复核；source card 已创建 |
+| Agent benchmark | AgentBench: Evaluating LLMs as Agents | Paper / Benchmark | A | 元数据已复核；source card 已创建 |
 | Tool-use eval | Tau-bench / tool-agent benchmark materials | Benchmark | A/B | 待复核 |
 | Software agents | SWE-agent paper and repository | Paper / Source | A | 待复核 |
 | Embodied agents | Voyager: An Open-Ended Embodied Agent with LLMs | Paper | A | 待复核 |
@@ -51,8 +51,8 @@
 
 | 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |
 | --- | --- | --- | --- | --- |
-| LLM 应用安全 | OWASP Top 10 for LLM Applications | Security Guidance | A | 待复核 |
-| AI 风险管理 | NIST AI Risk Management Framework | Standard / Guidance | A | 待复核 |
+| LLM 应用安全 | OWASP Top 10 for LLM Applications | Security Guidance | A | 链接已复核；source card 已创建 |
+| AI 风险管理 | NIST AI Risk Management Framework | Standard / Guidance | A | 链接已复核；source card 已创建 |
 | Prompt injection | Prompt injection papers and security writeups | Paper / Engineering | A/B | 待复核 |
 | Tool permissions | Framework security guidance for tools and agents | Official Docs | A/B | 待复核 |
 
@@ -76,4 +76,3 @@
 - 支撑证据
 - 可能问题
 - 是否进入正文
-

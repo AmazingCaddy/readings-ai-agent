@@ -13,19 +13,18 @@
 | [Reflexion paper](source-cards/2023-reflexion-paper.md) | Reflection / Eval | Paper | A | 链接已复核；待精读 | 验证 reflection 的适用边界 |
 | [AgentBench paper](source-cards/2023-agentbench-paper.md) | Eval / Benchmark | Paper | A | 链接已复核；待精读 | 提取 benchmark 覆盖任务和局限 |
 | [WebArena paper](source-cards/2023-webarena-paper.md) | Web Agent / Eval | Paper | A | 链接已复核；待精读 | 归纳 Web Agent 评测复杂度 |
+| [OpenAI Function Calling docs](source-cards/2026-openai-function-calling-docs.md) | Tool Use / Function Calling | Official Docs | A | 链接已复核；待精读 | 提取 tool schema、参数生成和工具结果回传机制 |
 | [MCP official docs](source-cards/2026-mcp-official-docs.md) | MCP | Official Docs | A | 链接已复核；待精读 | 提取 MCP 组件定义和安全边界 |
+| [LangGraph docs](source-cards/2026-langgraph-docs.md) | Agent 架构 / Orchestration | Framework Docs | A | 链接已复核；待精读 | 提取 state graph、workflow 和持久化相关抽象 |
+| [LlamaIndex docs](source-cards/2026-llamaindex-docs.md) | RAG / Data framework | Framework Docs | A | 链接已复核；待精读 | 提取 RAG 数据组件和 agent data framework 抽象 |
+| [NIST AI RMF](source-cards/2026-nist-ai-rmf.md) | Risk / Governance | Standard / Guidance | A | 链接已复核；待精读 | 提取生产化风险管理检查点 |
 | [OpenAI Agents SDK docs](source-cards/2026-openai-agents-sdk-docs.md) | Agent Framework | Official Docs | A | 链接已复核；待精读 | 提取 SDK 抽象、tools、handoffs、tracing |
+| [OpenAI Responses API docs](source-cards/2026-openai-responses-api-docs.md) | LLM 应用接口 | Official Docs | A | 链接已复核；待精读 | 提取输入输出、响应结构和工具调用接口 |
+| [OWASP LLM Top 10](source-cards/2026-owasp-llm-top-10.md) | Security | Security Guidance | A | 链接已复核；待精读 | 提取 Agent 安全风险分类和检查清单 |
 
 ## 待创建高优先级卡片
 
 | 候选来源 | 主题 | 理由 |
 | --- | --- | --- |
-| OpenAI tool calling / function calling docs | Tool Use | 需要现代 API 官方定义 |
-| OpenAI Responses API docs | LLM 应用架构 | 需要现代接口上下文 |
-| LangGraph docs | Agent 架构 / 状态图 | 需要工程化 orchestration reference |
-| LlamaIndex docs | RAG / Agent / Data framework | 需要 RAG 和数据连接工程 reference |
-| OWASP Top 10 for LLM Applications | Security | 需要安全章节基础 reference |
-| NIST AI RMF | Risk / Governance | 需要生产化风险管理 reference |
 | OpenAI Evals repository | Evaluation | 需要 eval 实践和源码 reference |
 | MCP example servers | MCP / Tools | 需要工具生态源码 reference |
-
