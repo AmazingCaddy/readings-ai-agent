@@ -14,6 +14,7 @@ Agent observability 不是普通日志的同义词。对会检索、调用工具
 - Source 6：[OpenAI Cookbook](../sources/source-cards/2026-openai-cookbook.md)
 - Source 7：[Evidence Note: Agent Eval 与 Trajectory 边界](agent-eval-trajectory-boundary.md)
 - Source 8：[Trace-Aware Eval 最小实验结果](../experiments/trace-aware-eval/results-2026-07-11.md)
+- Source 9：[Trace Schema Audit 最小实验结果](../experiments/trace-schema-audit/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -28,16 +29,17 @@ Agent observability 不是普通日志的同义词。对会检索、调用工具
 - 边界：LangSmith 和 Phoenix 都是平台/框架文档，支撑工程形态和字段设计，不证明任一平台默认最优。
 - 边界：LLM-as-judge 和在线 evaluator 需要抽样人工复核、误判分析、成本控制和隐私边界；不能把模型评审当作可靠真值。
 - 本地实验：标准库 trace-aware eval 实验显示，如果 trace 记录 tool call、tool result/error、approval 和 final response，就能用简单规则发现 final-only scoring 漏掉的过程错误；这支持正文中把 trace 作为调试、审计和回归输入，而不只是日志。
+- 本地实验：标准库 trace schema audit 显示，`debug_trace` 能支持 debug 但不能支持 audit、regression、cost、RAG 或 privacy；`audit_ready_trace` 支持审计和成本分析但仍缺 dataset/case/retrieval/citation；`eval_rag_trace` 同时覆盖 debug、audit、regression、cost、RAG 和 privacy；`privacy_leaky_trace` 虽能 debug，但因泄露假 secret 和邮箱而隐私失败。这支持“trace 字段要按用途设计”的工程边界。
 
 ## 实验验证
 
 - 是否需要实验：是
 - 实验设计：实现一个 toy RAG + tool-calling Agent。为 10-20 条任务记录 trace：user input、prompt/config version、model version、retrieved chunks、tool name/args/result/error、intermediate steps、latency、token usage、final output、human feedback、failure category。比较 final-answer-only scoring 与 trace-aware scoring 能发现的错误类型。
-- 结果：已完成标准库最小 trace-aware eval 实验。实验记录了 tool call、tool result/error、approval 和 final response，并比较 final-answer-only scoring 与 trace-aware scoring。尚未覆盖 RAG retrieval、latency、token/cost、prompt/config version、human feedback、LLM-as-judge 或真实 observability 平台。
+- 结果：已完成标准库最小 trace-aware eval 实验和 trace schema audit。前者记录 tool call、tool result/error、approval 和 final response，并比较 final-answer-only scoring 与 trace-aware scoring；后者比较 debug、audit、regression、cost、RAG 和 privacy 用途所需字段。尚未覆盖真实 observability 平台映射、真实 LLM-as-judge 或人工复核。
 
 ## 结论状态
 
-- 部分验证：论文/benchmark 支撑过程评测的重要性，OpenAI Evals 支撑 custom eval，LangSmith/Phoenix/Cookbook 支撑 trace、runs、spans、datasets、online/offline evaluation 和反馈工作流；标准库实验支撑 trace-aware scoring 能发现 final-only 漏掉的过程错误。仍缺真实 Agent / RAG traces、自动评分误判分析和人工复核设计。
+- 部分验证：论文/benchmark 支撑过程评测的重要性，OpenAI Evals 支撑 custom eval，LangSmith/Phoenix/Cookbook 支撑 trace、runs、spans、datasets、online/offline evaluation 和反馈工作流；标准库实验支撑 trace-aware scoring 能发现 final-only 漏掉的过程错误，并支撑 trace 字段按 debug/audit/regression/cost/RAG/privacy 用途设计。仍缺真实 Agent / RAG traces、自动评分误判分析和人工复核设计。
 
 ## 可进入章节
 
