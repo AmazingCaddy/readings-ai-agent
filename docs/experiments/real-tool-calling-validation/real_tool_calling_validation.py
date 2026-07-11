@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""Real Responses API tool-calling validation harness.
+"""Responses API tool-calling validation harness.
 
 The script intentionally separates JSON-schema validity from application-level
 business validation. The function schema only requires ``unit`` to be a string;
 the application accepts only celsius/fahrenheit.
+
+Without OPENAI_API_KEY this harness runs deterministic local fixtures that reuse
+the tool-call parser, business validator, and toy tool execution path instead of
+claiming real Responses API behavior.
 """
 
 from __future__ import annotations
@@ -119,6 +123,88 @@ def response_text(response: dict[str, Any]) -> str:
     return "\n".join(texts)
 
 
+def fake_function_response(response_id: str, call_id: str, arguments: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "id": response_id,
+        "output": [
+            {
+                "type": "function_call",
+                "name": "get_weather",
+                "call_id": call_id,
+                "arguments": json.dumps(arguments),
+            }
+        ],
+    }
+
+
+def run_tool_calling_control() -> dict[str, Any]:
+    trace: list[TraceEvent] = []
+    first = fake_function_response("resp_control_1", "call_weather_1", {"city": "Tokyo", "unit": "kelvin"})
+    trace.append(TraceEvent("first_response_fixture", {"id": first["id"]}))
+
+    call = find_function_call(first)
+    if call is None:
+        raise AssertionError("control fixture should contain a function call")
+    arguments = parse_arguments(call)
+    trace.append(
+        TraceEvent(
+            "tool_call_received",
+            {"name": call.get("name"), "call_id": call.get("call_id"), "arguments": arguments},
+        )
+    )
+    errors = validate_weather_args(arguments)
+    trace.append(TraceEvent("tool_validation_failed", {"ok": False, "errors": errors}))
+
+    second = fake_function_response("resp_control_2", "call_weather_2", {"city": "Tokyo", "unit": "celsius"})
+    trace.append(TraceEvent("second_response_fixture", {"id": second["id"]}))
+    second_call = find_function_call(second)
+    if second_call is None:
+        raise AssertionError("second control fixture should contain a function call")
+    second_args = parse_arguments(second_call)
+    second_errors = validate_weather_args(second_args)
+    trace.append(
+        TraceEvent(
+            "second_tool_call_received",
+            {"name": second_call.get("name"), "call_id": second_call.get("call_id"), "arguments": second_args},
+        )
+    )
+    if second_errors:
+        trace.append(TraceEvent("second_tool_validation_failed", {"ok": False, "errors": second_errors}))
+        tool_execution_count = 0
+    else:
+        trace.append(TraceEvent("tool_executed", {"ok": True, "result": execute_weather(second_args)}))
+        tool_execution_count = 1
+
+    validation_failed_count = 1 if errors else 0
+    corrected_tool_call_count = 1 if errors and not second_errors else 0
+    all_passed = (
+        validation_failed_count == 1
+        and corrected_tool_call_count == 1
+        and tool_execution_count == 1
+        and arguments["unit"] == "kelvin"
+        and second_args["unit"] == "celsius"
+    )
+    return {
+        "status": "completed",
+        "api_status": "skipped_without_openai_api_key",
+        "reason": "OPENAI_API_KEY is not set",
+        "model": MODEL,
+        "tool_call_control": "deterministic_validation_retry_fixtures",
+        "real_api_validated": False,
+        "tool_calls_seen": 2,
+        "validation_failed_count": validation_failed_count,
+        "corrected_tool_call_count": corrected_tool_call_count,
+        "tool_execution_count": tool_execution_count,
+        "tool_call_control_passed": all_passed,
+        "all_passed": all_passed,
+        "trace": [event.__dict__ for event in trace],
+        "limitations": [
+            "Deterministic fixtures only validate local tool-call parsing, business validation, retry feedback shape, and toy tool execution logic.",
+            "They do not validate real Responses API tool-call generation, model correction behavior, schema adherence, latency, cost, or cross-model reliability.",
+        ],
+    }
+
+
 def run(api_key: str) -> dict[str, Any]:
     trace: list[TraceEvent] = []
     started = time.perf_counter()
@@ -213,17 +299,7 @@ def finish(
 def main() -> int:
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
-        print(
-            json.dumps(
-                {
-                    "status": "skipped",
-                    "reason": "OPENAI_API_KEY is not set",
-                    "model": MODEL,
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+        print(json.dumps(run_tool_calling_control(), ensure_ascii=False, indent=2))
         return 0
 
     try:

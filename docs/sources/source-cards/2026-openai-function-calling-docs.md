@@ -8,7 +8,7 @@
 - 主题：Tool Use / Function Calling / Structured Output
 - 适合阶段：入门 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接已复核；关键段落已精读；“Function Calling 本身不执行工具”边界已可入正文；参数校验/重试标准库模拟实验和跨框架术语对照第一轮已完成；Real Tool Calling harness 已准备并接入统一 runner，当前无 API key 只验证 skip 分支
+- 是否已验证：来源链接已复核；关键段落已精读；“Function Calling 本身不执行工具”边界已可入正文；参数校验/重试标准库模拟实验和跨框架术语对照第一轮已完成；Real Tool Calling harness 已准备并接入统一 runner，当前无 API key 时完成本地 deterministic validation/retry control，并标记 `real_api_validated=false`
 
 ## 一句话总结
 
@@ -44,9 +44,9 @@
 
 - 已完成一个参数校验失败的标准库模拟实验：fake model 第一轮生成错误参数，应用层返回可操作错误，第二轮修正后执行工具。该实验支撑应用层校验/错误回传/有限重试流程，但不证明真实模型稳定修正参数。
 - 已完成跨框架术语对照 evidence：OpenAI API 的 function/tool calling、OpenAI Agents SDK 的 runtime tools / agent-as-tool、Semantic Kernel plugins/functions、LlamaIndex retriever/query engine、LangGraph state graph、AutoGen/CrewAI multi-agent / Flow 抽象不能直接互换；应按执行、状态、权限和 trace 边界比较。该对照不证明真实框架默认行为。
-- 已准备 [Real Tool Calling 参数校验与重试实验](../../experiments/real-tool-calling-validation/README.md) harness：无 API key 时返回 `skipped`；配置后可记录真实 tool call、validation error、tool result、最终响应、成本/延迟相关字段。当前结果页只记录 skip 分支，尚未产生真实 completed run，不能提前升级结论。
+- 已准备 [Real Tool Calling 参数校验与重试实验](../../experiments/real-tool-calling-validation/README.md) harness：无 API key 时运行本地 deterministic validation/retry control，覆盖 schema-valid 但业务非法参数、validation error、corrected tool call 和 toy tool execution；配置后可记录真实 tool call、validation error、tool result、最终响应、成本/延迟相关字段。当前尚未产生真实 API completed run，不能提前升级真实模型结论。
 
 ## 是否进入正文
 
 - 结论：进入；窄边界可入正文
-- 原因：Tool Use / Function Calling 章节需要官方 API reference；官方五步流程直接支撑“模型生成工具调用请求，应用侧执行工具并回传结果”。跨框架术语对照已补第一轮文档交叉验证；真实 harness 准备工作支撑后续记录模板。真实模型参数修正稳定性和跨框架默认行为仍需实测。
+- 原因：Tool Use / Function Calling 章节需要官方 API reference；官方五步流程直接支撑“模型生成工具调用请求，应用侧执行工具并回传结果”。跨框架术语对照已补第一轮文档交叉验证；标准库模拟和本地 validation/retry control 支撑应用层校验、错误反馈和有限重试的固定样例边界。真实模型参数修正稳定性和跨框架默认行为仍需实测。
