@@ -26,7 +26,7 @@
 | LlamaIndex | Documents、Nodes、Indexes、Retrievers、Query Engines、context augmentation、RAG pipeline | 数据 / RAG 框架抽象，重点是 loading、indexing、retrieval、response synthesis 和 evaluation | retriever/query engine 等同于通用 Agent tool；某个检索策略默认最优 |
 | AutoGen | AgentChat、Agents、Teams、Group Chat、Swarm、GraphFlow、logging/tracing | 多 Agent 应用和协作模式抽象，强调团队、对话和协调机制 | 多 Agent 默认优于 workflow 或单 Agent |
 | CrewAI | Flows、Crews、agent teams | Flow 管理 state/control execution，Crew 是 Flow 内协作完成特定任务的 agent team | Crew 可以替代受控流程；生产应用默认从 Crew 开始 |
-| Semantic Kernel | plugins、functions、native/OpenAPI/MCP plugins、task automation functions、Process Framework | 企业集成中把 existing APIs 暴露给模型；task automation 往往需要 HITL approval | plugin 等于 OpenAI function tool；experimental Process Framework 是稳定通用能力 |
+| Semantic Kernel | plugins、functions、native/OpenAPI/MCP plugins、task automation functions、function invocation filters、Process Framework | 企业集成中把 existing APIs 暴露给模型；task automation 往往需要 HITL approval，且可用 function invocation filter 在函数调用前请求用户同意 | plugin 等于 OpenAI function tool；function invocation filter 等于完整审批状态机；experimental Process Framework 是稳定通用能力 |
 
 ## 交叉验证结果
 
