@@ -18,7 +18,7 @@
 
 学习 Agent 最稳的路线是：先做小而可测的工具调用，再逐步加入 RAG、memory、编排、eval 和生产化边界。
 
-本手册的实践路线 smoke harness 把部分项目验收标准转成了 6 条可运行 eval cases：结构化输出、refusal 记录、工具参数校验、RAG 引用、资料不足拒答和成本预算阻断。它不调用真实模型，也不能替代 Cookbook/API 试跑，但可以作为初学者理解“项目要可测、可复盘、可失败分类”的起点。
+本手册的实践路线 smoke harness 把部分项目验收标准转成了 6 条可运行 eval cases：结构化输出、refusal 记录、工具参数校验、RAG 引用、资料不足拒答和成本预算阻断。它还把 6 个跟练项目卡片做成 readiness audit，检查 prerequisites、setup/run commands、acceptance checks、trace fields、failure examples、references 和 boundaries 是否齐全。它不调用真实模型，也不能替代 Cookbook/API 试跑，但可以作为初学者理解“项目要可测、可复盘、可失败分类、可追溯 references 和适用边界”的起点。
 
 ## 项目 1：最小问答应用
 
@@ -336,12 +336,13 @@
 - SWE-agent 论文和 mini-SWE-agent docs/source 可作为 repo issue / coding agent 进阶练习参考：SWE-agent 支撑 agent-computer interface、仓库导航、文件编辑和测试执行的重要性；mini-SWE-agent 补强当前轻量 coding agent 入口、bash-only 最小控制流、confirm/yolo/human 模式、trajectory、cost/call limit、CLI options、默认配置和 runtime/trajectory 边界。Real Repo Issue Agent Toy 已完成固定 workflow baseline 和确定性 workflow-agent hybrid baseline，证明 toy repo / failing tests / implementation-only diff / trajectory 对照组，以及建议、人工审批、风险命令拒绝、scoped diff 和复跑测试记录可复现；Real mini-SWE-agent CLI Surface Validation 已完成安装 / CLI / 默认配置表面检查；Real mini-SWE-agent Runtime Surface Validation 已完成 deterministic fake-model toy repo run，并观察到 configured env marker 会进入 trajectory；真实 coding-agent 试跑仍需复核 sandbox、权限、成本、模型行为、confirm 人工负担和 repo issue 修复质量。
 - Browser Use / Playwright / Anthropic Computer Use source cards 可作为 Browser / Computer Use Agent 进阶练习参考：它们支撑浏览器动作、profile/auth 风险、custom tools、screenshot/mouse/keyboard control、VM/container 隔离、action validation/logging 和 trace viewer 的工程边界；Real Browser Use Package Surface Validation 已完成 Browser Use package / source surface 检查；Real Browser Playwright Validation 已完成固定本地 demo page workflow 和 deterministic computer-use-style loop，可作为固定 workflow / 坐标动作对照入口。真实 Browser Use agent / Anthropic computer-use agent 任务成功率、点击精度、classifier 行为、成本、延迟、CAPTCHA/stealth、合规和生产可靠性仍待实验。
 - Browser Action Trace Audit 可作为无真实浏览器时的验收字段模板：项目应记录 action trace、DOM/screenshot state、side-effect approval、profile isolation、file upload control、external content boundary、trace redaction 和 failure classification。它不能替代固定 Playwright workflow、Browser Use 或模型驱动 computer-use-style action loop 的真实试跑；当前固定 Playwright workflow 和 deterministic coordinate-loop 已补一个本地 completed run，但模型驱动对照仍待做。
-- 实践路线 smoke harness 已完成标准库试跑，支持“每个项目都要有验收标准、trace、失败分类和可重复运行命令”的学习建议；仍不能替代真实 Structured Outputs、File Search/RAG、轻量 eval harness、Agents SDK trace/eval、Usage/Cost 和 Rate limits 试跑。
+- 实践路线 smoke harness 已完成标准库试跑，支持“每个项目都要有验收标准、trace、失败分类和可重复运行命令”的学习建议；readiness audit 进一步验证跟练项目卡片应包含 prerequisites、setup/run commands、acceptance checks、trace fields、failure examples、references 和 boundaries，且要明确本地 control 不能替代真实 API / 模型 / 框架验证。它仍不能替代真实 Structured Outputs、File Search/RAG、轻量 eval harness、Agents SDK trace/eval、Usage/Cost 和 Rate limits 试跑。
 - 安全 regression set 最小实验已完成标准库试跑，支持“生产化练习需要覆盖多类安全 case，并记录误报、漏报和 trace 泄漏”的学习建议；仍不能替代真实模型 / 框架 guardrail / HITL approval 试跑。
 
 ## 待验证问题
 
 - 这些 Cookbook recipe 真实本地试跑时的依赖、成本、失败样例和初学者阻塞点是什么？
+- 如何把 practice readiness card 模板迁移到每个项目的正式跟练页面，并补真实命令输出、trace 样例和故障排查步骤？
 - 真实项目 8 中，token、usage、rate-limit headers、retry、平均/P95 latency、cost estimate、budget threshold、Batch/Flex/Prompt Caching 字段和降级策略应该如何记录成初学者能复用的模板？Real Production Cost / Latency / Rate-Limit harness 已补本地 accounting control，Real Batch/Flex/Caching harness 已补本地 metadata control；真实 API completed run 仍待做。
 - 真实项目 8 中，API key、`safety_identifier`、abuse logs、application state、对象删除、third-party tool data flow 和 data retention controls 应如何记录成初学者能复用的模板？
 - 真实项目 8 中，moderation-only、policy-enforced 和 HITL 如何对照记录误报、漏报、延迟、成本和人工复核负担？Real Moderation Safety harness 已补本地 policy-signal control；真实 API completed run 仍待做。
