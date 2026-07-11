@@ -12,7 +12,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`；官方 MCP SDK harness 在没有 `mcp` Python package 时应返回 `skipped`；LlamaIndex harness 在没有 `llama-index-core` 时应返回 `skipped`。部分框架 harness 可以用 `uv run --with ...` 临时依赖运行。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
 
-当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-12.md)：2026-07-12 运行覆盖 15 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，LlamaIndex harness 通过临时依赖完成本地 `VectorStoreIndex` / retriever / source-node metadata run，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph interrupt recovery harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，LangGraph memory store harness 完成本地 `InMemoryStore` namespace / put / get / search / delete run，本地 MCP stdio harness 和官方 MCP Python SDK stdio harness 完成。Semantic Kernel plugin harness 已有单独 completed run；在标准 full runner 中因未安装该依赖而保守 skipped。
+当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-12.md)：2026-07-12 运行覆盖 16 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，LlamaIndex harness 通过临时依赖完成本地 `VectorStoreIndex` / retriever / source-node metadata run，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph interrupt recovery harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，LangGraph memory store harness 完成本地 `InMemoryStore` namespace / put / get / search / delete run，Real Framework Same-Task Comparison 在标准 full runner 中完成 LangGraph / LlamaIndex adapter，本地 MCP stdio harness 和官方 MCP Python SDK stdio harness 完成。Semantic Kernel plugin harness 和 same-task comparison 的 Semantic Kernel adapter 均已有单独 completed run；在标准 full runner 中因未安装该依赖而保守 skipped。
 
 ## 实验清单与状态
 
@@ -121,6 +121,10 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 25. Real Semantic Kernel plugin validation 实验
     - 目标：用 Semantic Kernel Python native plugin 验证 plugin/function metadata、参数 required/type 处理、应用层写工具审批和 side-effect trace。
     - 状态：真实 harness 已完成单独本地 run，见 [Real Semantic Kernel Plugin Validation](real-semantic-kernel-plugin-validation/README.md) 和 [2026-07-12 结果](real-semantic-kernel-plugin-validation/results-2026-07-12.md)。它支撑 native plugin runtime 的窄观察：metadata 暴露、缺参/不可解析类型拒绝、可解析字符串数值执行、未审批写工具不转发、已审批写工具产生 side effect。它不证明真实模型 tool selection、OpenAPI/MCP plugin、Agent Framework、Process Framework、HITL UI、参数快照、幂等恢复、成本、延迟或生产安全。
+
+26. Real Framework Same-Task Comparison 实验
+    - 目标：用同一个本地退款政策检索 + 审批退款任务，对比 LangGraph、LlamaIndex 和 Semantic Kernel 的真实 runtime surface，并拆分 framework-owned 与 application-owned capabilities。
+    - 状态：真实 harness 已完成单独本地 3 框架 run，见 [Real Framework Same-Task Comparison](real-framework-same-task-comparison/README.md) 和 [2026-07-12 结果](real-framework-same-task-comparison/results-2026-07-12.md)。本次记录 LangGraph `StateGraph` / conditional edge、LlamaIndex `VectorStoreIndex` / retriever source nodes、Semantic Kernel plugin metadata / `Kernel.invoke()`；三个 adapter 均阻断未审批退款、执行一次已审批退款且 trace 未泄露示例 secret。它不证明真实模型行为、成本、延迟、hosted tracing、HITL UI、部署恢复、OpenAPI/MCP plugin 或生产安全，也不能推出框架排名。
 
 ## 实验记录要求
 
