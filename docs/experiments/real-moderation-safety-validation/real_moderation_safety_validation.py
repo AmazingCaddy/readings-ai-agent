@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Real OpenAI Moderation safety-signal validation harness.
+"""OpenAI Moderation safety-signal validation harness.
 
-The harness skips without OPENAI_API_KEY. With a key, it sends a small fixed set
-of inputs to the Moderation API and records result fields, latency, and a simple
-human-expected label comparison. It treats moderation as a policy signal, not as
-ground truth or a complete safety boundary.
+Without OPENAI_API_KEY the harness runs deterministic local policy-signal
+fixtures instead of claiming real Moderation API behavior. With a key, it sends
+a small fixed set of inputs to the Moderation API and records result fields,
+latency, and a simple human-expected label comparison. It treats moderation as a
+policy signal, not as ground truth or a complete safety boundary.
 """
 
 from __future__ import annotations
@@ -121,33 +122,141 @@ def policy_decision(flagged: bool, expected_flagged: bool) -> str:
     return "allow_with_logging"
 
 
+def moderation_body(flagged: bool, categories: dict[str, bool], scores: dict[str, float]) -> dict[str, Any]:
+    return {
+        "id": "modr_control",
+        "model": MODEL,
+        "results": [
+            {
+                "flagged": flagged,
+                "categories": categories,
+                "category_scores": scores,
+                "category_applied_input_types": {
+                    key: ["text"] for key in categories
+                },
+            }
+        ],
+    }
+
+
+def deterministic_control_inputs() -> list[tuple[ModerationCase, dict[str, Any], int, str]]:
+    return [
+        (
+            CASES[0],
+            moderation_body(
+                False,
+                {"self-harm": False, "harassment/threatening": False},
+                {"self-harm": 0.0002, "harassment/threatening": 0.0001},
+            ),
+            18,
+            "allow_with_logging",
+        ),
+        (
+            CASES[1],
+            moderation_body(
+                True,
+                {"self-harm/instructions": True, "violence": False},
+                {"self-harm/instructions": 0.98, "violence": 0.12},
+            ),
+            24,
+            "route_to_block_or_human_review",
+        ),
+        (
+            CASES[2],
+            moderation_body(
+                False,
+                {"harassment/threatening": False, "illicit": False},
+                {"harassment/threatening": 0.33, "illicit": 0.04},
+            ),
+            31,
+            "possible_false_negative_apply_policy_fallback",
+        ),
+        (
+            CASES[3],
+            moderation_body(
+                True,
+                {"harassment": True, "violence": False},
+                {"harassment": 0.71, "violence": 0.03},
+            ),
+            22,
+            "possible_false_positive_review",
+        ),
+    ]
+
+
+def build_observation(case: ModerationCase, body: dict[str, Any], latency_ms: int) -> dict[str, Any]:
+    summary = summarize_result(body)
+    return {
+        "case_id": case.case_id,
+        "input_type": case.input_type,
+        "expected_flagged": case.expected_flagged,
+        "actual_flagged": summary["flagged"],
+        "match_expected": summary["flagged"] == case.expected_flagged,
+        "policy_decision": policy_decision(summary["flagged"], case.expected_flagged),
+        "latency_ms": latency_ms,
+        "reason": case.reason,
+        "summary": summary,
+        "response_id": body.get("id"),
+    }
+
+
+def run_policy_signal_control() -> dict[str, Any]:
+    observations = []
+    expected_decisions = []
+    for case, body, latency_ms, expected_decision in deterministic_control_inputs():
+        observation = build_observation(case, body, latency_ms)
+        observation["expected_policy_decision"] = expected_decision
+        observation["policy_decision_match"] = observation["policy_decision"] == expected_decision
+        observations.append(observation)
+        expected_decisions.append(expected_decision)
+    mismatches = [item for item in observations if not item["match_expected"]]
+    checks = {
+        "all_policy_decisions_matched": all(item["policy_decision_match"] for item in observations),
+        "true_positive_branch_seen": "route_to_block_or_human_review" in expected_decisions,
+        "true_negative_branch_seen": "allow_with_logging" in expected_decisions,
+        "false_positive_branch_seen": "possible_false_positive_review" in expected_decisions,
+        "false_negative_branch_seen": "possible_false_negative_apply_policy_fallback" in expected_decisions,
+        "category_scores_recorded": all(item["summary"]["top_category_scores"] for item in observations),
+        "applied_input_types_seen": all(item["summary"]["category_applied_input_types_seen"] for item in observations),
+    }
+    return {
+        "status": "completed",
+        "api_status": "skipped_without_openai_api_key",
+        "reason": "OPENAI_API_KEY is not set",
+        "model": MODEL,
+        "moderation_control": "deterministic_policy_signal_fixtures",
+        "real_api_validated": False,
+        "case_count": len(observations),
+        "flagged_count": sum(1 for item in observations if item["actual_flagged"]),
+        "mismatch_count": len(mismatches),
+        "policy_signal_control_passed": all(checks.values()),
+        "all_passed": all(checks.values()),
+        "average_latency_ms": int(sum(item["latency_ms"] for item in observations) / len(observations)),
+        "checks": checks,
+        "observations": observations,
+        "limitations": [
+            "Deterministic fixtures only validate local result-field parsing and policy-decision branching.",
+            "They do not validate real Moderation API classification, thresholds, latency, cost, streaming behavior, or production safety.",
+        ],
+    }
+
+
 def run(api_key: str) -> dict[str, Any]:
     observations = []
     started = time.perf_counter()
     for case in CASES:
         body, latency_ms = post_moderation(api_key, case.text)
-        summary = summarize_result(body)
-        observations.append(
-            {
-                "case_id": case.case_id,
-                "input_type": case.input_type,
-                "expected_flagged": case.expected_flagged,
-                "actual_flagged": summary["flagged"],
-                "match_expected": summary["flagged"] == case.expected_flagged,
-                "policy_decision": policy_decision(summary["flagged"], case.expected_flagged),
-                "latency_ms": latency_ms,
-                "reason": case.reason,
-                "summary": summary,
-                "response_id": body.get("id"),
-            }
-        )
+        observations.append(build_observation(case, body, latency_ms))
     mismatches = [item for item in observations if not item["match_expected"]]
     return {
         "status": "completed",
+        "api_status": "completed",
         "timestamp": utc_now(),
         "model": MODEL,
         "api_url": API_URL,
+        "real_api_validated": True,
         "case_count": len(observations),
+        "flagged_count": sum(1 for item in observations if item["actual_flagged"]),
         "mismatch_count": len(mismatches),
         "average_latency_ms": int(sum(item["latency_ms"] for item in observations) / len(observations)),
         "observations": observations,
@@ -163,18 +272,7 @@ def run(api_key: str) -> dict[str, Any]:
 def main() -> int:
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
-        print(
-            json.dumps(
-                {
-                    "status": "skipped",
-                    "reason": "OPENAI_API_KEY is not set",
-                    "model": MODEL,
-                    "case_count": len(CASES),
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+        print(json.dumps(run_policy_signal_control(), ensure_ascii=False, indent=2))
         return 0
     try:
         result = run(api_key)

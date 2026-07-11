@@ -9,7 +9,7 @@
 ## 当前状态
 
 - Harness 已准备：`real_moderation_safety_validation.py`
-- 当前运行状态：`skipped`，因为未设置 `OPENAI_API_KEY`。
+- 当前运行状态：无 `OPENAI_API_KEY` 时运行本地 deterministic policy-signal control，并标记 `api_status=skipped_without_openai_api_key`、`real_api_validated=false`。
 - 结果页：[2026-07-11 结果](results-2026-07-11.md)
 
 ## 运行方式
@@ -20,7 +20,7 @@ uv run python docs/experiments/real-moderation-safety-validation/real_moderation
 
 可选环境变量：
 
-- `OPENAI_API_KEY`：未设置时返回 `skipped`。
+- `OPENAI_API_KEY`：未设置时运行本地 deterministic policy-signal control。
 - `OPENAI_MODERATION_MODEL`：默认 `omni-moderation-latest`。
 - `OPENAI_MODERATION_URL`：默认 `https://api.openai.com/v1/moderations`。
 
@@ -41,10 +41,21 @@ uv run python docs/experiments/real-moderation-safety-validation/real_moderation
 - expected vs actual flagged mismatch。
 - policy decision：allow、human review、possible false positive review、possible false negative fallback。
 
+## 本地 control
+
+无 API key 时，脚本使用固定 moderation response fixture 复用 `summarize_result()` 和 `policy_decision()`：
+
+- true negative：benign support question -> `allow_with_logging`。
+- true positive：obvious self-harm instruction request -> `route_to_block_or_human_review`。
+- false negative fixture：high-risk tool-call arguments 未被 flagged -> `possible_false_negative_apply_policy_fallback`。
+- false positive fixture：benign tool output 被 flagged -> `possible_false_positive_review`。
+
+该 control 只验证 result-field parsing、category score 记录、`category_applied_input_types` 记录和应用层 policy decision 分支，不验证真实 Moderation API 分类质量。
+
 ## 结论边界
 
-- 可支撑：真实 Moderation API 观测入口、结果字段模板、误报 / 漏报记录方式和应用层 policy signal 设计。
-- 当前不能支撑：当前环境未设置 API key，没有真实 completed run。即使后续运行成功，也只能验证所选 moderation model、样本、账号、网络和时间窗口；不能证明阈值策略、检测层、人工复核流程、tool permission 或生产安全充分有效。
+- 可支撑：真实 Moderation API 观测入口、结果字段模板、误报 / 漏报记录方式、应用层 policy signal 设计，以及本地 policy-decision 分支检查。
+- 当前不能支撑：当前环境未设置 API key，没有真实 Moderation API completed run。即使后续运行成功，也只能验证所选 moderation model、样本、账号、网络和时间窗口；不能证明阈值策略、检测层、人工复核流程、tool permission 或生产安全充分有效。
 
 ## 不覆盖
 
