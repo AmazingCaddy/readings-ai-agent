@@ -3,12 +3,12 @@
 - 来源链接：https://atlas.mitre.org/；https://atlas.mitre.org/atlas-data/dist/manifest.yaml；https://atlas.mitre.org/atlas-data/dist/v6/ATLAS-2026.06.yaml
 - 作者 / 机构：MITRE
 - 发布时间：collection `created-date: 2020-10-23`；当前复核版本 `2026.06`，manifest `release-date: 2026-06-30`
-- 最后复核日期：2026-07-11
+- 最后复核日期：2026-07-12
 - 类型：Threat Knowledge Base / YAML Dataset
 - 主题：AI Security / Adversarial Techniques / Agentic AI / Prompt Injection / Tool Misuse / Memory Poisoning
 - 适合阶段：工程实践 / 生产化 / 安全测试设计
 - 可信度等级：A
-- 是否已验证：主页、manifest、最新 v6 YAML 数据、HTTP metadata 和 term catalog 已复核；可支撑 AI / Agentic AI 攻击技术分类、case study 与安全 regression set 设计；不能证明任意 mitigation、detector、guardrail、sandbox、HITL 或监控方案在真实系统中有效
+- 是否已验证：主页、manifest、最新 v6 YAML 数据、HTTP metadata、term catalog 和关键 Agentic AI 条目 2026-07-12 已复核；可支撑 AI / Agentic AI 攻击技术分类、case study 与安全 regression set 设计；不能证明任意 mitigation、detector、guardrail、sandbox、HITL 或监控方案在真实系统中有效
 
 ## 一句话总结
 
@@ -29,12 +29,13 @@ MITRE ATLAS 是面向 AI 系统的 adversarial tactics、techniques、mitigation
 
 - 主页返回 HTTP 200；HEAD metadata 显示 `last-modified: Tue, 30 Jun 2026 23:33:41 GMT`，`content-type: text/html; charset=utf-8`。
 - 主页 HTML 指向静态资源 `/assets/index-BZkV2o0L.js`，前端 bundle 中的数据加载逻辑指向 `/atlas-data/dist/manifest.yaml` 和 manifest 中的 v6 YAML 路径。
-- `/atlas-data/dist/manifest.yaml` 返回 HTTP 200；HEAD metadata 显示 `content-type: text/yaml`、`last-modified: Tue, 30 Jun 2026 23:33:41 GMT`。manifest 第一项为 release `2026.06`、release-date `2026-06-30`、format-version `6.0.0`、path `v6/ATLAS-2026.06.yaml`。
+- 2026-07-12 复核：`/atlas-data/dist/manifest.yaml` 返回 HTTP 200；HEAD metadata 显示 `content-type: text/yaml`、`last-modified: Tue, 30 Jun 2026 23:33:41 GMT`。manifest 第一项仍为 release `2026.06`、release-date `2026-06-30`、format-version `6.0.0`、path `v6/ATLAS-2026.06.yaml`。
 - `/atlas-data/dist/v6/ATLAS-2026.06.yaml` 返回 HTTP 200；HEAD metadata 显示 `content-type: text/yaml`、`last-modified: Tue, 30 Jun 2026 23:33:41 GMT`、`content-length: 625790`。
 - 最新 YAML 开头显示 `format-version: 6.0.0`、collection `name: ATLAS`、description `Adversarial Threat Landscape for AI Systems`、created-date `2020-10-23`、modified-date `2026-05-27`、version `2026.06`。
-- 最新 YAML 包含 tactics、techniques、mitigations、case-studies 和 relationships；抽样计数为 173 techniques、35 mitigations、63 case studies。
+- 2026-07-12 复核：最新 YAML 包含 tactics、techniques、mitigations、case-studies 和 relationships；`object-type` 计数仍为 173 techniques、35 mitigations、63 case studies。
 - term catalog 明确列出 platform values：`Predictive AI`、`Generative AI`、`Agentic AI`、`Enterprise`，并给出 Agentic AI 的 multi-step action / memory / tool use / workflow orchestration 相关定义。
 - term catalog 明确列出 maturity values：`Feasible`、`Demonstrated`、`Realized`。
+- 2026-07-12 复核：最新 YAML 仍命中 `LLM Prompt Injection`、`AI Agent Tool Invocation`、`AI Agent Tool Poisoning`、`Data Exfiltration from Slack AI via Indirect Prompt Injection`、`Hacking ChatGPT's Memories with Prompt Injection` 和 `Data Destruction via Indirect Prompt Injection Targeting Claude Computer-Use`。
 
 ## 可能的问题
 
