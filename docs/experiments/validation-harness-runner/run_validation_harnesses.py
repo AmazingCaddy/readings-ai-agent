@@ -37,6 +37,10 @@ HARNESSES = [
         "real_production_cost_latency",
         ROOT / "docs/experiments/real-production-cost-latency-validation/real_production_cost_latency_validation.py",
     ),
+    Harness(
+        "real_browser_playwright",
+        ROOT / "docs/experiments/real-browser-playwright-validation/real_browser_playwright_validation.py",
+    ),
     Harness("mcp_stdio_trace", ROOT / "docs/experiments/real-mcp-stdio-trace/mcp_stdio_trace.py"),
 ]
 
@@ -65,6 +69,9 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "average_latency_ms",
         "p95_latency_ms",
         "rate_limit_headers_seen",
+        "record_count",
+        "trace_zip_created",
+        "trace_zip_member_count",
         "leaked_secret_in_trace",
     ]:
         if key in payload:

@@ -9,7 +9,7 @@
 - 主题：Browser Agent / Browser Automation / Web Agent / Trace
 - 适合阶段：进阶 / 实践扩展
 - 可信度等级：B
-- 是否已验证：Browser Use GitHub metadata、README、docs `llms.txt`、Playwright Python installation/actions/trace viewer 页面已复核；标准库 Browser Action Trace Audit 已完成字段审计；支撑浏览器 Agent 的动作层、浏览器 profile/auth、custom tools、云端托管、trace、审批、文件上传策略、外部内容边界、脱敏和失败分类边界；README benchmark / leaderboard / hosted model claims 未独立复现，真实任务成功率、成本、延迟、CAPTCHA/stealth、合规和安全仍部分验证
+- 是否已验证：Browser Use GitHub metadata、README、docs `llms.txt`、Playwright Python installation/actions/trace viewer 页面已复核；标准库 Browser Action Trace Audit 已完成字段审计；真实 Playwright harness 已准备但当前因未安装 Playwright 只验证 skip 分支；支撑浏览器 Agent 的动作层、浏览器 profile/auth、custom tools、云端托管、trace、审批、文件上传策略、外部内容边界、脱敏和失败分类边界；README benchmark / leaderboard / hosted model claims 未独立复现，真实任务成功率、成本、延迟、CAPTCHA/stealth、合规和安全仍部分验证
 
 ## 一句话总结
 
@@ -45,6 +45,7 @@ Browser Use 和 Playwright 适合说明浏览器 Agent 的工程执行层：Agen
 - Playwright actions 页面包含 text input、checkboxes/radio buttons、select options、mouse click、keys/shortcuts、upload files、focus、drag and drop、scrolling 等动作目录。
 - Playwright trace viewer 页面说明可用 `--tracing` 或 `context.tracing.start(...)` / `stop(...)` 记录 trace，并用 trace viewer 按 action 回看页面状态、log、source、network 和 DOM snapshot。
 - 2026-07-11 运行 [Browser Action Trace Audit](../../experiments/browser-action-trace-audit/README.md) 成功；`naive_trace` 0/8 通过，`governed_trace` 8/8 通过。该结果只支撑字段设计，不启动真实浏览器、不调用 Playwright / Browser Use / Anthropic API，也不读取真实 DOM 或 screenshot。
+- 2026-07-11 准备 [Real Browser Playwright Validation](../../experiments/real-browser-playwright-validation/README.md) harness；当前环境未安装 Playwright，结果为 `skipped`。该入口尚未产生真实 browser completed run。
 
 ## 可能的问题
 
@@ -67,7 +68,7 @@ Browser Use 和 Playwright 适合说明浏览器 Agent 的工程执行层：Agen
 - 使用 Playwright 在本地 demo page 上实现固定 workflow：打开页面、填写表单、点击提交、记录 trace.zip，并检查 DOM 状态。
 - 使用 Browser Use 在同一 demo page 上运行一个自然语言任务，对比固定 Playwright workflow 与 browser agent 的步骤数、失败原因、trace 可读性、成本、延迟和是否需要人工确认。
 - 设计安全 case：登录态 profile、文件上传、购物车、表单提交、外部页面 prompt injection、CAPTCHA / 2FA、误点击 destructive button，记录 allow/block/require_approval 和 trace 脱敏。
-- 当前已完成无浏览器字段审计；下一步仍需要真实 demo site 对照实验来记录 trace.zip、真实 DOM/screenshot state、成本、延迟和失败样例。
+- 当前已完成无浏览器字段审计，并准备了真实 Playwright harness；下一步仍需要安装 Playwright 后运行 completed case，再扩展真实 demo site 对照实验来记录 trace.zip、真实 DOM/screenshot state、成本、延迟和失败样例。
 
 ## 是否进入正文
 

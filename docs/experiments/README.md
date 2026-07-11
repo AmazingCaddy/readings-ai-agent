@@ -102,6 +102,10 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
     - 目标：把 Browser Use、Playwright、Anthropic Computer Use 和权限 / observability evidence 中的 browser agent 边界整理成可审计 action trace 字段表。
     - 状态：已完成标准库 field audit，见 [Browser Action Trace Audit](browser-action-trace-audit/README.md) 和 [2026-07-11 结果](browser-action-trace-audit/results-2026-07-11.md)。尚未启动真实浏览器、运行 Playwright / Browser Use / Anthropic computer use 或调用真实模型；不能证明真实网页任务成功率、点击精度、classifier 效果、CAPTCHA/2FA/stealth、成本、延迟、合规或生产可靠性。
 
+21. Real Browser Playwright validation 实验
+    - 目标：在本地 demo page 上用固定 Playwright workflow 收集真实 browser action trace、DOM/screenshot state、文件上传、提交审批和失败分类，作为 Browser Use / computer-use-style action loop 的后续对照组。
+    - 状态：真实 harness 已准备，见 [Real Browser Playwright Validation](real-browser-playwright-validation/README.md) 和 [2026-07-11 结果](real-browser-playwright-validation/results-2026-07-11.md)。当前环境未安装 Playwright，运行结果为 `skipped`；尚未产生真实浏览器 completed run，不能证明 Playwright、Browser Use、Anthropic computer use 或任何模型的真实网页任务表现。
+
 ## 实验记录要求
 
 - 明确假设。
