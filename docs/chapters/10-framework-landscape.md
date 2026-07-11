@@ -104,6 +104,8 @@ Enterprise integration 更强调和现有系统、权限、插件、业务流程
 
 需要注意：SDK 抽象不等于 Agent 的全部理论，也不替代权限和评测设计。
 
+本手册的 Real OpenAI Agents SDK Guardrail Validation 已用 `openai-agents==0.18.2` 和 deterministic fake model 观察到一组本地 runtime surface：input guardrail 可以在模型调用前阻断，output guardrail 在模型调用后阻断，function-tool input guardrail 可以在本地函数工具副作用前拒绝，function-tool output guardrail 在函数执行后替换输出，`needs_approval=True` metadata 可观察。这说明比较框架时不能只看“是否支持 guardrails / approval”这个勾选项，还要看它们覆盖哪类工具、发生在副作用前还是副作用后，以及哪些 policy、审批状态、side effect 和 trace 脱敏仍由应用层负责。这个实验不覆盖真实模型、hosted tools、MCP tools、Shell / ApplyPatch tools、真实 HITL UI、生产 tracing、成本或延迟。
+
 ### LangGraph
 
 适合学习状态图、workflow-agent hybrid、可控编排、持久化和复杂流程。
@@ -170,7 +172,7 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 
 同一个任务可以用不同框架完成。比较时不要只看代码行数，还要看 trace 是否清楚、失败是否容易定位、权限是否可控、后续维护是否简单。
 
-本手册的 Real Framework Same-Task Comparison 用同一个“退款政策检索 + 审批退款”本地任务跑通了 OpenAI Agents SDK、LangGraph、LlamaIndex 和 Semantic Kernel：OpenAI Agents SDK 主要提供 `FunctionTool` schema、`needs_approval` metadata、tool argument validation、direct `ToolContext` invocation，以及 fake-model `Runner` approval / resume loop，LangGraph 主要提供 `StateGraph`、节点和条件路由，LlamaIndex 主要提供 `VectorStoreIndex`、retriever 和 source-node metadata，Semantic Kernel 主要提供 plugin catalog、kernel function metadata 和 `Kernel.invoke()`。同一个任务虽然都能跑通，但审批 policy、side effect、trace redaction，以及部分检索 / trust filter，仍是应用层代码。初学者比较框架时，应先问“这一步是框架帮我做的，还是我自己写的？”
+本手册的 Real Framework Same-Task Comparison 用同一个“退款政策检索 + 审批退款”本地任务跑通了 OpenAI Agents SDK、LangGraph、LlamaIndex 和 Semantic Kernel：OpenAI Agents SDK 主要提供 `FunctionTool` schema、`needs_approval` metadata、tool argument validation、direct `ToolContext` invocation，以及 fake-model `Runner` approval / resume loop，LangGraph 主要提供 `StateGraph`、节点和条件路由，LlamaIndex 主要提供 `VectorStoreIndex`、retriever 和 source-node metadata，Semantic Kernel 主要提供 plugin catalog、kernel function metadata 和 `Kernel.invoke()`。后续的 OpenAI Agents SDK guardrail harness 又把 SDK 的 input/output/tool guardrail 运行位置单独拆开观察。同一个任务虽然都能跑通，但审批 policy、side effect、trace redaction，以及部分检索 / trust filter，仍是应用层代码。初学者比较框架时，应先问“这一步是框架帮我做的，还是我自己写的？”
 
 ## 工程实践
 
@@ -220,14 +222,14 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 - 多 Agent 框架适合学习角色协作和任务分配，但“多 Agent 默认更好”没有被框架文档证明。“多 Agent 不是复杂任务默认升级路径；引入前应明确角色边界、证据分配、冲突处理、review trace 和成本预算”已升级为可入正文。标准库多 Agent 对比实验已验证无控制角色协作会带来重复读取、缺证据和冲突风险；Real Multi-Agent Framework Validation 已补 AutoGen AgentChat / CrewAI 的本地 fake-model runtime surface 观察，也补了 LangGraph deterministic `StateGraph` multi-role surface 观察。真实模型、多轮冲突合并、成本、延迟、trace 可读性和成功率仍需同任务对比验证。
 - LlamaIndex source card 明确其适合 RAG、数据连接、索引和 agent data framework；需区分通用 RAG 概念和框架实现。
 - Semantic Kernel source card 已完成第一轮精读，可支撑 enterprise integration、plugins/functions、native/OpenAPI/MCP plugin 导入、agent framework、human-in-the-loop 和 process orchestration 的框架定位；Real Semantic Kernel Plugin Validation 已补 native plugin runtime 的 metadata、参数处理和应用层审批 wrapper 观察；其 Process Framework 当前仍标注 experimental。
-- “Agent 框架应按任务难点和能力边界比较，不应写成某个框架默认最好”已升级为可入正文：框架生态定位边界、框架能力交叉表和标准库 rubric smoke test 支撑各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；Real Framework Same-Task Comparison 和 Real Multi-Agent Framework Validation 进一步支撑同任务 run 应拆分 framework-owned capabilities 和 application-owned capabilities；但不能从文档、rubric 或本地 fake-model / deterministic-node run 直接推出真实成本、可靠性或性能排名，也不能把 fake-model Agents SDK `Runner`、AutoGen team loop、CrewAI sequential crew 或 LangGraph local node graph 行为等同于真实模型、hosted tracing 或生产审批 UI。
+- “Agent 框架应按任务难点和能力边界比较，不应写成某个框架默认最好”已升级为可入正文：框架生态定位边界、框架能力交叉表和标准库 rubric smoke test 支撑各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；Real OpenAI Agents SDK Guardrail Validation、Real Framework Same-Task Comparison 和 Real Multi-Agent Framework Validation 进一步支撑同任务 run 应拆分 framework-owned capabilities 和 application-owned capabilities，并区分 guardrail / approval 发生在模型调用前后、工具副作用前后还是应用层 wrapper 中；但不能从文档、rubric 或本地 fake-model / deterministic-node run 直接推出真实成本、可靠性或性能排名，也不能把 fake-model Agents SDK `Runner`、AutoGen team loop、CrewAI sequential crew 或 LangGraph local node graph 行为等同于真实模型、hosted tracing、hosted/MCP/Shell/ApplyPatch 工具覆盖或生产审批 UI。
 - 框架能力交叉表已把 6 个常见框架的主轴、适合学习内容、不应误读点和真实实验缺口整理到 evidence note；它支撑本章的定位表，但仍不能替代真实框架横向实验。
 - Tool / Function / Plugin 术语对照已完成第一轮文档交叉验证，可支撑“框架术语不能直接当成行业通用定义”的保守表述。OpenAI API 的 function/tool calling、OpenAI Agents SDK 的 runtime tools / agent-as-tool、Semantic Kernel 的 plugins/functions、LlamaIndex 的 retriever/query engine、LangGraph 的 state graph、AutoGen/CrewAI 的 multi-agent / Flow 抽象处在不同层级；Semantic Kernel native plugin 已有本地 runtime 观察，但真实框架默认错误处理、权限、HITL、trace 和成本仍需同任务实验。
 
 ## 待验证问题
 
 - 各框架的 tracing 和 observability 能力如何实际比较？
-- 哪些框架更容易实现权限隔离和人工确认？LangGraph 文档机制已补 interrupt / persistence 边界，Real LangGraph Interrupt Recovery 已完成一个最小真实框架 run、本地 SQLite 同进程恢复、双本地 Python 进程恢复和双本地 Python 进程并发 resume case；Real Framework Same-Task Comparison 已补一个本地同任务 runtime 对照，但审批 policy 多数仍是应用层代码；仍需真实同任务对比 OpenAI Agents SDK、LangGraph、Semantic Kernel、MCP 等工具面的审批状态、参数快照、部署式服务恢复、真实服务并发恢复、幂等执行和 trace 脱敏。
+- 哪些框架更容易实现权限隔离和人工确认？OpenAI Agents SDK guardrail harness 已补 input/output/tool guardrail 位置边界，LangGraph 文档机制已补 interrupt / persistence 边界，Real LangGraph Interrupt Recovery 已完成一个最小真实框架 run、本地 SQLite 同进程恢复、双本地 Python 进程恢复和双本地 Python 进程并发 resume case；Real Framework Same-Task Comparison 已补一个本地同任务 runtime 对照，但审批 policy 多数仍是应用层代码；仍需真实同任务对比 OpenAI Agents SDK、LangGraph、Semantic Kernel、MCP 等工具面的审批状态、参数快照、部署式服务恢复、真实服务并发恢复、幂等执行、hosted/MCP/Shell/ApplyPatch 工具覆盖和 trace 脱敏。
 - 同一任务在不同真实框架下的成本、延迟和可调试性差异有多大？
 - 框架版本演进是否改变了核心抽象？
 - 如何为初学者设计不被框架绑定的实践项目？

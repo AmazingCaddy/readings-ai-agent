@@ -14,7 +14,7 @@
 - 主题：Agent Framework / Tool Use / Tracing
 - 适合阶段：入门 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接、README、文档首页、`llms.txt`、tools、guardrails、`human_in_the_loop`、tracing 关键段落和 HTTP metadata 已复核；Agent/Workflow、自治程度和复杂架构默认可靠性窄边界可入正文；高风险工具权限窄边界可入正文；跨框架术语对照第一轮已完成；安全 regression set 和审批状态恢复实验已完成；真实 SDK runtime/guardrail/HITL 效果仍部分验证
+- 是否已验证：来源链接、README、文档首页、`llms.txt`、tools、guardrails、`human_in_the_loop`、tracing 关键段落和 HTTP metadata 已复核；Agent/Workflow、自治程度和复杂架构默认可靠性窄边界可入正文；高风险工具权限窄边界可入正文；跨框架术语对照第一轮已完成；安全 regression set 和审批状态恢复实验已完成；Real OpenAI Agents SDK Guardrail Validation 已用 `openai-agents==0.18.2` / fake model 跑通 input guardrail、output guardrail、function-tool input/output guardrail 和 `needs_approval` metadata 的本地 runtime surface；真实模型安全、hosted/MCP/Shell/ApplyPatch 工具覆盖、生产 tracing 和真实 HITL UI 仍部分验证
 
 ## 一句话总结
 
@@ -49,6 +49,7 @@ OpenAI Agents SDK 文档适合用于解释现代 Agent SDK 的基本抽象、工
 - `human_in_the_loop.md` 写明 `needs_approval` 可用于 function_tool、Agent.as_tool、ShellTool、ApplyPatchTool；本地/Hosted MCP 也有 require_approval / approval callback 机制。
 - `tracing.md` 写明默认 tracing 包含 Runner run、agent_span、generation_span、function_span、guardrail_span、handoff_span。
 - `tracing.md` 写明 generation_span 和 function_span 可能包含敏感数据，可通过 RunConfig.trace_include_sensitive_data 或环境变量控制。
+- Real OpenAI Agents SDK Guardrail Validation 在 `openai-agents==0.18.2` 下观察到：blocking input guardrail tripwire 在 fake model 调用前触发，output guardrail tripwire 在 fake model 返回后触发，function-tool input guardrail 的 `reject_content` 在 Runner 路径上阻止本地函数工具副作用，function-tool output guardrail 的 `reject_content` 发生在本地函数工具执行之后，只替换工具输出；发布 trace 未泄露示例 secret。
 
 ## 可能的问题
 
@@ -66,6 +67,7 @@ OpenAI Agents SDK 文档适合用于解释现代 Agent SDK 的基本抽象、工
 - 构建一个最小 tool-calling 任务，对比 Responses API 自己管理 loop 与 Agents SDK 管理 loop 的 trace、guardrails、human approval、敏感 trace 数据配置和状态管理成本。
 - 已完成标准库安全 regression set，可作为后续迁移到 Agents SDK guardrails / HITL 的 case matrix：记录 `allow`、`block`、`require_approval`、false positive、false negative 和 trace secret 泄漏。当前结果不代表 Agents SDK 的真实拦截率。
 - 已完成标准库审批状态恢复与幂等性实验，可作为后续迁移到 Agents SDK HITL 的 case matrix：记录 approval state、RunState / resume、参数快照、重复恢复、拒绝恢复和 trace 脱敏。当前结果不代表 Agents SDK 的真实 HITL 行为。
+- Real OpenAI Agents SDK Guardrail Validation 已完成本地 fake-model run：5 个 case 全部通过，覆盖 input guardrail before model、output guardrail after model、function-tool input guardrail before side effect、function-tool output guardrail after side effect 和 `needs_approval` metadata。该 run 只支撑 SDK runtime surface，不代表真实模型 prompt-injection 防护、hosted/MCP/Shell/ApplyPatch 工具覆盖、detector 质量、生产 tracing、成本或延迟。
 - Agent/Workflow 和自治程度窄边界已升级为可入正文：Agents SDK 文档直接支撑 managed agent loop、runtime 管理 turns/tool execution/state handling，以及直接使用 Responses API 时开发者自行控制 loop/tool dispatch/state handling 的边界。真实 SDK 任务表现、成本和失败恢复仍需实验。
 - 复杂架构默认可靠性窄边界已升级为可入正文：Agents SDK 支撑 agent loop、handoffs、guardrails、sessions 和 tracing 等工程抽象，但这些抽象需要结合任务、权限、trace、成本和实验选择，不能直接推出复杂 Agent runtime 默认比简单 workflow 更可靠。
 - 已纳入框架能力交叉表，用于支撑“轻量 agent runtime / tool loop / tracing / guardrails / sessions”的保守定位；与其他框架卡片和 rubric smoke test 共同支撑“框架应按任务难点比较，不能写成某个框架默认最好”的窄边界；不代表真实横向性能结论。
@@ -74,4 +76,4 @@ OpenAI Agents SDK 文档适合用于解释现代 Agent SDK 的基本抽象、工
 ## 是否进入正文
 
 - 结论：部分进入
-- 原因：可支撑 Agent runtime、tool loop、guardrails、human approval、handoffs、sessions、tracing 和跨框架术语区分的工程抽象，并与 LangGraph/ReAct/标准库实验共同支撑 Agent/Workflow、自治程度和复杂架构默认可靠性窄边界；也与标准库安全实验共同支撑“高风险工具要把权限、审批、状态恢复和审计放进执行路径”的窄边界。不能把 OpenAI SDK 术语直接当成所有 Agent 系统的唯一通用定义，也不能提前断言真实 SDK runtime、guardrail 或 HITL 效果。
+- 原因：可支撑 Agent runtime、tool loop、guardrails、human approval、handoffs、sessions、tracing 和跨框架术语区分的工程抽象，并与 LangGraph/ReAct/标准库实验共同支撑 Agent/Workflow、自治程度和复杂架构默认可靠性窄边界；也与标准库安全实验和 Real OpenAI Agents SDK Guardrail Validation 共同支撑“高风险工具要把权限、审批、状态恢复和审计放进执行路径”的窄边界。不能把 OpenAI SDK 术语直接当成所有 Agent 系统的唯一通用定义，也不能提前断言真实 SDK runtime、guardrail 或 HITL 效果。

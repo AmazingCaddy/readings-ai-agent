@@ -24,6 +24,11 @@ class Harness:
 HARNESSES = [
     Harness("real_tool_calling", ROOT / "docs/experiments/real-tool-calling-validation/real_tool_calling_validation.py"),
     Harness(
+        "real_openai_agents_guardrail",
+        ROOT
+        / "docs/experiments/real-openai-agents-guardrail-validation/real_openai_agents_guardrail_validation.py",
+    ),
+    Harness(
         "real_structured_output",
         ROOT / "docs/experiments/real-structured-output-validation/real_structured_output_validation.py",
     ),
@@ -178,6 +183,11 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "embedding",
         "llm_synthesis",
         "all_passed",
+        "input_guardrail_blocked_before_model",
+        "output_guardrail_blocked_after_model",
+        "tool_input_reject_prevented_side_effect",
+        "tool_output_reject_after_side_effect",
+        "needs_approval_metadata_present",
         "untrusted_chunk_cited",
         "cross_user_broad_prefix_seen",
         "deleted_item_recalled",
