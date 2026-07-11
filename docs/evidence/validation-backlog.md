@@ -11,8 +11,8 @@
 ## 架构模式
 
 - ReAct 在哪些任务中确实优于单次提示或简单 workflow？已完成论文摘要第一轮验证和标准库 ReAct-like tool loop 对比；仍需真实模型、真实工具和真实任务实验。
-- Plan-and-Execute 的收益是否足以抵消额外成本和错误传播？已完成相关架构模式第一轮验证和标准库 planner/executor 对比实验；仍需真实模型 / Agent framework / repo issue 实验，并补 reflection retry 对照。
-- Reflection / Critic 模式在真实任务中是否稳定提升质量？Reflexion 已完成论文摘要第一轮验证，仍需结合现代模型、成本和错误记忆风险实验。
+- Plan-and-Execute 的收益是否足以抵消额外成本和错误传播？已完成相关架构模式第一轮验证、标准库 planner/executor 对比实验和 reflection retry 对照；仍需真实模型 / Agent framework / repo issue 实验。
+- Reflection / Critic 模式在真实任务中是否稳定提升质量？Reflexion 已完成论文摘要第一轮验证，标准库 reflection/retry 实验已验证 verified feedback 可补证据、unverified reflection 会重复错误；仍需结合真实模型、长期 episodic memory、成本和人工评审实验。
 - 多 Agent 的收益是否足以抵消通信成本、协调复杂度和调试难度？已完成 AutoGen/CrewAI 第一轮资料验证，仍需最小对比实验。
 
 ## 工具调用

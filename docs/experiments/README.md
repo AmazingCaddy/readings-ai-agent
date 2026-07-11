@@ -22,7 +22,7 @@
 
 5. Planner/Executor vs 单 Agent
    - 目标：验证任务拆解是否提高复杂任务完成率，还是增加错误传播。
-   - 状态：已完成标准库 Planner / Executor 与单循环对比实验，见 [Planner / Executor 与单循环对比实验](planner-executor-comparison/README.md) 和 [2026-07-11 结果](planner-executor-comparison/results-2026-07-11.md)。仍需真实模型 / Agent framework / repo issue / reflection retry 实验。
+   - 状态：已完成标准库 Planner / Executor 与单循环对比实验，见 [Planner / Executor 与单循环对比实验](planner-executor-comparison/README.md) 和 [2026-07-11 结果](planner-executor-comparison/results-2026-07-11.md)。仍需真实模型 / Agent framework / repo issue 实验。
 
 6. Prompt injection 基线测试
    - 目标：验证工具型 Agent 在恶意文档或外部输入下是否会越权。
@@ -35,6 +35,10 @@
 8. Trace-aware eval 最小实验
    - 目标：比较 final-answer-only scoring 和 trace-aware scoring 能发现的错误类型差异。
    - 状态：已完成标准库模拟实验，见 [Trace-Aware Eval 最小实验](trace-aware-eval/README.md) 和 [2026-07-11 结果](trace-aware-eval/results-2026-07-11.md)。仍需真实 Agent trace、LLM-as-judge 误判和人工复核实验。
+
+9. Reflection / Retry 错误反思实验
+   - 目标：验证 reflection 是否能帮助补证据，以及未验证反思是否会污染后续尝试。
+   - 状态：已完成标准库 Reflection / Retry 模拟实验，见 [Reflection / Retry 与错误反思实验](reflection-retry/README.md) 和 [2026-07-11 结果](reflection-retry/results-2026-07-11.md)。仍需真实模型 / critic / framework / 长期 episodic memory 实验。
 
 ## 实验记录要求
 

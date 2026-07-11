@@ -15,6 +15,7 @@ ReAct、Reflection / Reflexion、Tree of Thoughts、状态图和 workflow-agent 
 - Source 7：[Evidence Note: 多 Agent 不是默认更好](multi-agent-default-boundary.md)
 - Source 8：[Workflow、Hybrid 与 ReAct-like Tool Loop 对比实验结果](../experiments/workflow-agent-comparison/results-2026-07-11.md)
 - Source 9：[Planner / Executor 与单循环对比实验结果](../experiments/planner-executor-comparison/results-2026-07-11.md)
+- Source 10：[Reflection / Retry 与错误反思实验结果](../experiments/reflection-retry/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -26,17 +27,18 @@ ReAct、Reflection / Reflexion、Tree of Thoughts、状态图和 workflow-agent 
 - 一致点：Multi-agent evidence 支持复杂协作不是默认升级路径；架构复杂度需要用 trace、成本、失败原因和人工介入评估。
 - 本地实验：标准库 workflow / hybrid / ReAct-like 对比显示，固定 workflow 在简单任务中工具调用最少，hybrid 可以在受控分支补证据，ReAct-like loop 能动态查询但工具调用更多。这支持“从可控 workflow-agent hybrid 起步”的工程建议，但不证明 ReAct 或复杂架构在真实任务中稳定更优。
 - 本地实验：标准库 planner/executor 对比显示，一次性 planner/executor 在 billing migration 任务中漏掉 migration evidence，成功率为 2/3；带 validation feedback 的 planner/executor 通过 `validation_failed` 和 `plan_revised` 补齐证据，恢复到 3/3。这支持“计划必须可校验、失败必须反馈、必要时重规划”的工程建议。
+- 本地实验：标准库 reflection/retry 对比显示，`verified_reflection_retry` 通过 required evidence verifier 把成功率从 1/3 提升到 3/3，但工具调用从 6 增加到 14；`unverified_reflection_memory` 两次应用错误反思后仍为 1/3。这支持“反思需要证据校验和范围控制，错误反思可能污染后续尝试”的保守表述。
 - 边界：论文摘要中的效果提升来自特定任务、模型和 baseline；框架文档说明能力和抽象，不等于提供严格对照实验。因此正文只能写成“适用方向和风险边界”，不能写成“复杂架构总能提升可靠性”。
 
 ## 实验验证
 
 - 是否需要实验：是
 - 实验设计：用同一个“读取 issue -> 定位资料 -> 生成建议 -> 自检”的任务实现四个 baseline：固定 workflow、ReAct tool loop、planner/executor、reflection retry。记录成功率、工具调用次数、token 成本、总耗时、失败类型、trace 可读性、人工介入次数和错误传播情况。
-- 结果：已完成标准库 workflow / hybrid / ReAct-like tool loop 对比，以及 planner/executor vs single checklist / feedback replanning 对比。尚未覆盖 reflection retry、真实模型、token 成本、真实工具错误或人工介入。
+- 结果：已完成标准库 workflow / hybrid / ReAct-like tool loop 对比、planner/executor vs single checklist / feedback replanning 对比，以及 reflection/retry 错误反思模拟。尚未覆盖真实模型、token 成本、真实工具错误或人工介入。
 
 ## 结论状态
 
-- 部分验证：三篇论文支撑关键架构模式的研究脉络；LangGraph 和 OpenAI Agents SDK 支撑现代工程编排边界；已有 Agent/Workflow、多 Agent evidence、标准库 workflow / ReAct-like 对比和 planner/executor 对比支撑“从可控 workflow-agent hybrid 起步，并为 planning 加入校验反馈”的保守路线。仍缺 reflection retry 和真实模型 / 框架对比实验。
+- 部分验证：三篇论文支撑关键架构模式的研究脉络；LangGraph 和 OpenAI Agents SDK 支撑现代工程编排边界；已有 Agent/Workflow、多 Agent evidence、标准库 workflow / ReAct-like、planner/executor 和 reflection/retry 对比支撑“从可控 workflow-agent hybrid 起步，为 planning/reflection 加入校验反馈”的保守路线。仍缺真实模型 / 框架对比实验。
 
 ## 可进入章节
 
