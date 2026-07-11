@@ -2,7 +2,7 @@
 
 ## 目标
 
-用同一个本地确定性任务对比 LangGraph、LlamaIndex 和 Semantic Kernel 的真实 Python runtime surface：读取退款政策、阻断未审批退款、执行一次已审批退款，并记录脱敏 trace。
+用同一个本地确定性任务对比 OpenAI Agents SDK、LangGraph、LlamaIndex 和 Semantic Kernel 的真实 Python runtime surface：读取退款政策、阻断未审批退款、执行一次已审批退款，并记录脱敏 trace。
 
 这个实验补强第 10 章“框架应按任务难点和能力边界比较”的证据。它不是框架排行榜。
 
@@ -17,16 +17,23 @@
 
 ## 运行方式
 
-完整 3 框架对比：
+OpenAI Agents SDK / LangGraph / LlamaIndex 对比：
+
+```bash
+uv run --with openai-agents==0.18.2 --with langgraph --with llama-index-core python docs/experiments/real-framework-same-task-comparison/real_framework_same_task_comparison.py
+```
+
+LangGraph / LlamaIndex / Semantic Kernel 对比：
 
 ```bash
 uv run --with langgraph --with llama-index-core --with semantic-kernel python docs/experiments/real-framework-same-task-comparison/real_framework_same_task_comparison.py
 ```
 
-如果缺少某个依赖，对应 adapter 会返回 `skipped`，其他 adapter 仍可运行。
+如果缺少某个依赖，对应 adapter 会返回 `skipped`，其他 adapter 仍可运行。当前 `openai-agents==0.18.2` 与 `semantic-kernel==1.36.0` 在同一临时环境中会触发 pydantic import 组合问题，因此结果页使用两组命令分别覆盖 4 个 adapter；这属于依赖组合边界，不应解读为任一框架 runtime 行为优劣。
 
 ## 观察点
 
+- OpenAI Agents SDK 是否能把同一任务表达为 `FunctionTool` schema、`needs_approval` metadata 和直接 `ToolContext` invocation。
 - LangGraph 是否能把同一任务表达为 state graph、node 和 conditional edge。
 - LlamaIndex 是否能把同一任务中的文档检索部分表达为 `VectorStoreIndex` / retriever / source-node metadata。
 - Semantic Kernel 是否能把同一任务表达为 native plugin functions 和 `Kernel.invoke()`。
@@ -37,6 +44,6 @@ uv run --with langgraph --with llama-index-core --with semantic-kernel python do
 
 ## 结论状态
 
-- 当前状态：已完成 LangGraph 1.2.9、LlamaIndex Core 0.14.23、Semantic Kernel 1.36.0 的本地同任务 run。
+- 当前状态：已完成 OpenAI Agents SDK 0.18.2、LangGraph 1.2.9、LlamaIndex Core 0.14.23、Semantic Kernel 1.36.0 的本地同任务 adapter run；由于 OpenAI Agents SDK / Semantic Kernel 依赖组合冲突，4 个 adapter 通过两组命令覆盖。
 - 可支撑：同一任务可以拆成框架原生 runtime surface 与应用层治理代码两部分观察；框架比较应记录 native surface、framework-owned capabilities、application-owned capabilities、trace 和失败边界。
 - 不能支撑：不能证明任一框架默认更好、更安全、更便宜、更快，也不能证明真实模型 tool selection、真实 RAG answer quality、真实 HITL UI、部署恢复、hosted tracing 或生产可靠性。

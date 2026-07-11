@@ -164,7 +164,7 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 
 同一个任务可以用不同框架完成。比较时不要只看代码行数，还要看 trace 是否清楚、失败是否容易定位、权限是否可控、后续维护是否简单。
 
-本手册的 Real Framework Same-Task Comparison 用同一个“退款政策检索 + 审批退款”本地任务跑通了 LangGraph、LlamaIndex 和 Semantic Kernel：LangGraph 主要提供 `StateGraph`、节点和条件路由，LlamaIndex 主要提供 `VectorStoreIndex`、retriever 和 source-node metadata，Semantic Kernel 主要提供 plugin catalog、kernel function metadata 和 `Kernel.invoke()`。同一个任务虽然都能跑通，但审批 policy、side effect、trace redaction，以及部分检索 / trust filter，仍是应用层代码。初学者比较框架时，应先问“这一步是框架帮我做的，还是我自己写的？”
+本手册的 Real Framework Same-Task Comparison 用同一个“退款政策检索 + 审批退款”本地任务跑通了 OpenAI Agents SDK、LangGraph、LlamaIndex 和 Semantic Kernel：OpenAI Agents SDK 主要提供 `FunctionTool` schema、`needs_approval` metadata、tool argument validation 和 direct `ToolContext` invocation，LangGraph 主要提供 `StateGraph`、节点和条件路由，LlamaIndex 主要提供 `VectorStoreIndex`、retriever 和 source-node metadata，Semantic Kernel 主要提供 plugin catalog、kernel function metadata 和 `Kernel.invoke()`。同一个任务虽然都能跑通，但审批 policy、side effect、trace redaction，以及部分检索 / trust filter，仍是应用层代码。初学者比较框架时，应先问“这一步是框架帮我做的，还是我自己写的？”
 
 ## 工程实践
 
@@ -172,7 +172,7 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 
 设计一个固定任务，例如：用户提出问题，系统检索文档，必要时调用一个查询工具，最后输出带来源的答案。
 
-在真正写代码前，可以先做任务画像：哪些能力是必需的，哪些只是加分项，哪些抽象反而会增加学习成本。本手册的框架选择 rubric smoke test 用 5 个任务画像比较了轻量 tool agent、RAG 问答、审批 workflow、多角色 review 和企业插件集成。它能说明任务难点会把选择方向推向不同框架，但它不运行真实框架，不能证明任何框架真实更快、更便宜或更可靠。Real Framework Same-Task Comparison 则提供了一个窄口径真实 runtime 对照：同一任务要记录 framework-owned capabilities 和 application-owned capabilities，避免把应用层写的权限、redaction 或 side effect 误当成框架默认能力。
+在真正写代码前，可以先做任务画像：哪些能力是必需的，哪些只是加分项，哪些抽象反而会增加学习成本。本手册的框架选择 rubric smoke test 用 5 个任务画像比较了轻量 tool agent、RAG 问答、审批 workflow、多角色 review 和企业插件集成。它能说明任务难点会把选择方向推向不同框架，但它不运行真实框架，不能证明任何框架真实更快、更便宜或更可靠。Real Framework Same-Task Comparison 则提供了一个窄口径真实 runtime 对照：同一任务要记录 framework-owned capabilities 和 application-owned capabilities，避免把应用层写的权限、redaction 或 side effect 误当成框架默认能力。该实验中的 OpenAI Agents SDK adapter 只直接调用 `FunctionTool`，尚未运行 `Runner` managed agent loop、hosted tracing 或真实模型。
 
 用不同框架实现同一任务，记录这些指标：
 
@@ -212,7 +212,7 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 - 多 Agent 框架适合学习角色协作和任务分配，但“多 Agent 默认更好”没有被框架文档证明。“多 Agent 不是复杂任务默认升级路径；引入前应明确角色边界、证据分配、冲突处理、review trace 和成本预算”已升级为可入正文。标准库多 Agent 对比实验已验证无控制角色协作会带来重复读取、缺证据和冲突风险；真实框架仍需用同一任务的成本、延迟、trace 和成功率对比验证。
 - LlamaIndex source card 明确其适合 RAG、数据连接、索引和 agent data framework；需区分通用 RAG 概念和框架实现。
 - Semantic Kernel source card 已完成第一轮精读，可支撑 enterprise integration、plugins/functions、native/OpenAPI/MCP plugin 导入、agent framework、human-in-the-loop 和 process orchestration 的框架定位；Real Semantic Kernel Plugin Validation 已补 native plugin runtime 的 metadata、参数处理和应用层审批 wrapper 观察；其 Process Framework 当前仍标注 experimental。
-- “Agent 框架应按任务难点和能力边界比较，不应写成某个框架默认最好”已升级为可入正文：框架生态定位边界、框架能力交叉表和标准库 rubric smoke test 支撑各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；Real Framework Same-Task Comparison 进一步支撑同任务 run 应拆分 framework-owned capabilities 和 application-owned capabilities；但不能从文档、rubric 或一个本地同任务 run 直接推出真实成本、可靠性或性能排名。
+- “Agent 框架应按任务难点和能力边界比较，不应写成某个框架默认最好”已升级为可入正文：框架生态定位边界、框架能力交叉表和标准库 rubric smoke test 支撑各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；Real Framework Same-Task Comparison 进一步支撑同任务 run 应拆分 framework-owned capabilities 和 application-owned capabilities；但不能从文档、rubric 或一个本地同任务 run 直接推出真实成本、可靠性或性能排名，也不能把 direct `FunctionTool` invocation 等同于完整 Agents SDK `Runner` 行为。
 - 框架能力交叉表已把 6 个常见框架的主轴、适合学习内容、不应误读点和真实实验缺口整理到 evidence note；它支撑本章的定位表，但仍不能替代真实框架横向实验。
 - Tool / Function / Plugin 术语对照已完成第一轮文档交叉验证，可支撑“框架术语不能直接当成行业通用定义”的保守表述。OpenAI API 的 function/tool calling、OpenAI Agents SDK 的 runtime tools / agent-as-tool、Semantic Kernel 的 plugins/functions、LlamaIndex 的 retriever/query engine、LangGraph 的 state graph、AutoGen/CrewAI 的 multi-agent / Flow 抽象处在不同层级；Semantic Kernel native plugin 已有本地 runtime 观察，但真实框架默认错误处理、权限、HITL、trace 和成本仍需同任务实验。
 

@@ -111,6 +111,134 @@ def build_adapter_result(
     }
 
 
+def run_openai_agents_adapter() -> dict[str, Any]:
+    try:
+        import agents
+        from agents import RunConfig, function_tool
+        from agents.tool_context import ToolContext
+    except ImportError as exc:
+        return {
+            "framework": "openai-agents-sdk",
+            "status": "skipped",
+            "reason": "openai_agents_not_installed",
+            "error": str(exc),
+            "install_note": "Run with `uv run --with openai-agents ...`.",
+        }
+
+    side_effects: list[dict[str, Any]] = []
+    trace: list[dict[str, Any]] = []
+
+    @function_tool
+    def read_refund_policy(query: str) -> str:
+        """Read the refund approval policy and return trusted citations."""
+        retrieved = keyword_retrieve(query)
+        citations = trusted_citations(retrieved)
+        trace.append(
+            redact(
+                {
+                    "framework": "openai-agents-sdk",
+                    "op": "function_tool_read_policy",
+                    "retrieved": [item["chunk_id"] for item in retrieved],
+                    "citations": citations,
+                }
+            )
+        )
+        return json.dumps({"answer": DOCUMENTS[0]["text"], "citations": citations}, ensure_ascii=False)
+
+    @function_tool(needs_approval=True)
+    def issue_refund(order_id: str, amount: float) -> str:
+        """Issue a refund after application approval."""
+        side_effects.append({"order_id": order_id, "amount": amount})
+        trace.append(redact({"framework": "openai-agents-sdk", "op": "function_tool_issue_refund", "side_effect_count": len(side_effects)}))
+        return f"refund_issued:{order_id}:{amount:.2f}"
+
+    def tool_context(tool_name: str, raw_arguments: str) -> ToolContext[Any]:
+        return ToolContext(
+            context=None,
+            tool_name=tool_name,
+            tool_call_id=f"call-{tool_name}",
+            tool_arguments=raw_arguments,
+            run_config=RunConfig(trace_include_sensitive_data=False),
+        )
+
+    async def run_tool(tool: Any, raw_arguments: str) -> str:
+        return str(await tool.on_invoke_tool(tool_context(tool.name, raw_arguments), raw_arguments))
+
+    async def run_async() -> tuple[dict[str, Any], str, str, int, str]:
+        read_raw = '{"query":"refund approval policy"}'
+        read_result = json.loads(await run_tool(read_refund_policy, read_raw))
+
+        trace.append(
+            redact(
+                {
+                    "framework": "openai-agents-sdk",
+                    "op": "application_policy_reject",
+                    "tool_needs_approval": issue_refund.needs_approval,
+                    "forwarded_to_tool": False,
+                    "order_id": "order-9",
+                    "amount": 42.0,
+                }
+            )
+        )
+        blocked = "blocked_by_application_policy"
+        side_effect_count_after_blocked = len(side_effects)
+        invalid_result = await run_tool(issue_refund, '{"order_id":"order-9","amount":"not-a-number"}')
+        approved = await run_tool(issue_refund, '{"order_id":"order-9","amount":42.0}')
+        return read_result, blocked, invalid_result, side_effect_count_after_blocked, approved
+
+    read_result, blocked, invalid_result, side_effect_count_after_blocked, approved = asyncio.run(run_async())
+    schema = issue_refund.params_json_schema
+    required = sorted(schema.get("required", []))
+    invalid_rejected_without_side_effect = "Invalid JSON input" in invalid_result and len(side_effects) == 1
+
+    cases = [
+        {
+            "name": "function_tool_metadata_exposes_schema",
+            "passed": issue_refund.name == "issue_refund"
+            and issue_refund.needs_approval is True
+            and required == ["amount", "order_id"]
+            and schema.get("additionalProperties") is False,
+            "required": required,
+            "needs_approval": issue_refund.needs_approval,
+        },
+        {
+            "name": "trusted_policy_cited",
+            "passed": bool(read_result.get("citations")) and read_result["citations"][0]["chunk_id"] == "refund_policy",
+            "evidence": read_result.get("citations", []),
+        },
+        {
+            "name": "unapproved_refund_blocked",
+            "passed": blocked == "blocked_by_application_policy" and side_effect_count_after_blocked == 0,
+            "side_effect_count_after_blocked": side_effect_count_after_blocked,
+        },
+        {
+            "name": "invalid_argument_rejected_without_side_effect",
+            "passed": invalid_rejected_without_side_effect,
+            "error_preview": invalid_result[:160],
+        },
+        {
+            "name": "approved_refund_executes_once",
+            "passed": approved == "refund_issued:order-9:42.00" and len(side_effects) == 1,
+            "side_effect_count": len(side_effects),
+        },
+    ]
+
+    return build_adapter_result(
+        framework="openai-agents-sdk",
+        version=getattr(agents, "__version__", package_version("openai-agents")),
+        native_surface="FunctionTool schema + direct ToolContext invocation",
+        framework_owned_capabilities=["function_tool_schema", "needs_approval_flag", "tool_argument_validation", "tool_context_invoke"],
+        application_owned_capabilities=["keyword_retrieval", "approval_policy", "refund_side_effect", "trace_redaction"],
+        cases=cases,
+        trace=trace,
+        notes=[
+            "OpenAI Agents SDK FunctionTool exposed JSON schema and needs_approval metadata without a model call.",
+            "This harness directly invoked FunctionTool with ToolContext; it did not run Runner, managed agent loop, hosted tracing, or a real model.",
+            "Approval policy and trace redaction were application code in this harness.",
+        ],
+    )
+
+
 def run_langgraph_adapter() -> dict[str, Any]:
     try:
         from langgraph.graph import END, START, StateGraph
@@ -477,6 +605,7 @@ class Adapter:
 
 
 ADAPTERS = [
+    Adapter("openai-agents-sdk", run_openai_agents_adapter),
     Adapter("langgraph", run_langgraph_adapter),
     Adapter("llama-index-core", run_llamaindex_adapter),
     Adapter("semantic-kernel", run_semantic_kernel_adapter),

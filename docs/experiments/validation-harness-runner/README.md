@@ -12,10 +12,10 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；没有 Playwright 时，真实浏览器 harness 应返回 `skipped`；没有 LangGraph 时，真实 LangGraph harness 应返回 `skipped`；没有 `mcp` Python package 时，官方 MCP SDK harness 应返回 `skipped`；没有 `llama-index-core` 时，真实 LlamaIndex RAG harness 应返回 `skipped`；没有 `semantic-kernel` 时，真实 Semantic Kernel plugin harness 和 same-task comparison 的 Semantic Kernel adapter 应返回 `skipped`；Batch 提交必须显式 opt-in；不依赖 API 的本地 stdio MCP harness 应返回 `completed`。
 
-若要在不修改项目依赖的情况下运行 LangGraph、Playwright 和官方 MCP SDK harness，可使用临时依赖：
+若要在不修改项目依赖的情况下运行 OpenAI Agents SDK、LangGraph、Playwright 和官方 MCP SDK harness，可使用临时依赖：
 
 ```bash
-uv run --with playwright --with mcp --with llama-index-core --with langgraph --with langchain-core --with langgraph-checkpoint-sqlite python docs/experiments/validation-harness-runner/run_validation_harnesses.py
+uv run --with openai-agents==0.18.2 --with playwright --with mcp --with llama-index-core --with langgraph --with langchain-core --with langgraph-checkpoint-sqlite python docs/experiments/validation-harness-runner/run_validation_harnesses.py
 ```
 
 Semantic Kernel harness 建议单独运行：
@@ -26,15 +26,15 @@ uv run --with semantic-kernel python docs/experiments/real-semantic-kernel-plugi
 
 原因是 `semantic-kernel` 与当前 full runner 的临时依赖集合可能触发独立 dependency resolution / import 组合问题；full runner 中该入口可以保守 `skipped`，不影响单独 completed result 的证据状态。
 
-完整 3 框架 same-task comparison 建议单独运行：
+Semantic Kernel adapter 的 same-task comparison 建议单独运行：
 
 ```bash
 uv run --with langgraph --with llama-index-core --with semantic-kernel python docs/experiments/real-framework-same-task-comparison/real_framework_same_task_comparison.py
 ```
 
-full runner 的标准临时依赖集合未包含 `semantic-kernel`，因此 same-task comparison 在 full runner 中通常完成 LangGraph / LlamaIndex adapter，并保守跳过 Semantic Kernel adapter；完整 completed result 见该实验自己的结果页。
+full runner 的标准临时依赖集合未包含 `semantic-kernel`，因此 same-task comparison 在 full runner 中通常完成 OpenAI Agents SDK / LangGraph / LlamaIndex adapter，并保守跳过 Semantic Kernel adapter。`openai-agents==0.18.2` 与 `semantic-kernel==1.36.0` 在同一临时环境中会触发 pydantic import 组合问题，因此该实验结果页使用两组命令覆盖 4 个 adapter。
 
-最新记录：见 [2026-07-12 结果](results-2026-07-12.md)。本次运行验证了统一入口、API harness 的 skip 分支、Real LlamaIndex RAG Source-Node completed run、Real Browser Playwright 固定 demo page completed run、LangGraph `MemorySaver` 最小 run、`SqliteSaver` 同进程本地 SQLite graph 重建恢复 case、`SqliteSaver` 双本地 Python 进程 prepare/resume case、`SqliteSaver` 双本地 Python 进程并发 resume case、Real LangGraph Memory Store completed run、Real Framework Same-Task Comparison 的 LangGraph / LlamaIndex adapter、本地 MCP stdio harness 和官方 MCP Python SDK stdio harness；Semantic Kernel plugin harness 在 full runner 中保守 skipped，但已有单独 completed run；same-task comparison 已有单独完整 3 框架 completed run；没有完成真实 API 行为验证。
+最新记录：见 [2026-07-12 结果](results-2026-07-12.md)。本次运行验证了统一入口、API harness 的 skip 分支、Real LlamaIndex RAG Source-Node completed run、Real Browser Playwright 固定 demo page completed run、LangGraph `MemorySaver` 最小 run、`SqliteSaver` 同进程本地 SQLite graph 重建恢复 case、`SqliteSaver` 双本地 Python 进程 prepare/resume case、`SqliteSaver` 双本地 Python 进程并发 resume case、Real LangGraph Memory Store completed run、Real Framework Same-Task Comparison 的 OpenAI Agents SDK / LangGraph / LlamaIndex adapter、本地 MCP stdio harness 和官方 MCP Python SDK stdio harness；Semantic Kernel plugin harness 在 full runner 中保守 skipped，但已有单独 completed run；same-task comparison 已用第二组命令完成 Semantic Kernel adapter；没有完成真实 API 行为验证。
 
 ## 覆盖范围
 
