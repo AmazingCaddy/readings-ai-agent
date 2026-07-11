@@ -24,12 +24,12 @@ MCP 是模型应用和外部上下文/工具能力之间的协议层；它定义
 
 - 是否需要实验：是
 - 实验设计：接入一个只读 MCP server，记录 host 配置、client 连接、server 暴露的 tools/resources，以及一次 `tools/list` 和 `tools/call` trace。
-- 结果：已完成标准库模拟实验。脚本复现了 `roots/list`、`tools/list`、`tools/call`、`resources/list`、`resources/read` 和 host approval/review trace。它支持职责边界和 trace 字段设计，但不是完整 MCP SDK 或真实 host 行为验证。
+- 结果：已完成标准库模拟实验和本地 stdio JSON-RPC harness。脚本复现了 `roots/list`、`initialize`、`tools/list`、`tools/call`、`resources/list`、`resources/read` 和 host approval/review trace。它支持职责边界、进程消息流和 trace 字段设计，但不是完整 MCP SDK 或真实 host 行为验证。
 
 ## 结论状态
 
-- 部分验证：官方文档直接支撑职责定义和协议边界；servers README 支撑 reference implementation 边界；标准库模拟实验支撑最小 trace 字段和职责流。仍缺真实 MCP SDK / host trace 实验。
+- 部分验证：官方文档直接支撑职责定义和协议边界；servers README 支撑 reference implementation 边界；标准库模拟实验和本地 stdio JSON-RPC harness 支撑最小 trace 字段、职责流和进程消息边界。仍缺真实 MCP SDK / host trace 实验。
 
 ## 可进入章节
 
-- 是。可以写成：MCP 是 context exchange protocol 和工具/资源连接层，不是完整 Agent 框架；host/client/server 职责有官方定义；最小 trace 可记录 actor、method、decision、关键参数摘要和时间戳，但真实 host 行为仍需实测。
+- 是。可以写成：MCP 是 context exchange protocol 和工具/资源连接层，不是完整 Agent 框架；host/client/server 职责有官方定义；最小 trace 可记录 actor、method、decision、关键参数摘要和时间戳；本地 stdio JSON-RPC harness 可验证最小进程消息流，但真实 host 行为仍需实测。
