@@ -18,6 +18,7 @@ ReAct、Reflection / Reflexion、Tree of Thoughts、状态图和 workflow-agent 
 - Source 10：[Reflection / Retry 与错误反思实验结果](../experiments/reflection-retry/results-2026-07-11.md)
 - Source 11：[LangGraph Examples Repository](../sources/source-cards/2026-langgraph-examples-repo.md)
 - Source 12：[Voyager: An Open-Ended Embodied Agent with Large Language Models](../sources/source-cards/2023-voyager-paper.md)
+- Source 13：[Voyager-style Toy Embodied Agent 实验结果](../experiments/voyager-style-toy-agent/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -34,22 +35,23 @@ ReAct、Reflection / Reflexion、Tree of Thoughts、状态图和 workflow-agent 
 - 本地实验：标准库 workflow / hybrid / ReAct-like 对比显示，固定 workflow 在简单任务中工具调用最少，hybrid 可以在受控分支补证据，ReAct-like loop 能动态查询但工具调用更多。这支持“从可控 workflow-agent hybrid 起步”的工程建议，但不证明 ReAct 或复杂架构在真实任务中稳定更优。
 - 本地实验：标准库 planner/executor 对比显示，一次性 planner/executor 在 billing migration 任务中漏掉 migration evidence，成功率为 2/3；带 validation feedback 的 planner/executor 通过 `validation_failed` 和 `plan_revised` 补齐证据，恢复到 3/3。这支持“计划必须可校验、失败必须反馈、必要时重规划”的工程建议。
 - 本地实验：标准库 reflection/retry 对比显示，`verified_reflection_retry` 通过 required evidence verifier 把成功率从 1/3 提升到 3/3，但工具调用从 6 增加到 14；`unverified_reflection_memory` 两次应用错误反思后仍为 1/3。这支持“反思需要证据校验和范围控制，错误反思可能污染后续尝试”的保守表述。
+- 本地实验：Voyager-style toy embodied agent 实验在 3 个 curriculum task 中比较 `no_skill_library`、`unverified_skill_library` 和 `governed_curriculum_skill_library`。治理策略通过环境反馈修正 `craft_pickaxe`，拒绝并修正含 `unsafe_spawn_stone` 的技能，自我验证后保存 3 个 verified skills，成功 3/3；其他两组只成功 1/3。这支持“技能库需要验证、sandbox、停止条件和 trace”的工程边界，但不证明真实 Voyager / Minecraft 或真实模型技能生成能力。
 - 边界：论文摘要中的效果提升来自特定任务、模型和 baseline；框架文档说明能力和抽象，不等于提供严格对照实验。因此正文只能写成“适用方向和风险边界”，不能写成“复杂架构总能提升可靠性”。
 
 ## 实验验证
 
 - 是否需要实验：是
 - 实验设计：用同一个“读取 issue -> 定位资料 -> 生成建议 -> 自检”的任务实现四个 baseline：固定 workflow、ReAct tool loop、planner/executor、reflection retry。记录成功率、工具调用次数、token 成本、总耗时、失败类型、trace 可读性、人工介入次数和错误传播情况。
-- 结果：已完成标准库 workflow / hybrid / ReAct-like tool loop 对比、planner/executor vs single checklist / feedback replanning 对比，以及 reflection/retry 错误反思模拟。尚未覆盖真实模型、token 成本、真实工具错误或人工介入。
+- 结果：已完成标准库 workflow / hybrid / ReAct-like tool loop 对比、planner/executor vs single checklist / feedback replanning 对比、reflection/retry 错误反思模拟，以及 Voyager-style toy embodied agent 环境反馈 / 技能库治理实验。尚未覆盖真实模型、token 成本、真实工具错误、真实 Voyager / Minecraft 或人工介入。
 
 ## 结论状态
 
 - 可入正文：窄结论“ReAct 的核心思想是交替生成 reasoning traces 和 task-specific actions，用推理轨迹跟踪/更新计划、处理异常，用行动连接知识库或外部环境”已完成第一轮交叉验证。ReAct 摘要直接支撑 reasoning / acting interleaving；标准库 workflow / hybrid / ReAct-like 对比实验支撑把 ReAct-like tool loop 作为控制流形态解释，但不支撑 ReAct 默认优于 workflow。
 - 可入正文：窄结论“Tree of Thoughts 支持搜索式推理路径，但不等同于生产 Agent 编排框架”已完成第一轮交叉验证。ToT 摘要直接支撑多个中间 thought、不同推理路径、自我评估、前瞻和回溯；LangGraph / workflow evidence 支撑把工程编排、状态持久化和 HITL 与研究式搜索推理区分开。
-- 可入正文：窄结论“复杂 Agent 架构不是默认更可靠；是否引入 ReAct、Planner / Executor、Reflection、Tree of Thoughts、状态图、embodied lifelong learning 或多 Agent，需要看任务边界、trace、成本、失败原因、权限和实验结果”已完成第一轮交叉验证。论文支撑不同研究模式，Voyager 补强 automatic curriculum / skill library / environment feedback 的开放式具身 Agent 机制，LangGraph 和 OpenAI Agents SDK 支撑现代工程编排、状态和 trace 边界，LangGraph current docs / historical examples 补强 state graph、planner/replan 和 HITL 的代码形态；多组标准库实验显示复杂控制结构会带来额外工具调用、错误传播、错误反思、重复读取或冲突风险。
+- 可入正文：窄结论“复杂 Agent 架构不是默认更可靠；是否引入 ReAct、Planner / Executor、Reflection、Tree of Thoughts、状态图、embodied lifelong learning 或多 Agent，需要看任务边界、trace、成本、失败原因、权限和实验结果”已完成第一轮交叉验证。论文支撑不同研究模式，Voyager 补强 automatic curriculum / skill library / environment feedback 的开放式具身 Agent 机制，标准库 Voyager-style toy environment 进一步验证了 curriculum task、environment feedback、execution error、self-verification、verified skill library、sandbox rejection 和 stop condition 的最小 trace 形状；LangGraph 和 OpenAI Agents SDK 支撑现代工程编排、状态和 trace 边界，LangGraph current docs / historical examples 补强 state graph、planner/replan 和 HITL 的代码形态；多组标准库实验显示复杂控制结构会带来额外工具调用、错误传播、错误反思、重复读取或冲突风险。
 - 可入正文：窄结论“Planner / Executor 不能只停留在一次性计划；计划需要可执行，执行结果需要证据校验，失败需要反馈给 planner 并记录重规划 trace”已完成第一轮交叉验证。标准库 planner/executor 对比复现了一次性计划漏掉 migration evidence，而带 validation feedback 的流程通过 `validation_failed` 和 `plan_revised` 补齐证据。
 - 可入正文：窄结论“Reflection / Reflexion 可以把任务反馈和文字反思用于后续尝试，但反思必须绑定可校验反馈、范围控制和 trace；未验证反思不应直接写入长期记忆或后续策略”已完成第一轮交叉验证。Reflexion 摘要支撑 linguistic feedback、reflective text 和 episodic memory buffer 的研究机制；标准库 reflection/retry 实验显示 verified feedback 可以补齐 missing evidence，而 unverified reflection memory 会让错误重复。
-- 部分验证：ReAct、Reflection / Reflexion、Tree of Thoughts、Voyager-style embodied lifelong learning、状态图和 workflow-agent hybrid 的真实任务收益、成本、延迟、工具错误恢复和人工介入仍缺真实模型 / 框架 / 环境对比实验；不能写成某个复杂架构在真实任务中稳定更优，不能写成 ReAct / ToT / skill library 是复杂任务默认选择，也不能写成 reflection 或技能复用总能提升质量。
+- 部分验证：ReAct、Reflection / Reflexion、Tree of Thoughts、Voyager-style embodied lifelong learning、状态图和 workflow-agent hybrid 的真实任务收益、成本、延迟、工具错误恢复和人工介入仍缺真实模型 / 框架 / 环境对比实验；Voyager-style toy experiment 只证明小型确定性环境里的记录结构和失败模式，不证明真实 Voyager / Minecraft 复现、真实模型技能生成或跨环境迁移。不能写成某个复杂架构在真实任务中稳定更优，不能写成 ReAct / ToT / skill library 是复杂任务默认选择，也不能写成 reflection 或技能复用总能提升质量。
 
 ## 可进入章节
 

@@ -142,6 +142,10 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
     - 目标：验证 OpenAI Agents SDK 的 input / output / function-tool input / function-tool output guardrail 在本地 Runner 路径中的执行位置和 side-effect 边界。
     - 状态：真实 harness 已完成本地 fake-model run，见 [Real OpenAI Agents SDK Guardrail Validation](real-openai-agents-guardrail-validation/README.md) 和 [2026-07-12 结果](real-openai-agents-guardrail-validation/results-2026-07-12.md)。本次用 `openai-agents==0.18.2` 观察到 input guardrail 在模型调用前阻断、output guardrail 在模型调用后阻断、tool input guardrail 的 `reject_content` 阻止本地函数工具副作用、tool output guardrail 的 `reject_content` 发生在本地函数工具执行之后，并确认 `needs_approval` metadata 存在。它不证明真实模型安全、hosted/MCP/Shell/ApplyPatch 工具覆盖、detector 质量、真实 HITL UI、生产 trace、成本或延迟。
 
+31. Voyager-style toy embodied agent 实验
+    - 目标：用小型 toy environment 验证 automatic curriculum、executable skill library、environment feedback、execution error、自我验证、skill reuse、sandbox 和 stop condition 的最小 trace 形状。
+    - 状态：已完成标准库实验，见 [Voyager-style Toy Embodied Agent 实验](voyager-style-toy-agent/README.md) 和 [2026-07-11 结果](voyager-style-toy-agent/results-2026-07-11.md)。`governed_curriculum_skill_library` 完成 3/3 任务，记录技能修正、sandbox rejection 和 verified skill storage；`no_skill_library` 与 `unverified_skill_library` 均只完成 1/3。它不调用模型、不运行 Voyager 原仓库、不启动 Minecraft，不能证明真实开放式探索、真实技能生成、跨环境迁移、成本、延迟或生产可靠性。
+
 ## 实验记录要求
 
 - 明确假设。

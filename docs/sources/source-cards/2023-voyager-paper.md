@@ -10,7 +10,7 @@
 - 主题：Embodied Agent / Lifelong Learning / Minecraft / Skill Library / Self-improvement
 - 适合阶段：进阶
 - 可信度等级：A
-- 是否已验证：来源链接、arXiv 元数据、项目站点、GitHub repo metadata 和 README 已复核；摘要和 README 关键段落已精读；支撑开放式具身 Agent 的 automatic curriculum、executable skill library、environment feedback、execution error、自我验证和程序改进的研究机制边界；真实复现、成本、环境依赖、Minecraft 以外泛化能力和当前模型表现仍部分验证
+- 是否已验证：来源链接、arXiv 元数据、项目站点、GitHub repo metadata 和 README 已复核；摘要和 README 关键段落已精读；支撑开放式具身 Agent 的 automatic curriculum、executable skill library、environment feedback、execution error、自我验证和程序改进的研究机制边界；标准库 Voyager-style toy environment 已完成，支撑 curriculum、技能修正、verified skill library、sandbox rejection 和 trace 形状的窄观察；真实复现、成本、环境依赖、Minecraft 以外泛化能力和当前模型表现仍部分验证
 
 ## 一句话总结
 
@@ -41,6 +41,7 @@ Voyager 适合用来理解开放式具身 Agent：它把环境探索、技能库
 - GitHub API 返回 repo `MineDojo/Voyager` metadata：public、MIT license、default branch `main`、topics 包含 `embodied-learning`、`large-language-models`、`minecraft`、`open-ended-learning`。
 - GitHub README 重复论文摘要的三组件说明，并说明运行需要 Python >= 3.9、Node.js >= 16.13.0、Minecraft instance、Fabric mods、OpenAI API key 和 GPT-4。
 - GitHub README 明确声明：This project is strictly for research purposes, and not an official product from NVIDIA。
+- [Voyager-style Toy Embodied Agent 实验](../../experiments/voyager-style-toy-agent/results-2026-07-11.md) 用标准库 toy environment 跑通 3 个 curriculum task；治理策略通过环境反馈修正 `craft_pickaxe`、拒绝并修正 `unsafe_spawn_stone`、自我验证后保存 3 个 verified skills，成功 3/3；无技能库和未验证技能库策略均只成功 1/3。
 
 ## 可能的问题
 
@@ -58,7 +59,7 @@ Voyager 适合用来理解开放式具身 Agent：它把环境探索、技能库
 
 ## 可复现实验
 
-- 设计一个小型 grid-world 或文件系统 toy environment，实现 automatic curriculum、可执行技能库、错误反馈、自我验证和技能复用，对比无技能库、固定计划和可检索技能库的成功率、步骤数、错误恢复和 trace。
+- 已完成一个小型 toy environment，见 [Voyager-style Toy Embodied Agent 实验结果](../../experiments/voyager-style-toy-agent/results-2026-07-11.md)。后续可扩展真实模型生成/修正 skill、step budget 耗尽、循环动作、错误技能污染和跨环境 skill transfer case。
 - 如要试跑 Voyager 原仓库，应记录环境安装步骤、Minecraft / Fabric / Node / Python 版本、API 成本、失败样例、checkpoint、技能库内容、sandbox 和停止条件。
 
 ## 是否进入正文
