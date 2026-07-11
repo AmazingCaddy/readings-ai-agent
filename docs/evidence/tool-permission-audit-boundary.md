@@ -17,6 +17,7 @@
 - Source 9：[Prompt Injection 与工具权限最小实验结果](../experiments/prompt-injection-permission/results-2026-07-11.md)
 - Source 10：[安全 Regression Set 最小实验结果](../experiments/security-regression-set/results-2026-07-11.md)
 - Source 11：[审批状态恢复与幂等性实验结果](../experiments/approval-state-recovery/results-2026-07-11.md)
+- Source 12：[Anthropic MCP Connector and Tunnels Documentation](../sources/source-cards/2026-anthropic-mcp-docs.md)
 
 ## 交叉验证结果
 
@@ -27,6 +28,8 @@
 - 一致点：OpenAI Agents SDK guardrails 文档明确 blocking guardrails 可在 agent 启动前运行，避免 token consumption 和 tool execution；parallel guardrails 则可能已开始消耗 token 或执行工具。
 - 一致点：OpenAI Agents SDK HITL 文档支持敏感 tool calls 暂停执行，等待 approve/reject；`RunState` 可序列化和恢复审批状态，`needs_approval` / `require_approval` 覆盖 function tools、agent-as-tool、Shell/ApplyPatch、本地 MCP 和 Hosted MCP 等工具面。
 - 一致点：OpenAI Agents SDK tracing 文档提醒 generation/function spans 可能捕获敏感数据，并支持关闭敏感输入/输出捕获；这支持“审计 trace 也需要隐私治理”。
+- 一致点：Anthropic MCP connector 文档支持 remote MCP tools 的 allowlist、denylist、per-tool configuration 和 OAuth bearer token，并建议 read-only assistant 或需要 human confirmation 的场景禁用写入/破坏性工具；这与高风险工具默认最小权限和人类确认的工程边界一致。
+- 一致点：Anthropic MCP connector 文档说明该功能不适用于 Zero Data Retention，MCP server 交换的数据、工具定义和执行结果按标准 retention policy 保留；这补强了“工具调用 trace / 外部工具数据也需要数据保留和隐私治理”的边界。
 - 一致点：Semantic Kernel Plugins 文档区分 retrieval functions 和 task automation functions，并指出 task automation functions 往往需要 human-in-the-loop approval processes；这与 OpenAI HITL 机制方向一致。
 - 边界：OpenAI Agents SDK tool guardrails 明确不覆盖 hosted tools、built-in execution tools 和 handoffs 等所有执行面；因此框架 guardrail 不能被写成全局安全边界。
 - 边界：NIST 和 OWASP 支撑风险治理视角，OpenAI/Semantic Kernel 支撑工程机制，但是否有效仍需对具体工具、数据和权限模型做本地攻击/失败实验。
@@ -42,7 +45,7 @@
 
 ## 结论状态
 
-- 可入正文：窄结论“高风险工具不能只依赖模型自觉或安全 prompt；最小权限、应用层参数校验、写操作确认/审批、审批状态恢复和审计 trace 应进入工具执行路径”已完成第一轮交叉验证。风险资料、OpenAI API/SDK 文档和 Semantic Kernel 文档共同支撑工具权限、审批、guardrails 和敏感 trace 控制的工程边界；标准库实验支撑只读/写工具分离、审批拒绝、trace 脱敏、安全 regression set、审批状态恢复、参数快照校验和幂等执行的最小流程。
+- 可入正文：窄结论“高风险工具不能只依赖模型自觉或安全 prompt；最小权限、应用层参数校验、写操作确认/审批、审批状态恢复和审计 trace 应进入工具执行路径”已完成第一轮交叉验证。风险资料、OpenAI API/SDK 文档、Anthropic MCP connector 文档和 Semantic Kernel 文档共同支撑工具权限、审批、guardrails、remote tool allowlist/denylist、data retention 和敏感 trace 控制的工程边界；标准库实验支撑只读/写工具分离、审批拒绝、trace 脱敏、安全 regression set、审批状态恢复、参数快照校验和幂等执行的最小流程。
 - 部分验证：真实框架 guardrail/HITL 的覆盖范围、真实误报/漏报、成本、延迟和跨框架对比仍待实际运行验证。
 
 ## 可进入章节

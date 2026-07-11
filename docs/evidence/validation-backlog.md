@@ -21,6 +21,7 @@
 | P1 | 真实 RAG citation correctness | 轻量本地检索 + LLM synthesis；后续扩展到 LlamaIndex / vector store | chunk 配置、top-k、citation correctness、faithfulness、成本/延迟；LLM synthesis harness 已准备，LlamaIndex examples 已复核但未试跑 | 不证明某个 chunk/rerank 策略默认最优 |
 | P1 | 真实 Agent trace-aware eval | Responses API toy agent trace；后续扩展到 OpenAI Evals / LangSmith / Phoenix | runs/traces、final-only vs trace-aware 对比、人工复核样例；真实模型 trace harness 已准备，结果待跑 | 自动评分不能当真值，需保留人工抽样 |
 | P1 | 真实 MCP host/client/server trace | 本地 stdio JSON-RPC harness；后续扩展到 MCP SDK / host | tools/resources/prompts 调用 trace、approval/resource review、token/resource 泄露检查；stdio harness 已完成 | 不同 host 实现差异可能很大 |
+| P1 | 真实 Anthropic MCP connector / tunnels trace | Anthropic Messages API MCP connector；可选 MCP tunnels research preview | `mcp_tool_use` / `mcp_tool_result`、allowlist/denylist、authorization token handling、data retention note、tunnel OAuth / allowed IP / token-certificate rotation 检查 | 只能验证 Anthropic 产品集成面，不代表 MCP 通用 host 行为；tunnels 是 research preview，不能推出生产可靠性 |
 | P2 | 真实 memory framework 多会话对比 | LangGraph memory / Letta / Zep 中至少一种 | 写入、查看、编辑、删除、失效历史、跨用户隔离、删除后召回、污染样例；标准库 lifecycle audit 已覆盖最小验收结构 | 不写成长期记忆一定提升质量 |
 | P2 | 同一任务框架横向对比 | OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel | 相同任务实现、LOC、trace、权限、错误恢复、成本/延迟；LangGraph current docs / quickstart 已复核，历史 examples 已确认归档 | 不得推出“某框架默认最好” |
 | P2 | Cookbook 初学者项目试跑 | Structured Outputs、File Search/RAG、Eval、Cost/Rate limit recipes | 环境步骤、阻塞点、费用、失败样例、可跟练教程草稿 | Cookbook 是练习入口，不是生产保证 |
@@ -47,6 +48,7 @@
 - MCP 相比传统 API wrapper 的核心价值是什么？host/client/server 职责和 context exchange protocol 窄边界已升级为可入正文；真实 host / SDK 行为仍待验证。
 - MCP tools、resources、prompts 的边界如何准确解释？已完成官方 server concepts 和 2025-11-25 spec 第一轮验证：tools 是 model-controlled，resources 是 application-driven，prompts 是 user-controlled；标准库模拟实验和本地 stdio JSON-RPC harness 已验证最小 trace 字段，仍需真实 host 呈现方式对比。
 - MCP 安全模型和权限边界有哪些官方建议？窄结论已可入正文：authorization 是 optional transport-level capability；HTTP transport 支持授权时遵循 OAuth 2.1 相关规范；STDIO transport 应从环境取得凭据；token passthrough 被禁止；roots 不等于 sandbox；elicitation/sampling 需要用户可见和可拒绝的交互边界；标准库模拟实验和本地 stdio JSON-RPC harness 已验证 tool approval 和 resource review trace。仍需真实 SDK / host 实验验证实现差异、真实 UI、URL mode/OAuth 和 token redaction。
+- Anthropic MCP connector / tunnels 能支撑哪些产品集成结论？已完成第一轮文档复核：connector 支持 Messages API 连接 remote MCP tools、allowlist/denylist/per-tool config、OAuth bearer token 和 `mcp_tool_use` / `mcp_tool_result` blocks；connector 当前只支持 MCP tool calls，不支持全部 MCP capabilities；tunnels 支持私有网络 outbound-only 连接和 shared responsibility model，但处于 research preview。仍需真实 API / connector / tunnel 试跑验证 trace、权限、token redaction、cost/latency 和部署行为。
 - 如何用真实 MCP SDK / host 复现 host/client/server、`tools/list`、`tools/call`、`resources/list`、`resources/read` 和 trace？本地 stdio JSON-RPC harness 已覆盖进程边界和最小消息流，仍需官方 SDK / host 对照。
 - 如何把标准库模拟中的最小恶意 resource/prompt 与模拟写工具迁移到真实 host，验证 host 是否展示 tool inputs、允许用户拒绝、记录审计、避免敏感 token/resource 泄露？
 
@@ -69,6 +71,7 @@
 - Prompt injection 防护有哪些已验证的工程方法？窄结论“prompt 不是充分安全边界，外部内容和高风险工具必须由系统层权限/审批/审计控制”已可入正文。已确认 OWASP/NIST 支撑风险边界，OpenAI Agents SDK/Semantic Kernel/Responses API 支撑 guardrails、approval、require_approval、sensitive trace 控制等工程边界；标准库最小攻击实验已验证 prompt-only 风险和 policy-enforced 写工具阻断/trace 脱敏流程；安全 regression set 已扩展到授权、金额阈值、敏感信息、破坏性工具、幂等性和 benign case；审批状态恢复实验已覆盖拒绝后恢复、重复恢复、参数篡改恢复和 trace 脱敏；真实 prompt injection / permission harness 已准备；仍需实际运行验证真实模型 / 框架 guardrail 误报漏报。
 - 安全 regression set 应该如何覆盖外部文档注入、工具参数越权、敏感信息泄露和 excessive agency？标准库实验已覆盖外部文档注入、写工具越权、跨用户读取、高金额审批、trace 假 secret 泄露、破坏性工具、重复提交和 benign case；仍需迁移到真实工具、真实模型和框架 guardrail。
 - Guardrails、HITL approval、tool approval 和 sensitive trace 配置在不同框架中的覆盖范围有什么差异？OpenAI Agents SDK 已确认 tool guardrails 不覆盖所有工具类型；标准库实验已给出审批恢复最小验收结构，仍需横向比较真实框架的 pause/resume、审批状态序列化、参数快照、幂等执行和 trace 脱敏。
+- Remote MCP tools 的 allowlist/denylist、per-tool config 和 data retention 应如何纳入工具权限测试？Anthropic MCP connector 文档已补强这些产品集成字段；仍需真实 Messages API MCP connector 试跑，记录未知工具名、禁用工具、写工具 denylist、authorization token 更新、tool result error 和敏感 trace 行为。
 
 ## 实践路线
 

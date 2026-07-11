@@ -9,7 +9,8 @@ MCP 是模型应用和外部上下文/工具能力之间的协议层；它定义
 - Source 1：[Model Context Protocol Official Documentation](../sources/source-cards/2026-mcp-official-docs.md)
 - Source 2：[Model Context Protocol Servers Repository](../sources/source-cards/2026-mcp-servers-repo.md)
 - Source 3：[OpenAI Function Calling / Tool Calling Documentation](../sources/source-cards/2026-openai-function-calling-docs.md)
-- Source 4：[MCP 最小 Trace 实验结果](../experiments/mcp-trace/results-2026-07-11.md)
+- Source 4：[Anthropic MCP Connector and Tunnels Documentation](../sources/source-cards/2026-anthropic-mcp-docs.md)
+- Source 5：[MCP 最小 Trace 实验结果](../experiments/mcp-trace/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -18,6 +19,7 @@ MCP 是模型应用和外部上下文/工具能力之间的协议层；它定义
 - 一致点：官方 server concepts 将 tools、resources、prompts 分成不同 primitives；这支持正文中把 MCP 放在工具和上下文生态层，而不是 Agent runtime 层。
 - 一致点：servers repository README 明确 reference servers 是教育示例，不是 production-ready solutions；这支持正文中对示例 server 的保守边界。
 - 分歧点：OpenAI Function Calling docs 位于模型 API 工具调用层，MCP 位于应用和外部工具/上下文能力连接层。二者可组合，但不是同一抽象。
+- 边界点：Anthropic MCP connector 是一个具体产品集成面，它允许 Messages API 直接连接 remote MCP servers 的 tools，但文档明确当前只支持 MCP tool calls，不支持 connector 直接使用全部 MCP specification 能力。通用 host/client/server 和 tools/resources/prompts 协议定义仍以 MCP official docs 为准。
 - 可能原因：Function Calling 解决模型如何表示工具调用，MCP 解决应用如何通过标准协议连接和发现外部能力。
 
 ## 实验验证
@@ -28,7 +30,7 @@ MCP 是模型应用和外部上下文/工具能力之间的协议层；它定义
 
 ## 结论状态
 
-- 可入正文：窄结论“MCP 是 context exchange protocol 和工具/资源连接层，不是完整 Agent 框架；host、client、server 有官方定义的职责边界”由 MCP 官方文档直接支撑，并被 servers repo、Function Calling 边界和本地 trace / stdio harness 交叉支撑。
+- 可入正文：窄结论“MCP 是 context exchange protocol 和工具/资源连接层，不是完整 Agent 框架；host、client、server 有官方定义的职责边界”由 MCP 官方文档直接支撑，并被 servers repo、Function Calling 边界、Anthropic 产品集成边界和本地 trace / stdio harness 交叉支撑。
 - 部分验证：真实 MCP SDK / host 的权限呈现、approval UI、URL mode、OAuth、恶意 resource/prompt 展示和 trace 字段仍待验证。
 
 ## 可进入章节

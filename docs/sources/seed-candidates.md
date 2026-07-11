@@ -10,7 +10,7 @@
 | OpenAI API 工具调用 | OpenAI tool calling / function calling documentation | Official Docs | A | 链接已复核；source card 已创建 |
 | OpenAI Responses API | OpenAI Responses API documentation | Official Docs | A | 链接已复核；source card 已创建 |
 | MCP 协议 | Model Context Protocol official specification | Spec | A | 链接已复核；source card 已创建 |
-| MCP 概念 | Anthropic MCP documentation | Official Docs | A | 待复核 |
+| MCP 产品集成 | Anthropic MCP connector / tunnels documentation | Official Docs | A | 链接已复核；source card 已创建；旧 Anthropic MCP 概念页已重定向到 MCP 官方站点，通用协议概念仍引用 MCP official docs |
 | LangGraph | LangGraph documentation | Framework Docs | A | 链接已复核；source card 已创建 |
 | LlamaIndex Agents | LlamaIndex agent documentation | Framework Docs | A | 链接已复核；source card 已创建 |
 | Microsoft AutoGen | Microsoft AutoGen documentation | Framework Docs | A | 链接已复核；source card 已创建 |
