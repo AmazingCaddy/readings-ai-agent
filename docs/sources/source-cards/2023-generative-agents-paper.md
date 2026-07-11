@@ -3,12 +3,12 @@
 - 来源链接：https://arxiv.org/abs/2304.03442
 - 作者 / 机构：Joon Sung Park, Joseph C. O'Brien, Carrie J. Cai, Meredith Ringel Morris, Percy Liang, Michael S. Bernstein
 - 发布时间：2023-04-07；arXiv v2 updated 2023-08-06
-- 最后复核日期：2026-07-11
+- 最后复核日期：2026-07-12
 - 类型：论文
 - 主题：Agent Memory / Reflection / Planning / Simulation
 - 适合阶段：进阶
 - 可信度等级：A
-- 是否已验证：arXiv 元数据和摘要已复核；memory/reflection/planning 边界已完成第一轮交叉验证；长期记忆治理窄边界可入正文，真实任务可靠性仍部分验证
+- 是否已验证：arXiv API 元数据、HTTP metadata 和摘要已于 2026-07-12 复核；memory/reflection/planning 边界已完成第一轮交叉验证；长期记忆治理窄边界可入正文，真实任务可靠性仍部分验证
 
 ## 一句话总结
 
@@ -22,8 +22,10 @@ Generative Agents 是理解“记忆、反思、规划”如何组合成 believa
 
 ## 支撑证据
 
-- arXiv API 返回有效条目：`2304.03442v2`。
-- 2026-07-11 抓取 arXiv 页面成功；摘要包含 complete record of experiences、synthesize memories into higher-level reflections、retrieve memories dynamically 和 plan behavior 等关键表述。
+- 2026-07-12 抓取 arXiv 页面返回 HTTP 200；响应头 `last-modified: Tue, 08 Aug 2023 00:18:05 GMT`。
+- arXiv API 返回有效条目：`2304.03442v2`，published `2023-04-07T01:55:19Z`，updated `2023-08-06T00:21:19Z`，primary category `cs.HC`。
+- API 摘要包含 complete record of experiences、synthesize memories into higher-level reflections、retrieve them dynamically、plan behavior、observation、planning 和 reflection 等关键表述。
+- API 摘要报告 believable individual and emergent social behaviors，以及 observation / planning / reflection ablation；这些只能作为 sandbox simulation 和 believability 目标下的效果声明，不能外推为生产 Agent 任务可靠性。
 - 已与 MemoryBank、MemGPT、Letta、Zep、OWASP、NIST 和标准库 memory governance / lifecycle audit 实验交叉验证长期记忆治理边界；该论文可作为 memory/reflection/planning 组合案例，不证明生产 Agent 默认更可靠。
 
 ## 可能的问题
