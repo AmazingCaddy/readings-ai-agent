@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 17:07 Asia/Shanghai
+**Last Updated:** 2026-07-11 17:36 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -39,9 +39,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 22. Completed first evidence upgrade for observability/trace boundaries using LangSmith Observability, LangSmith Evaluation concepts, Arize Phoenix overview, Phoenix tracing tutorial, OpenAI Cookbook, OpenAI Evals, AgentBench, and WebArena. Trace field design and offline/online eval workflow are now partially verified; local trace-aware eval and LLM-as-judge misclassification analysis remain open.
 23. Completed first evidence upgrade for production tool permission and audit boundaries using OpenAI Agents SDK guardrails/tools/tracing/human-in-the-loop docs, OpenAI Responses API permission fields, Semantic Kernel plugin approval notes, OWASP, NIST, and observability evidence. Guardrails/HITL/sensitive trace controls are partially verified; local prompt-injection/tool-permission experiments and cross-framework comparisons remain open.
 24. Completed first evidence upgrade for MCP security, authorization, permissions, roots, elicitation, sampling, and tools/resources/prompts spec details using MCP 2025-11-25 specification pages and MCP Security Best Practices. The MCP chapter now distinguishes model-controlled tools, application-driven resources, user-controlled prompts, optional transport-level authorization, token audience validation, token passthrough prohibition, roots not being a sandbox, and HITL/privacy requirements for elicitation/sampling. Status remains partial verification pending local MCP trace and host implementation experiments.
+25. Completed a standard-library MCP-style trace simulation under `docs/experiments/mcp-trace/`. The script covers `roots/list`, `tools/list`, read-only `tools/call`, rejected write-tool approval, `resources/list`, ordinary resource review, and malicious resource review. Results support minimal trace field design (`actor`, `method`, `decision`, details, timestamp) but do not validate real MCP SDK, real host UI, OAuth, URL mode elicitation, or token redaction behavior.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2026-mcp-official-docs.md`, `docs/evidence/mcp-security-permission-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/05-mcp.md`, `docs/chapters/12-source-map.md`, `docs/sources/source-card-index.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2026-mcp-official-docs.md`, `docs/evidence/mcp-role-boundary.md`, `docs/evidence/mcp-security-permission-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/05-mcp.md`, `docs/chapters/12-source-map.md`, `docs/experiments/README.md`, `docs/experiments/mcp-trace/README.md`, `docs/experiments/mcp-trace/mcp_trace_simulation.py`, `docs/experiments/mcp-trace/results-2026-07-11.md`, `docs/sources/source-card-index.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
@@ -56,8 +57,8 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 - Run the practice roadmap examples locally: Structured Outputs, File Search/RAG, OpenAI Evals or a tiny eval harness, usage/cost monitoring, and rate-limit handling. Record dependency friction, cost, trace shape, failure examples, and beginner-facing instructions.
 - Run a toy Agent eval experiment comparing final-answer-only scoring with trajectory/trace-aware scoring.
 - Run LLM-as-judge and online evaluator misclassification checks with human spot review, cost tracking, and privacy/redaction constraints.
-- Run a minimal read-only MCP trace experiment to upgrade the MCP role boundary from partial verification toward `可入正文`, covering `tools/list`, `tools/call`, `resources/list`, `resources/read`, host/client/server trace fields, and how the host presents tool inputs/results.
-- Run a minimal MCP security experiment covering user rejection, roots behavior, URL mode elicitation, malicious resource/prompt content, token/log redaction, and a simulated write tool requiring confirmation.
+- Run a real MCP SDK / host trace experiment to upgrade the MCP role boundary beyond the current standard-library simulation, covering `tools/list`, `tools/call`, `resources/list`, `resources/read`, host/client/server trace fields, and how the host presents tool inputs/results.
+- Run a real MCP security experiment covering user rejection, roots behavior, URL mode elicitation, malicious resource/prompt content, token/log redaction, and a simulated write tool requiring confirmation.
 - Run a minimal RAG vs short-term vs long-term memory comparison experiment.
 - Run a minimal RAG pipeline experiment comparing chunk size, metadata, top-k, rerank/filter, citation correctness, answer faithfulness, latency, and token cost. LlamaIndex docs search did not directly verify source citation/source_nodes behavior in the latest docs.
 - Run a multi-session long-term memory governance experiment covering explicit write confirmation, automatic write failure modes, stale preference invalidation, conflicting facts, and sensitive information handling.

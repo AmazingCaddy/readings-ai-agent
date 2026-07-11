@@ -25,10 +25,10 @@
 ## MCP
 
 - MCP 相比传统 API wrapper 的核心价值是什么？
-- MCP tools、resources、prompts 的边界如何准确解释？已完成官方 server concepts 和 2025-11-25 spec 第一轮验证：tools 是 model-controlled，resources 是 application-driven，prompts 是 user-controlled；仍需本地 trace 验证具体 host 如何呈现。
-- MCP 安全模型和权限边界有哪些官方建议？已完成第一轮验证：authorization 是 optional transport-level capability；HTTP transport 支持授权时遵循 OAuth 2.1 相关规范；STDIO transport 应从环境取得凭据；token passthrough 被禁止；roots 不等于 sandbox；elicitation/sampling 需要用户可见和可拒绝的交互边界；仍需 host/client/server 实验验证实现差异。
-- 如何用一个只读 MCP server 复现 host/client/server、`tools/list`、`tools/call`、`resources/list`、`resources/read` 和 trace？
-- 如何设计一个最小恶意 resource/prompt 与一个模拟写工具，验证 host 是否展示 tool inputs、允许用户拒绝、记录审计、避免敏感 token/resource 泄露？
+- MCP tools、resources、prompts 的边界如何准确解释？已完成官方 server concepts 和 2025-11-25 spec 第一轮验证：tools 是 model-controlled，resources 是 application-driven，prompts 是 user-controlled；标准库模拟实验已验证最小 trace 字段，仍需真实 host 呈现方式对比。
+- MCP 安全模型和权限边界有哪些官方建议？已完成第一轮验证：authorization 是 optional transport-level capability；HTTP transport 支持授权时遵循 OAuth 2.1 相关规范；STDIO transport 应从环境取得凭据；token passthrough 被禁止；roots 不等于 sandbox；elicitation/sampling 需要用户可见和可拒绝的交互边界；标准库模拟实验已验证 tool approval 和 resource review trace，仍需真实 host/client/server 实验验证实现差异。
+- 如何用真实 MCP SDK / host 复现 host/client/server、`tools/list`、`tools/call`、`resources/list`、`resources/read` 和 trace？
+- 如何把标准库模拟中的最小恶意 resource/prompt 与模拟写工具迁移到真实 host，验证 host 是否展示 tool inputs、允许用户拒绝、记录审计、避免敏感 token/resource 泄露？
 
 ## RAG 与 Memory
 

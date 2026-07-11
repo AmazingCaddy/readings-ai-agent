@@ -22,6 +22,10 @@
 6. Prompt injection 基线测试
    - 目标：验证工具型 Agent 在恶意文档或外部输入下是否会越权。
 
+7. MCP 最小 trace 实验
+   - 目标：验证 host/client/server、`tools/list`、`tools/call`、`resources/list`、`resources/read`、roots 和 host approval trace 字段。
+   - 状态：已完成标准库模拟实验，见 [MCP 最小 Trace 实验](mcp-trace/README.md) 和 [2026-07-11 结果](mcp-trace/results-2026-07-11.md)。仍需真实 MCP SDK / host 实验。
+
 ## 实验记录要求
 
 - 明确假设。
@@ -30,4 +34,3 @@
 - 保存 trace 或日志。
 - 记录成功率、成本、延迟和失败类型。
 - 结论必须说明适用边界。
-
