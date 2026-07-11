@@ -33,7 +33,7 @@
 | Web agents | WebArena: A Realistic Web Environment for Building Autonomous Agents | Paper / Benchmark | A | 元数据已复核；source card 已创建 |
 | Agent benchmark | AgentBench: Evaluating LLMs as Agents | Paper / Benchmark | A | 元数据已复核；source card 已创建 |
 | Tool-use eval | Tau-bench / tool-agent benchmark materials | Benchmark | A/B | arXiv 元数据和 GitHub README 已复核；source card 已创建；原 repo 已提示任务过期，真实试跑应看 τ³-bench |
-| Software agents | SWE-agent paper and repository；mini-SWE-agent docs/source | Paper / Source | A | arXiv 元数据和 GitHub README 已复核；SWE-agent 和 mini-SWE-agent source cards 已创建；mini-SWE-agent README、docs 和关键源码已抽样复核；真实 toy repo 试跑待做 |
+| Software agents | SWE-agent paper and repository；mini-SWE-agent docs/source | Paper / Source | A | arXiv 元数据和 GitHub README 已复核；SWE-agent 和 mini-SWE-agent source cards 已创建；mini-SWE-agent README、docs 和关键源码已抽样复核；Real Repo Issue Agent Toy 固定 / deterministic hybrid baseline、mini-SWE-agent CLI surface 和 deterministic fake-model runtime surface 已完成；真实模型 confirm-mode toy repo 试跑待做 |
 | Embodied agents | Voyager: An Open-Ended Embodied Agent with LLMs | Paper / Source | A | arXiv 元数据、项目站点、GitHub repo metadata 和 README 已复核；source card 已创建；真实复现和 Minecraft 外泛化待验证 |
 
 ## Engineering / Source Code

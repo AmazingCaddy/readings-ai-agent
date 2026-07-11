@@ -8,7 +8,7 @@
 
 ## 实验边界
 
-这是一个真实 toy repo baseline 实验。当前已运行固定 workflow baseline 和确定性的 workflow-agent hybrid baseline，尚未运行 mini-SWE-agent 或 SWE-agent 修复 toy repo，也尚未运行任何真实模型。
+这是一个真实 toy repo baseline 实验。当前已运行固定 workflow baseline 和确定性的 workflow-agent hybrid baseline；mini-SWE-agent 的 deterministic fake-model runtime surface 已由 [Real mini-SWE-agent Runtime Surface Validation](../real-mini-swe-agent-runtime-validation/README.md) 覆盖。尚未运行真实模型驱动的 mini-SWE-agent confirm-mode、SWE-agent 或其他真实模型 coding agent。
 
 当前 completed baseline 只能支撑“toy repo、失败测试、diff、trajectory、固定 workflow 对照组和人工审批式 hybrid 控制边界可以安全复现”的教学边界，不能证明：
 
@@ -80,11 +80,12 @@ toy repo 应满足：
 | --- | --- | --- | --- | --- | --- | ---: | ---: | ---: | --- |
 | 2026-07-12 | fixed workflow | n/a | temp dir | completed | initial 3 failed, final 5 passed | 0 | n/a | <1s local | no agent/model tested |
 | 2026-07-12 | workflow-agent hybrid | deterministic suggestion stub | temp dir | completed | initial 3 failed, final 5 passed | 5 | n/a | <1s local | no real model or autonomous agent tested |
-| TODO | mini-SWE-agent confirm | TBD | TBD | pending | pending | TBD | TBD | TBD | pending |
+| 2026-07-12 | mini-SWE-agent runtime | deterministic fake model | temp dir | completed | initial failed, final passed | 5 fake calls | 0.5 fake cost | <3s local | yolo mode; no real model or confirm-mode tested |
+| TODO | mini-SWE-agent confirm | TBD real model | TBD | pending | pending | TBD | TBD | TBD | pending |
 
 ## 结论状态
 
-- 当前状态：固定 workflow baseline 和确定性 workflow-agent hybrid baseline 已完成，见 [2026-07-12 结果](results-2026-07-12.md)；mini-SWE-agent confirm-mode repo issue run 和 SWE-agent 仍待跑。
+- 当前状态：固定 workflow baseline 和确定性 workflow-agent hybrid baseline 已完成，见 [2026-07-12 结果](results-2026-07-12.md)；mini-SWE-agent deterministic fake-model runtime surface 已完成，见 [Real mini-SWE-agent Runtime Surface Validation 结果](../real-mini-swe-agent-runtime-validation/results-2026-07-12.md)；真实模型 mini-SWE-agent confirm-mode repo issue run 和 SWE-agent 仍待跑。
 - 可支撑：第 11 章可以把 Repo Issue Agent 作为进阶练习，并要求 toy repo、sandbox、确认模式、trajectory、diff/rollback、测试输出、成本和延迟记录；固定 workflow baseline 证明这个 toy repo 能产生失败测试、最小实现 diff 和通过测试的可复现对照组；确定性 hybrid baseline 证明“建议下一步、人工审批命令、拒绝不必要的环境读取、执行测试和 scoped diff”这类控制边界可以记录。
 - 不可支撑：不能把任何 coding agent、模型、sandbox 或框架写成默认可靠或默认更好。
 
