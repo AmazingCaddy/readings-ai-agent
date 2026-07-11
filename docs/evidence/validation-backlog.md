@@ -16,7 +16,7 @@
 | --- | --- | --- | --- | --- |
 | P0 | 真实 tool-calling 参数校验与有限重试 | OpenAI Responses / Function Calling API | 可复现实验脚本、失败样例、trace、成本/延迟记录；harness 已准备，结果待跑 | 只能验证所选模型和 schema，不代表所有模型稳定修正 |
 | P0 | 真实 Structured Outputs / JSON mode / refusal 对比 | OpenAI Structured Outputs / Responses API | schema valid、semantic valid、refusal、retry 结果表；harness 已准备，结果待跑 | schema 通过不等于事实正确或业务正确 |
-| P0 | 真实 prompt injection + tool permission / HITL | OpenAI Responses API 或一个轻量 tool agent | 攻击样例、阻断/漏报/误报、审批和 trace 脱敏结果；harness 已准备，结果待跑 | 不证明 guardrail 完全安全，只能记录覆盖范围 |
+| P0 | 真实 prompt injection + tool permission / HITL | OpenAI Responses API 或一个轻量 tool agent | 攻击样例、阻断/漏报/误报、审批、pause/resume、幂等执行、参数快照和 trace 脱敏结果；harness 已准备，结果待跑；标准库审批恢复实验已完成 | 不证明 guardrail 完全安全，只能记录覆盖范围 |
 | P1 | 真实 RAG citation correctness | 轻量本地检索 + LLM synthesis；后续扩展到 LlamaIndex / vector store | chunk 配置、top-k、citation correctness、faithfulness、成本/延迟；LLM synthesis harness 已准备，结果待跑 | 不证明某个 chunk/rerank 策略默认最优 |
 | P1 | 真实 Agent trace-aware eval | Responses API toy agent trace；后续扩展到 OpenAI Evals / LangSmith / Phoenix | runs/traces、final-only vs trace-aware 对比、人工复核样例；真实模型 trace harness 已准备，结果待跑 | 自动评分不能当真值，需保留人工抽样 |
 | P1 | 真实 MCP host/client/server trace | 本地 stdio JSON-RPC harness；后续扩展到 MCP SDK / host | tools/resources/prompts 调用 trace、approval/resource review、token/resource 泄露检查；stdio harness 已完成 | 不同 host 实现差异可能很大 |
@@ -63,9 +63,9 @@
 - 通用 benchmark 对真实业务 agent 的代表性有多强？已确认公开 benchmark 可学习评测思想，但业务系统仍需 custom/private eval。
 - Trace 字段如何设计，才能同时支持调试、审计、回归和隐私控制？已完成 LangSmith/Phoenix/Cookbook 第一轮验证，标准库 trace-aware eval 已覆盖 tool call/result/error/approval/final response；trace schema audit 已覆盖 debug、audit、regression、cost/latency、RAG 和 privacy 字段缺口；真实模型 trace-aware eval harness 已准备；仍需实际运行真实 RAG/tool traces、平台字段映射和隐私脱敏策略。
 - LLM-as-judge、online evaluator 和自动化规则的误判率、成本与抽样人工复核比例如何设计？
-- Prompt injection 防护有哪些已验证的工程方法？已确认 OWASP/NIST 支撑风险边界，OpenAI Agents SDK/Semantic Kernel/Responses API 支撑 guardrails、approval、require_approval、sensitive trace 控制等工程边界；标准库最小攻击实验已验证 prompt-only 风险和 policy-enforced 写工具阻断/trace 脱敏流程；安全 regression set 已扩展到授权、金额阈值、敏感信息、破坏性工具、幂等性和 benign case；真实 prompt injection / permission harness 已准备；仍需实际运行验证真实模型 / 框架 guardrail 误报漏报。
+- Prompt injection 防护有哪些已验证的工程方法？已确认 OWASP/NIST 支撑风险边界，OpenAI Agents SDK/Semantic Kernel/Responses API 支撑 guardrails、approval、require_approval、sensitive trace 控制等工程边界；标准库最小攻击实验已验证 prompt-only 风险和 policy-enforced 写工具阻断/trace 脱敏流程；安全 regression set 已扩展到授权、金额阈值、敏感信息、破坏性工具、幂等性和 benign case；审批状态恢复实验已覆盖拒绝后恢复、重复恢复、参数篡改恢复和 trace 脱敏；真实 prompt injection / permission harness 已准备；仍需实际运行验证真实模型 / 框架 guardrail 误报漏报。
 - 安全 regression set 应该如何覆盖外部文档注入、工具参数越权、敏感信息泄露和 excessive agency？标准库实验已覆盖外部文档注入、写工具越权、跨用户读取、高金额审批、trace 假 secret 泄露、破坏性工具、重复提交和 benign case；仍需迁移到真实工具、真实模型和框架 guardrail。
-- Guardrails、HITL approval、tool approval 和 sensitive trace 配置在不同框架中的覆盖范围有什么差异？OpenAI Agents SDK 已确认 tool guardrails 不覆盖所有工具类型，仍需横向比较。
+- Guardrails、HITL approval、tool approval 和 sensitive trace 配置在不同框架中的覆盖范围有什么差异？OpenAI Agents SDK 已确认 tool guardrails 不覆盖所有工具类型；标准库实验已给出审批恢复最小验收结构，仍需横向比较真实框架的 pause/resume、审批状态序列化、参数快照、幂等执行和 trace 脱敏。
 
 ## 实践路线
 

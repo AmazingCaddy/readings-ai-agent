@@ -16,6 +16,7 @@
 - Source 8：[Evidence Note: Observability 与 Trace 工程边界](observability-trace-boundary.md)
 - Source 9：[Prompt Injection 与工具权限最小实验结果](../experiments/prompt-injection-permission/results-2026-07-11.md)
 - Source 10：[安全 Regression Set 最小实验结果](../experiments/security-regression-set/results-2026-07-11.md)
+- Source 11：[审批状态恢复与幂等性实验结果](../experiments/approval-state-recovery/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -31,17 +32,18 @@
 - 边界：NIST 和 OWASP 支撑风险治理视角，OpenAI/Semantic Kernel 支撑工程机制，但是否有效仍需对具体工具、数据和权限模型做本地攻击/失败实验。
 - 本地实验：标准库 prompt injection / permission 模拟显示，写工具在应用层审批前阻断后不会产生 `refund_issued` 副作用；同一 trace 还演示了敏感字段在写入审计前脱敏。这支持“审批和 trace 隐私治理需要在工具执行路径上实现”的工程表述。
 - 本地实验：标准库安全 regression set 把安全 case 拆成 expected decision、actual decision、risk tags、false positive、false negative 和 secret leak 字段；它覆盖外部注入、跨用户读取、高金额退款、敏感邮件、破坏性工具、重复提交和 benign read。这支持“上线前安全 regression set 应同时检查阻断、审批、放行和误伤”的工程表述。
+- 本地实验：标准库 approval state recovery audit 比较 `naive_resume` 和 `governed_resume`。`naive_resume` 在重复恢复、拒绝后恢复和参数篡改恢复上失败，并产生重复副作用和敏感 trace 泄露；`governed_resume` 通过 7/7 个操作，覆盖审批状态、执行状态、参数快照 hash、拒绝阻断、幂等恢复和 trace 脱敏。这支持“人工审批必须是可恢复、可审计、可幂等的执行流程”的工程表述。
 
 ## 实验验证
 
 - 是否需要实验：是
-- 实验设计：实现一个最小客服 Agent，包含只读订单查询、发送邮件、取消订单、退款建议四类工具。构造外部文档 prompt injection、错误用户 ID、越权金额、敏感字段泄露、重复提交等 10-20 个安全 case。分别测试：无 guardrail、prompt-only、防护型参数校验、blocking guardrail、tool guardrail、HITL approval、敏感 trace 关闭、审计日志。记录被阻断类型、漏报、误报、成本、延迟和人工处理量。
-- 结果：已完成标准库 prompt injection / permission 模拟和安全 regression set，覆盖外部文档注入、只读/写工具分离、模拟审批拒绝、跨用户读取、高金额审批、敏感字段阻断/脱敏、破坏性工具、幂等性、benign case、审计事件和误报/漏报字段。尚未覆盖真实框架 guardrail、HITL 状态恢复、真实成本、真实延迟或跨框架对比。
+- 实验设计：实现一个最小客服 Agent，包含只读订单查询、发送邮件、取消订单、退款建议四类工具。构造外部文档 prompt injection、错误用户 ID、越权金额、敏感字段泄露、重复提交、拒绝后恢复、参数篡改恢复等 10-20 个安全 case。分别测试：无 guardrail、prompt-only、防护型参数校验、blocking guardrail、tool guardrail、HITL approval、审批状态恢复、敏感 trace 关闭、审计日志。记录被阻断类型、漏报、误报、成本、延迟和人工处理量。
+- 结果：已完成标准库 prompt injection / permission 模拟、安全 regression set 和 approval state recovery audit，覆盖外部文档注入、只读/写工具分离、模拟审批拒绝、跨用户读取、高金额审批、敏感字段阻断/脱敏、破坏性工具、幂等性、benign case、审批状态恢复、拒绝后阻断、参数快照校验、审计事件和误报/漏报字段。尚未覆盖真实框架 guardrail、真实 HITL 状态恢复、真实成本、真实延迟或跨框架对比。
 
 ## 结论状态
 
-- 部分验证：风险资料、OpenAI API/SDK 文档和 Semantic Kernel 文档已经共同支撑工具权限、审批、guardrails 和敏感 trace 控制的工程边界；标准库实验支撑只读/写工具分离、审批拒绝、trace 脱敏和安全 regression set 的最小流程。仍缺真实框架安全实验、真实误报/漏报分析和跨框架对比。
+- 部分验证：风险资料、OpenAI API/SDK 文档和 Semantic Kernel 文档已经共同支撑工具权限、审批、guardrails 和敏感 trace 控制的工程边界；标准库实验支撑只读/写工具分离、审批拒绝、trace 脱敏、安全 regression set、审批状态恢复、参数快照校验和幂等执行的最小流程。仍缺真实框架安全实验、真实误报/漏报分析和跨框架对比。
 
 ## 可进入章节
 
-- 是。可以写成：高风险工具应默认最小权限，写操作需要确认或审批，工具参数必须由应用层校验，guardrails 应放在正确执行点，trace 应记录可审计信息但避免泄露敏感数据。不能写成“用了 guardrails 或 HITL 就安全”。
+- 是。可以写成：高风险工具应默认最小权限，写操作需要确认或审批，工具参数必须由应用层校验，guardrails 应放在正确执行点，审批恢复要校验状态、参数快照和幂等性，trace 应记录可审计信息但避免泄露敏感数据。不能写成“用了 guardrails 或 HITL 就安全”。
