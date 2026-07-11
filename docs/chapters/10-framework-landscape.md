@@ -201,7 +201,7 @@ Semantic Kernel 文档已确认它把自身定位为 lightweight open-source dev
 - OpenAI Agents SDK、LangGraph、AutoGen 均已完成关键段落第一轮精读，可支撑 SDK runtime、orchestration runtime 和多 Agent 协调抽象的保守表述。
 - CrewAI source card 当前可信度为 B，但其 Introduction Markdown 可作为 Flows / Crews 抽象的补充证据；不宜单独支撑关键结论或营销式效果判断。
 - LangGraph source card 明确其适合状态图、可控 workflow 和复杂任务编排；但它是特定框架，不应被写成通用定义。
-- 多 Agent 框架适合学习角色协作和任务分配，但“多 Agent 默认更好”没有被框架文档证明。标准库多 Agent 对比实验已验证无控制角色协作会带来重复读取、缺证据和冲突风险；真实框架仍需用同一任务的成本、延迟、trace 和成功率对比验证。
+- 多 Agent 框架适合学习角色协作和任务分配，但“多 Agent 默认更好”没有被框架文档证明。“多 Agent 不是复杂任务默认升级路径；引入前应明确角色边界、证据分配、冲突处理、review trace 和成本预算”已升级为可入正文。标准库多 Agent 对比实验已验证无控制角色协作会带来重复读取、缺证据和冲突风险；真实框架仍需用同一任务的成本、延迟、trace 和成功率对比验证。
 - LlamaIndex source card 明确其适合 RAG、数据连接、索引和 agent data framework；需区分通用 RAG 概念和框架实现。
 - Semantic Kernel source card 已完成第一轮精读，可支撑 enterprise integration、plugins/functions、native/OpenAPI/MCP plugin 导入、agent framework、human-in-the-loop 和 process orchestration 的框架定位；其 Process Framework 当前仍标注 experimental。
 - 框架生态定位边界已完成第一轮验证和标准库 rubric smoke test：各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；但不能从文档或 rubric 直接推出“哪个框架最好”。

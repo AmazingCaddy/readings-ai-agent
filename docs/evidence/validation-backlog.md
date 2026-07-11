@@ -31,7 +31,7 @@
 - ReAct 在哪些任务中确实优于单次提示或简单 workflow？已完成论文摘要第一轮验证和标准库 ReAct-like tool loop 对比；仍需真实模型、真实工具和真实任务实验。
 - Plan-and-Execute 的收益是否足以抵消额外成本和错误传播？已完成相关架构模式第一轮验证、标准库 planner/executor 对比实验和 reflection retry 对照；仍需真实模型 / Agent framework / repo issue 实验。
 - Reflection / Critic 模式在真实任务中是否稳定提升质量？Reflexion 已完成论文摘要第一轮验证，标准库 reflection/retry 实验已验证 verified feedback 可补证据、unverified reflection 会重复错误；仍需结合真实模型、长期 episodic memory、成本和人工评审实验。
-- 多 Agent 的收益是否足以抵消通信成本、协调复杂度和调试难度？已完成 AutoGen/CrewAI 第一轮资料验证和标准库单流程 / 无控制多 Agent / Flow 控制多 Agent 对比；仍需真实模型、真实框架、token/latency/cost 和复杂多视角任务实验。
+- 多 Agent 的收益是否足以抵消通信成本、协调复杂度和调试难度？窄结论已可入正文：多 Agent 不是复杂任务默认升级路径，必须先明确角色边界、证据分配、冲突处理、review trace 和成本预算。已完成 AutoGen/CrewAI 第一轮资料验证和标准库单流程 / 无控制多 Agent / Flow 控制多 Agent 对比；仍需真实模型、真实框架、token/latency/cost 和复杂多视角任务实验。
 
 ## 工具调用
 

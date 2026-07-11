@@ -8,7 +8,7 @@
 - 主题：Multi-agent / Agent Framework / Orchestration
 - 适合阶段：进阶 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接、AgentChat 页面和源 Markdown 已复核；关键段落已精读；结论已部分交叉验证
+- 是否已验证：来源链接、AgentChat 页面和源 Markdown 已复核；关键段落已精读；支撑多 Agent 编排能力和“多 Agent 不是默认升级路径”的窄边界；真实 AutoGen 表现仍部分验证
 
 ## 一句话总结
 
@@ -42,8 +42,9 @@ AutoGen 是理解多 Agent 对话、协作和框架抽象的重要工程 referen
 
 - 对比单 Agent、planner/executor 和多 Agent 在同一任务上的成功率、成本和 trace 可读性。
 - 已纳入框架能力交叉表，用于支撑“AgentChat / Teams / Group Chat / Swarm / GraphFlow / tracing”的保守定位；不代表真实横向性能结论。
+- 已完成标准库多 Agent / Flow 控制对比实验，可作为后续迁移到 AutoGen 的 case matrix：记录 success、tool calls、messages、conflicts、duplicate reads 和 missing evidence。当前结果不代表 AutoGen 的真实表现。
 
 ## 是否进入正文
 
 - 结论：部分进入
-- 原因：可支撑多 Agent、Teams、coordination patterns、GraphFlow 和 trace/logging 的工程抽象；不能单独证明多 Agent 默认优于单 Agent 或 workflow。
+- 原因：可支撑多 Agent、Teams、coordination patterns、GraphFlow 和 trace/logging 的工程抽象，并与 CrewAI/Agent eval/标准库实验共同支撑“多 Agent 不是复杂任务默认升级路径”的窄边界；不能单独证明多 Agent 默认优于单 Agent 或 workflow，也不能证明 AutoGen 的真实成本或成功率。

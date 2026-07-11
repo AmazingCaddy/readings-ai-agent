@@ -8,7 +8,7 @@
 - 主题：Multi-agent / Agent Framework
 - 适合阶段：进阶 / 工程实践
 - 可信度等级：B
-- 是否已验证：来源链接和 Introduction Markdown 已复核；关键段落已精读；结论已部分交叉验证
+- 是否已验证：来源链接和 Introduction Markdown 已复核；关键段落已精读；支撑先用 Flow 控制、按需调用 Crew 的窄边界；真实 CrewAI 表现仍部分验证
 
 ## 一句话总结
 
@@ -44,8 +44,9 @@ CrewAI 是多 Agent 工程生态中的常见框架，可作为框架比较和多
 
 - 用同一小任务比较 CrewAI 与 AutoGen / LangGraph 的任务建模、可观测性和错误恢复。
 - 已纳入框架能力交叉表，用于支撑“Flows 管理状态和控制、Crews 作为 Flow 内 agent team”的保守定位；可信度仍保持 B，不代表真实横向性能结论。
+- 已完成标准库多 Agent / Flow 控制对比实验，可作为后续迁移到 CrewAI 的 case matrix：记录 success、messages、conflicts、duplicate reads、missing evidence 和 review trace。当前结果不代表 CrewAI 的真实表现。
 
 ## 是否进入正文
 
 - 结论：部分进入
-- 原因：可支撑 Flows / Crews 的多 Agent workflow 抽象，并与 AutoGen/LangGraph 交叉验证；产品化宣传和效果结论需保守处理。
+- 原因：可支撑 Flows / Crews 的多 Agent workflow 抽象，并与 AutoGen/Agent eval/标准库实验共同支撑“多 Agent 需要 Flow/workflow 控制，不是默认升级路径”的窄边界；产品化宣传、真实成本和效果结论需保守处理。

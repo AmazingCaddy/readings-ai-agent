@@ -16,8 +16,8 @@
 | [Reflexion paper](source-cards/2023-reflexion-paper.md) | Reflection / Eval | Paper | A | 摘要和语言反馈/反思边界已精读；reflection retry 实验已完成；部分验证 | 补真实 critic、长期 episodic memory、成本和人工评审实验 |
 | [AgentBench paper](source-cards/2023-agentbench-paper.md) | Eval / Benchmark | Paper | A | 摘要和 benchmark / trajectory 边界已精读；支撑工具/副作用 Agent 不能只看最终答案的窄结论；其余部分验证 | 补真实 Agent trace、LLM-as-judge 和人工复核实验 |
 | [WebArena paper](source-cards/2023-webarena-paper.md) | Web Agent / Eval | Paper | A | 摘要和 Web Agent 评测复杂度已精读；支撑过程/交互评测窄结论；其余部分验证 | 补真实 web/tool trace 评测和失败分类实验 |
-| [AutoGen docs](source-cards/2026-autogen-docs.md) | Multi-agent / Framework | Framework Docs | A | 关键多 Agent/Teams/GraphFlow 段落已精读；multi-agent evidence、框架能力交叉表和框架 rubric 已引用；部分验证 | 补真实 AutoGen / CrewAI / LangGraph 同任务横向实验 |
-| [CrewAI docs](source-cards/2026-crewai-docs.md) | Multi-agent / Framework | Framework Docs | B | Introduction / Flows / Crews 抽象已精读；multi-agent evidence 和框架能力交叉表已引用；部分验证 | 和 AutoGen / LangGraph 做真实横向比较，避免营销式结论 |
+| [AutoGen docs](source-cards/2026-autogen-docs.md) | Multi-agent / Framework | Framework Docs | A | 关键多 Agent/Teams/GraphFlow 段落已精读；支撑多 Agent 不是默认升级路径的窄边界；真实 AutoGen 表现仍部分验证 | 补真实 AutoGen / CrewAI / LangGraph 同任务横向实验 |
+| [CrewAI docs](source-cards/2026-crewai-docs.md) | Multi-agent / Framework | Framework Docs | B | Introduction / Flows / Crews 抽象已精读；支撑先用 Flow 控制、按需调用 Crew 的窄边界；真实 CrewAI 表现仍部分验证 | 和 AutoGen / LangGraph 做真实横向比较，避免营销式结论 |
 | [MCP servers repo](source-cards/2026-mcp-servers-repo.md) | MCP / Examples | Source Code | A | README / reference implementations 已复核；MCP role evidence 已引用；部分验证 | 补真实 MCP server 示例结构、权限假设和 host trace 实验 |
 | [OpenAI Function Calling docs](source-cards/2026-openai-function-calling-docs.md) | Tool Use / Function Calling | Official Docs | A | “Function Calling 本身不执行工具”已可入正文；参数校验/重试模拟实验已完成；真实 API harness 已准备；真实修正稳定性仍部分验证 | 实际运行真实模型 / API 实验并补其他框架术语对照 |
 | [MCP official docs](source-cards/2026-mcp-official-docs.md) | MCP | Official Docs / Spec | A | host/client/server 职责边界已可入正文；security / authorization 页面已精读；MCP trace 模拟和 stdio harness 已完成；真实 host 行为仍部分验证 | 补真实 MCP SDK / host trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验 |
