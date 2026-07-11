@@ -28,7 +28,7 @@
 | Self-RAG | Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection | Paper | A | arXiv 元数据已复核；source card 已创建 |
 | Planning | Tree of Thoughts: Deliberate Problem Solving with Large Language Models | Paper | A | 元数据已复核；source card 已创建 |
 | Reflection | Reflexion: Language Agents with Verbal Reinforcement Learning | Paper | A | 元数据已复核；source card 已创建 |
-| Multi-agent debate | Improving Factuality and Reasoning in Language Models through Multiagent Debate | Paper | A | 待复核 |
+| Multi-agent debate | Improving Factuality and Reasoning in Language Models through Multiagent Debate | Paper | A | arXiv 元数据已复核；source card 已创建 |
 | Web agents | WebArena: A Realistic Web Environment for Building Autonomous Agents | Paper / Benchmark | A | 元数据已复核；source card 已创建 |
 | Agent benchmark | AgentBench: Evaluating LLMs as Agents | Paper / Benchmark | A | 元数据已复核；source card 已创建 |
 | Tool-use eval | Tau-bench / tool-agent benchmark materials | Benchmark | A/B | 待复核 |

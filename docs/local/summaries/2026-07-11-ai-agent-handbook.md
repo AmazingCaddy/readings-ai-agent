@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 22:42 CST
+**Last Updated:** 2026-07-11 22:51 CST
 **Status:** In Progress
 
 ## Objective
@@ -93,9 +93,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 76. Clarified `docs/evidence/validation-backlog.md`. The introduction now explains that some backlog items already have narrow `可入正文` conclusions but remain open for real model/API/framework/cost/latency/stability validation. The tool-permission confirmation-boundary item now points to the completed standard-library security, permission, regression, and approval-state experiments while keeping real framework guardrail/HITL behavior pending.
 77. Added a high-priority security source card for Greshake et al.'s Indirect Prompt Injection paper (`docs/sources/source-cards/2023-indirect-prompt-injection-paper.md`). The card records arXiv metadata, HTTP metadata, abstract-level findings about data/instruction boundary blurring, remote injection into retrieved data, and tool/API call risk. Synced MkDocs nav, source-card directory, source-card index, seed candidates, prompt-injection evidence, claim ledger, coverage matrix, chapter 09, and chapter 12. This strengthens the prompt-injection boundary evidence without upgrading any real guardrail/HITL effectiveness claims.
 78. Added a RAG source card for Self-RAG (`docs/sources/source-cards/2023-self-rag-paper.md`). The card records arXiv metadata, HTTP metadata, and abstract-level findings that fixed passage retrieval can hurt when retrieval is unnecessary or irrelevant, while on-demand retrieval, reflection/critique, factuality, and citation accuracy need evaluation. Synced MkDocs nav, source-card directory, source-card index, seed candidates, RAG engineering evidence, claim ledger, coverage matrix, chapter 06, and chapter 12. This removes the `Self-RAG 待建卡` coverage gap while keeping real embedding/vector-store/rerank/LLM synthesis quality pending.
+79. Added a multi-agent source card for Du et al.'s Multiagent Debate paper (`docs/sources/source-cards/2023-multiagent-debate-paper.md`). The card records arXiv metadata, HTTP metadata, abstract-level findings about multiple model instances proposing/debating answers over rounds, and the reported factuality/reasoning benefits. Synced MkDocs nav, source-card directory, source-card index, seed candidates, multi-agent evidence, claim ledger, coverage matrix, chapter 07, and chapter 12. This removes the `Multi-agent debate 待建卡` coverage gap while preserving the boundary that real engineering multi-agent benefits, costs, latency, conflict handling, and framework behavior remain partially verified.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2023-self-rag-paper.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/index.md`, `docs/sources/seed-candidates.md`, `docs/evidence/rag-engineering-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/references/coverage-matrix.md`, `docs/chapters/06-rag-memory.md`, `docs/chapters/12-source-map.md`, `mkdocs.yml`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2023-multiagent-debate-paper.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/index.md`, `docs/sources/seed-candidates.md`, `docs/evidence/multi-agent-default-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/references/coverage-matrix.md`, `docs/chapters/07-planning-orchestration.md`, `docs/chapters/12-source-map.md`, `mkdocs.yml`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 

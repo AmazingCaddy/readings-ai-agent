@@ -11,10 +11,13 @@
 - Source 3：[AgentBench: Evaluating LLMs as Agents](../sources/source-cards/2023-agentbench-paper.md)
 - Source 4：[Evidence Note: Agent Eval 与 Trajectory 边界](agent-eval-trajectory-boundary.md)
 - Source 5：[多 Agent 与 Flow 控制对比实验结果](../experiments/multi-agent-comparison/results-2026-07-11.md)
+- Source 6：[Multiagent Debate paper](../sources/source-cards/2023-multiagent-debate-paper.md)
 
 ## 交叉验证结果
 
 - 一致点：AutoGen 文档明确提供 AgentChat、Teams、Selector Group Chat、Swarm、GraphFlow、logging 等多 Agent 抽象，说明多 Agent 是成熟工程生态的一部分。
+- 一致点：Multiagent Debate paper 摘要展示了多个模型实例提出、辩论各自答案和推理过程、多轮后形成共同答案的研究机制；这支持“多视角和互相审查可能有价值”的窄边界。
+- 一致点：Multiagent Debate paper 同时是研究任务和提示流程，不是生产框架指南；它不能证明工程多 Agent 对所有复杂任务默认更可靠。
 - 一致点：AutoGen Core 被描述为 event-driven framework for scalable multi-agent AI systems，适用场景包括 deterministic/dynamic workflows、multi-agent collaboration 和 distributed agents。
 - 一致点：CrewAI 文档把 Flows 和 Crews 分开，并明确 production-ready application 应 start with a Flow；Crew 只在需要特定复杂自治任务时作为 Flow 中的团队能力使用。
 - 一致点：AgentBench 和 Eval evidence note 支持对 Agent 系统进行交互环境、失败原因、trajectory/trace 和成本评估；这说明多 Agent 是否值得需要被评测，而不是只看架构图。
@@ -30,7 +33,7 @@
 
 ## 结论状态
 
-- 可入正文：窄结论“多 Agent 是一种编排选择，不是复杂任务的默认升级路径；只有在角色边界、证据分配、冲突处理、review trace、成本和延迟可控时才值得引入”已完成第一轮交叉验证。AutoGen 和 CrewAI 文档直接支撑多 Agent/Teams/Crews/GraphFlow/coordination patterns 的工程存在；CrewAI 还直接支撑“先用 Flow 控制，再在需要时调用 Crew”的保守路线；标准库实验支撑无控制多 Agent 的重复读取、缺证据和冲突风险。
+- 可入正文：窄结论“多 Agent 是一种编排选择，不是复杂任务的默认升级路径；只有在角色边界、证据分配、冲突处理、review trace、成本和延迟可控时才值得引入”已完成第一轮交叉验证。Multiagent Debate paper 支撑多实例辩论和互相审查的研究机制；AutoGen 和 CrewAI 文档直接支撑多 Agent/Teams/Crews/GraphFlow/coordination patterns 的工程存在；CrewAI 还直接支撑“先用 Flow 控制，再在需要时调用 Crew”的保守路线；标准库实验支撑无控制多 Agent 的重复读取、缺证据和冲突风险。
 - 部分验证：多 Agent 在真实模型 / AutoGen / CrewAI / LangGraph / 真实复杂任务中的收益、成本、延迟、冲突合并质量和人工评审负担仍需同任务对比实验。
 
 ## 可进入章节
