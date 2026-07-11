@@ -470,9 +470,6 @@ dependencies = [
 [package.metadata]
 requires-dist = [{ name = "mkdocs-material", specifier = ">=9.5" }]
 
-[package.metadata.requires-dev]
-dev = []
-
 [[package]]
 name = "requests"
 version = "2.34.2"
