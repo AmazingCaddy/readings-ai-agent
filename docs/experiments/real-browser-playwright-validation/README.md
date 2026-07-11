@@ -2,14 +2,14 @@
 
 ## 目标
 
-把 Browser Action Trace Audit 的字段模板推进到真实浏览器固定 workflow：在本地 demo page 上用 Playwright 记录真实 action、DOM hash、screenshot hash、文件上传、提交审批、外部页面指令边界、trace.zip 和失败分类。
+把 Browser Action Trace Audit 的字段模板推进到真实浏览器固定 workflow 和一个 deterministic computer-use-style action loop：在本地 demo page 上用 Playwright 记录真实 action、DOM hash、screenshot hash、坐标校验、文件上传、提交审批、destructive action 阻断、外部页面指令边界、trace.zip 和失败分类。
 
-当前 harness 只覆盖固定 Playwright workflow，不运行 Browser Use，不调用 Anthropic computer use，也不调用任何模型。
+当前 harness 覆盖固定 Playwright workflow 和本地 deterministic computer-use-style loop；不运行 Browser Use，不调用 Anthropic computer use，也不调用任何模型。
 
 ## 当前状态
 
 - Harness 已准备：`real_browser_playwright_validation.py`
-- 当前本地运行状态：`completed`。2026-07-11 使用临时 Playwright 依赖和本地 Chromium headless shell 跑通固定 demo page workflow，生成 4 条 action record 和 trace.zip。
+- 当前本地运行状态：`completed`。2026-07-11 使用临时 Playwright 依赖和本地 Chromium headless shell 跑通固定 demo page workflow；2026-07-12 扩展 deterministic computer-use-style loop。当前输出生成 8 条 action record 和 trace.zip。
 - 结果页：[2026-07-11 结果](results-2026-07-11.md)
 
 ## 运行方式
@@ -33,11 +33,14 @@ uv run --with playwright playwright install chromium
 5. 填写表单但不提交。
 6. 上传一个临时 redacted invoice 文件。
 7. 阻断 submit order 动作，记录 `pending` approval。
-8. 生成 Playwright trace.zip，并记录 action records。
+8. 在第二个页面上运行 deterministic computer-use-style loop：观察 screenshot/DOM、用坐标点击并填写 name、对 submit 坐标点击做审批阻断、对 destructive delete button 做策略阻断。
+9. 生成 Playwright trace.zip，并记录 action records。
 
 ## 记录字段
 
 - action trace：URL、action type、selector、action result、timestamp
+- controller mode：fixed Playwright workflow 或 deterministic computer-use-style loop
+- coordinate validation：坐标动作前记录 `elementFromPoint` 命中的 `data-testid`
 - page state：DOM hash、screenshot hash、before/after state
 - side-effect approval：risk level、approval required/status、side effect
 - profile isolation：temporary Playwright context、test account、cookie scope、domain allowlist
@@ -48,11 +51,11 @@ uv run --with playwright playwright install chromium
 
 ## 结论边界
 
-- 可支撑：真实 Playwright 固定 workflow 可以作为 browser agent 对照组入口；本次 completed run 收集了真实 browser action trace、DOM/screenshot hash、文件上传、审批阻断和 trace.zip metadata。
-- 当前不能支撑：本次只验证固定 demo page 和固定 Playwright workflow；不能证明 Browser Use、Anthropic computer use、任意模型、真实网站、CAPTCHA/2FA/stealth、classifier、防护层、成本、延迟、合规或生产可靠性。
+- 可支撑：真实 Playwright 固定 workflow 和 deterministic computer-use-style loop 可以作为 browser agent 对照组入口；本次 completed run 收集了真实 browser action trace、DOM/screenshot hash、坐标校验、文件上传、审批阻断、destructive action 阻断和 trace.zip metadata。
+- 当前不能支撑：本次只验证固定 demo page、固定 Playwright workflow 和 deterministic loop；不能证明 Browser Use、Anthropic computer use、任意模型、真实网站、CAPTCHA/2FA/stealth、classifier、防护层、成本、延迟、合规或生产可靠性。
 
 ## 下一步
 
 1. 在同一 demo page 上增加 Browser Use browser agent 对照。
-2. 可选增加 computer-use-style action loop，对比 screenshot/coordinate action、approval burden、trace readability、成本和延迟。
-3. 增加错误元素、登录态 profile、下载/删除类按钮和截图注入 case。
+2. 把 deterministic loop 升级为真实模型驱动 Browser Use 或 computer-use-style action loop，对比 screenshot/coordinate action、approval burden、trace readability、成本和延迟。
+3. 增加错误元素、登录态 profile、下载类按钮和截图注入 case。

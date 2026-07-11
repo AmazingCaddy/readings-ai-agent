@@ -36,16 +36,16 @@ Browser Agent 是高风险的工具型 Agent：它把模型决策连接到真实
 - 是否需要实验：是
 - 已完成：标准库 [Browser Action Trace Audit](../experiments/browser-action-trace-audit/README.md)。该 audit 比较 `naive_trace` 和 `governed_trace`：`naive_trace` 0/8 通过，`governed_trace` 8/8 通过，覆盖 action trace、page state、side-effect approval、profile isolation、file upload control、external content untrusted boundary、sensitive trace redaction 和 failure classification。
 - 支撑范围：该结果支撑“浏览器 Agent 练习和评测需要记录哪些字段”的窄结论。
-- 已完成：真实 [Real Browser Playwright Validation](../experiments/real-browser-playwright-validation/README.md) harness。2026-07-11 completed run 使用本地 demo page 和 Playwright Chromium headless，生成 4 条 action record 和 trace.zip；覆盖读价格、填表不提交、上传 redacted invoice、submit order 被策略阻断、DOM/screenshot hash、临时 context、`127.0.0.1` allowlist、外部页面指令作为 untrusted data 和 trace 脱敏字段。
+- 已完成：真实 [Real Browser Playwright Validation](../experiments/real-browser-playwright-validation/README.md) harness。2026-07-11 completed run 使用本地 demo page 和 Playwright Chromium headless，生成 8 条 action record 和 trace.zip；覆盖固定 workflow 的读价格、填表不提交、上传 redacted invoice、submit order 被策略阻断，也覆盖 deterministic computer-use-style loop 的 screenshot/DOM observe、坐标点击前 `elementFromPoint` 校验、坐标填写 name、submit 坐标动作审批阻断和 delete-account destructive action 阻断；记录 DOM/screenshot hash、临时 context、`127.0.0.1` allowlist、外部页面指令作为 untrusted data 和 trace 脱敏字段。
 - 已完成：真实 [Real Browser Use Package Surface Validation](../experiments/real-browser-use-package-validation/README.md) harness。2026-07-12 completed run 使用临时 `browser-use` 依赖，记录 package metadata、console scripts 和源码表面；它不导入 `browser_use`，不启动浏览器，不调用模型，也不打开网站。
-- 仍需实验：在同一本地 demo website 上把 Browser Use browser agent 和可选 Anthropic computer-use-style action loop 与已完成的固定 Playwright workflow 对照。任务包括只读信息提取、表单填写但不提交、需要确认后提交、文件上传、错误元素、外部页面/截图注入和登录态 profile。记录 browser action trace、DOM / screenshot state、tool decisions、action validation、approval、cost、latency、失败分类和敏感字段脱敏。
-- 结果边界：已完成 Browser Use package surface run 和真实 Playwright 固定 workflow run，但尚未完成真实模型 / Browser Use agent / computer-use-style completed run。当前标准库 audit 不启动浏览器；Browser Use package harness 不运行 agent；真实 Playwright harness 只验证本地 demo page 和固定脚本，不验证模型规划、Browser Use task、Anthropic computer use、真实网站、登录态、classifier、成本或延迟。这些结果都不能证明任意浏览器 Agent 的真实成功率、点击精度、classifier 行为、成本、CAPTCHA/stealth、合规或生产可靠性。
+- 仍需实验：在同一本地 demo website 上把 Browser Use browser agent 和真实模型驱动 computer-use-style action loop 与已完成的固定 Playwright workflow / deterministic loop 对照。任务包括只读信息提取、表单填写但不提交、需要确认后提交、文件上传、错误元素、外部页面/截图注入和登录态 profile。记录 browser action trace、DOM / screenshot state、tool decisions、action validation、approval、cost、latency、失败分类和敏感字段脱敏。
+- 结果边界：已完成 Browser Use package surface run 和真实 Playwright 固定 workflow / deterministic computer-use-style loop run，但尚未完成真实模型 / Browser Use agent / Anthropic computer-use completed run。当前标准库 audit 不启动浏览器；Browser Use package harness 不运行 agent；真实 Playwright harness 只验证本地 demo page、固定脚本和 deterministic loop，不验证模型规划、Browser Use task、Anthropic computer use、真实网站、登录态、classifier、成本或延迟。这些结果都不能证明任意浏览器 Agent 的真实成功率、点击精度、classifier 行为、成本、CAPTCHA/stealth、合规或生产可靠性。
 
 ## 结论状态
 
 - 可入正文：窄结论“浏览器 Agent 的执行层包括导航、点击、输入、选择、上传、滚动等网页动作；这些动作应被记录为可复盘 trace，并进入 eval、审计和回归测试”由 Browser Use / Playwright 文档、WebArena 和现有 eval/trace evidence 支撑。
 - 可入正文：窄结论“浏览器 / computer-use Agent 不能只用最终文本或 demo 成功判断可靠性；登录态、cookies、文件、表单提交、购物/支付、第三方站点 ToS、CAPTCHA/风控、网页/截图 prompt injection 和 destructive button 都需要权限、人工确认、隔离 profile / VM / container、测试账号和 trace 脱敏”由 Browser Use、Anthropic computer use 文档和工具权限 evidence 支撑。
-- 部分验证：Browser Use 的本地 package / source surface 已完成临时依赖验证，固定 Playwright workflow 的动作记录和 trace.zip 生成已完成本地真实浏览器验证；Browser Use benchmark / leaderboard / hosted model claims、Browser Use agent task 行为、Anthropic screenshot classifier 行为、真实网页/桌面任务成功率、点击精度、CAPTCHA/stealth、成本、延迟、合规、跨站点稳定性和生产可靠性仍需真实实验与独立评测。
+- 部分验证：Browser Use 的本地 package / source surface 已完成临时依赖验证，固定 Playwright workflow 和 deterministic computer-use-style loop 的动作记录、坐标校验、策略阻断和 trace.zip 生成已完成本地真实浏览器验证；Browser Use benchmark / leaderboard / hosted model claims、Browser Use agent task 行为、Anthropic screenshot classifier 行为、真实网页/桌面任务成功率、点击精度、CAPTCHA/stealth、成本、延迟、合规、跨站点稳定性和生产可靠性仍需真实实验与独立评测。
 
 ## 可进入章节
 
