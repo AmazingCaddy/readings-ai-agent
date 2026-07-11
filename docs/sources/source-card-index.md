@@ -7,7 +7,7 @@
 | Source card | 主题 | 类型 | 可信度 | 当前验证状态 | 下一步 |
 | --- | --- | --- | --- | --- | --- |
 | [ReAct paper](source-cards/2022-react-paper.md) | Agent 架构 / Tool Use | Paper | A | 摘要/核心模式已精读；支撑 Agent/Workflow 控制权连续谱和复杂架构不是默认更可靠的窄边界；ReAct 效果仍部分验证 | 补真实模型 / 框架任务对比，避免泛化为 ReAct 默认更优 |
-| [RAG paper](source-cards/2020-rag-paper.md) | RAG | Paper | A | 摘要和关键动机已精读；RAG / Memory 术语边界已可入正文；工程质量仍部分验证 | 补真实 RAG stack、citation correctness 和成本/延迟实验 |
+| [RAG paper](source-cards/2020-rag-paper.md) | RAG | Paper | A | 摘要和关键动机已精读；支撑外部检索、provenance 和知识更新动机；RAG / Memory 术语边界和 RAG 工程 pipeline 窄边界已可入正文；工程质量仍部分验证 | 补真实 RAG stack、citation correctness 和成本/延迟实验 |
 | [Generative Agents paper](source-cards/2023-generative-agents-paper.md) | Memory / Reflection / Planning | Paper | A | 摘要和 memory/reflection/planning 关系已精读；支撑长期记忆治理窄边界；真实收益仍部分验证 | 补真实多会话 Agent / memory framework 收益与污染实验 |
 | [MemoryBank paper](source-cards/2023-memorybank-paper.md) | Long-term memory | Paper | A | 摘要和长期记忆更新/遗忘方向已精读；支撑长期记忆治理窄边界；真实收益仍部分验证 | 补真实长期记忆收益、过时和隐私实验 |
 | [MemGPT paper](source-cards/2023-memgpt-paper.md) | Memory management / Context | Paper | A | 摘要和显式 memory management 方向已精读；RAG/Memory 与长期记忆治理窄边界已引用；真实 memory 行为仍部分验证 | 补真实 memory tier / context management 实验 |
@@ -24,7 +24,7 @@
 | [LangGraph docs](source-cards/2026-langgraph-docs.md) | Agent 架构 / Orchestration | Framework Docs | A | 关键 stateful workflow / agent / durable execution / HITL 段落已精读；Agent/Workflow、自治程度、复杂架构默认可靠性和 Planner/Executor trace 边界可入正文；真实 LangGraph 行为仍部分验证 | 补真实 LangGraph workflow / agent 对比实验 |
 | [LangGraph memory docs](source-cards/2026-langgraph-memory-docs.md) | Short-term / Long-term memory | Framework Docs | A | 关键 short-term / long-term memory 边界已精读；RAG / Memory 术语边界和长期记忆治理窄边界已可入正文；真实 memory framework 行为仍部分验证 | 补真实 memory framework、用户编辑/删除和多会话收益实验 |
 | [Letta docs](source-cards/2026-letta-docs.md) | Agent memory / Stateful agents | Framework Docs | B | 关键 memory inspection/editing/versioning 段落已精读；长期记忆治理窄边界已可入正文；lifecycle audit 已引用；真实 Letta 行为仍部分验证 | 和 Zep / LangGraph 做真实 memory governance 对比实验 |
-| [LlamaIndex docs](source-cards/2026-llamaindex-docs.md) | RAG / Data framework | Framework Docs | A | 关键页面已精读；RAG pipeline / citation 模拟实验、上下文策略对比实验和框架能力交叉表已完成；真实 LLM citation harness 已准备；部分验证 | 实际运行 LLM citation harness，并补真实 embedding / LlamaIndex pipeline、metadata filter 和 citation correctness 实验 |
+| [LlamaIndex docs](source-cards/2026-llamaindex-docs.md) | RAG / Data framework | Framework Docs | A | 关键页面已精读；支撑 RAG 工程 pipeline 窄边界可入正文；RAG pipeline / citation 模拟实验、上下文策略对比实验和框架能力交叉表已完成；真实 LLM citation harness 已准备；具体质量仍部分验证 | 实际运行 LLM citation harness，并补真实 embedding / LlamaIndex pipeline、metadata filter 和 citation correctness 实验 |
 | [NIST AI RMF](source-cards/2026-nist-ai-rmf.md) | Risk / Governance | Standard / Guidance | A | 关键风险治理段落已精读；security / memory / production evidence 已引用；支撑生产安全治理边界；安全 regression set 已完成；具体 Agent 控制仍部分验证 | 补真实风险评审清单和生产安全试跑 |
 | [OpenAI Agents SDK docs](source-cards/2026-openai-agents-sdk-docs.md) | Agent Framework | Official Docs | A | 关键页面已精读；Agent/Workflow、自治程度和复杂架构默认可靠性窄边界可入正文；高风险工具权限窄边界可入正文；真实 runtime/guardrails/HITL 覆盖仍部分验证 | 补真实 guardrails/HITL/tool permission 和框架横向对比实验 |
 | [OpenAI Cookbook](source-cards/2026-openai-cookbook.md) | Examples / Practice | Official Examples | A/B | 具体 recipe 已复核；部分验证 | 本地试跑最小项目并记录成本、失败样例和初学者阻塞点 |

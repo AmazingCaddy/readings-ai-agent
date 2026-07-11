@@ -7,6 +7,7 @@
 - Agent 和 Workflow 的边界如何定义才准确？窄结论已可入正文：二者是控制权、状态推进、工具调用顺序和运行时决策方式的连续谱，不是互斥阵营；仍需真实模型 / Agent framework / repo issue 实验验证具体架构收益。
 - “自治程度”是否可以作为分类维度？窄结论已可入正文：它可以作为控制权和风险面的连续谱维度，但不能写成能力等级；仍需真实模型 / 框架 / 成本 / 权限实验验证不同自治程度的实际收益和风险。
 - RAG 和 Memory 的边界如何解释给初学者？术语边界已升级为可入正文；仍需真实 RAG / memory framework / 多会话质量实验验证效果、成本和隐私风险。
+- RAG 是否只是一种 prompt 技巧？窄结论已可入正文：工程 RAG 是 loading、indexing、storing、querying/retrieval、response synthesis 和 evaluation 等阶段组成的可观察 pipeline；最小可治理 RAG 需要 chunk metadata、retrieval trace、citation/source 绑定和无证据拒答或 `grounded=false` 标记。仍需真实 embedding / vector store、chunk size/top-k/rerank、LLM synthesis faithfulness、citation correctness、latency 和 token cost 实验验证具体质量表现。
 
 ## 真实验证执行队列
 
@@ -52,7 +53,7 @@
 ## RAG 与 Memory
 
 - 长期记忆是否一定提升 Agent 表现？窄结论已可入正文：长期记忆可能有价值，但不能默认自动写入或默认提升表现，必须配套写入守门、生命周期权限、跨用户隔离和 trace 脱敏。已完成第一轮验证、标准库写入守门模拟和 lifecycle audit；仍需真实多会话 Agent / memory framework 实验验证哪些任务有收益、哪些任务会被污染。
-- Chunk size、embedding model、reranking 对结果的影响如何验证？LlamaIndex 已完成第一轮工程流程验证，标准库最小 pipeline 已验证 trace/citation 字段；真实 LLM citation synthesis harness 已准备但仍使用本地关键词检索，仍需真实 embedding / vector store / rerank 对比实验。
+- Chunk size、embedding model、reranking 对结果的影响如何验证？RAG 工程 pipeline 的窄边界已可入正文；LlamaIndex 已完成第一轮工程流程验证，标准库最小 pipeline 已验证 trace/citation 字段；真实 LLM citation synthesis harness 已准备但仍使用本地关键词检索，仍需真实 embedding / vector store / rerank 对比实验。
 - RAG 答案如何稳定带 source citation / source nodes？标准库模拟实验已验证 chunk-level citation 字段设计；真实 LLM citation synthesis harness 已准备；仍需实际运行验证 citation correctness / faithfulness，并扩展到真实 RAG stack。
 - Memory 写入守门和生命周期控制有哪些可复用设计？Letta/Zep 已提供第一轮工程模式参考，标准库模拟已验证显式写入、敏感信息拒绝、低置信推断拒绝、用户纠正、失效历史、查看、编辑、删除、删除后不召回、跨用户阻断和 trace 脱敏的最小流程；仍需真实 framework 的查看、编辑、删除、权限和隐私边界实验。
 - RAG paper 中的 non-parametric memory 与 Agent long-term memory 如何避免术语混淆？已完成第一轮边界解释和标准库 RAG / Memory 分流实验；后续仍需真实教程示例避免术语误用。
