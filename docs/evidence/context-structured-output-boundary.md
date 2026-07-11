@@ -38,7 +38,8 @@ LLM 应用不能把模型调用理解成“输入一段 prompt，取回一段文
 
 ## 结论状态
 
-- 部分验证：OpenAI 官方文档直接支撑输入/输出结构、message roles、Structured Outputs、JSON mode 和 context window 的 API 边界；RAG/Memory 和 Prompt Injection evidence 支撑“长上下文不能替代治理”的交叉边界；标准库实验验证了 schema-valid semantic error、naive long context 的旧资料/外部指令风险，以及摘要/RAG 策略的 provenance 和 trust 失败模式。仍缺真实 API / 模型 / 长上下文成本实验。
+- 可入正文：窄结论“Structured Outputs / schema validation 提升可解析性和 schema adherence，但不保证事实正确、权限正确或业务正确”由 OpenAI Structured Outputs 文档直接支撑，并被 Responses API / Function Calling source cards 和标准库 schema-valid semantic error 实验交叉支撑。
+- 部分验证：真实 Responses API / Structured Outputs 的 refusal、retry、跨模型稳定性、真实长上下文成本和真实外部攻击样本仍待验证；“长上下文不能替代治理”已有交叉支撑和标准库失败模式，但仍需真实长上下文 / RAG / 摘要对比实验。
 
 ## 可进入章节
 
