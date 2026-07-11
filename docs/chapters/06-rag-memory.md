@@ -243,6 +243,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 
 - [术语边界表](../glossary.md)
 - [结论证据台账](../evidence/claim-ledger.md)
+- [References 覆盖矩阵](../references/coverage-matrix.md)
 - [Evidence Note: RAG 与 Memory 边界](../evidence/rag-memory-boundary.md)
 - [RAG、短期记忆与长期记忆对比实验结果](../experiments/rag-memory-comparison/results-2026-07-11.md)
 - [Evidence Note: RAG 工程流程边界](../evidence/rag-engineering-boundary.md)
