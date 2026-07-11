@@ -2,6 +2,8 @@
 
 本清单记录仍需补强的验证问题。部分条目已经有窄口径结论可入正文；它们仍保留在 backlog 中，是因为真实模型、真实 API、真实框架、成本、延迟、稳定性或生产效果还没有完成验证。未完成真实验证前，不应把这些宽口径表现写成确定性结论。
 
+阅读本清单时要区分三种证据强度：标准库模拟和本地 deterministic control 可以证明记录字段、应用层策略、parser / validator、trace 脱敏和固定 fixture 失败模式；fake-model / deterministic-node 框架 run 可以证明所选版本的本地 runtime surface；只有带真实凭据、真实模型或真实服务的 completed run 才能支持真实 API / 模型 / 服务行为。当前没有 `OPENAI_API_KEY` 的 harness 结果一律不能升级为真实模型质量、检测效果、成本、延迟或生产可靠性结论。
+
 ## 概念边界
 
 - Agent 和 Workflow 的边界如何定义才准确？窄结论已可入正文：二者是控制权、状态推进、工具调用顺序和运行时决策方式的连续谱，不是互斥阵营；仍需真实模型 / Agent framework / repo issue 实验验证具体架构收益。

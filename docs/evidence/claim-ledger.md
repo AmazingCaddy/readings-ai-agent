@@ -9,6 +9,8 @@
 - `可入正文`：有清晰 references、边界说明，并经过交叉验证或实验设计。
 - `不应确定表述`：容易误导初学者，必须保守表达。
 
+实验结果阅读边界：无 `OPENAI_API_KEY` 时完成的本地 deterministic control、fake-model run 或标准库 audit，只能支撑应用层 parser、validator、policy、trace、字段模板和固定 fixture 的窄结论；不能把它们写成真实模型、真实 API、真实 detector / guardrail、真实 HITL、真实 sandbox、真实成本、真实延迟或生产可靠性已验证。只有结果明确标记真实 API / 真实模型 / 真实框架行为已运行，并记录模型、版本、输入、输出、trace、成本和边界时，才能升级对应的宽口径结论。
+
 ## 当前台账
 
 | 结论 | 支撑资料 | 当前状态 | 正文写法 |

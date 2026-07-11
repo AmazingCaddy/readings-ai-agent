@@ -50,6 +50,12 @@
 
 它们通常不是 Agent 专用教程，需要和具体工具、数据流、权限模型结合。
 
+### 实验和 Harness
+
+本手册中的实验结果要按证据强度阅读。标准库模拟和本地 deterministic control 适合证明字段设计、应用层策略、trace、校验器和固定失败样例；fake-model 或 deterministic-node run 适合观察框架本地 runtime surface；它们都不能证明真实模型质量、真实 API 行为、检测层拦截率、真实成本、真实延迟或生产可靠性。
+
+如果一个结果标记 `real_api_validated=false`、`real_model_validated=false`、`fake_model_only=true` 或 `skipped_without_openai_api_key`，正文只能把它作为窄口径工程边界或后续真实实验入口。只有真实 API / 模型 / 服务 completed run 同时记录模型、版本、输入、输出、trace、成本、延迟和限制条件时，才可能支撑更宽的结论。
+
 ## 按主题阅读
 
 ### Agent 基础与架构

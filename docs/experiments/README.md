@@ -22,6 +22,8 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 - `真实 harness 已准备`：脚本入口已存在；无 API key 或未接入真实框架时只能说明入口可运行或会保守跳过。
 - `真实实验待跑`：需要真实 API、真实框架、真实数据、成本/延迟记录或人工复核后，才能升级更宽的工程结论。
 
+判读规则：`completed` 不等于“真实能力已验证”。如果结果同时标记 `real_api_validated=false`、`real_model_validated=false`、`fake_model_only=true`、`deterministic_*` 或 `skipped_without_openai_api_key`，它只能证明本地 fixture、应用层控制逻辑、字段记录或框架表面行为。把这些结果迁移到正文时，必须保留“仍需真实 API / 真实模型 / 真实服务实验”的边界。
+
 1. Tool calling 参数错误恢复
    - 目标：观察模型生成错误参数时，schema 校验和重试策略是否有效。
    - 状态：已完成标准库模拟实验，见 [Tool Calling 参数校验与重试实验](tool-calling-validation/README.md) 和 [2026-07-11 结果](tool-calling-validation/results-2026-07-11.md)；真实 API harness 已准备，见 [Real Tool Calling 参数校验与重试实验](real-tool-calling-validation/README.md) 和 [2026-07-11 结果](real-tool-calling-validation/results-2026-07-11.md)。当前无 API key，harness 运行本地 deterministic validation/retry control，覆盖 schema-valid 但业务非法参数、validation error、修正参数和 toy tool execution；仍需配置 API key 后记录真实模型 / API 结果。
