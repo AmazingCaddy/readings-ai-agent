@@ -14,6 +14,7 @@
 | 结论 | 支撑资料 | 当前状态 | 正文写法 |
 | --- | --- | --- | --- |
 | ReAct 的核心思想是交替生成推理轨迹和任务行动。 | ReAct paper | 部分验证 | 可作为 ReAct 的基础解释，但效果边界需保守。 |
+| Agent 和 Workflow 的边界主要在控制权、状态和决策方式；二者可以组合成 workflow-agent hybrid。 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper；Evidence Note: Agent 与 Workflow 边界 | 部分验证 | 可作为第 01/04 章基础边界；需避免写成“Agent 总比 workflow 高级”。 |
 | Tool use 可以让模型连接外部 API、搜索、计算器等工具。 | Toolformer paper；OpenAI Function Calling docs；OpenAI Responses API docs | 部分验证 | 可入门解释，但要区分研究训练方案和 API schema 机制。 |
 | Function calling 本身不执行工具，执行发生在应用程序或工具运行时。 | OpenAI Function Calling docs；OpenAI Responses API docs；Evidence Note: Tool Use 与 Function Calling 边界 | 部分验证 | 可作为工程边界写入正文；仍建议用最小实验验证错误回传和重试流程。 |
 | RAG 的动机包括外部知识访问、知识更新和 provenance。 | RAG paper；Evidence Note: RAG 与 Memory 边界 | 部分验证 | 可作为 RAG 章节基础动机，但现代工程实现需另引框架文档。 |
@@ -27,7 +28,7 @@
 
 ## 待升级为可入正文的优先结论
 
-1. Agent vs Workflow 的边界。
+1. Agent vs Workflow 的边界。已完成第一轮 OpenAI Agents SDK、LangGraph 和 ReAct 交叉验证，待补最小对比实验。
 2. Tool Use vs Function Calling 的边界。已完成第一轮官方文档交叉验证，待补最小实验。
 3. RAG vs Memory 的边界。已完成第一轮论文和框架文档交叉验证，待补最小实验。
 4. MCP server/client/host 的职责边界。已完成第一轮官方文档交叉验证，待补最小 MCP trace 实验。

@@ -4,7 +4,7 @@
 
 ## 概念边界
 
-- Agent 和 Workflow 的边界如何定义才准确？
+- Agent 和 Workflow 的边界如何定义才准确？已完成第一轮 OpenAI Agents SDK、LangGraph 和 ReAct 交叉验证，仍需补最小对比实验。
 - “自治程度”是否可以作为分类维度？有哪些可靠来源支持？
 - RAG 和 Memory 的边界如何解释给初学者？已完成第一轮验证，仍需补最小实验和更多工程案例。
 
