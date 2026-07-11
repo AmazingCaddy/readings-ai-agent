@@ -6,7 +6,7 @@
 
 - Agent 和 Workflow 的边界如何定义才准确？已完成第一轮 OpenAI Agents SDK、LangGraph 和 ReAct 交叉验证，仍需补最小对比实验。
 - “自治程度”是否可以作为分类维度？有哪些可靠来源支持？
-- RAG 和 Memory 的边界如何解释给初学者？已完成第一轮验证，仍需补最小实验。
+- RAG 和 Memory 的边界如何解释给初学者？已完成第一轮验证和标准库最小 RAG pipeline / citation 模拟；仍需 RAG vs short-term vs long-term memory 对比实验。
 
 ## 架构模式
 
@@ -33,8 +33,8 @@
 ## RAG 与 Memory
 
 - 长期记忆是否一定提升 Agent 表现？已完成第一轮验证：不能写成“一定提升”，仍需多会话实验验证在哪些任务中可能造成污染。
-- Chunk size、embedding model、reranking 对结果的影响如何验证？LlamaIndex 已完成第一轮工程流程验证，仍需最小 RAG pipeline 实验。
-- RAG 答案如何稳定带 source citation / source nodes？本轮 LlamaIndex 文档搜索未找到直接证据，需补具体示例或实验。
+- Chunk size、embedding model、reranking 对结果的影响如何验证？LlamaIndex 已完成第一轮工程流程验证，标准库最小 pipeline 已验证 trace/citation 字段；仍需真实 embedding / vector store / rerank 对比实验。
+- RAG 答案如何稳定带 source citation / source nodes？标准库模拟实验已验证 chunk-level citation 字段设计；仍需真实 RAG stack 和 LLM synthesis 下的 citation correctness / faithfulness 实验。
 - Memory 写入守门有哪些可复用设计？Letta/Zep 已提供第一轮工程模式参考，仍需结合本地实验验证。
 - RAG paper 中的 non-parametric memory 与 Agent long-term memory 如何避免术语混淆？
 

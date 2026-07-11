@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 17:45 Asia/Shanghai
+**Last Updated:** 2026-07-11 17:55 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -41,9 +41,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 24. Completed first evidence upgrade for MCP security, authorization, permissions, roots, elicitation, sampling, and tools/resources/prompts spec details using MCP 2025-11-25 specification pages and MCP Security Best Practices. The MCP chapter now distinguishes model-controlled tools, application-driven resources, user-controlled prompts, optional transport-level authorization, token audience validation, token passthrough prohibition, roots not being a sandbox, and HITL/privacy requirements for elicitation/sampling. Status remains partial verification pending local MCP trace and host implementation experiments.
 25. Completed a standard-library MCP-style trace simulation under `docs/experiments/mcp-trace/`. The script covers `roots/list`, `tools/list`, read-only `tools/call`, rejected write-tool approval, `resources/list`, ordinary resource review, and malicious resource review. Results support minimal trace field design (`actor`, `method`, `decision`, details, timestamp) but do not validate real MCP SDK, real host UI, OAuth, URL mode elicitation, or token redaction behavior.
 26. Completed a standard-library Tool Calling validation/retry simulation under `docs/experiments/tool-calling-validation/`. The script uses a fake model to produce an invalid `get_weather(unit=kelvin)` call, has the application reject it with a validation error, then accepts a corrected `unit=celsius` call and records final response. This supports application-side validation/error feedback/retry flow but does not validate real model/API stability.
+27. Completed a standard-library RAG pipeline / citation simulation under `docs/experiments/rag-pipeline/`. The script loads three source-card notes, creates chunks with `chunk_id/source_id/title/url`, performs keyword retrieval, synthesizes answers with citations, and returns `grounded=false` for unsupported questions. This supports minimal RAG trace/citation design but does not validate embedding/vector-store/rerank/LLM synthesis quality, latency, token cost, or citation correctness in a real stack.
 
 ## Technical Context
-- Files modified recently: `docs/chapters/03-tool-use.md`, `docs/chapters/12-source-map.md`, `docs/evidence/tool-use-function-calling-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/tool-calling-validation/README.md`, `docs/experiments/tool-calling-validation/tool_calling_validation.py`, `docs/experiments/tool-calling-validation/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/2026-openai-function-calling-docs.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/chapters/06-rag-memory.md`, `docs/chapters/12-source-map.md`, `docs/evidence/rag-engineering-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/rag-pipeline/README.md`, `docs/experiments/rag-pipeline/rag_pipeline_simulation.py`, `docs/experiments/rag-pipeline/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/2026-llamaindex-docs.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
@@ -61,7 +62,7 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 - Run a real MCP SDK / host trace experiment to upgrade the MCP role boundary beyond the current standard-library simulation, covering `tools/list`, `tools/call`, `resources/list`, `resources/read`, host/client/server trace fields, and how the host presents tool inputs/results.
 - Run a real MCP security experiment covering user rejection, roots behavior, URL mode elicitation, malicious resource/prompt content, token/log redaction, and a simulated write tool requiring confirmation.
 - Run a minimal RAG vs short-term vs long-term memory comparison experiment.
-- Run a minimal RAG pipeline experiment comparing chunk size, metadata, top-k, rerank/filter, citation correctness, answer faithfulness, latency, and token cost. LlamaIndex docs search did not directly verify source citation/source_nodes behavior in the latest docs.
+- Run a real RAG stack experiment beyond the current standard-library simulation, comparing chunk size, metadata, top-k, rerank/filter, citation correctness, answer faithfulness, latency, and token cost. LlamaIndex docs search did not directly verify source citation/source_nodes behavior in the latest docs.
 - Run a multi-session long-term memory governance experiment covering explicit write confirmation, automatic write failure modes, stale preference invalidation, conflicting facts, and sensitive information handling.
 - Run a minimal prompt-injection permission-boundary experiment covering external document injection, read/write tool separation, parameter validation, human confirmation, and audit logs.
 - Run a tool-permission and audit experiment covering OpenAI Agents SDK guardrails execution mode, function-tool guardrails, HITL approval pause/resume, MCP require_approval, sensitive trace disabling, and audit log redaction.
