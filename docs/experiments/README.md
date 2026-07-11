@@ -88,7 +88,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 17. Agentic security regression set 实验
     - 目标：把 MITRE ATLAS 和 OWASP Agentic AI resources 中的 agentic-specific 风险整理成可迁移到真实模型 / 框架的安全 case matrix。
-    - 状态：真实实验设计已准备，见 [Real Agentic Security Regression Set 实验](real-agentic-security-regression-set/README.md)。尚未实现脚本、运行真实模型或运行真实框架；不能证明任何 mitigation、detector、guardrail、HITL、sandbox、runtime containment 或 monitoring 有效。
+    - 状态：已完成标准库 toy runtime，见 [Real Agentic Security Regression Set 实验](real-agentic-security-regression-set/README.md) 和 [2026-07-11 结果](real-agentic-security-regression-set/results-2026-07-11.md)。尚未运行真实模型或真实框架；不能证明任何 mitigation、detector、guardrail、HITL、sandbox、runtime containment 或 monitoring 有效。
 
 ## 实验记录要求
 

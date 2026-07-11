@@ -219,7 +219,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - Indirect Prompt Injection paper 和 OWASP LLM Top 10 的关键风险项已完成第一轮精读，可支撑外部内容模糊数据/指令边界、prompt injection、敏感信息泄露、工具/插件访问控制和 excessive agency 的保守风险表述。
 - OWASP Agentic AI Security Resources 的公开资源页、HTTP metadata 和 WP JSON 摘要已复核，可支撑 goal hijacking、tool misuse、identity / privilege abuse、memory poisoning、insecure inter-agent communication、cascading failures、rogue agents、runtime containment、architectural monitoring 和 schema controls 等 agentic-specific 风险边界。白皮书下载受限，全文未精读，因此不能支撑完整缓解清单或具体控制效果。
 - MITRE ATLAS 的主页、manifest、latest v6 YAML、HTTP metadata 和 term catalog 已复核，可支撑 LLM Prompt Injection、AI Agent Tool Invocation、AI Agent Tool Poisoning、memory / MCP / computer-use case-study-derived regression set、Agentic AI platform 和 maturity 的保守边界。它不能支撑任意 mitigation、guardrail、detector、HITL 或监控方案的真实效果。
-- Real Agentic Security Regression Set 实验设计已准备，可作为把 MITRE ATLAS / OWASP 风险转成 case matrix 的模板；它定义了 prompt injection、tool invocation、tool poisoning、memory poisoning、MCP / remote tool abuse、computer-use destructive action、runaway loop 和 inter-agent message 等 case，以及 expected decision、approval state、trace redaction、false positive / false negative 等记录字段。该设计尚未运行，不能支撑真实防护效果。
+- Real Agentic Security Regression Set 已完成标准库 toy runtime，可作为把 MITRE ATLAS / OWASP 风险转成 case matrix 的模板；它定义并运行了 prompt injection、tool invocation、tool poisoning、memory poisoning、MCP / remote tool abuse、computer-use destructive action、runaway loop 和 inter-agent message 等 case，以及 expected decision、approval state、trace redaction、false positive / false negative 等记录字段。该结果只支撑 case 覆盖和记录字段设计，不能支撑真实防护效果。
 - NIST AI RMF 的概述段落已完成第一轮精读，可支撑生产化章节的风险管理和治理视角；它不是 Agent 专用工程指南。
 - “Prompt injection 不能只靠 prompt 解决；外部内容应被当作不可信数据，工具权限和写操作审批必须由应用/系统层控制”已升级为可入正文。Indirect Prompt Injection paper 支撑外部检索数据中的恶意 prompt 可影响应用行为和 API 调用的风险边界；OWASP 支撑风险分类，NIST 支撑全生命周期风险治理，Microsoft Prompt Shields 支撑 user prompt attack / document attack 分类、生成前检测接口和误报/漏报边界，OpenAI 工具调用文档支撑应用侧执行和控制边界。
 - Microsoft Prompt Shields 文档已补充检测层工程资料：`shieldPrompt` API 可以分析 `userPrompt` 和 `documents`，返回 `attackDetected` 字段；但文档也明确提示可能出现 false positives / negatives，并建议 additional validation layers。因此它只能支撑“检测层应纳入安全 workflow”，不能支撑“接入检测后就安全”。
@@ -230,6 +230,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - Browser Use / Playwright / Anthropic Computer Use 资料已补充 browser agent 和 computer-use agent 的工程边界：浏览器动作、登录态 profile、截图、鼠标键盘控制、文件上传、表单提交、custom tools、human-in-the-loop、VM/container 隔离、domain allowlist、action validation/logging 和 Playwright action trace 都需要纳入权限、审计和脱敏设计。Anthropic 文档还提示网页或图片中的指令可能造成 prompt injection，并提供 screenshot classifier 作为一层确认机制；这些资料不能证明真实网站任务、点击精度、classifier 效果、CAPTCHA/stealth、合规或生产可靠性。
 - 本地标准库 prompt injection / tool permission 实验显示，prompt-only 模式会产生退款副作用并泄露假 secret 到 trace；应用层权限策略可以阻断写工具、记录拒绝原因并脱敏敏感字段。该实验支撑最小权限、写工具审批和 trace 脱敏的流程设计；真实 API harness 已准备但结果待跑，仍需真实模型和框架 guardrail 实验。
 - 本地标准库安全 regression set 显示，回归测试应同时覆盖 prompt injection、授权、数据边界、金额阈值、敏感信息、破坏性工具、幂等性和 benign case；该实验支撑安全测试矩阵设计，但不证明真实 guardrail 拦截率。
+- 本地标准库 agentic security regression set 显示，agentic-specific 安全回归还应覆盖 tool poisoning、memory poisoning、MCP / remote tool 外传、computer-use destructive action、runaway loop 和 inter-agent message 边界；toy runtime 中 `policy_enforced_hitl` 仍未阻断 computer-use destructive action，说明 HITL 不能替代 sandbox / runtime containment。该结果不证明真实 sandbox、detector、guardrail 或 HITL 有效。
 - 本地标准库审批状态恢复实验显示，HITL approval 需要保存审批状态、参数快照和执行状态；重复恢复应返回已执行，拒绝后恢复应阻断，参数被篡改后恢复应阻断，trace 应脱敏。该实验支撑审批恢复和幂等性设计，但不证明真实框架的 HITL 行为。
 - OpenAI Production / Cost / Latency / Rate Limit 文档已补充生产成本和性能治理资料，可支撑“成本、延迟和限流是生产质量的一部分”的工程边界：上线前应记录 token/usage、request/token rate limits、rate-limit headers、重试、平均/P95 延迟、模型选择、预算阈值和降级策略。真实 API / 应用中的成本、延迟、吞吐、质量取舍和具体优化效果仍需实验。
 - OpenAI Batch / Flex / Prompt Caching 文档已补充异步批处理、低优先级处理和缓存前缀资料，可支撑“优化手段需要按 workload 选择并记录观测字段”的边界：Batch 应记录 status、error file、`custom_id` 映射和过期；Flex 应记录 timeout、`429 Resource Unavailable` 和 fallback；Prompt Caching 应记录 `cached_tokens`、`cache_write_tokens` 和 cache miss 原因。
@@ -292,5 +293,5 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - [安全 Regression Set 最小实验结果](../experiments/security-regression-set/results-2026-07-11.md)
 - [审批状态恢复与幂等性实验结果](../experiments/approval-state-recovery/results-2026-07-11.md)
 - [Real Prompt Injection 与工具权限实验](../experiments/real-prompt-injection-permission/README.md)
-- [Real Agentic Security Regression Set 实验设计](../experiments/real-agentic-security-regression-set/README.md)
+- [Real Agentic Security Regression Set](../experiments/real-agentic-security-regression-set/README.md)
 - [References 覆盖矩阵](../references/coverage-matrix.md)

@@ -21,6 +21,7 @@
 - Source 13：[LangGraph Documentation](../sources/source-cards/2026-langgraph-docs.md)
 - Source 14：[OWASP Agentic AI Security Resources](../sources/source-cards/2026-owasp-agentic-ai-security.md)
 - Source 15：[MITRE ATLAS](../sources/source-cards/2026-mitre-atlas.md)
+- Source 16：[Real Agentic Security Regression Set 标准库结果](../experiments/real-agentic-security-regression-set/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -48,16 +49,17 @@
 - 本地实验：标准库 prompt injection / permission 模拟显示，写工具在应用层审批前阻断后不会产生 `refund_issued` 副作用；同一 trace 还演示了敏感字段在写入审计前脱敏。这支持“审批和 trace 隐私治理需要在工具执行路径上实现”的工程表述。
 - 本地实验：标准库安全 regression set 把安全 case 拆成 expected decision、actual decision、risk tags、false positive、false negative 和 secret leak 字段；它覆盖外部注入、跨用户读取、高金额退款、敏感邮件、破坏性工具、重复提交和 benign read。这支持“上线前安全 regression set 应同时检查阻断、审批、放行和误伤”的工程表述。
 - 本地实验：标准库 approval state recovery audit 比较 `naive_resume` 和 `governed_resume`。`naive_resume` 在重复恢复、拒绝后恢复和参数篡改恢复上失败，并产生重复副作用和敏感 trace 泄露；`governed_resume` 通过 7/7 个操作，覆盖审批状态、执行状态、参数快照 hash、拒绝阻断、幂等恢复和 trace 脱敏。这支持“人工审批必须是可恢复、可审计、可幂等的执行流程”的工程表述。
+- 本地实验：Real Agentic Security Regression Set 的标准库 toy runtime 覆盖 tool invocation、tool poisoning、memory poisoning、MCP / remote tool、computer-use destructive action、runaway loop 和 inter-agent message。`policy_enforced_hitl` 通过 8/9，但仍未阻断 computer-use destructive action；`sandboxed_runtime` 通过 9/9。这支持“HITL 与 sandbox/runtime containment 是不同边界”的工程表述，但不证明真实 sandbox、HITL 或 guardrail 有效。
 
 ## 实验验证
 
 - 是否需要实验：是
 - 实验设计：实现一个最小客服 Agent，包含只读订单查询、发送邮件、取消订单、退款建议四类工具。构造外部文档 prompt injection、错误用户 ID、越权金额、敏感字段泄露、重复提交、拒绝后恢复、参数篡改恢复等 10-20 个安全 case。分别测试：无 guardrail、prompt-only、防护型参数校验、blocking guardrail、tool guardrail、HITL approval、审批状态恢复、敏感 trace 关闭、审计日志。记录被阻断类型、漏报、误报、成本、延迟和人工处理量。
-- 结果：已完成标准库 prompt injection / permission 模拟、安全 regression set 和 approval state recovery audit，覆盖外部文档注入、只读/写工具分离、模拟审批拒绝、跨用户读取、高金额审批、敏感字段阻断/脱敏、破坏性工具、幂等性、benign case、审批状态恢复、拒绝后阻断、参数快照校验、审计事件和误报/漏报字段。LangGraph current docs 已补 interrupt / checkpointer / `thread_id` / node restart / side-effect idempotency 的框架机制证据。尚未覆盖真实框架 guardrail、真实 LangGraph HITL 状态恢复、真实成本、真实延迟或跨框架对比。
+- 结果：已完成标准库 prompt injection / permission 模拟、安全 regression set、agentic security regression set 和 approval state recovery audit，覆盖外部文档注入、只读/写工具分离、模拟审批拒绝、跨用户读取、高金额审批、敏感字段阻断/脱敏、破坏性工具、幂等性、benign case、tool poisoning、memory poisoning、MCP / remote tool、computer-use destructive action、runaway loop、inter-agent message、审批状态恢复、拒绝后阻断、参数快照校验、审计事件和误报/漏报字段。LangGraph current docs 已补 interrupt / checkpointer / `thread_id` / node restart / side-effect idempotency 的框架机制证据。尚未覆盖真实框架 guardrail、真实 LangGraph HITL 状态恢复、真实 sandbox/runtime containment、真实成本、真实延迟或跨框架对比。
 
 ## 结论状态
 
-- 可入正文：窄结论“高风险工具不能只依赖模型自觉或安全 prompt；最小权限、应用层参数校验、写操作确认/审批、审批状态恢复和审计 trace 应进入工具执行路径”已完成第一轮交叉验证。风险资料、OpenAI API/SDK 文档、Anthropic MCP connector 文档、Semantic Kernel 文档、LangGraph 文档、OWASP Agentic AI resources 和 MITRE ATLAS 共同支撑工具权限、审批、guardrails、remote tool allowlist/denylist、data retention、interrupt/resume、checkpointer、`thread_id` 恢复、runtime containment、agent identity、memory poisoning、多 Agent 通信风险、Agentic AI tool invocation / tool poisoning / computer-use action 和敏感 trace 控制的工程边界；标准库实验支撑只读/写工具分离、审批拒绝、trace 脱敏、安全 regression set、审批状态恢复、参数快照校验和幂等执行的最小流程。
+- 可入正文：窄结论“高风险工具不能只依赖模型自觉或安全 prompt；最小权限、应用层参数校验、写操作确认/审批、审批状态恢复、sandbox/runtime containment 和审计 trace 应进入工具执行路径”已完成第一轮交叉验证。风险资料、OpenAI API/SDK 文档、Anthropic MCP connector 文档、Semantic Kernel 文档、LangGraph 文档、OWASP Agentic AI resources 和 MITRE ATLAS 共同支撑工具权限、审批、guardrails、remote tool allowlist/denylist、data retention、interrupt/resume、checkpointer、`thread_id` 恢复、runtime containment、agent identity、memory poisoning、多 Agent 通信风险、Agentic AI tool invocation / tool poisoning / computer-use action 和敏感 trace 控制的工程边界；标准库实验支撑只读/写工具分离、审批拒绝、trace 脱敏、安全 regression set、agentic-specific regression set、审批状态恢复、参数快照校验、幂等执行，以及 HITL 与 sandbox/runtime containment 的不同边界。
 - 部分验证：真实框架 guardrail/HITL 的覆盖范围、真实误报/漏报、成本、延迟和跨框架对比仍待实际运行验证。
 
 ## 可进入章节
