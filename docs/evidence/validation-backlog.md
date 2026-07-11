@@ -60,7 +60,7 @@
 ## Eval 与生产化
 
 - LLM 应用输入输出不只是字符串的窄边界已可入正文：OpenAI Text Generation 和 Responses API reference 直接支撑 message roles、content items、output array、tool calls、refusals、structured outputs 和 context management 等结构化接口。仍需真实 API 运行记录 refusal/retry、跨模型稳定性、其他供应商字段名和成本。
-- 上下文工程中的输出解析、Structured Outputs、JSON mode 和长上下文失败模式如何设计最小实验？“schema valid 不等于事实/权限/业务正确”窄边界已升级为可入正文；已完成 OpenAI 官方文档第一轮验证、标准库输出解析 / 上下文治理模拟实验和上下文策略对比实验；真实 Structured Outputs / JSON mode harness 已准备；仍需实际运行验证 refusal、semantic validator、retry loop、真实长上下文 / RAG / 摘要 token/latency/cost 和跨模型稳定性。
+- 上下文工程中的输出解析、Structured Outputs、JSON mode 和长上下文失败模式如何设计最小实验？“schema valid 不等于事实/权限/业务正确”和“长上下文不能替代上下文治理”窄边界已升级为可入正文；已完成 OpenAI 官方文档第一轮验证、标准库输出解析 / 上下文治理模拟实验和上下文策略对比实验；真实 Structured Outputs / JSON mode harness 已准备；仍需实际运行验证 refusal、semantic validator、retry loop、真实长上下文 / RAG / 摘要 token/latency/cost 和跨模型稳定性。
 - Agent eval 应该优先评估最终结果还是完整 trajectory？窄结论“对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全；关键 trajectory / trace 应作为 eval、审计和回归输入”已可入正文。AgentBench/WebArena/OpenAI Evals/LangSmith/Phoenix 支撑过程与交互评测的重要性，标准库 trace-aware eval 已验证 final-only 会漏掉无审批副作用工具和工具错误未恢复；trace schema audit 已验证 debug/audit/regression/cost/RAG/privacy 需要不同字段；真实模型 trace-aware eval harness 已准备，仍需实际运行和平台对照实验。
 - 通用 benchmark 对真实业务 agent 的代表性有多强？已确认公开 benchmark 可学习评测思想，但业务系统仍需 custom/private eval。
 - Trace 字段如何设计，才能同时支持调试、审计、回归和隐私控制？已完成 LangSmith/Phoenix/Cookbook 第一轮验证，标准库 trace-aware eval 已覆盖 tool call/result/error/approval/final response；trace schema audit 已覆盖 debug、audit、regression、cost/latency、RAG 和 privacy 字段缺口；真实模型 trace-aware eval harness 已准备；仍需实际运行真实 RAG/tool traces、平台字段映射和隐私脱敏策略。

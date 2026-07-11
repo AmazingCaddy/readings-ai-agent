@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 18:34 CST
+**Last Updated:** 2026-07-11 18:36 CST
 **Status:** In Progress
 
 ## Objective
@@ -67,6 +67,7 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 50. Promoted the narrow Planner / Executor boundary claim to `可入正文`: plans must be executable, execution results need evidence validation, failures should feed back to the planner, and replanning should be recorded in trace. Updated agent architecture pattern evidence, claim ledger, coverage matrix, validation backlog, chapters 04/07/12, source-card index, and LangGraph / Tree of Thoughts source cards. Real model/framework planner quality, token/latency/cost, tool failures, permissions, and human review remain partially verified or pending.
 51. Promoted the narrow complex-agent-architecture boundary claim to `可入正文`: complex Agent architecture is not inherently more reliable; choosing ReAct, Planner / Executor, Reflection, Tree of Thoughts, state graphs, or multi-agent designs should be based on task boundaries, trace, cost, failure reasons, permissions, and experiments. Updated agent architecture pattern evidence, claim ledger, coverage matrix, validation backlog, chapters 04/07/12, source-card index, and ReAct / Reflexion / Tree of Thoughts / LangGraph / OpenAI Agents SDK source cards. Real model/framework benefits, latency, cost, permissions, and error recovery remain partially verified or pending.
 52. Promoted the narrow LLM input/output boundary claim to `可入正文`: modern LLM applications are not simple string-in/string-out functions; APIs such as Responses model roles, content items, tool calls, refusals, structured outputs, and context management as structured interface objects. Updated context/structured-output evidence, claim ledger, coverage matrix, validation backlog, chapters 02/12, source-card index, and OpenAI Text Generation / Responses API source cards. Real API refusal/retry, cross-model stability, provider field differences, latency, token, and cost behavior remain partially verified or pending.
+53. Promoted the narrow long-context governance boundary claim to `可入正文`: larger context windows do not replace governance over source, freshness, trust level, citation/provenance, state, permissions, and eval. Updated context/structured-output evidence, claim ledger, coverage matrix, validation backlog, chapters 02/12, source-card index, and OpenAI Text Generation / Responses API source cards. Real long-context vs RAG vs summary quality, cost, latency, and cross-model stability remain partially verified or pending.
 
 ## Technical Context
 - Files modified recently: `docs/evidence/context-structured-output-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/references/coverage-matrix.md`, `docs/evidence/validation-backlog.md`, `docs/chapters/02-llm-context.md`, `docs/chapters/12-source-map.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/2026-openai-text-generation-docs.md`, `docs/sources/source-cards/2026-openai-responses-api-docs.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.

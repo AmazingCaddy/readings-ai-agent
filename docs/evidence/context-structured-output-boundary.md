@@ -40,7 +40,8 @@ LLM 应用不能把模型调用理解成“输入一段 prompt，取回一段文
 
 - 可入正文：窄结论“LLM 应用的输入输出不只是字符串；Responses 等 API 会把 message roles、content items、tool calls、refusals、structured outputs 和 context management 建模为结构化对象”由 OpenAI Text Generation 文档和 Responses API reference 直接支撑，并被 Tool Calling / Structured Outputs 资料交叉支撑。
 - 可入正文：窄结论“Structured Outputs / schema validation 提升可解析性和 schema adherence，但不保证事实正确、权限正确或业务正确”由 OpenAI Structured Outputs 文档直接支撑，并被 Responses API / Function Calling source cards 和标准库 schema-valid semantic error 实验交叉支撑。
-- 部分验证：真实 Responses API / Structured Outputs 的 refusal、retry、跨模型稳定性、真实长上下文成本和真实外部攻击样本仍待验证；其他供应商和框架可能有不同字段名；“长上下文不能替代治理”已有交叉支撑和标准库失败模式，但仍需真实长上下文 / RAG / 摘要对比实验。
+- 可入正文：窄结论“长上下文不能替代上下文治理；系统仍需要处理来源、时效、信任级别、引用、状态、权限隔离和评测”已完成第一轮交叉验证。OpenAI 文档支撑 context window、context management 和 truncation 是工程限制，RAG/Memory 与 Prompt Injection evidence 支撑检索、状态和权限隔离的必要性，两组标准库实验复现了旧资料、外部注入、摘要丢失 provenance 和基础 RAG 召回不可信文档的失败模式。
+- 部分验证：真实 Responses API / Structured Outputs 的 refusal、retry、跨模型稳定性、真实长上下文成本和真实外部攻击样本仍待验证；其他供应商和框架可能有不同字段名；真实长上下文 / RAG / 摘要策略的质量、成本和延迟对比仍需实验。
 
 ## 可进入章节
 

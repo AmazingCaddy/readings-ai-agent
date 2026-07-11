@@ -161,7 +161,7 @@ Prompt injection / tool permission 标准库模拟实验已经完成，可帮助
 - 多 Agent 已补标准库单流程 / 无控制多 Agent / Flow 控制多 Agent 对比实验，窄结论“多 Agent 不是复杂任务默认升级路径；引入前应明确角色边界、证据分配、冲突处理、review trace 和成本预算”已可入正文；仍缺真实模型、真实框架、token/latency/cost 和复杂任务实验。
 - MCP official docs 已补 2025-11-25 tools/resources/prompts/authorization/roots/elicitation/sampling spec 和 Security Best Practices 第一轮精读；MCP 最小 trace 标准库模拟实验已完成，可支撑最小审计字段和职责流设计；仍缺真实 MCP SDK / host trace、权限确认、URL mode / OAuth、恶意 resource/prompt 和 host 实现差异实验。
 - Tool Use / Function Calling 已补标准库参数校验/重试模拟实验，可支撑“应用层校验、错误回传、有限重试”的流程说明；仍缺真实 Function Calling / Responses API 实验和其他框架术语对照。
-- LLM / Context 已补官方文档精读、标准库输出解析 / 上下文治理模拟实验和上下文策略对比实验，窄结论“LLM 应用输入输出不只是字符串”和“schema validation 不等于语义正确”已可入正文；“长上下文不能替代来源、时效、权限治理”已有最小流程说明；仍缺真实 Responses API / Structured Outputs、refusal、semantic validator、retry loop、长上下文 token/latency/cost 和跨模型稳定性实验。
+- LLM / Context 已补官方文档精读、标准库输出解析 / 上下文治理模拟实验和上下文策略对比实验，窄结论“LLM 应用输入输出不只是字符串”“schema validation 不等于语义正确”和“长上下文不能替代来源、时效、权限治理”已可入正文；仍缺真实 Responses API / Structured Outputs、refusal、semantic validator、retry loop、长上下文 token/latency/cost 和跨模型稳定性实验。
 - RAG / Memory 已补标准库对比实验，可支撑外部知识、thread state、guarded long-term memory 和无安全来源拒答的分层边界；仍缺真实 RAG / memory framework / 多会话质量实验。
 - RAG 已补标准库最小 pipeline / citation 模拟实验，可支撑 chunk metadata、retrieval trace、chunk-level citations 和 `grounded=false` 拒答流程；仍缺真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank 对比、citation correctness 和成本/延迟实验。
 - Memory / 知识库治理已补标准库写入守门模拟实验，可支撑显式写入、敏感信息拒绝、低置信推断拒绝、用户纠正、失效历史和 trace 脱敏流程；仍缺真实多会话 Agent / memory framework 的收益、污染、权限、隐私和用户查看/编辑/删除实验。
