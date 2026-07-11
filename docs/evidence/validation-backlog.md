@@ -5,7 +5,7 @@
 ## 概念边界
 
 - Agent 和 Workflow 的边界如何定义才准确？已完成第一轮 OpenAI Agents SDK、LangGraph、ReAct 交叉验证和标准库 workflow / hybrid / ReAct-like 对比实验；仍需真实模型 / Agent framework / repo issue 实验。
-- “自治程度”是否可以作为分类维度？有哪些可靠来源支持？
+- “自治程度”是否可以作为分类维度？已完成第一轮边界验证：它可以作为控制权和风险面的连续谱维度，但不能写成能力等级；仍需真实模型 / 框架 / 成本 / 权限实验。
 - RAG 和 Memory 的边界如何解释给初学者？已完成第一轮验证和标准库最小 RAG pipeline / citation 模拟；仍需 RAG vs short-term vs long-term memory 对比实验。
 
 ## 架构模式

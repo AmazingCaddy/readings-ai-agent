@@ -6,15 +6,16 @@
 
 通俗理解：Agent 是一个能围绕目标反复观察、思考、调用工具并推进任务的系统。
 
-精确定义：在本手册中，Agent 指围绕模型推理、工具调用、状态管理、控制循环和权限边界构建的任务执行系统。自治程度取决于系统是否允许它持续决策、调用工具、管理状态并处理反馈。
+精确定义：在本手册中，Agent 指围绕模型推理、工具调用、状态管理、控制循环和权限边界构建的任务执行系统。自治程度取决于系统是否允许它持续决策、调用工具、管理状态、处理反馈和判断何时停止。
 
 不要混淆：
 
 - Agent 不是简单聊天界面。
 - Agent 不一定需要多 Agent。
 - Agent 不等于“模型自己会思考”。实际自治来自系统设计和权限配置。
+- 自治程度是连续谱和风险维度，不是能力等级；越自治越需要权限、trace、eval、成本和停止条件。
 
-主要 references：OpenAI Agents SDK docs、LangGraph docs、ReAct paper。
+主要 references：OpenAI Agents SDK docs、LangGraph docs、ReAct paper、Evidence Note: Agent 自治程度边界。
 
 ## Workflow
 
@@ -146,4 +147,3 @@
 - 工具权限、数据隔离、确认机制、审计和最小权限原则同样重要。
 
 主要 references：OWASP LLM Top 10、NIST AI RMF。
-

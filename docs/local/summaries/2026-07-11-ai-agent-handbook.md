@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 17:14 Asia/Shanghai
+**Last Updated:** 2026-07-11 17:16 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -52,15 +52,17 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 35. Completed a standard-library context governance / structured output experiment under `docs/experiments/context-structured-output/`. Free text passes schema/semantic validation on 1/3 tickets; JSON mode passes schema on 2/3 but semantic validation on 1/3; schema-validated output passes schema on 3/3 but still has one semantic error around human review and external citation. The context-governance half shows naive long context using stale policy and following external injection, while governed context selects the current trusted policy and quarantines the external attachment. This supports conservative chapter wording but does not validate real Responses API / Structured Outputs, refusals, long-context cost, or cross-model stability.
 36. Completed a standard-library practice roadmap smoke harness under `docs/experiments/practice-roadmap-harness/`. It runs 6/6 passing eval cases across structured output, refusal recording, tool validation retry, grounded RAG, unsupported-question refusal, and a budget-exceeded production check. This supports the chapter 11 guidance that beginner projects need acceptance criteria, trace, failure categories, and repeatable commands, but it does not validate real Cookbook/API dependencies, cost, latency, rate limits, or model behavior.
 37. Completed a standard-library framework selection rubric smoke test under `docs/experiments/framework-selection-rubric/`. It maps five task profiles to framework directions using required/nice-to-have/avoid capabilities, missing required capabilities, and cautions. It supports the chapter 10 guidance to compare frameworks by task difficulty and tradeoffs, but it does not validate real framework implementation cost, trace, permissions, latency, token cost, or maintenance burden.
+38. Completed a first evidence note for Agent autonomy-level boundaries under `docs/evidence/autonomy-level-boundary.md`. It frames autonomy as a control/right-to-act and risk-surface continuum, not a capability rank. Chapter 01, chapter 04, glossary, claim ledger, validation backlog, coverage matrix, and source map now point to this boundary. It relies on existing official docs/evidence and the workflow/hybrid/ReAct-like simulation; no new script was added.
 
 ## Technical Context
-- Files modified recently: `docs/chapters/10-framework-landscape.md`, `docs/chapters/12-source-map.md`, `docs/evidence/framework-landscape-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/framework-selection-rubric/README.md`, `docs/experiments/framework-selection-rubric/framework_selection_rubric.py`, `docs/experiments/framework-selection-rubric/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/chapters/01-agent-landscape.md`, `docs/chapters/04-agent-architecture.md`, `docs/chapters/12-source-map.md`, `docs/evidence/autonomy-level-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/glossary.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
 ## Open Questions
 - Run a real Function Calling / Responses API experiment to upgrade the Function Calling boundary beyond the current standard-library simulation; compare whether a real model can repair validation errors and how tool execution errors are represented.
 - Run a real workflow vs workflow-agent hybrid vs agent loop comparison beyond the current standard-library simulation, using a real model/framework/repo issue and recording token, latency, cost, permission, tool-error, and trace-readability metrics.
+- Validate autonomy-level guidance in a real model/framework comparison: fixed workflow vs workflow-agent hybrid vs higher-autonomy tool loop, with explicit permissions, stop conditions, trace, token/latency/cost and human approval metrics.
 - Run a real planner/executor and reflection retry comparison beyond the current standard-library simulations, using real model/framework/repo issues and recording cost, latency, tool failures, permissions, trace readability, and human review.
 - Run a real output parsing experiment comparing free text, JSON mode, and Structured Outputs; include refusal, semantic validator, retry loop and model/API failure behavior. The current standard-library experiment only validates minimal parsing and schema/semantic-boundary flow.
 - Run a real long-context failure-mode experiment covering irrelevant context, conflicting context, stale context, external prompt injection, truncation behavior and token cost. The current standard-library experiment only validates a deterministic stale-policy / external-injection boundary.
