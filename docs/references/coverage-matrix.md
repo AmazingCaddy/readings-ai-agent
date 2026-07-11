@@ -17,7 +17,7 @@ Claim Boundary Consistency Audit 会检查 coverage matrix 的主题行是否保
 
 Source Reference Integrity Audit 会检查 source-card index、source card 元数据、章节 References 和本地 Markdown links 的结构完整性。它能防漏索引和本地断链，但不联网验证外部 URL 或资料事实。
 
-Source URL Availability Audit 会联网检查 source card 元数据中的主来源 URL 当前是否可访问；2026-07-12 本地运行覆盖 64 张 source cards 的 89 个主 URL，89 个均返回 HTTP 2xx/3xx，attention 0；新增 smolagents docs、GitHub URL 和 tau2/tau3-bench 主入口均可达。它只补链接可达性快照，不验证资料内容正确、章节解释正确或真实系统表现。
+Source URL Availability Audit 会联网检查 source card 元数据中的主来源 URL 当前是否可访问；2026-07-12 本地运行覆盖 64 张 source cards 的 89 个主 URL，88 个返回 HTTP 2xx/3xx，OpenAI Evals repo URL 返回 `TimeoutError` 并记录为 live-network attention；LangChain / LangSmith docs URL 和 tau2/tau3-bench 主入口可达。它只补链接可达性快照，不验证资料内容正确、章节解释正确或真实系统表现。
 
 Source Card Evidence Quality Audit 会检查进入正文的 source cards 是否具备支撑证据、风险段落和边界措辞；2026-07-12 本地运行覆盖 64 张 source cards，进入正文的卡片需全部通过。它只补证据结构和文字边界检查，不验证外部事实或真实系统表现。
 

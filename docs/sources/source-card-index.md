@@ -4,7 +4,7 @@
 
 Source Reference Integrity Audit 会检查本索引与 `source-cards/` 目录的双向一致性、source card 基础元数据和章节结构、章节 References 以及本地 Markdown 链接是否断开。该 audit 只验证本地引用结构，不验证外部 URL 当前可访问或资料内容正确。
 
-Source URL Availability Audit 会对 source card 元数据中的主来源 URL 做联网快照；2026-07-12 本地运行检查了 64 张 source cards 的 89 个主 URL，89 个均返回 HTTP 2xx/3xx，attention 0；新增 smolagents docs、GitHub URL 和 tau2/tau3-bench 主入口均可达。该 audit 只证明本次网络环境下 URL 可达，不验证资料内容、章节解释、真实模型/API/框架行为或未来可用性。
+Source URL Availability Audit 会对 source card 元数据中的主来源 URL 做联网快照；2026-07-12 本地运行检查了 64 张 source cards 的 89 个主 URL，88 个返回 HTTP 2xx/3xx，OpenAI Evals repo URL 返回 `TimeoutError` 并记录为 live-network attention；LangChain / LangSmith docs URL 和 tau2/tau3-bench 主入口可达。该 audit 只证明本次网络环境下 URL 可达，不验证资料内容、章节解释、真实模型/API/框架行为或未来可用性。
 
 Source Card Evidence Quality Audit 会检查进入正文的 source cards 是否保留 `支撑证据`、可观察 evidence marker、`可能的问题` 和边界措辞。该 audit 只验证证据结构和限制文字，不验证资料内容事实或章节解释正确性。
 
