@@ -8,12 +8,12 @@
   - https://developers.openai.com/api/docs/guides/token-counting.md
 - 作者 / 机构：OpenAI
 - 发布时间：持续更新 documentation
-- 最后复核日期：2026-07-11
+- 最后复核日期：2026-07-12
 - 类型：Official Docs / Production Engineering
 - 主题：Production / Cost / Latency / Rate Limits / Token Accounting
 - 适合阶段：工程实践 / 生产化前检查
 - 可信度等级：A
-- 是否已验证：上述 5 个官方 Markdown 页面均返回 HTTP 200；关键段落已精读；可支撑成本、延迟、限流、token 计数和用量治理的工程边界；标准库字段 audit 已完成；真实 cost-latency harness 已完成本地 deterministic accounting control，当前无 API key 未验证真实 API；Batch / Flex / Prompt Caching harness 已完成本地 deterministic metadata control；真实成本、真实延迟、吞吐、模型质量取舍和具体优化效果仍部分验证
+- 是否已验证：上述 5 个官方 Markdown 页面均于 2026-07-12 返回 HTTP 200；关键段落已复核；可支撑成本、延迟、限流、token 计数和用量治理的工程边界；标准库字段 audit 已完成；真实 cost-latency harness 已完成本地 deterministic accounting control，当前无 API key 未验证真实 API；Batch / Flex / Prompt Caching harness 已完成本地 deterministic metadata control；真实成本、真实延迟、吞吐、模型质量取舍和具体优化效果仍部分验证
 
 ## 一句话总结
 
@@ -27,26 +27,28 @@
 - 文档给出一个保守成本框架：成本可以看作 token 数量与每 token 成本的函数；降低成本可以从更小模型、减少 token、缩短 prompt、缓存常见查询等方向入手。
 - Latency optimization 文档把延迟优化总结为七类方向：process tokens faster、generate fewer tokens、use fewer input tokens、make fewer requests、parallelize、make users wait less、don't default to an LLM。
 - Production best practices 和 Latency optimization 都强调：completion / output token 生成通常是主要延迟来源；减少输出 token、设置合理 `max_tokens`、stop sequences、减少多余 completions、streaming 和 batching 都可能影响延迟或用户等待体验。
-- Rate limits 文档说明限流指标包括 RPM、RPD、TPM、TPD、IPM 和部分音频分钟限制；限流按 organization / project 而非 user 定义，且因 model、shared limit、long context、vector store ingestion 等不同而变化。
-- Rate limits 文档列出 HTTP response headers 中可观测的 limit / remaining / reset requests 和 tokens 字段；这些字段适合进入生产 trace 或监控。
+- Rate limits 文档说明限流指标包括 RPM、RPD、TPM、TPD、IPM 和部分音频分钟限制；限流按 organization 和 project 两级而非 user 定义，且因 model、shared limit、long context、vector store ingestion 等不同而变化。
+- Rate limits 文档列出 HTTP response headers 中可观测的 limit / remaining / reset requests、tokens 和 project-scoped token 字段；这些字段适合进入生产 trace 或监控。
 - Rate limit error mitigation 建议指数退避加随机 jitter，并提醒失败请求也会计入 per-minute limit；因此无限重试不是正确方案。
-- Token counting 文档说明 input token count endpoint 可用和 Responses API 相同的 payload 预估请求 token，覆盖 text、messages、images、files、tools、conversations，并可用于成本估算、上下文限制检查和按大小路由请求。
+- Token counting 文档说明 input token count endpoint 可用和 Responses API 相同的 payload 预估请求 token，覆盖 text、messages、instructions、images、files、tools、conversations，并可用于成本估算、上下文限制检查和按大小路由请求；它还提醒 output token usage 可能包含不可见的格式、channel 或 tool-call 结构 token，`max_output_tokens` / `max_completion_tokens` 也会限制这些非可见 token。
 - Cost optimization 文档说明减少请求、减少 token、选择更小模型是同时影响成本和延迟的主要方向；Batch API 和 flex processing 可用于异步或低优先级任务，但需要接受响应时间和可用性取舍。
 
 ## 支撑证据
 
-- `production-best-practices.md` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 07:10:06 GMT`；`content-type: text/markdown; charset=utf-8`。
-- `rate-limits.md` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 07:33:12 GMT`；`content-type: text/markdown; charset=utf-8`。
-- `latency-optimization.md` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 12:53:43 GMT`；`content-type: text/markdown; charset=utf-8`。
-- `cost-optimization.md` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 08:28:41 GMT`；`content-type: text/markdown; charset=utf-8`。
-- `token-counting.md` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 08:28:44 GMT`；`content-type: text/markdown; charset=utf-8`。
+- `production-best-practices.md` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 06:46:20 GMT`；`content-type: text/markdown; charset=utf-8`。
+- `rate-limits.md` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 10:45:00 GMT`；`content-type: text/markdown; charset=utf-8`。
+- `latency-optimization.md` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 17:49:23 GMT`；`content-type: text/markdown; charset=utf-8`。
+- `cost-optimization.md` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 07:17:39 GMT`；`content-type: text/markdown; charset=utf-8`。
+- `token-counting.md` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 16:10:51 GMT`；`content-type: text/markdown; charset=utf-8`。
+- 2026-07-12 复核确认 Rate limits headers 表新增或明确 project-scoped token header：`x-ratelimit-limit-project-tokens`、`x-ratelimit-remaining-project-tokens`、`x-ratelimit-reset-project-tokens`。
+- 2026-07-12 复核确认 Token counting 文档新增 output token caveat：reported output / completion tokens may exceed visible text tokens and include non-visible formatting, channel, tool-call, or message-structure tokens.
 - `developers.openai.com/llms.txt` 列出了 rate limits、production best practices、cost optimization、latency optimization、token counting、pricing、batch、flex processing 和 prompt caching 等相关官方 Markdown 路径。
 - 复核时确认猜测路径 `https://developers.openai.com/api/docs/guides/usage.md` 返回 HTML 404；不应引用该路径。
 
 ## 可能的问题
 
 - 这些文档可以支撑生产治理和优化方向，但不证明任一应用的真实 P95 latency、token cost、吞吐、质量或稳定性。
-- 价格、模型名称、usage tiers、rate limits 和产品入口会变化；正文不应硬编码价格表或把当前 tier 数值写成长期规则。
+- 价格、模型名称、usage tiers、rate limits、默认 usage limit 和产品入口会变化；正文不应硬编码价格表、tier 表或把当前额度数值写成长期规则。
 - Batch API、flex processing、prompt caching 已另建 source card 复核；pricing 仍需要按具体练习场景单独复核，正文不应硬编码价格表。
 - 减少 token、换小模型、并行化、batching 和 streaming 都可能有质量、交互、复杂度或等待时间取舍，需要真实任务 eval 支撑。
 

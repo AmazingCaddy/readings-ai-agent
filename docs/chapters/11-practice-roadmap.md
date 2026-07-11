@@ -212,7 +212,7 @@
 
 安全 regression cases 不应只写“有一个 prompt injection 测试”。更实用的最小集合应同时包含：外部文档注入、跨用户数据访问、高金额写操作、敏感字段外泄、破坏性工具、重复提交和一个正常请求。每条 case 都应记录预期行为、实际行为、是否误报、是否漏报和 trace 是否泄露敏感字段。
 
-成本和延迟记录也不要只写“看起来还行”。最小记录表应包含：input tokens、output tokens、request count、model、rate-limit headers、retry count、平均 latency、P95 latency、cost estimate、budget threshold、超预算后的停止或降级行为。先把这些字段记录下来，再讨论减少输出 token、换模型、streaming、Batch、Flex、Prompt Caching 或异步处理是否真的改善了你的任务。
+成本和延迟记录也不要只写“看起来还行”。最小记录表应包含：input tokens、reported output/completion tokens、可见输出长度、request count、model、organization/project 级 rate-limit headers、retry count、平均 latency、P95 latency、cost estimate、budget threshold、超预算后的停止或降级行为。OpenAI token counting 文档提醒 reported output tokens 可能包含不可见的格式、channel、tool-call 或消息结构 token，所以练习里要同时记录 API usage 字段和可见输出，而不是只数屏幕上看到的字。先把这些字段记录下来，再讨论减少输出 token、换模型、streaming、Batch、Flex、Prompt Caching 或异步处理是否真的改善了你的任务。
 
 如果你用 Cookbook 做练习，Usage/Cost recipe 更适合帮你设计 usage/cost 表：`start_time`、`end_time`、`bucket_width`、`group_by`、`project_id`、`line_item`、`amount.value`、`amount.currency`。Rate limits recipe 更适合帮你设计限流和降级表：429 / `RateLimitError`、重试次数、等待时间、失败请求、主动节流、RPM/RPD/TPM、`max_tokens`、batching、fallback model 和质量/成本/延迟对照。没有真实 API run 时，这些字段只能作为模板，不能当作优化已经有效。
 
@@ -229,7 +229,7 @@
 - OpenAI Cookbook 的 `How to use the Usage API and Cost API to monitor your OpenAI usage`。
 - OpenAI Cookbook 的 `How to handle rate limits`。
 - 这两个 Cookbook recipe 适合做字段化练习：前者看 usage/cost 聚合和 dashboard 原型，后者看 429、backoff、主动节流、batching、fallback 和并发处理脚本；它们不是生产成本或限流可靠性的证明。
-- OpenAI Production / Cost / Latency / Rate Limit source card。它适合用来理解 usage dashboard、billing / usage limits、token counting、rate-limit headers、exponential backoff、`max_tokens`、streaming、batching 和预算阈值的工程边界。
+- OpenAI Production / Cost / Latency / Rate Limit source card。它适合用来理解 usage dashboard、billing / usage limits、token counting、organization/project 级 rate limits、standard/project token rate-limit headers、exponential backoff、`max_tokens` / `max_output_tokens`、streaming、batching、非可见 output token 计数 caveat 和预算阈值的工程边界。
 - OpenAI Batch / Flex / Prompt Caching source card。它适合用来理解 Batch 的离线任务边界、Flex 的低优先级取舍，以及 Prompt Caching 的 cache read/write 观测字段。
 - [Production Cost / Latency / Rate-Limit Audit](../experiments/production-cost-latency-rate-limit/README.md)。它适合在无 API key 时练习生产字段检查，但不能替代真实成本、延迟、限流和质量实验。
 - OpenAI Moderation source card。它适合用来理解 generated/input/output moderation、`flagged` / categories / scores、tool-calling 覆盖限制和 streaming 限制。
@@ -326,7 +326,7 @@
 
 - “OpenAI Cookbook 的具体 recipe 可以作为初学者实践项目参考，但不能替代 API 文档、生产安全指南或本地实验”已升级为可入正文。正文应引用具体 recipe，而不是笼统引用整个站点；Cookbook 是示例集合，不是 API 规范或生产保证。
 - 当前已复核的 Cookbook recipe 可以支撑以下练习方向：Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits。
-- OpenAI Production / Cost / Latency / Rate Limit docs 和 Batch / Flex / Prompt Caching docs 可支撑项目 8 的生产质量记录项：token/usage、request/token rate limits、rate-limit headers、重试、平均/P95 latency、model choice、budget threshold、Batch status、Flex fallback、`cached_tokens` / `cache_write_tokens` 和降级策略。它们不证明任何具体优化默认有效，真实 cost / latency / throughput / quality tradeoff 仍需练习项目实测。
+- OpenAI Production / Cost / Latency / Rate Limit docs 和 Batch / Flex / Prompt Caching docs 可支撑项目 8 的生产质量记录项：token/usage、organization/project 级 request/token rate limits、standard/project token rate-limit headers、重试、平均/P95 latency、model choice、budget threshold、reported output token 与可见输出差异、Batch status、Flex fallback、`cached_tokens` / `cache_write_tokens` 和降级策略。它们不证明任何具体优化默认有效，真实 cost / latency / throughput / quality tradeoff 仍需练习项目实测。
 - Real Batch / Flex / Prompt Caching harness 已准备，可作为项目 8 的真实 API 观测入口：Prompt Caching 记录 cache read/write usage，Flex 记录成功或 resource unavailable / fallback，Batch 默认只准备 JSONL metadata，只有显式 opt-in 才提交 job。当前无 API key 时已完成本地 deterministic metadata control，验证 cache usage 字段、Flex fallback 记录和 Batch JSONL / `custom_id` 检查；它不能替代真实 API completed run。
 - OpenAI Moderation 和 Safety / Data Controls docs 可支撑项目 8 的安全和数据治理记录项：moderation signals、categories/scores、tool-calling moderation 覆盖限制、streaming moderation 限制、red-team、HITL、用户举报、`safety_identifier`、API key revoke、abuse monitoring logs、application state、endpoint retention、remote MCP third-party retention、hosted container state 和 data residency。标准库 production safety / data governance checklist + object-level data-flow audit 已验证这些字段以及 remote MCP、hosted execution、file/vector store、prompt caching、browser/computer-use 数据面可以拆成可运行检查表；Real Moderation Safety harness 已补本地 deterministic policy-signal control，覆盖 `flagged`、categories、scores、expected mismatch 和 allow / review / false-positive / false-negative 分支。它们不证明任何真实检测层、数据控制配置、对象删除、trace 脱敏或合规方案充分有效。
 - OpenAI File Search / Retrieval docs 可作为 File Search RAG 项目的 API 边界 reference：托管 `file_search` 仍需要记录 included search results、citations、filters、ranking/chunking、成本、延迟和删除一致性。
