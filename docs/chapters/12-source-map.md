@@ -96,9 +96,9 @@
 
 ### 框架生态与实践
 
-先读手册 10 和 11，再横向阅读 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI、Semantic Kernel 和 OpenAI Cookbook。
+先读手册 10 和 11，再横向阅读 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI、Semantic Kernel 和 OpenAI Cookbook 的具体 recipe。
 
-阅读重点是选择维度和可迁移概念，而不是追随单一框架。
+阅读重点是选择维度、可迁移概念和可复现练习，而不是追随单一框架或照搬复杂 demo。
 
 ## 当前 Source Card 状态
 
@@ -114,7 +114,7 @@
 - Frameworks：OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI、Semantic Kernel。
 - Practice：OpenAI Cookbook、MCP servers repo、OpenAI Evals repo。
 
-核心 source cards 已经完成多轮链接、元数据和关键段落复核，能支撑章节中的学习方向、术语边界和部分验证结论。仍处于候选或只完成链接复核的资料，不能支撑过强的工程断言。
+核心 source cards 已经完成多轮链接、元数据和关键段落复核，能支撑章节中的学习方向、术语边界和部分验证结论。OpenAI Cookbook 已完成 Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits 等具体 recipe 的第一轮复核，可支撑实践项目参考。仍处于候选或只完成链接复核的资料，不能支撑过强的工程断言。
 
 ## 如何继续扩展资料库
 
@@ -141,6 +141,7 @@
 - 当前手册已经建立 source card index、coverage matrix 和 claim ledger，用于控制资料进入正文的门槛。
 - Source card index 明确记录了每张卡片的可信度、验证状态和下一步。
 - Coverage matrix 显示 Evaluation / Observability、Production / Security、框架横向实验等主题仍有缺口，需要继续补 trace、权限、审计、observability 和工程案例。
+- Cookbook 的具体 recipe 已能支撑实践项目路线，但仍需要本地试跑来确认依赖、成本、失败样例和初学者阻塞点。
 - Claim ledger 规定只有状态为“可入正文”的结论，才能写成确定性表述；其他结论需要保守表达。
 
 ## 待验证问题

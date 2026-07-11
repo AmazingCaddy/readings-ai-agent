@@ -25,7 +25,7 @@
 | Evaluation / Observability | 待补 | AgentBench；WebArena | OpenAI Evals；LangSmith；Phoenix 候选 | 关键摘要/README 已精读；部分验证 | 需要 trace observability 资料、trajectory 最小实验、回归集工程案例 |
 | Production / 安全 / 成本 | 待补 | OWASP LLM Top 10；NIST AI RMF | 框架安全文档候选 | 关键风险项已精读；部分验证 | 需要最小 prompt injection 实验、框架安全资料、审计资料 |
 | 框架生态 | 待补 | OpenAI Agents SDK；LangGraph；LlamaIndex；AutoGen；Semantic Kernel；CrewAI | 官方 examples 候选 | 关键框架定位已精读；部分验证 | 需要同一任务横向实验、observability/permission 对比和官方 examples |
-| 实践项目路线 | OpenAI Cookbook | 待补 | OpenAI Cookbook；MCP servers repo；LangGraph examples 候选 | 部分链接已复核 | 需要按学习阶段拆项目 |
+| 实践项目路线 | OpenAI Cookbook | OpenAI Cookbook；OpenAI Function Calling docs；OpenAI Responses API docs；OpenAI Evals repo | OpenAI Cookbook；MCP servers repo；LangGraph examples 候选 | 具体 Cookbook recipe 已精读；部分验证 | 需要本地试跑最小项目、选择低成本技术栈、补 MCP/LangGraph examples |
 
 ## 当前优先级
 
@@ -34,6 +34,7 @@
 3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。Eval 已完成 OpenAI Evals README 第一轮，仍需 trace/observability 工程资料。
 4. 为 Memory / 知识库治理补充长期记忆最小实验，并继续扩展隐私/权限工程资料。
 5. 为 Production / Security 补充 prompt injection 最小实验、工具权限工程案例和审计资料。
+6. 为实践项目路线试跑 Structured Outputs、RAG/File Search、eval harness、成本/限流练习，记录初学者阻塞点。
 
 ## 入正文门槛
 

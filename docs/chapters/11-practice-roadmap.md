@@ -39,6 +39,10 @@
 
 - [LLM 基础与上下文工程](02-llm-context.md)
 
+### 可参考 recipe
+
+- OpenAI Cookbook 的 `Introduction to Structured Outputs`，尤其是 math tutor、summarization、entity extraction 和 refusal 小节。
+
 ## 项目 2：最小 Tool Calling Agent
 
 ### 学习目标
@@ -59,6 +63,11 @@
 ### 关联章节
 
 - [Tool Use、Function Calling 与 Structured Output](03-tool-use.md)
+
+### 可参考资料
+
+- OpenAI Function Calling / Tool Calling docs。
+- OpenAI Cookbook 的 `Introduction to Structured Outputs` 中 function call usage 和 entity extraction 示例。
 
 ## 项目 3：带来源的 RAG 问答
 
@@ -81,6 +90,10 @@
 ### 关联章节
 
 - [RAG、Memory 与知识库治理](06-rag-memory.md)
+
+### 可参考 recipe
+
+- OpenAI Cookbook 的 `Doing RAG on PDFs using File Search in the Responses API`。它适合作为 PDF/RAG 入门练习参考，也包含 retrieval evaluation 的例子。
 
 ## 项目 4：短期状态与长期记忆
 
@@ -167,6 +180,11 @@
 
 - [Evaluation 与 Observability](08-evaluation-observability.md)
 
+### 可参考 recipe
+
+- OpenAI Cookbook 的 `Getting Started with OpenAI Evals`。
+- OpenAI Cookbook 的 `Evaluating Agents with Langfuse`，用于理解 trace、online evaluation、offline evaluation 和 dataset evaluation 的工程形态。
+
 ## 项目 8：生产化前检查
 
 ### 学习目标
@@ -189,6 +207,11 @@
 
 - [Production：安全、权限、成本与部署](09-production-security.md)
 
+### 可参考 recipe
+
+- OpenAI Cookbook 的 `How to use the Usage API and Cost API to monitor your OpenAI usage`。
+- OpenAI Cookbook 的 `How to handle rate limits`。
+
 ## 推荐学习顺序
 
 1. 先完成项目 1 和 2，理解模型调用和工具调用。
@@ -207,14 +230,15 @@
 
 ## 已验证结论
 
-- OpenAI Cookbook 可作为实践项目的重要参考，但 source card 已提醒应引用具体 recipe，而不是笼统引用整个站点。
+- OpenAI Cookbook 可作为实践项目的重要参考，但正文应引用具体 recipe，而不是笼统引用整个站点；Cookbook 是示例集合，不是 API 规范或生产保证。
+- 当前已复核的 Cookbook recipe 可以支撑以下练习方向：Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits。
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源，但具体 server 的权限和安全假设需要逐个检查。
 - OpenAI Evals repo 可作为小型回归测试和 eval 结构参考；Agent eval 仍应结合 trace 和业务任务。
 
 ## 待验证问题
 
-- 哪些 OpenAI Cookbook 示例最适合初学者作为项目模板？
+- 这些 Cookbook recipe 本地试跑时的依赖、成本、失败样例和初学者阻塞点是什么？
 - 每个项目应使用哪个最小技术栈，才能降低环境成本？
 - 如何为项目 7 设计可自动运行的 eval harness？
 - MCP 实验应选择哪个只读 server 作为最小示例？
@@ -236,6 +260,7 @@
 - [OpenAI Cookbook](../sources/source-cards/2026-openai-cookbook.md)
 - [MCP servers repo](../sources/source-cards/2026-mcp-servers-repo.md)
 - [OpenAI Evals Repository](../sources/source-cards/2026-openai-evals-repo.md)
+- [Evidence Note: 实践路线与 Cookbook 示例边界](../evidence/practice-roadmap-cookbook-boundary.md)
 
 ### Governance
 

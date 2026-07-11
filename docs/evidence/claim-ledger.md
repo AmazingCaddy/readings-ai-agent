@@ -32,6 +32,7 @@
 | Prompt injection 不能只靠 prompt 解决。 | OWASP LLM Top 10；NIST AI RMF；OpenAI Function Calling docs；Evidence Note: Prompt Injection 与权限边界 | 部分验证 | 可作为生产安全章节的核心提醒；需明确 prompt 有帮助但不是充分安全边界，仍待最小实验和框架安全资料。 |
 | 多 Agent 不是默认更好，会带来成本、调试和协调复杂度。 | AutoGen docs；CrewAI docs；AgentBench；Evidence Note: 多 Agent 不是默认更好 | 部分验证 | 可作为 Planning / Orchestration 和框架生态章节的核心提醒；仍需最小对比实验验证收益是否抵消成本。 |
 | Agent 框架应按任务难点比较，不应写成“某个框架默认最好”。 | OpenAI Agents SDK docs；LangGraph docs；LlamaIndex docs；AutoGen docs；CrewAI docs；Semantic Kernel docs；Evidence Note: 框架生态定位边界 | 部分验证 | 可作为框架生态章节核心边界；仍需同一任务横向实验。 |
+| 实践项目路线可以用 Cookbook 的具体 recipe 作为模板，但 Cookbook 不能替代 API 文档、生产安全指南或本地实验。 | OpenAI Cookbook；OpenAI Function Calling docs；OpenAI Responses API docs；OpenAI Evals repo；Evidence Note: 实践路线与 Cookbook 示例边界 | 部分验证 | 可作为第 11 章项目 reference；必须引用具体 recipe，并提醒示例不是生产保证。 |
 | MCP 是连接工具和上下文能力的协议，不是 Agent 框架本身。 | MCP official docs；MCP servers repo；Evidence Note: MCP Host / Client / Server 职责边界 | 部分验证 | 可作为 MCP 章节核心边界；仍建议补最小 MCP trace 实验。 |
 
 ## 待升级为可入正文的优先结论
@@ -46,6 +47,7 @@
 8. 上下文工程与结构化输出边界。已完成第一轮官方文档交叉验证，待补输出解析和长上下文失败模式实验。
 9. Agent 架构模式边界。已完成 ReAct、Reflexion、Tree of Thoughts、LangGraph 和已有 workflow/multi-agent evidence 第一轮交叉验证，待补最小架构对比实验。
 10. 框架生态定位边界。已完成主要框架文档第一轮交叉验证，待补同一任务横向实验。
+11. 实践项目路线。已完成 OpenAI Cookbook 具体 recipe 第一轮验证，待补本地最小项目试跑、成本估算和初学者跟练体验验证。
 
 ## 升级流程
 

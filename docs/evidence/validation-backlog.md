@@ -46,6 +46,13 @@
 - Prompt injection 防护有哪些已验证的工程方法？已确认 OWASP/NIST 支撑风险边界，仍需补最小实验和框架级权限/隔离资料。
 - 安全 regression set 应该如何覆盖外部文档注入、工具参数越权、敏感信息泄露和 excessive agency？
 
+## 实践路线
+
+- 哪些 OpenAI Cookbook 示例最适合初学者作为项目模板？已完成第一轮验证：Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost、Rate limits 适合作为候选；仍需本地试跑确认依赖、成本和阻塞点。
+- 每个项目应使用哪个最小技术栈，才能降低环境成本？需要基于本地试跑和 GitHub Pages 教程形态决定。
+- 如何为项目 7 设计可自动运行的 eval harness？OpenAI Evals repo 和 Cookbook 可提供方向，仍需本地最小实现。
+- 如何把 Cookbook recipe 改写成初学者可跟练教程，同时保留 references、trace、失败样例和成本记录？
+
 ## 框架生态
 
 - 同一任务在 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel 下的实现成本、trace、权限和错误处理如何比较？框架定位已完成第一轮验证，仍需横向实验。
