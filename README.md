@@ -15,6 +15,30 @@
 
 当前阶段是内容蓝图和资料治理体系，不急于写完整正文或做页面视觉设计。
 
+## 本地预览
+
+本项目使用 MkDocs Material 构建 GitHub Pages 文档站，并用 `uv` 管理 Python 环境。
+
+首次安装依赖：
+
+```bash
+uv sync
+```
+
+启动本地预览：
+
+```bash
+uv run mkdocs serve
+```
+
+构建静态站点：
+
+```bash
+uv run mkdocs build
+```
+
+构建产物会输出到 `site/`，不会进入 Git。
+
 第一阶段交付物：
 
 - 主题地图
@@ -29,17 +53,19 @@
 
 ## 目录
 
-- [项目 Goal](docs/governance/goal.md)
-- [质量标准](docs/governance/quality-standard.md)
-- [References 规范](docs/governance/references-style.md)
-- [References 覆盖矩阵](docs/references/coverage-matrix.md)
-- [主题地图](docs/topic-map.md)
-- [章节目录](docs/chapter-outline.md)
-- [候选资料清单](docs/sources/seed-candidates.md)
-- [Source Card 索引](docs/sources/source-card-index.md)
-- [待验证问题](docs/evidence/validation-backlog.md)
-- [资料卡片模板](docs/templates/source-card.md)
-- [章节模板](docs/templates/chapter-template.md)
+内容文档会在后续独立提交中加入 `docs/` 目录。计划包含：
+
+- 项目 Goal
+- 质量标准
+- References 规范
+- References 覆盖矩阵
+- 主题地图
+- 章节目录
+- 候选资料清单
+- Source Card 索引
+- 待验证问题
+- 资料卡片模板
+- 章节模板
 
 ## 内容原则
 
