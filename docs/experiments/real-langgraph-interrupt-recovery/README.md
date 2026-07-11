@@ -10,7 +10,7 @@
 
 这是一个真实框架实验 harness。本次使用 `uv run --with langgraph --with langchain-core` 临时依赖运行，已得到 LangGraph 1.2.9 / langchain-core 1.4.9 下的 completed 结果。
 
-当前 completed run 覆盖 `MemorySaver`、`SqliteSaver` 同进程本地恢复、`SqliteSaver` 双 Python 进程本地恢复、本地假退款工具和一个最小 graph shape，不能证明：
+当前 completed run 覆盖 `MemorySaver`、`SqliteSaver` 同进程本地恢复、`SqliteSaver` 双 Python 进程本地恢复、`SqliteSaver` 双 Python 进程并发 resume、本地假退款工具和一个最小 graph shape，不能证明：
 
 - LangGraph 默认提供完整审批安全。
 - checkpointer 默认能防止重复执行、拒绝后执行或参数篡改。
@@ -75,6 +75,7 @@
 | 2026-07-11 | `MemorySaver` | tampered_args | completed / argument_hash_mismatch | 0 | true | 1 ms | application-level hash check |
 | 2026-07-11 | `SqliteSaver` | sqlite_process_restart | completed / approved_executed after graph rebuild | 1 after restart | true | 14 ms | same Python process; local SQLite only |
 | 2026-07-11 | `SqliteSaver` | sqlite_subprocess_restart | completed / approved_executed after subprocess resume | 1 after restart | true | 1501 ms | two local Python processes; local SQLite only |
+| 2026-07-11 | `SqliteSaver` | sqlite_concurrent_resume | completed / two resumes returned approved_executed | 1 shared execution | true | 1252 ms | local SQLite only; no explicit duplicate-blocked status |
 
 ## 运行方式
 
@@ -92,9 +93,9 @@ uv run --with langgraph --with langchain-core --with langgraph-checkpoint-sqlite
 
 ## 结论状态
 
-- 当前状态：真实 harness 已在临时依赖环境下完成一次 `MemorySaver` run，并用 `langgraph-checkpoint-sqlite` 3.1.0 完成同进程 SQLite graph 重建恢复和双 Python 进程 prepare/resume 的本地最小 case。
-- 可支撑：第 07、09 和 10 章可以写成“在最小 LangGraph run 中，`interrupt()` / `Command(resume=...)` / `thread_id` / `MemorySaver` 可跑通审批恢复；应用层参数 hash 可阻断篡改；拒绝不执行工具；重复 resume 未重复执行工具；trace 未泄露示例 secret marker。使用 `SqliteSaver` 和同一个 `thread_id`，同进程重建 graph 或由独立 Python 进程 resume，都可以在本地 SQLite checkpoint 上恢复并执行一次本地假工具”。
-- 部分验证：重复 resume 本次返回已完成状态，而不是显式 duplicate-blocked 状态；SQLite restart case 是本地 SQLite 文件和本机 Python 进程，不等于部署服务重启、并发、故障注入或生产恢复；真实副作用、真实审批 UI、状态表、事务幂等、生产审计和跨框架对比仍待验证。
+- 当前状态：真实 harness 已在临时依赖环境下完成一次 `MemorySaver` run，并用 `langgraph-checkpoint-sqlite` 3.1.0 完成同进程 SQLite graph 重建恢复、双 Python 进程 prepare/resume 和双 Python 进程并发 resume 的本地最小 case。
+- 可支撑：第 07、09 和 10 章可以写成“在最小 LangGraph run 中，`interrupt()` / `Command(resume=...)` / `thread_id` / `MemorySaver` 可跑通审批恢复；应用层参数 hash 可阻断篡改；拒绝不执行工具；重复 resume 未重复执行工具；trace 未泄露示例 secret marker。使用 `SqliteSaver` 和同一个 `thread_id`，同进程重建 graph 或由独立 Python 进程 resume，都可以在本地 SQLite checkpoint 上恢复并执行一次本地假工具；两个本地 Python resume 进程同时恢复同一暂停审批时，本次共享副作用日志只记录 1 次工具执行”。
+- 部分验证：重复 resume 和并发 resume 本次都返回已完成状态，而不是显式 duplicate-blocked 状态；SQLite restart / concurrency case 是本地 SQLite 文件和本机 Python 进程，不等于部署服务重启、故障注入或生产并发恢复；真实副作用、真实审批 UI、状态表、事务幂等、生产审计和跨框架对比仍待验证。
 - 不可支撑：不能写成 LangGraph interrupt、checkpointer 或任意 HITL 框架默认安全、默认生产可用、默认脱敏、默认幂等或默认优于应用层状态机。
 
 ## 后续产出
@@ -102,4 +103,5 @@ uv run --with langgraph --with langchain-core --with langgraph-checkpoint-sqlite
 真实 completed run 后应新增或更新：
 
 - 脱敏 trace 样例。
+- 部署式 kill-and-resume、部署式并发恢复和真实状态表 / 事务幂等 case。
 - 对 source card、tool-permission evidence、coverage matrix、validation backlog 和第 07/09/10/12 章的同步更新。

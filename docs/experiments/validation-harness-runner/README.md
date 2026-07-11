@@ -18,7 +18,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 uv run --with langgraph --with langchain-core python docs/experiments/validation-harness-runner/run_validation_harnesses.py
 ```
 
-最新记录：见 [2026-07-11 结果](results-2026-07-11.md)。本次运行验证了统一入口、API harness 的 skip 分支、LangGraph `MemorySaver` 最小 run、`SqliteSaver` 同进程本地 SQLite graph 重建恢复 case、`SqliteSaver` 双本地 Python 进程 prepare/resume case 和本地 MCP stdio harness；没有完成真实 API 行为验证。
+最新记录：见 [2026-07-11 结果](results-2026-07-11.md)。本次运行验证了统一入口、API harness 的 skip 分支、LangGraph `MemorySaver` 最小 run、`SqliteSaver` 同进程本地 SQLite graph 重建恢复 case、`SqliteSaver` 双本地 Python 进程 prepare/resume case、`SqliteSaver` 双本地 Python 进程并发 resume case 和本地 MCP stdio harness；没有完成真实 API 行为验证。
 
 ## 覆盖范围
 

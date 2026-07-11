@@ -55,6 +55,23 @@ class ToolLedger:
         )
 
 
+@dataclass
+class FileToolLedger:
+    path: Path
+    executions: list[dict[str, Any]] = field(default_factory=list)
+
+    def issue_refund(self, state: RefundState) -> None:
+        record = {
+            "order_id": state["order_id"],
+            "user_id_hash": redact(state["user_id"]),
+            "amount": state["amount"],
+            "timestamp": utc_now(),
+        }
+        self.executions.append(record)
+        with self.path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
@@ -112,7 +129,7 @@ def versions() -> dict[str, str | None]:
     return result
 
 
-def build_graph(ledger: ToolLedger, checkpointer: Any | None = None) -> Any:
+def build_graph(ledger: Any, checkpointer: Any | None = None) -> Any:
     from langgraph.checkpoint.memory import MemorySaver
     from langgraph.graph import END, StateGraph
     from langgraph.types import interrupt
@@ -345,8 +362,19 @@ def sqlite_prepare_subprocess(db_path: str, meta_path: str) -> None:
     Path(meta_path).write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def sqlite_resume_subprocess(db_path: str, meta_path: str, result_path: str) -> None:
+def sqlite_resume_subprocess(
+    db_path: str,
+    meta_path: str,
+    result_path: str,
+    ledger_path: str | None = None,
+    start_gate_path: str | None = None,
+) -> None:
     from langgraph.checkpoint.sqlite import SqliteSaver
+
+    if start_gate_path is not None:
+        gate = Path(start_gate_path)
+        while not gate.exists():
+            time.sleep(0.01)
 
     meta = json.loads(Path(meta_path).read_text(encoding="utf-8"))
     interrupt_payload = meta.get("interrupt_payload")
@@ -356,7 +384,7 @@ def sqlite_resume_subprocess(db_path: str, meta_path: str, result_path: str) -> 
             "reason": "interrupt_payload_missing",
         }
     else:
-        ledger = ToolLedger()
+        ledger = FileToolLedger(Path(ledger_path)) if ledger_path is not None else ToolLedger()
         with SqliteSaver.from_conn_string(db_path) as saver:
             graph = build_graph(ledger, checkpointer=saver)
             final_state = resume_graph(
@@ -435,6 +463,98 @@ def run_sqlite_subprocess_restart_case() -> dict[str, Any]:
     }
 
 
+def jsonl_record_count(path: Path) -> int:
+    if not path.exists():
+        return 0
+    return sum(1 for line in path.read_text(encoding="utf-8").splitlines() if line.strip())
+
+
+def run_sqlite_concurrent_resume_case() -> dict[str, Any]:
+    try:
+        import langgraph.checkpoint.sqlite  # noqa: F401
+    except ImportError:
+        return {
+            "case": "sqlite_concurrent_resume",
+            "status": "skipped",
+            "reason": "langgraph_checkpoint_sqlite_not_installed",
+        }
+
+    started = time.perf_counter()
+    with tempfile.TemporaryDirectory(prefix="langgraph-concurrent-checkpoint-") as tmpdir:
+        tmp_path = Path(tmpdir)
+        db_path = tmp_path / "checkpoints.sqlite"
+        meta_path = tmp_path / "pending.json"
+        side_effect_path = tmp_path / "side_effects.jsonl"
+        gate_path = tmp_path / "resume.gate"
+        result_paths = [tmp_path / "resume_a.json", tmp_path / "resume_b.json"]
+        script_path = Path(__file__).resolve()
+        prepare = subprocess.run(
+            [sys.executable, str(script_path), "_sqlite_prepare", str(db_path), str(meta_path)],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        if prepare.returncode != 0:
+            return {
+                "case": "sqlite_concurrent_resume",
+                "status": "failed",
+                "reason": "prepare_subprocess_failed",
+                "prepare_stderr_preview": prepare.stderr[:500],
+            }
+
+        processes = [
+            subprocess.Popen(
+                [
+                    sys.executable,
+                    str(script_path),
+                    "_sqlite_resume",
+                    str(db_path),
+                    str(meta_path),
+                    str(result_path),
+                    str(side_effect_path),
+                    str(gate_path),
+                ],
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            for result_path in result_paths
+        ]
+        time.sleep(0.2)
+        gate_path.write_text("go", encoding="utf-8")
+        completed = [process.communicate(timeout=30) for process in processes]
+        failed = [
+            {"index": index, "returncode": process.returncode, "stderr_preview": stderr[:500]}
+            for index, (process, (_stdout, stderr)) in enumerate(zip(processes, completed))
+            if process.returncode != 0
+        ]
+        if failed:
+            return {
+                "case": "sqlite_concurrent_resume",
+                "status": "failed",
+                "reason": "resume_subprocess_failed",
+                "failures": failed,
+            }
+        resume_results = [json.loads(path.read_text(encoding="utf-8")) for path in result_paths]
+        shared_execution_count = jsonl_record_count(side_effect_path)
+
+    approval_statuses = [result.get("approval_status") for result in resume_results]
+    return {
+        "case": "sqlite_concurrent_resume",
+        "status": "completed",
+        "checkpointer": "SqliteSaver",
+        "new_python_processes": True,
+        "concurrent_resume_attempts": len(resume_results),
+        "resume_statuses": [result.get("status") for result in resume_results],
+        "approval_statuses": approval_statuses,
+        "tool_execution_count_shared": shared_execution_count,
+        "all_resume_processes_completed": all(result.get("status") == "completed" for result in resume_results),
+        "secret_leaked_in_trace": any(result.get("secret_leaked_in_trace") for result in resume_results),
+        "latency_ms": int((time.perf_counter() - started) * 1000),
+    }
+
+
 def run_validation() -> dict[str, Any]:
     try:
         import langgraph  # noqa: F401
@@ -452,6 +572,7 @@ def run_validation() -> dict[str, Any]:
         run_side_effect_risk_case(),
         run_sqlite_restart_case(),
         run_sqlite_subprocess_restart_case(),
+        run_sqlite_concurrent_resume_case(),
     ]
     persistent_restart_tested = any(
         case.get("case") in {"sqlite_process_restart", "sqlite_subprocess_restart"}
@@ -466,7 +587,7 @@ def run_validation() -> dict[str, Any]:
         "case_count": len(cases),
         "cases": cases,
         "limitations": [
-            "The SQLite subprocess case uses separate local Python processes, but it is still a local SQLite test, not a deployed service restart, concurrency, or failure-injection test.",
+            "The SQLite subprocess and concurrent resume cases use local Python processes and local SQLite; they are not deployed service restart or failure-injection tests.",
             "The refund tool is local and fake; no real payment, database, email, or external API is called.",
             "Results only cover the selected LangGraph version, Python version, graph shape, and local runtime.",
         ],
@@ -478,7 +599,9 @@ def main() -> None:
         sqlite_prepare_subprocess(sys.argv[2], sys.argv[3])
         return
     if len(sys.argv) > 1 and sys.argv[1] == "_sqlite_resume":
-        sqlite_resume_subprocess(sys.argv[2], sys.argv[3], sys.argv[4])
+        ledger_path = sys.argv[5] if len(sys.argv) > 5 else None
+        start_gate_path = sys.argv[6] if len(sys.argv) > 6 else None
+        sqlite_resume_subprocess(sys.argv[2], sys.argv[3], sys.argv[4], ledger_path, start_gate_path)
         return
     print(json.dumps(run_validation(), ensure_ascii=False, indent=2))
 
