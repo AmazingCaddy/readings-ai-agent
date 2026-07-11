@@ -206,6 +206,7 @@ Semantic Kernel 文档已确认它把自身定位为 lightweight open-source dev
 - Semantic Kernel source card 已完成第一轮精读，可支撑 enterprise integration、plugins/functions、native/OpenAPI/MCP plugin 导入、agent framework、human-in-the-loop 和 process orchestration 的框架定位；其 Process Framework 当前仍标注 experimental。
 - “Agent 框架应按任务难点和能力边界比较，不应写成某个框架默认最好”已升级为可入正文：框架生态定位边界、框架能力交叉表和标准库 rubric smoke test 支撑各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；但不能从文档或 rubric 直接推出真实成本、可靠性或性能排名。
 - 框架能力交叉表已把 6 个常见框架的主轴、适合学习内容、不应误读点和真实实验缺口整理到 evidence note；它支撑本章的定位表，但仍不能替代真实框架横向实验。
+- Tool / Function / Plugin 术语对照已完成第一轮文档交叉验证，可支撑“框架术语不能直接当成行业通用定义”的保守表述。OpenAI API 的 function/tool calling、OpenAI Agents SDK 的 runtime tools / agent-as-tool、Semantic Kernel 的 plugins/functions、LlamaIndex 的 retriever/query engine、LangGraph 的 state graph、AutoGen/CrewAI 的 multi-agent / Flow 抽象处在不同层级；真实框架默认错误处理、权限、HITL、trace 和成本仍需同任务实验。
 
 ## 待验证问题
 
@@ -242,4 +243,5 @@ Semantic Kernel 文档已确认它把自身定位为 lightweight open-source dev
 - [多 Agent 与 Flow 控制对比实验结果](../experiments/multi-agent-comparison/results-2026-07-11.md)
 - [Evidence Note: 框架生态定位边界](../evidence/framework-landscape-boundary.md)
 - [Evidence Note: 框架能力交叉表与选择边界](../evidence/framework-capability-crosswalk.md)
+- [Evidence Note: Tool / Function / Plugin 术语对照边界](../evidence/tool-terminology-crosswalk.md)
 - [框架选择 Rubric Smoke Test 结果](../experiments/framework-selection-rubric/results-2026-07-11.md)

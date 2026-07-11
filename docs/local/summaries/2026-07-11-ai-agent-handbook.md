@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 21:08 CST
+**Last Updated:** 2026-07-11 21:18 CST
 **Status:** In Progress
 
 ## Objective
@@ -81,9 +81,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 64. Clarified the validation-status wording after all current claim-ledger rows reached `可入正文`. The claim ledger now says these are narrow concept/protocol/engineering-boundary claims, while real quality, cost, latency, stability, framework superiority, and production reliability still require experiments. The coverage matrix now explicitly distinguishes narrow `可入正文` status from broad real-world partial verification, and the source-map chapter summary no longer says most materials still need deep reading.
 65. Audited chapter wording for overbroad trace requirements. Chapter 02 now limits process-trace guidance to multi-step Agents and systems involving tools, state, or external side effects, aligning the chapter summary with the claim ledger and chapter 08 observability boundary.
 66. Added a first-pass cross-framework tool terminology evidence note under `docs/evidence/tool-terminology-crosswalk.md`. It compares OpenAI API function/tool calling, OpenAI Agents SDK tools/agent-as-tool, Semantic Kernel plugins/functions, LlamaIndex retriever/query engine, LangGraph state graph, and AutoGen/CrewAI multi-agent/Flow abstractions. The narrow claim that these terms cannot be directly interchanged is now `可入正文`; real framework defaults for error handling, retry, permissions, HITL, trace fields, latency, cost, and implementation effort remain pending.
+67. Completed the source-card traceability follow-up for the terminology crosswalk. Chapter 10 now references the crosswalk, and the OpenAI Agents SDK, LangGraph, LlamaIndex, AutoGen, CrewAI, and Semantic Kernel source cards plus the source-card index now record that they support the terminology-boundary evidence. This keeps the new claim traceable from chapter text back to source cards without upgrading any real framework behavior claims.
 
 ## Technical Context
-- Files modified recently: `docs/evidence/tool-terminology-crosswalk.md`, `docs/chapters/03-tool-use.md`, `docs/chapters/12-source-map.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/tool-use-function-calling-boundary.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/2026-openai-function-calling-docs.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/chapters/10-framework-landscape.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/2026-openai-agents-sdk-docs.md`, `docs/sources/source-cards/2026-langgraph-docs.md`, `docs/sources/source-cards/2026-llamaindex-docs.md`, `docs/sources/source-cards/2026-autogen-docs.md`, `docs/sources/source-cards/2026-crewai-docs.md`, `docs/sources/source-cards/2026-semantic-kernel-docs.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 

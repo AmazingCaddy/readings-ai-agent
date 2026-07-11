@@ -8,7 +8,7 @@
 - 主题：Agent Framework / Tool Use / Tracing
 - 适合阶段：入门 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接、README、文档首页、guardrails、tools、tracing、human-in-the-loop 关键段落已复核；Agent/Workflow、自治程度和复杂架构默认可靠性窄边界可入正文；高风险工具权限窄边界可入正文；安全 regression set 和审批状态恢复实验已完成；真实 SDK runtime/guardrail/HITL 效果仍部分验证
+- 是否已验证：来源链接、README、文档首页、guardrails、tools、tracing、human-in-the-loop 关键段落已复核；Agent/Workflow、自治程度和复杂架构默认可靠性窄边界可入正文；高风险工具权限窄边界可入正文；跨框架术语对照第一轮已完成；安全 regression set 和审批状态恢复实验已完成；真实 SDK runtime/guardrail/HITL 效果仍部分验证
 
 ## 一句话总结
 
@@ -60,8 +60,9 @@ OpenAI Agents SDK 文档适合用于解释现代 Agent SDK 的基本抽象、工
 - Agent/Workflow 和自治程度窄边界已升级为可入正文：Agents SDK 文档直接支撑 managed agent loop、runtime 管理 turns/tool execution/state handling，以及直接使用 Responses API 时开发者自行控制 loop/tool dispatch/state handling 的边界。真实 SDK 任务表现、成本和失败恢复仍需实验。
 - 复杂架构默认可靠性窄边界已升级为可入正文：Agents SDK 支撑 agent loop、handoffs、guardrails、sessions 和 tracing 等工程抽象，但这些抽象需要结合任务、权限、trace、成本和实验选择，不能直接推出复杂 Agent runtime 默认比简单 workflow 更可靠。
 - 已纳入框架能力交叉表，用于支撑“轻量 agent runtime / tool loop / tracing / guardrails / sessions”的保守定位；与其他框架卡片和 rubric smoke test 共同支撑“框架应按任务难点比较，不能写成某个框架默认最好”的窄边界；不代表真实横向性能结论。
+- 已纳入 Tool / Function / Plugin 术语对照 evidence，用于区分 OpenAI API 层 function/tool calling 与 Agents SDK runtime tools、function tools、hosted tools、local/runtime tools、agent-as-tool、handoffs、guardrails 和 tracing 等更高层 runtime 抽象；不代表真实 SDK 默认安全或 eval 行为。
 
 ## 是否进入正文
 
 - 结论：部分进入
-- 原因：可支撑 Agent runtime、tool loop、guardrails、human approval、handoffs、sessions 和 tracing 的工程抽象，并与 LangGraph/ReAct/标准库实验共同支撑 Agent/Workflow、自治程度和复杂架构默认可靠性窄边界；也与标准库安全实验共同支撑“高风险工具要把权限、审批、状态恢复和审计放进执行路径”的窄边界。不能把 OpenAI SDK 术语直接当成所有 Agent 系统的唯一通用定义，也不能提前断言真实 SDK runtime、guardrail 或 HITL 效果。
+- 原因：可支撑 Agent runtime、tool loop、guardrails、human approval、handoffs、sessions、tracing 和跨框架术语区分的工程抽象，并与 LangGraph/ReAct/标准库实验共同支撑 Agent/Workflow、自治程度和复杂架构默认可靠性窄边界；也与标准库安全实验共同支撑“高风险工具要把权限、审批、状态恢复和审计放进执行路径”的窄边界。不能把 OpenAI SDK 术语直接当成所有 Agent 系统的唯一通用定义，也不能提前断言真实 SDK runtime、guardrail 或 HITL 效果。
