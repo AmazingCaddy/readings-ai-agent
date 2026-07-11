@@ -45,3 +45,8 @@
 - Trace 字段如何设计，才能同时支持调试、审计、回归和隐私控制？
 - Prompt injection 防护有哪些已验证的工程方法？已确认 OWASP/NIST 支撑风险边界，仍需补最小实验和框架级权限/隔离资料。
 - 安全 regression set 应该如何覆盖外部文档注入、工具参数越权、敏感信息泄露和 excessive agency？
+
+## 框架生态
+
+- 同一任务在 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel 下的实现成本、trace、权限和错误处理如何比较？框架定位已完成第一轮验证，仍需横向实验。
+- Semantic Kernel Process Framework 当前标注 experimental；后续复核时需要确认其稳定性和 API 变化。

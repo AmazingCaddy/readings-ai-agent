@@ -31,6 +31,7 @@
 | Agent eval 不应只看最终答案，还应检查关键 trajectory / trace。 | AgentBench；WebArena；OpenAI Evals repo；Evidence Note: Agent Eval 与 Trajectory 边界 | 部分验证 | 可写入 Eval 章节；需说明 trajectory 自动评分方法仍待任务级验证。 |
 | Prompt injection 不能只靠 prompt 解决。 | OWASP LLM Top 10；NIST AI RMF；OpenAI Function Calling docs；Evidence Note: Prompt Injection 与权限边界 | 部分验证 | 可作为生产安全章节的核心提醒；需明确 prompt 有帮助但不是充分安全边界，仍待最小实验和框架安全资料。 |
 | 多 Agent 不是默认更好，会带来成本、调试和协调复杂度。 | AutoGen docs；CrewAI docs；AgentBench；Evidence Note: 多 Agent 不是默认更好 | 部分验证 | 可作为 Planning / Orchestration 和框架生态章节的核心提醒；仍需最小对比实验验证收益是否抵消成本。 |
+| Agent 框架应按任务难点比较，不应写成“某个框架默认最好”。 | OpenAI Agents SDK docs；LangGraph docs；LlamaIndex docs；AutoGen docs；CrewAI docs；Semantic Kernel docs；Evidence Note: 框架生态定位边界 | 部分验证 | 可作为框架生态章节核心边界；仍需同一任务横向实验。 |
 | MCP 是连接工具和上下文能力的协议，不是 Agent 框架本身。 | MCP official docs；MCP servers repo；Evidence Note: MCP Host / Client / Server 职责边界 | 部分验证 | 可作为 MCP 章节核心边界；仍建议补最小 MCP trace 实验。 |
 
 ## 待升级为可入正文的优先结论
@@ -44,6 +45,7 @@
 7. 长期记忆的收益与治理风险边界。已完成第一轮论文、工程文档和安全资料交叉验证，待补最小多会话记忆实验。
 8. 上下文工程与结构化输出边界。已完成第一轮官方文档交叉验证，待补输出解析和长上下文失败模式实验。
 9. Agent 架构模式边界。已完成 ReAct、Reflexion、Tree of Thoughts、LangGraph 和已有 workflow/multi-agent evidence 第一轮交叉验证，待补最小架构对比实验。
+10. 框架生态定位边界。已完成主要框架文档第一轮交叉验证，待补同一任务横向实验。
 
 ## 升级流程
 

@@ -114,7 +114,7 @@
 - Frameworks：OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI、Semantic Kernel。
 - Practice：OpenAI Cookbook、MCP servers repo、OpenAI Evals repo。
 
-大部分 source cards 目前是“链接或元数据已复核，内容待精读”。因此它们可以支撑章节中的学习方向、术语边界和保守结论，但还不能支撑过强的工程断言。
+核心 source cards 已经完成多轮链接、元数据和关键段落复核，能支撑章节中的学习方向、术语边界和部分验证结论。仍处于候选或只完成链接复核的资料，不能支撑过强的工程断言。
 
 ## 如何继续扩展资料库
 
@@ -140,7 +140,7 @@
 
 - 当前手册已经建立 source card index、coverage matrix 和 claim ledger，用于控制资料进入正文的门槛。
 - Source card index 明确记录了每张卡片的可信度、验证状态和下一步。
-- Coverage matrix 显示 Evaluation / Observability、Production / Security 等主题仍有缺口，需要继续补 trace、权限、审计和工程案例。
+- Coverage matrix 显示 Evaluation / Observability、Production / Security、框架横向实验等主题仍有缺口，需要继续补 trace、权限、审计、observability 和工程案例。
 - Claim ledger 规定只有状态为“可入正文”的结论，才能写成确定性表述；其他结论需要保守表达。
 
 ## 待验证问题

@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 16:09 Asia/Shanghai
+**Last Updated:** 2026-07-11 16:19 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -34,9 +34,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 17. Completed first evidence upgrade for LLM context engineering and structured output boundaries using OpenAI Text Generation docs, Structured Outputs docs, Responses API reference, Function Calling docs, and existing RAG/Memory and Prompt Injection evidence.
 18. Completed first evidence upgrade for Agent architecture pattern boundaries using ReAct, Reflexion, Tree of Thoughts, LangGraph, OpenAI Agents SDK, and existing Agent/Workflow plus Multi-agent evidence.
 19. Completed first evidence upgrade for RAG engineering flow using RAG paper, LlamaIndex framework overview, RAG overview, Documents / Nodes, Indexing, Retriever, and Query Engine docs.
+20. Completed first evidence upgrade for framework landscape boundaries using Semantic Kernel overview, Agent Framework, Plugins, Process Framework docs, and existing OpenAI Agents SDK, LangGraph, LlamaIndex, AutoGen, CrewAI evidence.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2026-llamaindex-docs.md`, `docs/evidence/rag-engineering-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/06-rag-memory.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2026-semantic-kernel-docs.md`, `docs/evidence/framework-landscape-boundary.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/10-framework-landscape.md`, `docs/chapters/12-source-map.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
@@ -47,6 +48,7 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 - Run an output parsing experiment comparing free text, JSON mode, and Structured Outputs; include refusal and semantic-error handling.
 - Run a long-context failure-mode experiment covering irrelevant context, conflicting context, stale context, external prompt injection, truncation behavior, and token cost.
 - Run a single-agent vs planner/executor vs multi-agent comparison experiment for the same research/writing task.
+- Run a same-task framework comparison across OpenAI Agents SDK, LangGraph, LlamaIndex, AutoGen/CrewAI, and Semantic Kernel, covering implementation effort, trace readability, permissions/human approval, state recovery, and error handling.
 - Run a toy Agent eval experiment comparing final-answer-only scoring with trajectory/trace-aware scoring.
 - Run a minimal read-only MCP trace experiment to upgrade the MCP role boundary from partial verification toward `可入正文`.
 - Run a minimal RAG vs short-term vs long-term memory comparison experiment.
