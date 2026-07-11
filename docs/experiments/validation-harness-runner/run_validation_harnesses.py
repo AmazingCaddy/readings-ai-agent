@@ -116,6 +116,10 @@ HARNESSES = [
         ROOT / "docs/experiments/source-reference-integrity-audit/source_reference_integrity_audit.py",
     ),
     Harness(
+        "source_to_claim_support",
+        ROOT / "docs/experiments/source-to-claim-support-audit/source_to_claim_support_audit.py",
+    ),
+    Harness(
         "source_card_evidence_quality",
         ROOT / "docs/experiments/source-card-evidence-quality-audit/source_card_evidence_quality_audit.py",
     ),
@@ -292,6 +296,7 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "check_count",
         "source_card_count",
         "content_chapter_count",
+        "content_chapter_source_card_count",
         "body_entry_claim_count",
         "declared_target_count",
         "failed_checks",

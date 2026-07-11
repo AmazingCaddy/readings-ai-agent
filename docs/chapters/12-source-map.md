@@ -159,6 +159,8 @@ Browser Use、Playwright 和 Anthropic Computer Use 适合放在 Browser / Compu
 
 Claim To Chapter Landing Audit 已补 29 条 `可入正文` 结论到 50 个声明章节落点的文本对齐检查，防止台账结论没有真正进入目标章节；它仍只验证文本落点，不验证外部事实、章节解释正确或真实系统表现。
 
+Source To Claim Support Audit 已补 01-11 内容章节直接引用的 55 张 source cards 到 claim ledger `支撑资料` 列的文本追溯检查，防止章节引用资料但台账没有纳入证据链；它不扫描第 12 章 source map 的全量资料索引，也不验证外部事实、章节解释正确或真实系统表现。
+
 Coverage matrix 的“入门资料”列现在优先使用本手册章节和已精读的核心 docs / papers，目的是给初学者提供阅读入口；它不等同于把真实模型、真实框架或真实生产效果升级为已验证结论。
 
 ## 如何继续扩展资料库
