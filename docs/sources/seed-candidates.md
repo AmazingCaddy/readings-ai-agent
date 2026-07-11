@@ -68,9 +68,10 @@
 | 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |
 | --- | --- | --- | --- | --- |
 | LLM 应用安全 | OWASP Top 10 for LLM Applications | Security Guidance | A | 链接已复核；source card 已创建 |
+| Agentic AI 安全 | OWASP Agentic Security Initiative resources | Security Guidance / Whitepaper Metadata | A/B | 公开资源页和 WP JSON 摘要已复核；source card 已创建；白皮书下载受限，全文未精读；真实 agentic-specific mitigation 效果待实验 |
 | AI 风险管理 | NIST AI Risk Management Framework | Standard / Guidance | A | 链接已复核；source card 已创建 |
 | Responsible AI / 安全治理 | Google Cloud Responsible AI documentation | Official Docs | A | Google Cloud 页面和关键段落已复核；source card 已创建；真实过滤、grounding、监控效果待实验 |
-| Prompt injection | Indirect Prompt Injection paper；Microsoft Prompt Shields docs；Anthropic jailbreak mitigation docs；additional security writeups | Paper / Engineering | A/B | arXiv paper 元数据已复核；Microsoft Learn Prompt Shields concept/quickstart 和 Anthropic 官方 Markdown mitigation page 已复核；source cards 已创建；更多独立攻击样例、框架 guardrail/HITL 行为和误报/漏报资料待复核 |
+| Prompt injection | Indirect Prompt Injection paper；Microsoft Prompt Shields docs；Anthropic jailbreak mitigation docs；OWASP Agentic Security Initiative resources；additional security writeups | Paper / Engineering | A/B | arXiv paper 元数据已复核；Microsoft Learn Prompt Shields concept/quickstart、Anthropic 官方 Markdown mitigation page 和 OWASP agentic security 公开资源页已复核；source cards 已创建；更多独立攻击样例、框架 guardrail/HITL 行为和误报/漏报资料待复核 |
 | Tool permissions | Framework security guidance for tools and agents | Official Docs | A/B | OpenAI Agents SDK / Semantic Kernel 已完成第一轮；仍需横向补充 |
 
 ## Courses / Beginner-Friendly Materials

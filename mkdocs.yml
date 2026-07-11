@@ -92,6 +92,7 @@ nav:
           - OpenAI Structured Outputs docs: sources/source-cards/2026-openai-structured-outputs-docs.md
           - OpenAI Text Generation docs: sources/source-cards/2026-openai-text-generation-docs.md
           - OWASP LLM Top 10: sources/source-cards/2026-owasp-llm-top-10.md
+          - OWASP Agentic AI Security: sources/source-cards/2026-owasp-agentic-ai-security.md
           - Microsoft Prompt Shields docs: sources/source-cards/2026-microsoft-prompt-shields-docs.md
           - Anthropic Jailbreak Mitigation docs: sources/source-cards/2026-anthropic-jailbreak-mitigation-docs.md
           - Semantic Kernel docs: sources/source-cards/2026-semantic-kernel-docs.md

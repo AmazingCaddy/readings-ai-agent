@@ -34,6 +34,8 @@ Prompt injection 指外部输入试图改变模型行为，让系统忽略原有
 
 OWASP 把 prompt injection 列为 LLM 应用风险项，并把不安全插件设计、敏感信息泄露和 excessive agency 也列为相关风险。对初学者来说，关键不是背风险编号，而是记住：外部内容只能被当作数据，不能被当作系统规则。
 
+OWASP Agentic Security Initiative 的公开资源还把 Agentic AI 风险扩展到目标劫持、工具误用、身份和权限滥用、记忆污染、多 Agent 通信不安全、级联失败和失控 Agent。这里不能得出“某个缓解方案已经有效”的结论，但可以提醒你：生产安全不只是挡住 prompt injection，还要检查身份、权限、记忆、运行时隔离、schema 校验、停止条件和监控。
+
 ### 权限模型
 
 权限模型决定 Agent 能访问什么数据、能调用什么工具、能执行什么动作、哪些动作需要人类确认。
@@ -213,6 +215,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 ## 已验证结论
 
 - Indirect Prompt Injection paper 和 OWASP LLM Top 10 的关键风险项已完成第一轮精读，可支撑外部内容模糊数据/指令边界、prompt injection、敏感信息泄露、工具/插件访问控制和 excessive agency 的保守风险表述。
+- OWASP Agentic AI Security Resources 的公开资源页、HTTP metadata 和 WP JSON 摘要已复核，可支撑 goal hijacking、tool misuse、identity / privilege abuse、memory poisoning、insecure inter-agent communication、cascading failures、rogue agents、runtime containment、architectural monitoring 和 schema controls 等 agentic-specific 风险边界。白皮书下载受限，全文未精读，因此不能支撑完整缓解清单或具体控制效果。
 - NIST AI RMF 的概述段落已完成第一轮精读，可支撑生产化章节的风险管理和治理视角；它不是 Agent 专用工程指南。
 - “Prompt injection 不能只靠 prompt 解决；外部内容应被当作不可信数据，工具权限和写操作审批必须由应用/系统层控制”已升级为可入正文。Indirect Prompt Injection paper 支撑外部检索数据中的恶意 prompt 可影响应用行为和 API 调用的风险边界；OWASP 支撑风险分类，NIST 支撑全生命周期风险治理，Microsoft Prompt Shields 支撑 user prompt attack / document attack 分类、生成前检测接口和误报/漏报边界，OpenAI 工具调用文档支撑应用侧执行和控制边界。
 - Microsoft Prompt Shields 文档已补充检测层工程资料：`shieldPrompt` API 可以分析 `userPrompt` 和 `documents`，返回 `attackDetected` 字段；但文档也明确提示可能出现 false positives / negatives，并建议 additional validation layers。因此它只能支撑“检测层应纳入安全 workflow”，不能支撑“接入检测后就安全”。
@@ -236,6 +239,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - Anthropic MCP connector / tunnels 的 allowlist/denylist、OAuth token、data retention、shared responsibility 和 tunnel credential rotation 在真实试跑中如何记录到 trace 和安全检查清单？
 - Browser Agent 如何在真实或仿真网站中隔离 profile、限制登录态、确认表单/购物/上传等写操作，并记录可审计 action trace？
 - 真实模型 / 框架 guardrail / Prompt Shields 或同类检测层下，prompt injection 防护的误报、漏报、成本、延迟和人工审批负担如何测量？真实 API harness 已准备，仍需实际运行并比较 prompt-only、detector-only、policy-enforced 和 HITL 对照。
+- agentic-specific 安全 regression set 应如何覆盖 goal hijacking、tool misuse、identity / privilege abuse、memory poisoning、insecure inter-agent communication、cascading failures 和 rogue agent / runaway loop 停止条件？
 - 哪些日志字段既能支持审计，又不会引入新的隐私风险？已完成 observability/trace 第一轮验证，仍需脱敏和访问控制实验。
 - 成本和延迟应该如何纳入 Agent eval？已补 OpenAI 官方 production / rate limit / cost / latency / token counting / Batch / Flex / Prompt Caching 边界，仍需真实 API / Cookbook 练习记录 token、usage、rate-limit headers、retry、平均/P95 latency、cost estimate、budget threshold、cache read/write 和失败样例。
 - OpenAI API、remote MCP、hosted tools、files/vector stores 和 browser/computer-use 工具的数据保留边界如何落到项目 checklist？已补 OpenAI Safety / Data Controls 官方边界，仍需真实项目按 endpoint、对象删除、third-party server、trace 字段和 project data controls 复核。
@@ -254,6 +258,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 ### Security and Risk
 
 - [OWASP Top 10 for Large Language Model Applications](../sources/source-cards/2026-owasp-llm-top-10.md)
+- [OWASP Agentic AI Security Resources](../sources/source-cards/2026-owasp-agentic-ai-security.md)
 - [NIST AI Risk Management Framework](../sources/source-cards/2026-nist-ai-rmf.md)
 - [Microsoft Prompt Shields Documentation](../sources/source-cards/2026-microsoft-prompt-shields-docs.md)
 - [Anthropic Jailbreak and Prompt Injection Mitigation Documentation](../sources/source-cards/2026-anthropic-jailbreak-mitigation-docs.md)
