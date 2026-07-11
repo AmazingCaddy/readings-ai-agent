@@ -75,6 +75,24 @@ class TraceEvent:
     timestamp: str = field(default_factory=utc_now)
 
 
+@dataclass(frozen=True)
+class RetrievalCase:
+    case_id: str
+    question: str
+    expected_source_ids: tuple[str, ...]
+    unsupported: bool = False
+
+
+@dataclass(frozen=True)
+class RetrievalStrategy:
+    strategy_id: str
+    chunk_size_words: int
+    top_k: int
+    allowed_source_ids: tuple[str, ...] = ()
+    rerank_terms: tuple[str, ...] = ()
+    expected_failure_case_ids: tuple[str, ...] = ()
+
+
 DOCUMENTS = [
     Document(
         source_id="rag-paper",
@@ -139,25 +157,46 @@ class RagPipeline:
         self.record("chunk", documents=len(documents), chunks=len(chunks), chunk_size_words=self.chunk_size_words)
         return chunks
 
-    def retrieve(self, question: str, top_k: int = 2) -> list[dict[str, Any]]:
+    def retrieve(
+        self,
+        question: str,
+        top_k: int = 2,
+        allowed_source_ids: tuple[str, ...] = (),
+        rerank_terms: tuple[str, ...] = (),
+    ) -> list[dict[str, Any]]:
         query_terms = terms(question)
         scored = []
         for chunk in self.chunks:
+            if allowed_source_ids and chunk.source_id not in allowed_source_ids:
+                continue
             overlap = sorted(query_terms & chunk.keywords)
             score = len(overlap)
             if score:
-                scored.append({"chunk": chunk, "score": score, "matched_terms": overlap})
-        scored.sort(key=lambda item: (-item["score"], item["chunk"].chunk_id))
+                rerank_overlap = sorted(set(rerank_terms) & chunk.keywords)
+                scored.append(
+                    {
+                        "chunk": chunk,
+                        "score": score,
+                        "matched_terms": overlap,
+                        "rerank_score": len(rerank_overlap),
+                        "rerank_matched_terms": rerank_overlap,
+                    }
+                )
+        scored.sort(key=lambda item: (-item["score"], -item["rerank_score"], item["chunk"].chunk_id))
         selected = scored[:top_k]
         self.record(
             "retrieve",
             question=question,
             query_terms=sorted(query_terms),
+            allowed_source_ids=list(allowed_source_ids),
+            rerank_terms=list(rerank_terms),
             selected=[
                 {
                     "chunk_id": item["chunk"].chunk_id,
                     "score": item["score"],
                     "matched_terms": item["matched_terms"],
+                    "rerank_score": item["rerank_score"],
+                    "rerank_matched_terms": item["rerank_matched_terms"],
                 }
                 for item in selected
             ],
@@ -200,6 +239,122 @@ class RagPipeline:
         return [event.__dict__ for event in self.trace]
 
 
+RETRIEVAL_CASES = [
+    RetrievalCase(
+        case_id="multi_source_provenance",
+        question="How does RAG help with provenance and source tracing?",
+        expected_source_ids=("rag-paper", "llamaindex-rag"),
+    ),
+    RetrievalCase(
+        case_id="memory_governance",
+        question="How is RAG different from long-term memory governance?",
+        expected_source_ids=("langgraph-memory", "llamaindex-rag"),
+    ),
+    RetrievalCase(
+        case_id="unsupported_deployment",
+        question="What is the project deployment command?",
+        expected_source_ids=(),
+        unsupported=True,
+    ),
+]
+
+
+RETRIEVAL_STRATEGIES = [
+    RetrievalStrategy(
+        strategy_id="balanced_top2",
+        chunk_size_words=28,
+        top_k=2,
+    ),
+    RetrievalStrategy(
+        strategy_id="top1_misses_multi_source",
+        chunk_size_words=28,
+        top_k=1,
+        expected_failure_case_ids=("multi_source_provenance", "memory_governance"),
+    ),
+    RetrievalStrategy(
+        strategy_id="wrong_metadata_filter_hides_memory",
+        chunk_size_words=28,
+        top_k=2,
+        allowed_source_ids=("rag-paper", "llamaindex-rag"),
+        expected_failure_case_ids=("memory_governance",),
+    ),
+    RetrievalStrategy(
+        strategy_id="fine_chunks_top3_rerank_still_needs_eval",
+        chunk_size_words=10,
+        top_k=3,
+        rerank_terms=("provenance", "metadata", "memory", "governance"),
+        expected_failure_case_ids=("memory_governance",),
+    ),
+]
+
+
+def evaluate_retrieval_strategy(case: RetrievalCase, strategy: RetrievalStrategy) -> dict[str, Any]:
+    pipeline = RagPipeline(DOCUMENTS, chunk_size_words=strategy.chunk_size_words)
+    selected = pipeline.retrieve(
+        case.question,
+        top_k=strategy.top_k,
+        allowed_source_ids=strategy.allowed_source_ids,
+        rerank_terms=strategy.rerank_terms,
+    )
+    retrieved_source_ids = [item["chunk"].source_id for item in selected]
+    unique_retrieved_source_ids = sorted(set(retrieved_source_ids))
+    expected_source_ids = set(case.expected_source_ids)
+    retrieved_expected = expected_source_ids & set(retrieved_source_ids)
+    recall = 1.0 if not expected_source_ids else len(retrieved_expected) / len(expected_source_ids)
+    unsupported_passed = not case.unsupported or not selected
+    passed = recall == 1.0 and unsupported_passed
+    expected_outcome = "expected_failure" if case.case_id in strategy.expected_failure_case_ids else "pass"
+    expectation_met = passed if expected_outcome == "pass" else not passed
+    return {
+        "case_id": case.case_id,
+        "strategy_id": strategy.strategy_id,
+        "expected_outcome": expected_outcome,
+        "expectation_met": expectation_met,
+        "passed": passed,
+        "unsupported": case.unsupported,
+        "expected_source_ids": sorted(expected_source_ids),
+        "retrieved_source_ids": unique_retrieved_source_ids,
+        "recall_expected_sources": recall,
+        "selected_chunks": [
+            {
+                "chunk_id": item["chunk"].chunk_id,
+                "source_id": item["chunk"].source_id,
+                "score": item["score"],
+                "matched_terms": item["matched_terms"],
+                "rerank_score": item["rerank_score"],
+                "rerank_matched_terms": item["rerank_matched_terms"],
+            }
+            for item in selected
+        ],
+    }
+
+
+def run_strategy_audit() -> dict[str, Any]:
+    results = [
+        evaluate_retrieval_strategy(case, strategy)
+        for case in RETRIEVAL_CASES
+        for strategy in RETRIEVAL_STRATEGIES
+    ]
+    expected_failures = [item for item in results if item["expected_outcome"] == "expected_failure"]
+    return {
+        "status": "completed",
+        "control": "deterministic_retrieval_strategy_fixtures",
+        "real_embedding_validated": False,
+        "real_vector_store_validated": False,
+        "real_llm_validated": False,
+        "case_count": len(RETRIEVAL_CASES),
+        "strategy_count": len(RETRIEVAL_STRATEGIES),
+        "result_count": len(results),
+        "expected_failure_count": len(expected_failures),
+        "expectations_met": all(item["expectation_met"] for item in results),
+        "results": results,
+        "limitations": [
+            "This audit uses deterministic keyword overlap, not embeddings, vector stores, rerankers, or LLM synthesis.",
+            "It validates retrieval-eval record shape and predictable failure modes only; it does not prove a chunk size, top-k, filter, or rerank strategy is best for real RAG.",
+        ],
+    }
+
+
 def main() -> None:
     pipeline = RagPipeline(DOCUMENTS)
     cases = [
@@ -208,8 +363,11 @@ def main() -> None:
         pipeline.answer("What is the project deployment command?"),
     ]
     result = {
+        "status": "completed",
+        "control": "deterministic_rag_pipeline_and_retrieval_strategy_fixtures",
         "cases": cases,
         "trace": pipeline.serialized_trace(),
+        "strategy_audit": run_strategy_audit(),
     }
     print(json.dumps(result, ensure_ascii=False, indent=2))
 

@@ -9,7 +9,7 @@
 - 主题：RAG / Adaptive Retrieval / Self-Reflection / Citation Accuracy
 - 适合阶段：进阶 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接、HTTP metadata、arXiv 元数据和摘要已复核；支撑“RAG 不能机械固定检索，retrieval necessity、passage relevance、generation critique 和 citation accuracy 都需要评估”的窄边界；真实工程 RAG stack、当前模型表现、成本和延迟仍部分验证
+- 是否已验证：来源链接、HTTP metadata、arXiv 元数据和摘要已复核；支撑“RAG 不能机械固定检索，retrieval necessity、passage relevance、generation critique 和 citation accuracy 都需要评估”的窄边界；标准库 RAG retrieval strategy audit 已补 top-k / filter / chunking / rerank 需要 eval 的本地固定失败样例；真实工程 RAG stack、当前模型表现、成本和延迟仍部分验证
 
 ## 一句话总结
 
@@ -50,6 +50,6 @@ Self-RAG 适合用来解释进阶 RAG 的一个关键问题：不是每个问题
 
 ## 可复现实验
 
-- 本手册已完成标准库 RAG 最小 pipeline / citation 模拟实验，覆盖 chunk metadata、retrieval trace、chunk-level citations 和无证据拒答。
+- 本手册已完成标准库 RAG 最小 pipeline / citation / retrieval strategy 模拟实验，覆盖 chunk metadata、retrieval trace、chunk-level citations、无证据拒答，以及 top-k 过小、metadata filter 错配、细 chunk + rerank terms 仍可能漏召回的固定失败样例。
 - 本手册已完成上下文策略对比实验，显示基础 keyword RAG 可能召回不可信外部文档，说明 RAG 需要 trust/freshness metadata、filter 和 citation 校验。
-- Real RAG Citation Synthesis harness 已完成本地 deterministic citation verifier control，覆盖 citation id、quote matching、grounded/ungrounded citation 和 unsupported grounded claim 的失败样例；仍需配置 API key 后实际运行真实 LLM completed case，并扩展到 embedding、vector store、top-k、rerank/filter、citation correctness、faithfulness、latency 和 token cost 对比。
+- 标准库 RAG strategy audit 已完成 deterministic keyword control，覆盖 top-k 过小、metadata filter 错配、细 chunk + rerank terms 仍可能漏召回；Real RAG Citation Synthesis harness 已完成本地 deterministic citation verifier control，覆盖 citation id、quote matching、grounded/ungrounded citation 和 unsupported grounded claim 的失败样例；仍需配置 API key 后实际运行真实 LLM completed case，并扩展到 embedding、vector store、top-k、rerank/filter、citation correctness、faithfulness、latency 和 token cost 对比。

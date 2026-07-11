@@ -8,7 +8,7 @@
 - 主题：RAG / Retrieval / Knowledge-intensive NLP
 - 适合阶段：入门后 / 进阶
 - 可信度等级：A
-- 是否已验证：来源链接、arXiv 元数据和摘要已复核；外部检索、provenance 和知识更新动机可入正文；与 LangGraph memory docs 完成边界交叉验证；RAG / Memory 术语边界已可入正文；与 LlamaIndex docs 和最小 pipeline 实验共同支撑 RAG 工程 pipeline 窄边界可入正文
+- 是否已验证：来源链接、arXiv 元数据和摘要已复核；外部检索、provenance 和知识更新动机可入正文；与 LangGraph memory docs 完成边界交叉验证；RAG / Memory 术语边界已可入正文；与 LlamaIndex docs 和最小 pipeline / retrieval strategy audit 共同支撑 RAG 工程 pipeline 窄边界可入正文
 
 ## 一句话总结
 

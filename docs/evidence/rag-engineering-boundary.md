@@ -43,7 +43,7 @@
 
 - 是否需要实验：是
 - 实验设计：用同一组手册资料建立最小 RAG pipeline，比较不同 chunk size、metadata、top-k、rerank/filter、OpenAI File Search / vector store 和无 RAG baseline。记录检索命中率、included search results、引用正确率、答案忠实度、延迟、token / storage 成本、删除一致性和无法回答时的处理。
-- 结果：已完成标准库最小 pipeline / citation 模拟实验、Real RAG Citation Synthesis deterministic verifier control 和 Real LlamaIndex RAG Source-Node Validation。标准库实验验证了 chunk metadata、retrieval trace、citation 字段和 unsupported question 拒答流程；citation verifier control 验证了 citation id / quote / groundedness / unsupported-claim 的最小校验器和失败样例；LlamaIndex run 验证了真实框架中的 retriever source nodes、QueryEngine `response.source_nodes`、node postprocessor、trust filter、empty source nodes 和 trace 脱敏。尚未覆盖真实 embedding、vector store、rerank、真实 LLM synthesis、chunk size 对比、latency 或 token cost。
+- 结果：已完成标准库最小 pipeline / citation / retrieval strategy 模拟实验、Real RAG Citation Synthesis deterministic verifier control 和 Real LlamaIndex RAG Source-Node Validation。标准库实验验证了 chunk metadata、retrieval trace、citation 字段、unsupported question 拒答流程，并用 3 个 case / 4 个 strategy 暴露 top-k 过小、metadata filter 错配、细 chunk + rerank terms 仍可能漏召回的固定失败样例；citation verifier control 验证了 citation id / quote / groundedness / unsupported-claim 的最小校验器和失败样例；LlamaIndex run 验证了真实框架中的 retriever source nodes、QueryEngine `response.source_nodes`、node postprocessor、trust filter、empty source nodes 和 trace 脱敏。尚未覆盖真实 embedding、vector store、rerank、真实 LLM synthesis、真实 chunk size 对比、latency 或 token cost。
 
 ## 结论状态
 

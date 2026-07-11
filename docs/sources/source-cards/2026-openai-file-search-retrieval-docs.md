@@ -9,7 +9,7 @@
 - 主题：File Search / Retrieval API / Vector Stores / RAG / Citations
 - 适合阶段：入门后 / RAG 实践
 - 可信度等级：A
-- 是否已验证：官方 Markdown 页面已抓取；File Search guide、Retrieval guide 和 File Search 页面 HTTP metadata 已复核；支撑 Responses API `file_search` hosted tool、vector stores、semantic + keyword search、`file_search_call`、file citations、`include=["file_search_call.results"]`、metadata filtering、query rewriting、ranking options、vector store attributes、expiration policies、chunking defaults/limits、supported file types、rate limits、pricing/data links 的工程边界；不证明真实 citation correctness、answer faithfulness、默认 chunking/ranking 最优、成本、延迟、权限隔离或生产可靠性
+- 是否已验证：官方 Markdown 页面已抓取；File Search guide、Retrieval guide 和 File Search 页面 HTTP metadata 已复核；支撑 Responses API `file_search` hosted tool、vector stores、semantic + keyword search、`file_search_call`、file citations、`include=["file_search_call.results"]`、metadata filtering、query rewriting、ranking options、vector store attributes、expiration policies、chunking defaults/limits、supported file types、rate limits、pricing/data links 的工程边界；标准库 RAG strategy audit 已补 top-k / filter / chunking / rerank eval 字段模板；不证明真实 citation correctness、answer faithfulness、默认 chunking/ranking 最优、成本、延迟、权限隔离或生产可靠性
 
 ## 一句话总结
 
@@ -66,6 +66,7 @@ OpenAI File Search / Retrieval 文档适合把初学者从“RAG 是自己拼 pr
 
 - 用同一组 PDF/Markdown 文档建立 vector store，运行 File Search 问答，保存 `file_search_call`、included search results、citations、latency、token usage 和费用。
 - 对比 `max_num_results`、metadata filters、query rewriting、score threshold、chunking strategy 和 expiration policy 对 recall、citation correctness、faithfulness、latency 和成本的影响。
+- 可先用本手册 RAG pipeline strategy audit 的字段做练习表：`expected_source_ids`、`retrieved_source_ids`、`recall_expected_sources`、`expected_outcome` 和 `expectation_met`，再迁移到真实 File Search / vector store 结果。
 - 加入过期文档、冲突文档、权限不应访问的文档、删除后立即搜索、无答案问题和 prompt injection 文档，记录检索是否命中、答案是否拒答、trace 是否足够复盘。
 
 ## 是否进入正文
