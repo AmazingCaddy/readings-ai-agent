@@ -107,6 +107,10 @@ HARNESSES = [
         "source_reference_integrity",
         ROOT / "docs/experiments/source-reference-integrity-audit/source_reference_integrity_audit.py",
     ),
+    Harness(
+        "source_card_evidence_quality",
+        ROOT / "docs/experiments/source-card-evidence-quality-audit/source_card_evidence_quality_audit.py",
+    ),
 ]
 
 

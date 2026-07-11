@@ -6,6 +6,8 @@ Source Reference Integrity Audit 会检查本索引与 `source-cards/` 目录的
 
 Source URL Availability Audit 会对 source card 元数据中的主来源 URL 做联网快照；2026-07-12 本地运行检查了 56 张 source cards 的 73 个主 URL，全部可访问。该 audit 只证明本次网络环境下 URL 可达，不验证资料内容、章节解释、真实模型/API/框架行为或未来可用性。
 
+Source Card Evidence Quality Audit 会检查进入正文的 source cards 是否保留 `支撑证据`、可观察 evidence marker、`可能的问题` 和边界措辞。该 audit 只验证证据结构和限制文字，不验证资料内容事实或章节解释正确性。
+
 ## 已创建卡片
 
 | Source card | 主题 | 类型 | 可信度 | 当前验证状态 | 下一步 |

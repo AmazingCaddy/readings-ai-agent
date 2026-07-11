@@ -9,7 +9,7 @@
 - 主题：RAG examples / Query engines / Retrievers / Citation / Agent workflows
 - 适合阶段：入门后 / 工程实践
 - 可信度等级：A/B
-- 是否已验证：GitHub 仓库元数据、README、`docs/examples` 索引和若干 examples 子目录已复核；可支撑“LlamaIndex examples 覆盖 RAG、agent workflow、query engine、retriever、citation 等实践形态”的窄边界；不支撑 production-ready、最佳 chunk/top-k/rerank 参数或真实质量结论
+- 是否已验证：GitHub 仓库元数据、README、`docs/examples` 索引和若干 examples 子目录已复核；可支撑“LlamaIndex examples 覆盖 RAG、agent workflow、query engine、retriever、citation 等实践形态”的窄边界；不支撑 production-ready、最佳 chunk/top-k/rerank 参数，真实质量结论仍未验证
 
 ## 一句话总结
 
