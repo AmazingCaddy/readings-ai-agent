@@ -63,7 +63,7 @@
 - 通用 benchmark 对真实业务 agent 的代表性有多强？已确认公开 benchmark 可学习评测思想，但业务系统仍需 custom/private eval。
 - Trace 字段如何设计，才能同时支持调试、审计、回归和隐私控制？已完成 LangSmith/Phoenix/Cookbook 第一轮验证，标准库 trace-aware eval 已覆盖 tool call/result/error/approval/final response；trace schema audit 已覆盖 debug、audit、regression、cost/latency、RAG 和 privacy 字段缺口；真实模型 trace-aware eval harness 已准备；仍需实际运行真实 RAG/tool traces、平台字段映射和隐私脱敏策略。
 - LLM-as-judge、online evaluator 和自动化规则的误判率、成本与抽样人工复核比例如何设计？
-- Prompt injection 防护有哪些已验证的工程方法？已确认 OWASP/NIST 支撑风险边界，OpenAI Agents SDK/Semantic Kernel/Responses API 支撑 guardrails、approval、require_approval、sensitive trace 控制等工程边界；标准库最小攻击实验已验证 prompt-only 风险和 policy-enforced 写工具阻断/trace 脱敏流程；安全 regression set 已扩展到授权、金额阈值、敏感信息、破坏性工具、幂等性和 benign case；审批状态恢复实验已覆盖拒绝后恢复、重复恢复、参数篡改恢复和 trace 脱敏；真实 prompt injection / permission harness 已准备；仍需实际运行验证真实模型 / 框架 guardrail 误报漏报。
+- Prompt injection 防护有哪些已验证的工程方法？窄结论“prompt 不是充分安全边界，外部内容和高风险工具必须由系统层权限/审批/审计控制”已可入正文。已确认 OWASP/NIST 支撑风险边界，OpenAI Agents SDK/Semantic Kernel/Responses API 支撑 guardrails、approval、require_approval、sensitive trace 控制等工程边界；标准库最小攻击实验已验证 prompt-only 风险和 policy-enforced 写工具阻断/trace 脱敏流程；安全 regression set 已扩展到授权、金额阈值、敏感信息、破坏性工具、幂等性和 benign case；审批状态恢复实验已覆盖拒绝后恢复、重复恢复、参数篡改恢复和 trace 脱敏；真实 prompt injection / permission harness 已准备；仍需实际运行验证真实模型 / 框架 guardrail 误报漏报。
 - 安全 regression set 应该如何覆盖外部文档注入、工具参数越权、敏感信息泄露和 excessive agency？标准库实验已覆盖外部文档注入、写工具越权、跨用户读取、高金额审批、trace 假 secret 泄露、破坏性工具、重复提交和 benign case；仍需迁移到真实工具、真实模型和框架 guardrail。
 - Guardrails、HITL approval、tool approval 和 sensitive trace 配置在不同框架中的覆盖范围有什么差异？OpenAI Agents SDK 已确认 tool guardrails 不覆盖所有工具类型；标准库实验已给出审批恢复最小验收结构，仍需横向比较真实框架的 pause/resume、审批状态序列化、参数快照、幂等执行和 trace 脱敏。
 
