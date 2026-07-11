@@ -8,7 +8,7 @@
 - 主题：Multi-agent / Agent Framework / Orchestration
 - 适合阶段：进阶 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接、AgentChat 页面和源 Markdown 已复核；关键段落已精读；支撑多 Agent 编排能力、“多 Agent 不是默认升级路径”和跨框架术语对照窄边界；真实 AutoGen 表现仍部分验证
+- 是否已验证：来源链接、AgentChat 页面和源 Markdown 已复核；关键段落已精读；支撑多 Agent 编排能力、“多 Agent 不是默认升级路径”和跨框架术语对照窄边界；Real Multi-Agent Framework Validation 已用 fake `ChatCompletionClient` 跑通 AutoGen AgentChat 0.7.5 的本地 researcher/reviewer team surface；真实模型 AutoGen 表现仍部分验证
 
 ## 一句话总结
 
@@ -43,9 +43,10 @@ AutoGen 是理解多 Agent 对话、协作和框架抽象的重要工程 referen
 - 对比单 Agent、planner/executor 和多 Agent 在同一任务上的成功率、成本和 trace 可读性。
 - 已纳入框架能力交叉表，用于支撑“AgentChat / Teams / Group Chat / Swarm / GraphFlow / tracing”的保守定位；与其他框架卡片和 rubric smoke test 共同支撑“框架应按任务难点比较，不能写成某个框架默认最好”的窄边界；不代表真实横向性能结论。
 - 已纳入 Tool / Function / Plugin 术语对照 evidence，用于说明 AutoGen 的 AgentChat、Agents、Teams、Group Chat、Swarm 和 GraphFlow 属于多 Agent 应用 / 协调模式抽象，不能直接等同于 API 层 function/tool calling 或单个 RAG retriever。
-- 已完成标准库多 Agent / Flow 控制对比实验，可作为后续迁移到 AutoGen 的 case matrix：记录 success、tool calls、messages、conflicts、duplicate reads 和 missing evidence。当前结果不代表 AutoGen 的真实表现。
+- 已完成标准库多 Agent / Flow 控制对比实验，可作为后续迁移到 AutoGen 的 case matrix：记录 success、tool calls、messages、conflicts、duplicate reads 和 missing evidence。
+- Real Multi-Agent Framework Validation 已完成 AutoGen AgentChat 0.7.5 本地 run：`AssistantAgent` + `RoundRobinGroupChat` + `TextMentionTermination` 产生 user/researcher/reviewer transcript，reviewer 暴露 `feedback.md missing` 并触发 termination，发布 trace 未泄露示例 secret。该 run 使用 fake `ChatCompletionClient`，只支撑 team scheduling、termination condition 和 transcript surface 的窄观察，不代表真实模型协作质量、成本、延迟或生产 observability。
 
 ## 是否进入正文
 
 - 结论：部分进入
-- 原因：可支撑多 Agent、Teams、coordination patterns、GraphFlow、trace/logging 和跨框架术语区分的工程抽象，并与 CrewAI/Agent eval/标准库实验共同支撑“多 Agent 不是复杂任务默认升级路径”的窄边界；不能单独证明多 Agent 默认优于单 Agent 或 workflow，也不能证明 AutoGen 的真实成本或成功率。
+- 原因：可支撑多 Agent、Teams、coordination patterns、GraphFlow、trace/logging 和跨框架术语区分的工程抽象，并与 CrewAI/Agent eval/标准库实验和 Real Multi-Agent Framework Validation 共同支撑“多 Agent 不是复杂任务默认升级路径”的窄边界；不能单独证明多 Agent 默认优于单 Agent 或 workflow，也不能证明 AutoGen 的真实模型成本、成功率或生产行为。

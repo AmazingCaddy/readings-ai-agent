@@ -12,6 +12,7 @@
 - Source 4：[Evidence Note: Agent Eval 与 Trajectory 边界](agent-eval-trajectory-boundary.md)
 - Source 5：[多 Agent 与 Flow 控制对比实验结果](../experiments/multi-agent-comparison/results-2026-07-11.md)
 - Source 6：[Multiagent Debate paper](../sources/source-cards/2023-multiagent-debate-paper.md)
+- Source 7：[Real Multi-Agent Framework Validation 结果](../experiments/real-multi-agent-framework-validation/results-2026-07-12.md)
 
 ## 交叉验证结果
 
@@ -24,17 +25,18 @@
 - 分歧点：AutoGen 更强调多 Agent 应用和设计模式，CrewAI 明确强调 Flow 控制和 Crew 协作的组合。二者都说明多 Agent 可实现，但都不能证明多 Agent 对所有复杂任务默认更优。
 - 可能原因：框架文档通常展示能力和抽象，而不是针对单 Agent、workflow、多 Agent 做严格对照实验。是否采用多 Agent 取决于任务分解、协调成本、可观测性和失败代价。
 - 本地实验：标准库多 Agent 对比中，`single_checklist` 以 6 次工具调用完成 3/3 个任务；`ungoverned_multi_agent` 只完成 1/3，出现 7 条 messages、1 个 unresolved conflict、3 次 duplicate reads，并漏掉 `cost.md` / `feedback.md`；`flow_controlled_multi_agent` 通过 `plan_created` 和 `review_completed` 恢复到 3/3，但有 9 条 messages。该结果支持“多 Agent 需要 Flow / workflow 控制，否则角色化本身会增加协调和缺证据风险”的保守表述。
+- 真实框架本地观察：Real Multi-Agent Framework Validation 用 deterministic fake model / fake LLM 跑通 AutoGen AgentChat 0.7.5 的 `AssistantAgent` + `RoundRobinGroupChat` + `TextMentionTermination` 和 CrewAI 1.15.2 的 `Agent` + `Task` + `Crew(process=sequential)`。两者都能产生 researcher/reviewer transcript 或 task output，并暴露 `feedback.md missing`；发布 trace 未泄露示例 secret。该结果支撑“多 Agent 框架提供可用编排表面和可检查输出形状”的窄观察，但 evidence policy、missing-evidence rubric 和 trace 脱敏仍是应用层代码。
 
 ## 实验验证
 
 - 是否需要实验：是
 - 实验设计：用同一个研究+写作小任务分别实现单 Agent、planner/executor、multi-agent researcher/writer/reviewer。记录成功率、人工修正次数、工具调用次数、token 成本、总耗时、冲突处理次数和 trace 可读性。
-- 结果：已完成标准库单流程 / 无控制多 Agent / Flow 控制多 Agent 对比。实验覆盖 success、tool calls、messages、conflicts、duplicate reads 和 missing evidence。尚未覆盖真实模型、真实 AutoGen/CrewAI/LangGraph、token/latency/cost、工具错误或人工评审。
+- 结果：已完成标准库单流程 / 无控制多 Agent / Flow 控制多 Agent 对比。实验覆盖 success、tool calls、messages、conflicts、duplicate reads 和 missing evidence。已完成 AutoGen AgentChat / CrewAI 的本地 fake-model runtime run，覆盖 researcher/reviewer 编排表面、transcript / task output、缺证据暴露和 trace 脱敏。尚未覆盖真实模型、LangGraph multi-agent、真实 token/latency/cost、工具错误、多轮冲突合并或人工评审。
 
 ## 结论状态
 
-- 可入正文：窄结论“多 Agent 是一种编排选择，不是复杂任务的默认升级路径；只有在角色边界、证据分配、冲突处理、review trace、成本和延迟可控时才值得引入”已完成第一轮交叉验证。Multiagent Debate paper 支撑多实例辩论和互相审查的研究机制；AutoGen 和 CrewAI 文档直接支撑多 Agent/Teams/Crews/GraphFlow/coordination patterns 的工程存在；CrewAI 还直接支撑“先用 Flow 控制，再在需要时调用 Crew”的保守路线；标准库实验支撑无控制多 Agent 的重复读取、缺证据和冲突风险。
-- 部分验证：多 Agent 在真实模型 / AutoGen / CrewAI / LangGraph / 真实复杂任务中的收益、成本、延迟、冲突合并质量和人工评审负担仍需同任务对比实验。
+- 可入正文：窄结论“多 Agent 是一种编排选择，不是复杂任务的默认升级路径；只有在角色边界、证据分配、冲突处理、review trace、成本和延迟可控时才值得引入”已完成第一轮交叉验证。Multiagent Debate paper 支撑多实例辩论和互相审查的研究机制；AutoGen 和 CrewAI 文档直接支撑多 Agent/Teams/Crews/GraphFlow/coordination patterns 的工程存在；CrewAI 还直接支撑“先用 Flow 控制，再在需要时调用 Crew”的保守路线；标准库实验支撑无控制多 Agent 的重复读取、缺证据和冲突风险；Real Multi-Agent Framework Validation 补充了 AutoGen AgentChat / CrewAI 本地 fake-model runtime 表面的窄观察。
+- 部分验证：多 Agent 在真实模型 / LangGraph multi-agent / 真实复杂任务中的收益、成本、延迟、冲突合并质量和人工评审负担仍需同任务对比实验。当前 AutoGen/CrewAI completed run 不证明真实模型协作质量或生产行为。
 
 ## 可进入章节
 

@@ -52,4 +52,4 @@
 
 - 本手册已完成标准库多 Agent / Flow 控制对比实验，比较单流程、无控制多 Agent 和 Flow 控制多 Agent 的 success、messages、conflicts、duplicate reads 和 missing evidence。
 - 标准库实验支持“无控制多 Agent 会增加协调和缺证据风险；Flow 控制可以改善但会增加消息开销”的工程边界。
-- 仍需真实模型 / AutoGen / CrewAI / LangGraph 同任务横向实验，记录 token、latency、cost、冲突合并质量、人工评审负担和 trace 可读性。
+- Real Multi-Agent Framework Validation 已补 AutoGen AgentChat / CrewAI 的本地 fake-model researcher/reviewer runtime surface；仍需真实模型 / LangGraph multi-agent 同任务横向实验，记录 token、latency、cost、冲突合并质量、人工评审负担和 trace 可读性。

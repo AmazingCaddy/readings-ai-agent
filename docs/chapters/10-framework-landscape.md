@@ -134,11 +134,15 @@ AutoGen 文档已确认它提供 AgentChat、Teams、Selector Group Chat、Swarm
 
 本手册的多 Agent 标准库实验显示，无 Flow 控制的 researcher/writer/reviewer 组合会重复读取、漏掉 cost 或 beginner feedback，并留下未解决冲突；Flow 控制能恢复成功率，但会带来消息协调开销。这个实验不能证明 AutoGen 或 CrewAI 的真实表现，只用于说明选择 multi-agent framework 时应检查控制流、证据分配和 review trace。
 
+Real Multi-Agent Framework Validation 进一步用 fake `ChatCompletionClient` 跑通了 AutoGen AgentChat 0.7.5 的 `AssistantAgent` + `RoundRobinGroupChat` + `TextMentionTermination`。它说明 AutoGen 可以提供 team scheduling、termination condition 和 message transcript 这样的 runtime surface；但缺证据判断和 trace 脱敏仍是实验代码实现，不能推出真实模型协作质量。
+
 ### CrewAI
 
 适合作为多 Agent 工程生态的补充资料。它的文档可用于横向比较角色、任务和协作抽象。
 
 CrewAI 文档已确认它把系统拆成 Flows 和 Crews：Flow 管理状态和执行控制，Crew 是 Flow 内协作完成特定任务的 agent team。需要注意：当前 source card 将其可信度标为 B，正文应重点用来比较抽象和适用场景，而不是引用营销式结论。
+
+Real Multi-Agent Framework Validation 也用 fake `BaseLLM` 跑通了 CrewAI 1.15.2 的 `Agent` + `Task` + `Crew(process=sequential)`。它说明 CrewAI 可以提供 agent/task/crew 和 sequential task output surface；但 evidence policy、review rubric、模型质量、成本和生产 tracing 都没有被验证。
 
 ### Semantic Kernel
 
@@ -173,6 +177,8 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 设计一个固定任务，例如：用户提出问题，系统检索文档，必要时调用一个查询工具，最后输出带来源的答案。
 
 在真正写代码前，可以先做任务画像：哪些能力是必需的，哪些只是加分项，哪些抽象反而会增加学习成本。本手册的框架选择 rubric smoke test 用 5 个任务画像比较了轻量 tool agent、RAG 问答、审批 workflow、多角色 review 和企业插件集成。它能说明任务难点会把选择方向推向不同框架，但它不运行真实框架，不能证明任何框架真实更快、更便宜或更可靠。Real Framework Same-Task Comparison 则提供了一个窄口径真实 runtime 对照：同一任务要记录 framework-owned capabilities 和 application-owned capabilities，避免把应用层写的权限、redaction 或 side effect 误当成框架默认能力。该实验中的 OpenAI Agents SDK adapter 已运行 fake-model `Runner` approval / resume loop，但尚未运行真实模型、hosted tracing 或生产审批 UI。
+
+同样，Real Multi-Agent Framework Validation 提供的是 multi-agent runtime surface 对照，不是质量对照。它可以帮助你检查 transcript、task output、终止条件和角色边界是否清楚；不能替代真实模型、多轮冲突合并、token/latency/cost 和人工复核实验。
 
 用不同框架实现同一任务，记录这些指标：
 
@@ -209,10 +215,10 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 - OpenAI Agents SDK、LangGraph、AutoGen 均已完成关键段落第一轮精读，可支撑 SDK runtime、orchestration runtime 和多 Agent 协调抽象的保守表述。
 - CrewAI source card 当前可信度为 B，但其 Introduction Markdown 可作为 Flows / Crews 抽象的补充证据；不宜单独支撑关键结论或营销式效果判断。
 - LangGraph source card 明确其适合状态图、可控 workflow 和复杂任务编排；interrupts / persistence 文档补强了 pause/resume、checkpointer、`thread_id` 和 side-effect idempotency 边界；Real LangGraph Interrupt Recovery harness 已完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case。LangGraph 是特定框架，不应被写成通用定义，也不证明真实生产审批流程默认安全。
-- 多 Agent 框架适合学习角色协作和任务分配，但“多 Agent 默认更好”没有被框架文档证明。“多 Agent 不是复杂任务默认升级路径；引入前应明确角色边界、证据分配、冲突处理、review trace 和成本预算”已升级为可入正文。标准库多 Agent 对比实验已验证无控制角色协作会带来重复读取、缺证据和冲突风险；真实框架仍需用同一任务的成本、延迟、trace 和成功率对比验证。
+- 多 Agent 框架适合学习角色协作和任务分配，但“多 Agent 默认更好”没有被框架文档证明。“多 Agent 不是复杂任务默认升级路径；引入前应明确角色边界、证据分配、冲突处理、review trace 和成本预算”已升级为可入正文。标准库多 Agent 对比实验已验证无控制角色协作会带来重复读取、缺证据和冲突风险；Real Multi-Agent Framework Validation 已补 AutoGen AgentChat / CrewAI 的本地 fake-model runtime surface 观察。真实模型、多轮冲突合并、成本、延迟、trace 可读性和成功率仍需同任务对比验证。
 - LlamaIndex source card 明确其适合 RAG、数据连接、索引和 agent data framework；需区分通用 RAG 概念和框架实现。
 - Semantic Kernel source card 已完成第一轮精读，可支撑 enterprise integration、plugins/functions、native/OpenAPI/MCP plugin 导入、agent framework、human-in-the-loop 和 process orchestration 的框架定位；Real Semantic Kernel Plugin Validation 已补 native plugin runtime 的 metadata、参数处理和应用层审批 wrapper 观察；其 Process Framework 当前仍标注 experimental。
-- “Agent 框架应按任务难点和能力边界比较，不应写成某个框架默认最好”已升级为可入正文：框架生态定位边界、框架能力交叉表和标准库 rubric smoke test 支撑各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；Real Framework Same-Task Comparison 进一步支撑同任务 run 应拆分 framework-owned capabilities 和 application-owned capabilities；但不能从文档、rubric 或一个本地同任务 run 直接推出真实成本、可靠性或性能排名，也不能把 fake-model Agents SDK `Runner` 行为等同于真实模型、hosted tracing 或生产审批 UI。
+- “Agent 框架应按任务难点和能力边界比较，不应写成某个框架默认最好”已升级为可入正文：框架生态定位边界、框架能力交叉表和标准库 rubric smoke test 支撑各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；Real Framework Same-Task Comparison 和 Real Multi-Agent Framework Validation 进一步支撑同任务 run 应拆分 framework-owned capabilities 和 application-owned capabilities；但不能从文档、rubric 或本地 fake-model run 直接推出真实成本、可靠性或性能排名，也不能把 fake-model Agents SDK `Runner`、AutoGen team loop 或 CrewAI sequential crew 行为等同于真实模型、hosted tracing 或生产审批 UI。
 - 框架能力交叉表已把 6 个常见框架的主轴、适合学习内容、不应误读点和真实实验缺口整理到 evidence note；它支撑本章的定位表，但仍不能替代真实框架横向实验。
 - Tool / Function / Plugin 术语对照已完成第一轮文档交叉验证，可支撑“框架术语不能直接当成行业通用定义”的保守表述。OpenAI API 的 function/tool calling、OpenAI Agents SDK 的 runtime tools / agent-as-tool、Semantic Kernel 的 plugins/functions、LlamaIndex 的 retriever/query engine、LangGraph 的 state graph、AutoGen/CrewAI 的 multi-agent / Flow 抽象处在不同层级；Semantic Kernel native plugin 已有本地 runtime 观察，但真实框架默认错误处理、权限、HITL、trace 和成本仍需同任务实验。
 
@@ -247,6 +253,8 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 - [Real Semantic Kernel Plugin Validation 结果](../experiments/real-semantic-kernel-plugin-validation/results-2026-07-12.md)
 - [Real Framework Same-Task Comparison](../experiments/real-framework-same-task-comparison/README.md)
 - [Real Framework Same-Task Comparison 结果](../experiments/real-framework-same-task-comparison/results-2026-07-12.md)
+- [Real Multi-Agent Framework Validation](../experiments/real-multi-agent-framework-validation/README.md)
+- [Real Multi-Agent Framework Validation 结果](../experiments/real-multi-agent-framework-validation/results-2026-07-12.md)
 
 ### Governance
 
