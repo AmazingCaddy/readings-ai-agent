@@ -20,6 +20,8 @@
 
 本手册的实践路线 smoke harness 把部分项目验收标准转成了 6 条可运行 eval cases：结构化输出、refusal 记录、工具参数校验、RAG 引用、资料不足拒答和成本预算阻断。它还把 6 个跟练项目卡片做成 readiness audit，检查 prerequisites、setup/run commands、acceptance checks、trace fields、failure examples、references 和 boundaries 是否齐全。它不调用真实模型，也不能替代 Cookbook/API 试跑，但可以作为初学者理解“项目要可测、可复盘、可失败分类、可追溯 references 和适用边界”的起点。
 
+OpenAI Cookbook 的具体 recipe 已于 2026-07-12 复核可访问性和页面 metadata，可作为本章项目参考；但 notebook 示例输出、Usage/Cost dashboard 原型和 Rate limits 重试代码都不等于本地已复现或生产已验证。没有真实 API run、真实账户用量和真实 429/fallback 对照时，只能把它们当作字段和流程模板。
+
 ## 项目 1：最小问答应用
 
 ### 学习目标
