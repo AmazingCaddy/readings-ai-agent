@@ -10,9 +10,9 @@
 
 ## 架构模式
 
-- ReAct 在哪些任务中确实优于单次提示或简单 workflow？
-- Plan-and-Execute 的收益是否足以抵消额外成本和错误传播？
-- Reflection / Critic 模式在真实任务中是否稳定提升质量？
+- ReAct 在哪些任务中确实优于单次提示或简单 workflow？已完成论文摘要第一轮验证，仍需本地对比实验。
+- Plan-and-Execute 的收益是否足以抵消额外成本和错误传播？已完成相关架构模式第一轮验证，仍需 planner/executor 最小实验。
+- Reflection / Critic 模式在真实任务中是否稳定提升质量？Reflexion 已完成论文摘要第一轮验证，仍需结合现代模型、成本和错误记忆风险实验。
 - 多 Agent 的收益是否足以抵消通信成本、协调复杂度和调试难度？已完成 AutoGen/CrewAI 第一轮资料验证，仍需最小对比实验。
 
 ## 工具调用

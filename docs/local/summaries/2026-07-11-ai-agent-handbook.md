@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 16:07 Asia/Shanghai
+**Last Updated:** 2026-07-11 16:08 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -32,15 +32,17 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 15. Completed first evidence upgrade for Multi-agent default boundary using AutoGen AgentChat docs, CrewAI Introduction markdown, AgentBench, and eval evidence.
 16. Completed first evidence upgrade for long-term memory governance and risk boundary using MemoryBank, MemGPT, Generative Agents, Letta memory docs, Zep concepts docs, OWASP LLM Top 10, and NIST AI RMF.
 17. Completed first evidence upgrade for LLM context engineering and structured output boundaries using OpenAI Text Generation docs, Structured Outputs docs, Responses API reference, Function Calling docs, and existing RAG/Memory and Prompt Injection evidence.
+18. Completed first evidence upgrade for Agent architecture pattern boundaries using ReAct, Reflexion, Tree of Thoughts, LangGraph, OpenAI Agents SDK, and existing Agent/Workflow plus Multi-agent evidence.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2026-openai-text-generation-docs.md`, `docs/sources/source-cards/2026-openai-structured-outputs-docs.md`, `docs/sources/source-cards/2026-openai-responses-api-docs.md`, `docs/sources/source-cards/index.md`, `docs/evidence/context-structured-output-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/02-llm-context.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2022-react-paper.md`, `docs/sources/source-cards/2023-reflexion-paper.md`, `docs/sources/source-cards/2023-tree-of-thoughts-paper.md`, `docs/evidence/agent-architecture-pattern-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/04-agent-architecture.md`, `docs/chapters/07-planning-orchestration.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
 ## Open Questions
 - Run the minimal tool-calling experiment to upgrade the Function Calling boundary from partial verification toward `可入正文`.
 - Run a workflow vs workflow-agent hybrid vs agent loop comparison experiment for the same task.
+- Run a fixed workflow vs ReAct tool loop vs planner/executor vs reflection retry experiment for the same issue-analysis task.
 - Run an output parsing experiment comparing free text, JSON mode, and Structured Outputs; include refusal and semantic-error handling.
 - Run a long-context failure-mode experiment covering irrelevant context, conflicting context, stale context, external prompt injection, truncation behavior, and token cost.
 - Run a single-agent vs planner/executor vs multi-agent comparison experiment for the same research/writing task.

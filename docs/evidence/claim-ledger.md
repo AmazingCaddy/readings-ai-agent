@@ -13,8 +13,11 @@
 
 | 结论 | 支撑资料 | 当前状态 | 正文写法 |
 | --- | --- | --- | --- |
-| ReAct 的核心思想是交替生成推理轨迹和任务行动。 | ReAct paper | 部分验证 | 可作为 ReAct 的基础解释，但效果边界需保守。 |
+| ReAct 的核心思想是交替生成推理轨迹和任务行动。 | ReAct paper；Evidence Note: Agent 架构模式边界 | 部分验证 | 可作为 ReAct 的基础解释，但效果边界需保守。 |
 | Agent 和 Workflow 的边界主要在控制权、状态和决策方式；二者可以组合成 workflow-agent hybrid。 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper；Evidence Note: Agent 与 Workflow 边界 | 部分验证 | 可作为第 01/04 章基础边界；需避免写成“Agent 总比 workflow 高级”。 |
+| Reflection / Reflexion 可以利用任务反馈和文字反思改进后续尝试，但不保证稳定提升。 | Reflexion paper；Memory governance evidence；Agent eval evidence；Evidence Note: Agent 架构模式边界 | 部分验证 | 可作为架构模式解释；需提醒反馈质量、成本和错误记忆风险。 |
+| Tree of Thoughts 支持搜索式推理路径，但不等同于生产 Agent 编排框架。 | Tree of Thoughts paper；LangGraph docs；Evidence Note: Agent 架构模式边界 | 部分验证 | 可作为规划/搜索思路解释；不能写成复杂任务默认应使用 ToT。 |
+| 复杂 Agent 架构不是默认更可靠，需用 trace、成本、失败原因和实验比较。 | ReAct；Reflexion；Tree of Thoughts；LangGraph docs；Agent/Workflow evidence；Multi-agent evidence | 部分验证 | 可作为第 04/07 章核心提醒；仍需最小架构对比实验。 |
 | LLM 应用的输入输出不只是字符串，Responses 等 API 会把 message roles、content items、tool calls、refusals 和 structured outputs 建模为结构化对象。 | OpenAI Text Generation docs；OpenAI Responses API docs；Evidence Note: 上下文工程与结构化输出边界 | 部分验证 | 可作为第 02 章基础解释；其他供应商字段名可能不同。 |
 | 结构化输出能提升解析和 schema 校验可靠性，但不保证事实正确。 | OpenAI Structured Outputs docs；OpenAI Responses API docs；OpenAI Function Calling docs；Evidence Note: 上下文工程与结构化输出边界 | 部分验证 | 可写入第 02/03 章；需提醒 schema adherence 不等于业务正确。 |
 | 长上下文不能替代上下文治理。 | OpenAI Text Generation docs；OpenAI Responses API docs；RAG / Memory evidence；Prompt Injection evidence；Evidence Note: 上下文工程与结构化输出边界 | 部分验证 | 可作为上下文工程核心提醒；仍需最小实验验证失败模式和成本。 |
@@ -39,6 +42,7 @@
 6. Prompt injection 为什么需要权限和隔离，而不是只靠提示词。已完成第一轮风险资料交叉验证，待补最小实验和框架安全资料。
 7. 长期记忆的收益与治理风险边界。已完成第一轮论文、工程文档和安全资料交叉验证，待补最小多会话记忆实验。
 8. 上下文工程与结构化输出边界。已完成第一轮官方文档交叉验证，待补输出解析和长上下文失败模式实验。
+9. Agent 架构模式边界。已完成 ReAct、Reflexion、Tree of Thoughts、LangGraph 和已有 workflow/multi-agent evidence 第一轮交叉验证，待补最小架构对比实验。
 
 ## 升级流程
 
