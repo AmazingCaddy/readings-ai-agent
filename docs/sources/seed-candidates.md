@@ -1,0 +1,79 @@
+# 候选资料清单 v1
+
+状态说明：本文件是候选资料 intake，不等同于已验证 references。所有链接和结论都需要后续联网复核、交叉验证或实验验证。
+
+## Official Docs / Specs
+
+| 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |
+| --- | --- | --- | --- | --- |
+| OpenAI Agent 构建 | OpenAI Agents SDK documentation | Official Docs | A | 待复核 |
+| OpenAI API 工具调用 | OpenAI tool calling / function calling documentation | Official Docs | A | 待复核 |
+| OpenAI Responses API | OpenAI Responses API documentation | Official Docs | A | 待复核 |
+| MCP 协议 | Model Context Protocol official specification | Spec | A | 待复核 |
+| MCP 概念 | Anthropic MCP documentation | Official Docs | A | 待复核 |
+| LangGraph | LangGraph documentation | Framework Docs | A | 待复核 |
+| LlamaIndex Agents | LlamaIndex agent documentation | Framework Docs | A | 待复核 |
+| Microsoft AutoGen | Microsoft AutoGen documentation | Framework Docs | A | 待复核 |
+| Semantic Kernel | Microsoft Semantic Kernel documentation | Framework Docs | A | 待复核 |
+| CrewAI | CrewAI documentation | Framework Docs | B | 待复核 |
+
+## Papers
+
+| 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |
+| --- | --- | --- | --- | --- |
+| ReAct | ReAct: Synergizing Reasoning and Acting in Language Models | Paper | A | 待复核 |
+| Tool use | Toolformer: Language Models Can Teach Themselves to Use Tools | Paper | A | 待复核 |
+| Modular tool reasoning | MRKL Systems: A modular, neuro-symbolic architecture | Paper | A | 待复核 |
+| RAG | Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks | Paper | A | 待复核 |
+| Self-RAG | Self-RAG: Learning to Retrieve, Generate, and Critique | Paper | A | 待复核 |
+| Planning | Tree of Thoughts: Deliberate Problem Solving with Large Language Models | Paper | A | 待复核 |
+| Reflection | Reflexion: Language Agents with Verbal Reinforcement Learning | Paper | A | 待复核 |
+| Multi-agent debate | Improving Factuality and Reasoning in Language Models through Multiagent Debate | Paper | A | 待复核 |
+| Web agents | WebArena: A Realistic Web Environment for Building Autonomous Agents | Paper / Benchmark | A | 待复核 |
+| Agent benchmark | AgentBench: Evaluating LLMs as Agents | Paper / Benchmark | A | 待复核 |
+| Tool-use eval | Tau-bench / tool-agent benchmark materials | Benchmark | A/B | 待复核 |
+| Software agents | SWE-agent paper and repository | Paper / Source | A | 待复核 |
+| Embodied agents | Voyager: An Open-Ended Embodied Agent with LLMs | Paper | A | 待复核 |
+
+## Engineering / Source Code
+
+| 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |
+| --- | --- | --- | --- | --- |
+| Agent traces | LangSmith documentation and examples | Engineering Docs | B | 待复核 |
+| Observability | Arize Phoenix documentation | Engineering Docs | B | 待复核 |
+| Evals | OpenAI Evals repository | Source Code | A | 待复核 |
+| Browser agents | Playwright / browser-use related examples | Source / Engineering | B/C | 待复核 |
+| RAG implementation | LlamaIndex examples repository | Source Code | A/B | 待复核 |
+| LangGraph examples | LangGraph examples repository | Source Code | A/B | 待复核 |
+| MCP examples | MCP official example servers | Source Code | A | 待复核 |
+
+## Security / Risk
+
+| 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |
+| --- | --- | --- | --- | --- |
+| LLM 应用安全 | OWASP Top 10 for LLM Applications | Security Guidance | A | 待复核 |
+| AI 风险管理 | NIST AI Risk Management Framework | Standard / Guidance | A | 待复核 |
+| Prompt injection | Prompt injection papers and security writeups | Paper / Engineering | A/B | 待复核 |
+| Tool permissions | Framework security guidance for tools and agents | Official Docs | A/B | 待复核 |
+
+## Courses / Beginner-Friendly Materials
+
+| 主题 | 候选来源 | 类型 | 初始可信度 | 验证状态 |
+| --- | --- | --- | --- | --- |
+| Agent 入门 | DeepLearning.AI short courses on agents and tool use | Course | B | 待复核 |
+| RAG 入门 | DeepLearning.AI / framework courses on RAG | Course | B | 待复核 |
+| LLM 应用开发 | OpenAI cookbook examples | Official Examples | A/B | 待复核 |
+| LangChain/LangGraph 入门 | LangChain Academy materials | Course | B | 待复核 |
+
+## 下一步处理方式
+
+每个候选资料需要转成 source card，并补齐：
+
+- 官方链接或论文链接
+- 发布时间和最后复核日期
+- 适合阶段
+- 核心结论
+- 支撑证据
+- 可能问题
+- 是否进入正文
+

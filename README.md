@@ -53,19 +53,18 @@ uv run mkdocs build
 
 ## 目录
 
-内容文档会在后续独立提交中加入 `docs/` 目录。计划包含：
-
-- 项目 Goal
-- 质量标准
-- References 规范
-- References 覆盖矩阵
-- 主题地图
-- 章节目录
-- 候选资料清单
-- Source Card 索引
-- 待验证问题
-- 资料卡片模板
-- 章节模板
+- [项目 Goal](docs/governance/goal.md)
+- [质量标准](docs/governance/quality-standard.md)
+- [References 规范](docs/governance/references-style.md)
+- [References 覆盖矩阵](docs/references/coverage-matrix.md)
+- [主题地图](docs/topic-map.md)
+- [章节目录](docs/chapter-outline.md)
+- [候选资料清单](docs/sources/seed-candidates.md)
+- [Source Card 索引](docs/sources/source-card-index.md)
+- [Source Cards](docs/sources/source-cards/index.md)
+- [待验证问题](docs/evidence/validation-backlog.md)
+- [资料卡片模板](docs/governance/templates/source-card.md)
+- [章节模板](docs/governance/templates/chapter-template.md)
 
 ## 内容原则
 

@@ -1,0 +1,39 @@
+# Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
+
+- 来源链接：https://arxiv.org/abs/2005.11401
+- 作者 / 机构：Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Kuettler, Mike Lewis, Wen-tau Yih, Tim Rocktaeschel, Sebastian Riedel, Douwe Kiela
+- 发布时间：2020-05-22；arXiv v4 updated 2021-04-12；accepted at NeurIPS 2020
+- 最后复核日期：2026-07-11
+- 类型：论文
+- 主题：RAG / Retrieval / Knowledge-intensive NLP
+- 适合阶段：入门后 / 进阶
+- 可信度等级：A
+- 是否已验证：来源链接和 arXiv 元数据已复核；内容待精读；结论待交叉验证
+
+## 一句话总结
+
+RAG 基础论文，用于解释为什么生成模型需要外部检索来处理知识密集型任务。
+
+## 核心结论
+
+- 论文提出 retrieval-augmented generation，将参数化记忆与显式非参数化记忆结合。
+- 摘要描述的 RAG 形态使用预训练 seq2seq 模型作为 parametric memory，并用 Wikipedia dense vector index 作为 non-parametric memory。
+- 摘要强调 provenance、知识更新和知识密集型任务是 RAG 的关键动机。
+
+## 支撑证据
+
+- arXiv API 返回有效条目：`2005.11401v4`。
+
+## 可能的问题
+
+- 原始论文设定和当前工程 RAG 系统已有差异，需要结合现代框架文档说明。
+- 初学者正文中应区分“RAG 论文中的模型训练方案”和“工程实践中的检索增强应用架构”。
+
+## 初学者阅读建议
+
+- 先理解“检索再生成”的直觉，再读论文方法。
+
+## 是否进入正文
+
+- 结论：进入
+- 原因：RAG 章节基础 reference。

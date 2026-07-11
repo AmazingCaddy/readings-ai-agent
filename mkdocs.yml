@@ -26,15 +26,26 @@ nav:
       - 资料库说明: sources/README.md
       - 候选资料清单: sources/seed-candidates.md
       - Source Card 索引: sources/source-card-index.md
+      - Source Cards:
+          - 目录: sources/source-cards/index.md
+          - RAG paper: sources/source-cards/2020-rag-paper.md
+          - ReAct paper: sources/source-cards/2022-react-paper.md
+          - AgentBench paper: sources/source-cards/2023-agentbench-paper.md
+          - Reflexion paper: sources/source-cards/2023-reflexion-paper.md
+          - Toolformer paper: sources/source-cards/2023-toolformer-paper.md
+          - Tree of Thoughts paper: sources/source-cards/2023-tree-of-thoughts-paper.md
+          - WebArena paper: sources/source-cards/2023-webarena-paper.md
+          - MCP official docs: sources/source-cards/2026-mcp-official-docs.md
+          - OpenAI Agents SDK docs: sources/source-cards/2026-openai-agents-sdk-docs.md
   - References:
       - 覆盖矩阵: references/coverage-matrix.md
   - 证据与实验:
       - 待验证问题: evidence/validation-backlog.md
       - 实验说明: experiments/README.md
   - 模板:
-      - 资料卡片模板: templates/source-card.md
-      - 章节模板: templates/chapter-template.md
-      - Evidence Note 模板: templates/evidence-note.md
+      - 资料卡片模板: governance/templates/source-card.md
+      - 章节模板: governance/templates/chapter-template.md
+      - Evidence Note 模板: governance/templates/evidence-note.md
 
 markdown_extensions:
   - admonition
