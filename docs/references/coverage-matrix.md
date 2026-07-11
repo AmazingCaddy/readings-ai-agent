@@ -15,7 +15,7 @@
 | --- | --- | --- | --- | --- | --- |
 | AI Agent 定义与边界 | 待补 | OpenAI Agents SDK docs；LangGraph docs | 待补 | 部分链接已复核 | 需要官方定义和 workflow 对比来源 |
 | LLM 与上下文工程 | OpenAI Responses API docs | OpenAI Responses API docs | OpenAI cookbook 候选 | 部分链接已复核 | 需要结构化输出和上下文失败模式资料 |
-| Tool Use / Function Calling | OpenAI function calling docs | Toolformer paper；OpenAI function calling docs | OpenAI cookbook 候选 | 部分链接已复核 | 需要精读现代 API 文档和 SDK 文档 |
+| Tool Use / Function Calling | OpenAI function calling docs | Toolformer paper；OpenAI function calling docs；OpenAI Responses API docs | OpenAI cookbook 候选 | 关键段落已精读；部分验证 | 需要最小实验、SDK 文档和其他框架术语对照 |
 | Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；LangGraph docs | LangGraph examples 候选 | 部分链接已复核 | 需要 workflow-agent hybrid 工程来源 |
 | MCP | MCP official docs | MCP official docs | MCP servers repo | 部分链接已复核 | 需要官方 spec 细读和安全边界资料 |
 | RAG | 待补 | RAG paper；Self-RAG 候选；LlamaIndex docs | LlamaIndex examples 候选 | 部分链接已复核 | 需要现代 RAG 工程实践和 memory 对比 |
@@ -30,7 +30,7 @@
 ## 当前优先级
 
 1. 补齐基础定义和术语边界的高可信 references。
-2. 精读并提取已经链接复核的论文、官方文档和安全资料。
+2. 精读并提取已经链接复核的论文、官方文档和安全资料。Tool Use / Function Calling 已完成第一轮。
 3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。
 4. 为 Memory / 知识库治理补充写入守门、冲突治理和隐私边界的工程案例。
 5. 为 Production / Security 补充 prompt injection 和工具权限的工程案例。

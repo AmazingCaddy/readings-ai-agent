@@ -14,8 +14,8 @@
 | 结论 | 支撑资料 | 当前状态 | 正文写法 |
 | --- | --- | --- | --- |
 | ReAct 的核心思想是交替生成推理轨迹和任务行动。 | ReAct paper | 部分验证 | 可作为 ReAct 的基础解释，但效果边界需保守。 |
-| Tool use 可以让模型连接外部 API、搜索、计算器等工具。 | Toolformer paper；OpenAI Function Calling docs | 部分验证 | 可入门解释，但要区分研究训练方案和 API schema 机制。 |
-| Function calling 本身不执行工具，执行发生在应用程序或工具运行时。 | OpenAI Function Calling docs；OpenAI Responses API docs | 候选结论 | 待精读官方文档后升级。 |
+| Tool use 可以让模型连接外部 API、搜索、计算器等工具。 | Toolformer paper；OpenAI Function Calling docs；OpenAI Responses API docs | 部分验证 | 可入门解释，但要区分研究训练方案和 API schema 机制。 |
+| Function calling 本身不执行工具，执行发生在应用程序或工具运行时。 | OpenAI Function Calling docs；OpenAI Responses API docs；Evidence Note: Tool Use 与 Function Calling 边界 | 部分验证 | 可作为工程边界写入正文；仍建议用最小实验验证错误回传和重试流程。 |
 | RAG 的动机包括外部知识访问、知识更新和 provenance。 | RAG paper | 部分验证 | 可作为 RAG 章节基础动机，但现代工程实现需另引框架文档。 |
 | Memory 不等于 RAG，也不等于把完整历史塞进 prompt。 | MemGPT；MemoryBank；LangGraph memory docs | 候选结论 | 可作为术语边界，但需要精读后给出更严谨表述。 |
 | 长期记忆可能提升持续交互体验，但也会引入错误写入、过时和隐私风险。 | MemoryBank；MemGPT；OWASP LLM Top 10；NIST AI RMF | 候选结论 | 不应写成“长期记忆总是提升 Agent”。 |
@@ -27,7 +27,7 @@
 ## 待升级为可入正文的优先结论
 
 1. Agent vs Workflow 的边界。
-2. Tool Use vs Function Calling 的边界。
+2. Tool Use vs Function Calling 的边界。已完成第一轮官方文档交叉验证，待补最小实验。
 3. RAG vs Memory 的边界。
 4. MCP server/client/host 的职责边界。
 5. Agent eval 为什么要看 trajectory。
@@ -42,4 +42,3 @@
 3. 写出适用场景和不适用场景。
 4. 写出初学者版表述，避免术语堆叠。
 5. 在对应 source card 中记录证据，再迁移到章节正文。
-

@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 00:30 Asia/Shanghai
+**Last Updated:** 2026-07-11 00:45 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -22,14 +22,17 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 5. Verified the site with `uv run mkdocs build --strict`; build passed with only the upstream Material for MkDocs warning about MkDocs 2.0.
 6. Drafted chapters 08 and 09 covering Evaluation / Observability and Production / Security with conservative wording around source cards that are link-verified but pending deep content validation.
 7. Drafted chapters 10, 11, and 12 covering framework comparison, hands-on project roadmap, and the source/reference map.
+8. Started evidence-upgrade goal. Added OpenAI docs MCP globally, but current session still does not expose its tools until restart/new session; used official URL fetching as fallback.
+9. Completed first evidence upgrade for Tool Use / Function Calling boundary using OpenAI Function Calling docs, Responses API reference, and Toolformer arXiv abstract.
 
 ## Technical Context
-- Files modified recently: `README.md`, `docs/index.md`, `mkdocs.yml`, `docs/chapters/10-framework-landscape.md`, `docs/chapters/11-practice-roadmap.md`, `docs/chapters/12-source-map.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2026-openai-function-calling-docs.md`, `docs/sources/source-cards/2026-openai-responses-api-docs.md`, `docs/sources/source-cards/2023-toolformer-paper.md`, `docs/evidence/tool-use-function-calling-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/03-tool-use.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
 ## Open Questions
-- Whether to include broader advanced chapters after 09, such as multi-agent systems, product design patterns, and hands-on labs.
+- Run the minimal tool-calling experiment to upgrade the Function Calling boundary from partial verification toward `可入正文`.
+- In a new session, verify whether the newly added `openaiDeveloperDocs` MCP tools are exposed.
 
 ## Blockers
 (none currently)

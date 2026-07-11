@@ -16,9 +16,10 @@
 
 ## 工具调用
 
-- Function calling、tool use、structured output 在不同框架中的术语差异是什么？
+- Function calling、tool use、structured output 在不同框架中的术语差异是什么？OpenAI API 层边界已完成第一轮验证，仍需补其他框架术语对照。
 - 工具参数校验和重试的最佳实践有哪些官方或工程 references？
 - 工具调用权限应该如何设计确认边界？
+- 最小 tool-calling 实验中，参数校验失败后模型能否稳定修正？
 
 ## MCP
 
@@ -37,4 +38,3 @@
 - Agent eval 应该优先评估最终结果还是完整 trajectory？
 - 通用 benchmark 对真实业务 agent 的代表性有多强？
 - Prompt injection 防护有哪些已验证的工程方法？
-
