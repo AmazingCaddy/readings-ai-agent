@@ -34,4 +34,4 @@ Tree of Thoughts 可用于解释搜索式规划和多候选推理路径，但需
 ## 可能的问题
 
 - ToT 是推理/搜索框架，不应直接等同于生产 Agent 的任务编排。
-- 已和实际 orchestration 框架资料完成第一轮交叉验证；仍需最小实验验证搜索式规划的成本和收益。
+- 已和实际 orchestration 框架资料完成第一轮交叉验证；Planner / Executor 与 Reflection / Retry 标准库实验只覆盖相邻 planning/retry 模式，仍需 ToT-style search 实验验证搜索式规划的成本和收益。

@@ -177,7 +177,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 - LangGraph memory 文档按 recall scope 区分 short-term/thread-scoped memory 和 long-term/cross-session memory，可作为短期/长期记忆工程边界的参考。
 - LangGraph memory 文档强调 long-term memory 没有 one-size-fits-all solution，写入方式有 hot path 和 background 两类权衡。
 - MemGPT、MemoryBank、Generative Agents 支持长期记忆和记忆管理的研究方向，但不能泛化为“加长期记忆总是更好”。
-- 长期记忆治理与风险边界已完成第一轮验证：论文支撑持续交互和显式 memory management 的潜在价值，Letta/Zep 支撑写入、审计、版本、冲突和失效标记等工程模式，OWASP/NIST 支撑隐私与风险治理边界；仍需最小实验验证具体收益和失败模式。
+- 长期记忆治理与风险边界已完成第一轮验证：论文支撑持续交互和显式 memory management 的潜在价值，Letta/Zep 支撑写入、审计、版本、冲突和失效标记等工程模式，OWASP/NIST 支撑隐私与风险治理边界；标准库模拟已覆盖写入守门和 RAG / memory 分流，仍需真实多会话 Agent / memory framework 实验验证收益、污染和失败模式。
 - 本地标准库 memory governance 实验显示，自动写入会持久化敏感信息和低置信推断；写入守门可以拒绝敏感数据、低置信推断和助手猜测，并保留偏好变化的失效历史。该实验支撑治理流程设计，但不证明长期记忆提升任务质量。
 
 ## 待验证问题

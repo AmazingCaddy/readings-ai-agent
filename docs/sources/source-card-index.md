@@ -26,7 +26,7 @@
 | [Letta docs](source-cards/2026-letta-docs.md) | Agent memory / Stateful agents | Framework Docs | B | 关键 memory inspection/editing/versioning 段落已精读；长期记忆治理 evidence 已引用；部分验证 | 和 Zep / LangGraph 做真实 memory governance 对比实验 |
 | [LlamaIndex docs](source-cards/2026-llamaindex-docs.md) | RAG / Data framework | Framework Docs | A | 关键页面已精读；RAG pipeline / citation 模拟实验已完成；部分验证 | 补真实 embedding / LlamaIndex pipeline 和 citation correctness 实验 |
 | [NIST AI RMF](source-cards/2026-nist-ai-rmf.md) | Risk / Governance | Standard / Guidance | A | 关键风险治理段落已精读；security / memory / production evidence 已引用；部分验证 | 补真实风险评审清单和安全 regression set |
-| [OpenAI Agents SDK docs](source-cards/2026-openai-agents-sdk-docs.md) | Agent Framework | Official Docs | A | 关键页面已精读；部分验证 | 继续做 guardrails/HITL/tool permission 最小实验和框架横向对比 |
+| [OpenAI Agents SDK docs](source-cards/2026-openai-agents-sdk-docs.md) | Agent Framework | Official Docs | A | 关键页面已精读；prompt injection / permission 标准库实验已完成；部分验证 | 补真实 guardrails/HITL/tool permission 和框架横向对比实验 |
 | [OpenAI Cookbook](source-cards/2026-openai-cookbook.md) | Examples / Practice | Official Examples | A/B | 具体 recipe 已复核；部分验证 | 本地试跑最小项目并记录成本、失败样例和初学者阻塞点 |
 | [OpenAI Evals repo](source-cards/2026-openai-evals-repo.md) | Eval / Source Code | Source Code | A | README 和 custom eval 方向已精读；trace-aware eval 实验已完成；部分验证 | 补真实 eval harness、LLM-as-judge 误判和人工复核实验 |
 | [OpenAI Responses API docs](source-cards/2026-openai-responses-api-docs.md) | LLM 应用接口 | Official Docs | A | 输入/输出、tool、structured output、permission 字段已精读；多个 evidence 已引用；部分验证 | 补真实 Responses API / Structured Outputs / tool validation retry 实验 |

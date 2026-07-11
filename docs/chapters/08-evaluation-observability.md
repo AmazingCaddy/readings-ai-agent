@@ -198,7 +198,7 @@ Agent 的表现不只由模型决定，还由 prompt、工具 schema、RAG、权
 
 - AgentBench 的摘要已完成第一轮精读，可支撑“Agent eval 需要交互环境、长期推理、决策和失败原因分析”的保守表述。
 - WebArena 的摘要已完成第一轮精读，可支撑“真实 Web Agent 任务需要端到端环境、工具、外部知识和 long-horizon 评测”的保守表述；论文中的旧实验数值不能泛化为当前模型能力。
-- OpenAI Evals README 已完成第一轮精读，可支撑 custom eval、private eval 和 tool-using agent eval 的工程思路；具体实践仍需结合当前文档和本地实验。
+- OpenAI Evals README 已完成第一轮精读，可支撑 custom eval、private eval 和 tool-using agent eval 的工程思路；标准库 trace-aware eval 已覆盖最小评分字段，具体实践仍需结合当前文档、真实 Agent trace、LLM-as-judge 误判和人工复核实验。
 - LangSmith 与 Phoenix 文档已完成第一轮精读，可支撑 offline/online eval、datasets、runs/traces/spans、human feedback、LLM-as-judge、code evaluators、experiments 和 sessions 等工程工作流。
 - 本地标准库 trace-aware eval 实验显示，final-answer-only scoring 通过 3/3，而 trace-aware scoring 只通过 1/3；过程评分发现了无审批副作用工具和工具错误未恢复。它支撑“Agent eval 不应只看最终答案”的工程建议，但仍需要真实 Agent trace、LLM-as-judge 误判和人工复核实验。
 - “Agent eval 不应只看最终答案，还应检查关键 trajectory / trace”已升级为部分验证；trace 字段和 offline/online eval 工作流已有工程资料支撑，但 trajectory 自动评分方法仍待任务级验证。
