@@ -28,7 +28,8 @@ MCP 是模型应用和外部上下文/工具能力之间的协议层；它定义
 
 ## 结论状态
 
-- 部分验证：官方文档直接支撑职责定义和协议边界；servers README 支撑 reference implementation 边界；标准库模拟实验和本地 stdio JSON-RPC harness 支撑最小 trace 字段、职责流和进程消息边界。仍缺真实 MCP SDK / host trace 实验。
+- 可入正文：窄结论“MCP 是 context exchange protocol 和工具/资源连接层，不是完整 Agent 框架；host、client、server 有官方定义的职责边界”由 MCP 官方文档直接支撑，并被 servers repo、Function Calling 边界和本地 trace / stdio harness 交叉支撑。
+- 部分验证：真实 MCP SDK / host 的权限呈现、approval UI、URL mode、OAuth、恶意 resource/prompt 展示和 trace 字段仍待验证。
 
 ## 可进入章节
 

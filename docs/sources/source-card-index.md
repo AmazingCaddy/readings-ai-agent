@@ -7,7 +7,7 @@
 | Source card | 主题 | 类型 | 可信度 | 当前验证状态 | 下一步 |
 | --- | --- | --- | --- | --- | --- |
 | [ReAct paper](source-cards/2022-react-paper.md) | Agent 架构 / Tool Use | Paper | A | 摘要/核心模式已精读；与 Agent/Workflow 和架构 evidence 交叉验证；部分验证 | 补真实模型 / 框架任务对比，避免泛化为 ReAct 默认更优 |
-| [RAG paper](source-cards/2020-rag-paper.md) | RAG | Paper | A | 摘要和关键动机已精读；与 LlamaIndex、RAG/Memory evidence 和标准库实验交叉验证；部分验证 | 补真实 RAG stack、citation correctness 和成本/延迟实验 |
+| [RAG paper](source-cards/2020-rag-paper.md) | RAG | Paper | A | 摘要和关键动机已精读；RAG / Memory 术语边界已可入正文；工程质量仍部分验证 | 补真实 RAG stack、citation correctness 和成本/延迟实验 |
 | [Generative Agents paper](source-cards/2023-generative-agents-paper.md) | Memory / Reflection / Planning | Paper | A | 摘要和 memory/reflection/planning 关系已精读；长期记忆治理 evidence 已引用；部分验证 | 补真实多会话 Agent / memory framework 收益与污染实验 |
 | [MemoryBank paper](source-cards/2023-memorybank-paper.md) | Long-term memory | Paper | A | 摘要和长期记忆更新/遗忘方向已精读；长期记忆治理 evidence 已引用；部分验证 | 补真实长期记忆收益、过时和隐私实验 |
 | [MemGPT paper](source-cards/2023-memgpt-paper.md) | Memory management / Context | Paper | A | 摘要和显式 memory management 方向已精读；RAG/Memory 与长期记忆 evidence 已引用；部分验证 | 补真实 memory tier / context management 实验 |
@@ -19,10 +19,10 @@
 | [AutoGen docs](source-cards/2026-autogen-docs.md) | Multi-agent / Framework | Framework Docs | A | 关键多 Agent/Teams/GraphFlow 段落已精读；multi-agent evidence、框架能力交叉表和框架 rubric 已引用；部分验证 | 补真实 AutoGen / CrewAI / LangGraph 同任务横向实验 |
 | [CrewAI docs](source-cards/2026-crewai-docs.md) | Multi-agent / Framework | Framework Docs | B | Introduction / Flows / Crews 抽象已精读；multi-agent evidence 和框架能力交叉表已引用；部分验证 | 和 AutoGen / LangGraph 做真实横向比较，避免营销式结论 |
 | [MCP servers repo](source-cards/2026-mcp-servers-repo.md) | MCP / Examples | Source Code | A | README / reference implementations 已复核；MCP role evidence 已引用；部分验证 | 补真实 MCP server 示例结构、权限假设和 host trace 实验 |
-| [OpenAI Function Calling docs](source-cards/2026-openai-function-calling-docs.md) | Tool Use / Function Calling | Official Docs | A | 关键段落已精读；参数校验/重试模拟实验已完成；真实 API harness 已准备；部分验证 | 实际运行真实模型 / API 实验并补其他框架术语对照 |
-| [MCP official docs](source-cards/2026-mcp-official-docs.md) | MCP | Official Docs / Spec | A | 关键 spec / security / authorization 页面已精读；MCP trace 模拟和 stdio harness 已完成；部分验证 | 补真实 MCP SDK / host trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验 |
+| [OpenAI Function Calling docs](source-cards/2026-openai-function-calling-docs.md) | Tool Use / Function Calling | Official Docs | A | “Function Calling 本身不执行工具”已可入正文；参数校验/重试模拟实验已完成；真实 API harness 已准备；真实修正稳定性仍部分验证 | 实际运行真实模型 / API 实验并补其他框架术语对照 |
+| [MCP official docs](source-cards/2026-mcp-official-docs.md) | MCP | Official Docs / Spec | A | host/client/server 职责边界已可入正文；security / authorization 页面已精读；MCP trace 模拟和 stdio harness 已完成；真实 host 行为仍部分验证 | 补真实 MCP SDK / host trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验 |
 | [LangGraph docs](source-cards/2026-langgraph-docs.md) | Agent 架构 / Orchestration | Framework Docs | A | 关键 stateful workflow / agent / durable execution / HITL 段落已精读；多个 architecture evidence 和框架能力交叉表已引用；部分验证 | 补真实 LangGraph workflow / agent 对比实验 |
-| [LangGraph memory docs](source-cards/2026-langgraph-memory-docs.md) | Short-term / Long-term memory | Framework Docs | A | 关键 short-term / long-term memory 边界已精读；RAG/Memory 对比实验已完成；部分验证 | 补真实 memory framework、用户编辑/删除和多会话收益实验 |
+| [LangGraph memory docs](source-cards/2026-langgraph-memory-docs.md) | Short-term / Long-term memory | Framework Docs | A | 关键 short-term / long-term memory 边界已精读；RAG / Memory 术语边界已可入正文；真实 memory framework 行为仍部分验证 | 补真实 memory framework、用户编辑/删除和多会话收益实验 |
 | [Letta docs](source-cards/2026-letta-docs.md) | Agent memory / Stateful agents | Framework Docs | B | 关键 memory inspection/editing/versioning 段落已精读；长期记忆治理 evidence 和 lifecycle audit 已引用；部分验证 | 和 Zep / LangGraph 做真实 memory governance 对比实验 |
 | [LlamaIndex docs](source-cards/2026-llamaindex-docs.md) | RAG / Data framework | Framework Docs | A | 关键页面已精读；RAG pipeline / citation 模拟实验、上下文策略对比实验和框架能力交叉表已完成；真实 LLM citation harness 已准备；部分验证 | 实际运行 LLM citation harness，并补真实 embedding / LlamaIndex pipeline、metadata filter 和 citation correctness 实验 |
 | [NIST AI RMF](source-cards/2026-nist-ai-rmf.md) | Risk / Governance | Standard / Guidance | A | 关键风险治理段落已精读；security / memory / production evidence 已引用；安全 regression set 已完成；部分验证 | 补真实风险评审清单和生产安全试跑 |

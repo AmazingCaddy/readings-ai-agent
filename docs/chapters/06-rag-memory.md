@@ -175,6 +175,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 
 - RAG 论文摘要支持“外部检索可以帮助知识密集型生成任务”这一基础动机，并明确提到 provenance 和 world knowledge 更新问题。
 - RAG 论文中的 non-parametric memory 指外部可检索索引一类机制，不应和 Agent 长期记忆治理直接混同。
+- “RAG 偏外部知识检索和 provenance，Memory 偏状态、历史经验和跨会话数据治理”是本章可入正文的术语边界；真实 RAG / memory framework 的质量、成本和隐私收益仍需实验验证。
 - LlamaIndex 文档支持现代工程 RAG 的五阶段流程：Loading、Indexing、Storing、Querying、Evaluation；Documents / Nodes、Indexes、Retrievers 和 Query Engines 可作为初学者理解工程组件的参考。
 - 本地标准库 RAG pipeline 模拟实验复现了 chunk、retrieve、synthesize 三个可观察阶段，输出 chunk-level citations，并在 unsupported question 上返回 `grounded=false`；它支撑最小 citation/source 追溯设计。真实 LLM citation synthesis harness 已准备，但仍使用本地关键词检索且结果待跑，不证明真实 embedding / vector store / rerank 效果。
 - 本地标准库上下文策略对比实验显示，基础 keyword RAG 可能召回不可信外部文档，lossy summary 可能丢失 source id；它支撑 RAG 需要 trust/freshness metadata、citation 和 human gate trace 的工程边界，但不证明真实 embedding / rerank 表现。

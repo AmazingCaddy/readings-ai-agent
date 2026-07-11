@@ -28,7 +28,8 @@ Function calling / tool calling 是模型与应用程序协作调用外部工具
 
 ## 结论状态
 
-- 部分验证：官方文档直接支撑 API 流程和应用侧执行边界；Toolformer 支撑研究脉络区分；标准库模拟实验支撑参数校验、错误回传和有限重试流程。仍缺真实模型 / API 实验和跨框架术语对照。
+- 可入正文：窄结论“Function Calling / Tool Calling 本身不执行工具；工具执行发生在应用程序或工具运行时，并由应用侧把结果回传模型”由 OpenAI 官方文档直接支撑，并被 Responses API source card 和本地参数校验实验交叉支撑。
+- 部分验证：参数校验失败后真实模型能否稳定修正、不同框架的 tool/function/structured output 术语是否一致、真实 API 错误恢复和成本表现仍待验证。
 
 ## 可进入章节
 

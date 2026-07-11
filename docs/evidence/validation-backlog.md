@@ -6,7 +6,7 @@
 
 - Agent 和 Workflow 的边界如何定义才准确？已完成第一轮 OpenAI Agents SDK、LangGraph、ReAct 交叉验证和标准库 workflow / hybrid / ReAct-like 对比实验；仍需真实模型 / Agent framework / repo issue 实验。
 - “自治程度”是否可以作为分类维度？已完成第一轮边界验证：它可以作为控制权和风险面的连续谱维度，但不能写成能力等级；仍需真实模型 / 框架 / 成本 / 权限实验。
-- RAG 和 Memory 的边界如何解释给初学者？已完成第一轮验证、标准库 RAG / short-term / long-term memory 对比实验和最小 RAG pipeline / citation 模拟；仍需真实 RAG / memory framework / 多会话质量实验。
+- RAG 和 Memory 的边界如何解释给初学者？术语边界已升级为可入正文；仍需真实 RAG / memory framework / 多会话质量实验验证效果、成本和隐私风险。
 
 ## 真实验证执行队列
 
@@ -35,14 +35,14 @@
 
 ## 工具调用
 
-- Function calling、tool use、structured output 在不同框架中的术语差异是什么？OpenAI API 层和 Structured Outputs 边界已完成第一轮验证，仍需补其他框架术语对照。
+- Function calling、tool use、structured output 在不同框架中的术语差异是什么？OpenAI API 层“Function Calling 本身不执行工具”的窄边界已升级为可入正文；Structured Outputs 边界已完成第一轮验证，仍需补其他框架术语对照。
 - 工具参数校验和重试的最佳实践有哪些官方或工程 references？已完成标准库模拟实验，支持“应用层校验、错误回传、有限重试”的流程；真实 Responses API harness 已准备，仍需配置 API key 后记录真实 API / SDK 行为和框架默认行为对照。
 - 工具调用权限应该如何设计确认边界？
 - 真实 tool-calling 实验中，参数校验失败后模型能否稳定修正？标准库 fake model 已复现流程，真实 API harness 已准备，但不能证明真实模型稳定性，仍需实际运行结果。
 
 ## MCP
 
-- MCP 相比传统 API wrapper 的核心价值是什么？
+- MCP 相比传统 API wrapper 的核心价值是什么？host/client/server 职责和 context exchange protocol 窄边界已升级为可入正文；真实 host / SDK 行为仍待验证。
 - MCP tools、resources、prompts 的边界如何准确解释？已完成官方 server concepts 和 2025-11-25 spec 第一轮验证：tools 是 model-controlled，resources 是 application-driven，prompts 是 user-controlled；标准库模拟实验和本地 stdio JSON-RPC harness 已验证最小 trace 字段，仍需真实 host 呈现方式对比。
 - MCP 安全模型和权限边界有哪些官方建议？已完成第一轮验证：authorization 是 optional transport-level capability；HTTP transport 支持授权时遵循 OAuth 2.1 相关规范；STDIO transport 应从环境取得凭据；token passthrough 被禁止；roots 不等于 sandbox；elicitation/sampling 需要用户可见和可拒绝的交互边界；标准库模拟实验和本地 stdio JSON-RPC harness 已验证 tool approval 和 resource review trace，仍需真实 SDK / host 实验验证实现差异。
 - 如何用真实 MCP SDK / host 复现 host/client/server、`tools/list`、`tools/call`、`resources/list`、`resources/read` 和 trace？本地 stdio JSON-RPC harness 已覆盖进程边界和最小消息流，仍需官方 SDK / host 对照。

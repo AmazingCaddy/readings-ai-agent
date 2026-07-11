@@ -8,7 +8,7 @@
 - 主题：Tool Use / Function Calling / Structured Output
 - 适合阶段：入门 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接已复核；关键段落已精读；Tool Use / Function Calling 边界已交叉验证；参数校验/重试标准库模拟实验已完成
+- 是否已验证：来源链接已复核；关键段落已精读；“Function Calling 本身不执行工具”边界已可入正文；参数校验/重试标准库模拟实验已完成
 
 ## 一句话总结
 
@@ -47,5 +47,5 @@
 
 ## 是否进入正文
 
-- 结论：进入
-- 原因：Tool Use / Function Calling 章节需要官方 API reference。
+- 结论：进入；窄边界可入正文
+- 原因：Tool Use / Function Calling 章节需要官方 API reference；官方五步流程直接支撑“模型生成工具调用请求，应用侧执行工具并回传结果”。真实模型参数修正稳定性和跨框架默认行为仍需实测。
