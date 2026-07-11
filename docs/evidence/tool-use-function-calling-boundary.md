@@ -19,6 +19,7 @@ Function calling / tool calling 是模型与应用程序协作调用外部工具
 - 一致点：OpenAI Function Calling docs 的五步流程明确包含“应用侧执行代码”和“带工具输出再次请求模型”。这支持“模型不直接执行应用函数”的工程边界。
 - 一致点：Toolformer 摘要同样关注何时调用 API、传什么参数、如何利用结果，说明 tool use 是更广的研究主题。
 - 一致点：MRKL 摘要提出 systems approach，把 LLM 与 external knowledge sources、discrete knowledge and reasoning modules 组合；这支撑“工具/外部能力可以作为系统模块接入”的架构历史线。
+- 2026-07-12 复核：Toolformer 和 MRKL 的 arXiv 页面均返回 HTTP 200，arXiv API 分别确认 Toolformer `2302.04761v1` 和 MRKL `2205.00445v1` 的 published / updated metadata、primary category、authors 和摘要。该复核增强来源可追溯性，但不新增真实 API、真实模型、真实框架或生产 tool routing 证据。
 - 分歧点：MRKL 是模块化 neuro-symbolic 系统架构论文，Toolformer 是训练方法和论文实验，OpenAI Function Calling 是现代 API 机制。三者都涉及外部能力，但抽象层级不同。
 - 可能原因：研究论文讨论模型能力形成方式，API 文档讨论应用如何把工具暴露给模型并执行工具调用流程。
 - 本地实验：标准库模拟实验使用 fake model 生成一次错误参数 `unit=kelvin`，应用层返回可操作校验错误，fake model 第二轮改为 `unit=celsius`，应用层执行工具并记录 trace。这支持“参数校验、错误回传和有限重试是应用控制循环的一部分”的工程边界。
@@ -32,10 +33,10 @@ Function calling / tool calling 是模型与应用程序协作调用外部工具
 
 ## 结论状态
 
-- 可入正文：窄结论“Tool use 可以让模型通过应用或运行时连接外部 API、搜索、计算器、日历、数据库等工具能力”已完成第一轮交叉验证。Toolformer 摘要支撑 calculator、QA system、search engines、translation system 和 calendar 等工具使用研究方向；MRKL 摘要支撑把 LLM 与外部知识源、离散推理模块组合成系统架构的思想；OpenAI Function Calling / Responses API 文档支撑现代 API 通过工具定义、参数 schema、工具调用请求和工具结果回传来组织这类能力。
+- 可入正文：窄结论“Tool use 可以让模型通过应用或运行时连接外部 API、搜索、计算器、日历、数据库等工具能力”已完成 2026-07-12 arXiv API 复核和交叉验证。Toolformer 摘要支撑 calculator、Q&A system、search engines、translation system 和 calendar 等工具使用研究方向；MRKL 摘要支撑把 LLM 与外部知识源、离散推理模块组合成系统架构的思想；OpenAI Function Calling / Responses API 文档支撑现代 API 通过工具定义、参数 schema、工具调用请求和工具结果回传来组织这类能力。
 - 可入正文：窄结论“Function Calling / Tool Calling 本身不执行工具；工具执行发生在应用程序或工具运行时，并由应用侧把结果回传模型”由 OpenAI 官方文档直接支撑，并被 Responses API source card 和本地参数校验实验交叉支撑。
 - 可入正文：窄结论“不同框架的 tool / function / plugin / retriever / flow 等术语不能直接互换；学习时应优先比较执行边界、状态边界、权限边界和 trace 边界”已完成第一轮文档交叉验证。
-- 部分验证：MRKL 的模块路由工程效果、Toolformer 的训练式 tool use 效果、现代 API tool-calling 的真实模型稳定性、参数校验失败后真实模型能否稳定修正、真实框架默认错误恢复、权限覆盖、trace 字段和成本表现仍待验证。
+- 部分验证：MRKL 的模块路由工程效果、Toolformer 的训练式 tool use 效果、现代 API tool-calling 的真实模型稳定性、参数校验失败后真实模型能否稳定修正、真实框架默认错误恢复、权限覆盖、trace 字段和成本表现仍待验证。Toolformer / MRKL 的论文实验声明不能直接外推到现代 API function calling 或应用层工具执行流程。
 
 ## 可进入章节
 
