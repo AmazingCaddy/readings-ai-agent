@@ -32,6 +32,10 @@ HARNESSES = [
         ROOT / "docs/experiments/real-prompt-injection-permission/real_prompt_injection_permission.py",
     ),
     Harness("real_rag_citation", ROOT / "docs/experiments/real-rag-citation-validation/real_rag_citation_validation.py"),
+    Harness(
+        "real_llamaindex_rag",
+        ROOT / "docs/experiments/real-llamaindex-rag-validation/real_llamaindex_rag_validation.py",
+    ),
     Harness("real_trace_aware_eval", ROOT / "docs/experiments/real-trace-aware-eval/real_trace_aware_eval.py"),
     Harness(
         "real_production_cost_latency",
@@ -74,6 +78,13 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "model",
         "api_url",
         "retrieval",
+        "framework",
+        "index",
+        "embedding",
+        "llm_synthesis",
+        "all_passed",
+        "untrusted_chunk_cited",
+        "secret_leaked_in_trace",
         "elapsed_seconds",
         "tool_calls_seen",
         "final_only_passes",
@@ -105,7 +116,11 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
             compact[key] = value.get("status") if isinstance(value, dict) else value
     if "results" in payload and isinstance(payload["results"], list):
         compact["result_count"] = len(payload["results"])
-        compact["result_statuses"] = [item.get("status") for item in payload["results"] if isinstance(item, dict)]
+        compact["result_statuses"] = [
+            item.get("status", "passed" if item.get("passed") is True else "failed" if item.get("passed") is False else None)
+            for item in payload["results"]
+            if isinstance(item, dict)
+        ]
     if "cases" in payload and isinstance(payload["cases"], list):
         compact["case_count"] = len(payload["cases"])
     if "trace" in payload and isinstance(payload["trace"], list):
