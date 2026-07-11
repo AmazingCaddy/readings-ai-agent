@@ -99,6 +99,10 @@ HARNESSES = [
     ),
     Harness("mcp_stdio_trace", ROOT / "docs/experiments/real-mcp-stdio-trace/mcp_stdio_trace.py"),
     Harness("mcp_sdk_trace", ROOT / "docs/experiments/real-mcp-sdk-trace/mcp_sdk_trace.py"),
+    Harness(
+        "claim_boundary_consistency",
+        ROOT / "docs/experiments/claim-boundary-consistency-audit/claim_boundary_consistency_audit.py",
+    ),
 ]
 
 
@@ -266,6 +270,10 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "rejected_write_tool_forwarded",
         "malicious_resource_review",
         "leaked_secret_in_trace",
+        "control",
+        "real_fact_validation",
+        "check_count",
+        "failed_checks",
     ]:
         if key in payload:
             compact[key] = payload[key]

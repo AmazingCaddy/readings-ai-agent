@@ -45,7 +45,7 @@
 
 ## 已可入正文的窄结论与仍待验证范围
 
-当前台账中的结论都已达到 `可入正文` 门槛，但这只表示对应的窄口径概念、协议或工程边界可以写成确定性表述。每条结论仍必须保留正文写法中的限制条件；真实质量、成本、延迟、稳定性、框架优劣、模型收益和生产可靠性仍需实验或更强 references 支撑。
+当前台账中的结论都已达到 `可入正文` 门槛，但这只表示对应的窄口径概念、协议或工程边界可以写成确定性表述。每条结论仍必须保留正文写法中的限制条件；真实质量、成本、延迟、稳定性、框架优劣、模型收益和生产可靠性仍需实验或更强 references 支撑。Claim Boundary Consistency Audit 已把这条规则转成可运行文本检查：当前 29 条 `可入正文` rows 均保留边界词，但该 audit 不验证外部资料事实或真实 API / 模型行为。
 
 1. Agent vs Workflow / 自治程度的边界。窄结论“Agent 和 Workflow 是控制权与编排方式的连续谱，自治程度不是能力等级”可入正文；真实模型 / 框架 / repo issue、成本、权限和工具错误恢复仍待实际运行验证。
 2. Tool Use vs Function Calling 的边界。窄结论“tool use 可以连接外部工具能力”“Function Calling 本身不执行工具”和“跨框架 tool/function/plugin/retriever/flow 术语不能直接互换”可入正文；Real Semantic Kernel Plugin Validation 已补 native plugin runtime 的最小观察；Real Tool Calling harness 已补本地 deterministic validation/retry control，可支撑应用层 parser、validator、错误反馈和 toy tool execution 的固定样例边界。参数校验失败后真实模型能否稳定修正、真实 API 错误恢复、OpenAPI/MCP plugin 和真实框架默认行为仍待实际运行验证。
