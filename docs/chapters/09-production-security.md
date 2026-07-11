@@ -226,7 +226,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - “Prompt injection 不能只靠 prompt 解决；外部内容应被当作不可信数据，工具权限和写操作审批必须由应用/系统层控制”已升级为可入正文。Indirect Prompt Injection paper 支撑外部检索数据中的恶意 prompt 可影响应用行为和 API 调用的风险边界；OWASP 支撑风险分类，NIST 支撑全生命周期风险治理，Microsoft Prompt Shields 支撑 user prompt attack / document attack 分类、生成前检测接口和误报/漏报边界，OpenAI 工具调用文档支撑应用侧执行和控制边界。
 - Microsoft Prompt Shields 文档已补充检测层工程资料：`shieldPrompt` API 可以分析 `userPrompt` 和 `documents`，返回 `attackDetected` 字段；但文档也明确提示可能出现 false positives / negatives，并建议 additional validation layers。因此它只能支撑“检测层应纳入安全 workflow”，不能支撑“接入检测后就安全”。
 - Anthropic jailbreak / prompt injection mitigation 文档已补充另一组官方工程资料：直接 jailbreak / prompt injection 和 indirect prompt injection 是不同 threat model；网页、邮件、文档、OCR 输出和 tool results 等第三方内容应作为不可信数据处理；工程上可结合 `tool_result` 边界、来源说明、JSON encoding、tool output screening、最小权限、red-team 和持续监控。它支撑这些防护层应进入系统设计，但不证明任意 classifier、prompt、JSON encoding 或 computer-use 机制的真实拦截率。
-- OpenAI Agents SDK 和 Semantic Kernel 文档已补充第一轮工程资料，可支撑 guardrails、human approval、tool approval、sensitive trace 控制和 task automation approval 的保守表述；标准库 prompt injection / tool permission 实验、安全 regression set 和审批状态恢复实验已覆盖最小权限、trace 脱敏、误报/漏报字段、多类风险 case、审批恢复、参数快照和幂等执行。“高风险工具应使用最小权限、参数校验、guardrails、人工确认、审批状态恢复和审计 trace 的组合”已升级为可入正文。真实 prompt injection / permission harness 已准备，但结果待跑，仍需真实模型 / 框架 guardrail 与 HITL 实验验证误报、漏报和覆盖范围。
+- OpenAI Agents SDK 和 Semantic Kernel 文档已补充第一轮工程资料，可支撑 guardrails、human approval、tool approval、sensitive trace 控制和 task automation approval 的保守表述；标准库 prompt injection / tool permission 实验、安全 regression set 和审批状态恢复实验已覆盖最小权限、trace 脱敏、误报/漏报字段、多类风险 case、审批恢复、参数快照和幂等执行。“高风险工具应使用最小权限、参数校验、guardrails、人工确认、审批状态恢复和审计 trace 的组合”已升级为可入正文。Real Prompt Injection / Permission harness 已准备并接入统一 runner，当前无 API key 只验证 skip 分支；仍需真实模型 / 框架 guardrail 与 HITL 实验验证误报、漏报和覆盖范围。
 - LangGraph current docs 已补充 HITL interrupt / persistence 的框架机制证据：`interrupt()` 可暂停 graph execution，`Command(resume=...)` 可恢复，checkpointer 按 `thread_id` 保存 graph state snapshots，approval workflow、review/edit state 和 tool 内中断可放在 critical actions 前；但文档也明确 resume 会重新执行 node、`interrupt()` 前代码会重跑、interrupt 顺序不能随意变化、side effects 需要幂等或放在确认之后，内存型 checkpointer 不适合生产持久化。这支撑“审批要进入可恢复状态机”的窄边界，不证明真实 LangGraph 生产审批流程默认安全。
 - Real LangGraph Interrupt Recovery harness 已准备并接入统一 runner，覆盖 approved once、duplicate resume、rejected resume、tampered args、side-effect-before-interrupt 和 trace redaction 的最小检查入口；当前环境未安装 LangGraph，结果为 `skipped`，不能证明真实框架行为。
 - Anthropic MCP connector / tunnels 文档已补充 remote MCP tools 和私有网络 MCP server 的产品集成证据：allowlist/denylist、per-tool config、OAuth bearer token、third-party server trust review、data retention、outbound-only tunnel、inner TLS、allowed IPs、凭据保护和 shared responsibility。它们支撑“远程工具连接也要纳入权限、数据保留和审计设计”的窄边界，但不证明 connector、tunnel 或任意 MCP server 默认安全或生产可靠。
@@ -250,7 +250,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - MCP 工具生态中的安全边界应该如何落到 host、client 和 server 实现？
 - Anthropic MCP connector / tunnels 的 allowlist/denylist、OAuth token、data retention、shared responsibility 和 tunnel credential rotation 在真实试跑中如何记录到 trace 和安全检查清单？
 - Browser Agent 如何在真实或仿真网站中隔离 profile、限制登录态、确认表单/购物/上传等写操作，并记录可审计 action trace？标准库 browser action trace audit 已完成字段模板，真实 Playwright / Browser Use / computer-use 对照仍待做。
-- 真实模型 / 框架 guardrail / Prompt Shields 或同类检测层下，prompt injection 防护的误报、漏报、成本、延迟和人工审批负担如何测量？真实 API harness 已准备，仍需实际运行并比较 prompt-only、detector-only、policy-enforced 和 HITL 对照。
+- 真实模型 / 框架 guardrail / Prompt Shields 或同类检测层下，prompt injection 防护的误报、漏报、成本、延迟和人工审批负担如何测量？Real Prompt Injection / Permission harness 已准备，当前无 API key 只验证 skip 分支；仍需实际运行并比较 prompt-only、detector-only、policy-enforced 和 HITL 对照。
 - agentic-specific 安全 regression set 应如何覆盖 goal hijacking、tool misuse、identity / privilege abuse、memory poisoning、insecure inter-agent communication、cascading failures 和 rogue agent / runaway loop 停止条件？
 - 哪些日志字段既能支持审计，又不会引入新的隐私风险？已完成 observability/trace 第一轮验证，仍需脱敏和访问控制实验。
 - 成本和延迟应该如何纳入 Agent eval？已补 OpenAI 官方 production / rate limit / cost / latency / token counting / Batch / Flex / Prompt Caching 边界，标准库字段 audit 已完成，真实 cost-latency 和 Batch/Flex/Caching harness 已准备；仍需真实 API / Cookbook 练习记录 token、usage、rate-limit headers、retry、平均/P95 latency、cost estimate、budget threshold、cache read/write 和失败样例。
@@ -303,6 +303,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - [安全 Regression Set 最小实验结果](../experiments/security-regression-set/results-2026-07-11.md)
 - [审批状态恢复与幂等性实验结果](../experiments/approval-state-recovery/results-2026-07-11.md)
 - [Real Prompt Injection 与工具权限实验](../experiments/real-prompt-injection-permission/README.md)
+- [Real Prompt Injection 与工具权限实验结果](../experiments/real-prompt-injection-permission/results-2026-07-11.md)
 - [Real Agentic Security Regression Set](../experiments/real-agentic-security-regression-set/README.md)
 - [Production Safety / Data Governance Checklist](../experiments/production-safety-data-governance/README.md)
 - [Real Moderation Safety Validation](../experiments/real-moderation-safety-validation/README.md)
