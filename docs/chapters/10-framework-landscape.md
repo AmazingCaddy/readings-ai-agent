@@ -154,6 +154,8 @@ Semantic Kernel 文档已确认它把自身定位为 lightweight open-source dev
 
 设计一个固定任务，例如：用户提出问题，系统检索文档，必要时调用一个查询工具，最后输出带来源的答案。
 
+在真正写代码前，可以先做任务画像：哪些能力是必需的，哪些只是加分项，哪些抽象反而会增加学习成本。本手册的框架选择 rubric smoke test 用 5 个任务画像比较了轻量 tool agent、RAG 问答、审批 workflow、多角色 review 和企业插件集成。它能说明任务难点会把选择方向推向不同框架，但它不运行真实框架，不能证明任何框架真实更快、更便宜或更可靠。
+
 用不同框架实现同一任务，记录这些指标：
 
 - 完成最小 demo 的时间。
@@ -192,13 +194,13 @@ Semantic Kernel 文档已确认它把自身定位为 lightweight open-source dev
 - 多 Agent 框架适合学习角色协作和任务分配，但“多 Agent 默认更好”没有被框架文档证明。标准库多 Agent 对比实验已验证无控制角色协作会带来重复读取、缺证据和冲突风险；真实框架仍需用同一任务的成本、延迟、trace 和成功率对比验证。
 - LlamaIndex source card 明确其适合 RAG、数据连接、索引和 agent data framework；需区分通用 RAG 概念和框架实现。
 - Semantic Kernel source card 已完成第一轮精读，可支撑 enterprise integration、plugins/functions、native/OpenAPI/MCP plugin 导入、agent framework、human-in-the-loop 和 process orchestration 的框架定位；其 Process Framework 当前仍标注 experimental。
-- 框架生态定位边界已完成第一轮验证：各框架适合解决不同工程难点，但不能从文档直接推出“哪个框架最好”。
+- 框架生态定位边界已完成第一轮验证和标准库 rubric smoke test：各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；但不能从文档或 rubric 直接推出“哪个框架最好”。
 
 ## 待验证问题
 
 - 各框架的 tracing 和 observability 能力如何实际比较？
 - 哪些框架更容易实现权限隔离和人工确认？
-- 同一任务在不同框架下的成本、延迟和可调试性差异有多大？
+- 同一任务在不同真实框架下的成本、延迟和可调试性差异有多大？
 - 框架版本演进是否改变了核心抽象？
 - 如何为初学者设计不被框架绑定的实践项目？
 
@@ -228,3 +230,4 @@ Semantic Kernel 文档已确认它把自身定位为 lightweight open-source dev
 - [Evidence Note: 多 Agent 不是默认更好](../evidence/multi-agent-default-boundary.md)
 - [多 Agent 与 Flow 控制对比实验结果](../experiments/multi-agent-comparison/results-2026-07-11.md)
 - [Evidence Note: 框架生态定位边界](../evidence/framework-landscape-boundary.md)
+- [框架选择 Rubric Smoke Test 结果](../experiments/framework-selection-rubric/results-2026-07-11.md)

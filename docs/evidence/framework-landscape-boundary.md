@@ -14,6 +14,7 @@ Agent 框架应按任务核心难点来比较，而不是按流行度排名。Op
 - Source 6：[Microsoft Semantic Kernel Documentation](../sources/source-cards/2026-semantic-kernel-docs.md)
 - Source 7：[Evidence Note: Agent 与 Workflow 边界](agent-workflow-boundary.md)
 - Source 8：[Evidence Note: 多 Agent 不是默认更好](multi-agent-default-boundary.md)
+- Source 9：[框架选择 Rubric Smoke Test 结果](../experiments/framework-selection-rubric/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -25,16 +26,17 @@ Agent 框架应按任务核心难点来比较，而不是按流行度排名。Op
 - 一致点：Semantic Kernel 文档支持企业集成定位：lightweight open-source development kit、middleware、plugins/functions、native/OpenAPI/MCP plugin 导入、agent framework、human-agent collaboration 和 process orchestration。
 - 边界：Semantic Kernel Process Framework 当前标注 experimental；CrewAI source card 可信度为 B；框架文档通常强调能力和产品定位，不等于严格对照实验。
 - 交叉结论：框架选择应从控制流、状态、工具、RAG/memory、多 Agent、observability、权限/审批和部署治理等维度比较，而不是直接给出“最佳框架”。
+- 本地实验：标准库 rubric smoke test 用 5 个任务画像比较 required、nice-to-have、avoid、missing required 和 cautions。结果分别把最小 tool agent、RAG QA、审批 workflow、多角色 review 和企业插件集成映射到不同框架方向，并且所有任务都保留 `needs_real_experiment=true`。这支持“rubric 可用于学习和预筛选，但不能替代真实横向实验”。
 
 ## 实验验证
 
 - 是否需要实验：是
-- 实验设计：用同一个“检索资料、调用只读工具、生成带来源答案、必要时请求人工确认”的小任务分别用 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI 和 Semantic Kernel 实现。比较实现时间、工具 schema、状态恢复、trace 可读性、人工确认、错误处理、成本和依赖复杂度。
-- 结果：待执行
+- 实验设计：先用标准库 rubric smoke test 验证任务画像和能力标签；再用同一个“检索资料、调用只读工具、生成带来源答案、必要时请求人工确认”的小任务分别用 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI 和 Semantic Kernel 实现。比较实现时间、工具 schema、状态恢复、trace 可读性、人工确认、错误处理、成本和依赖复杂度。
+- 结果：已完成标准库 rubric smoke test；真实框架横向实验待执行。
 
 ## 结论状态
 
-- 部分验证：各框架官方文档或框架文档已支撑各自定位和能力边界；仍缺同一任务的横向实验和更细的 observability / permission 对比。
+- 部分验证：各框架官方文档或框架文档已支撑各自定位和能力边界；标准库 rubric smoke test 支撑任务画像和比较维度设计；仍缺同一任务的真实框架横向实验和更细的 observability / permission 对比。
 
 ## 可进入章节
 
