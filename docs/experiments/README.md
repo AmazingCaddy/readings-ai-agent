@@ -12,7 +12,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`；官方 MCP SDK harness 在没有 `mcp` Python package 时应返回 `skipped`；LlamaIndex harness 在没有 `llama-index-core` 时应返回 `skipped`。部分框架 harness 可以用 `uv run --with ...` 临时依赖运行。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
 
-当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-12.md)：2026-07-12 运行覆盖 14 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，LlamaIndex harness 通过临时依赖完成本地 `VectorStoreIndex` / retriever / source-node metadata run，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph interrupt recovery harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，LangGraph memory store harness 完成本地 `InMemoryStore` namespace / put / get / search / delete run，本地 MCP stdio harness 和官方 MCP Python SDK stdio harness 完成。
+当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-12.md)：2026-07-12 运行覆盖 15 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，LlamaIndex harness 通过临时依赖完成本地 `VectorStoreIndex` / retriever / source-node metadata run，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph interrupt recovery harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，LangGraph memory store harness 完成本地 `InMemoryStore` namespace / put / get / search / delete run，本地 MCP stdio harness 和官方 MCP Python SDK stdio harness 完成。Semantic Kernel plugin harness 已有单独 completed run；在标准 full runner 中因未安装该依赖而保守 skipped。
 
 ## 实验清单与状态
 
@@ -117,6 +117,10 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 24. Real Moderation safety validation 实验
     - 目标：为 OpenAI Moderation API 准备真实安全信号观测入口，记录 `flagged`、categories、scores、latency、expected mismatch、tool arguments / tool output 覆盖和 policy decision。
     - 状态：真实 harness 已准备，见 [Real Moderation Safety Validation](real-moderation-safety-validation/README.md) 和 [2026-07-11 结果](real-moderation-safety-validation/results-2026-07-11.md)。当前无 API key，运行结果为 `skipped`；尚未产生真实 moderation completed run，不能证明误报、漏报、阈值策略、人工复核流程或生产安全效果。
+
+25. Real Semantic Kernel plugin validation 实验
+    - 目标：用 Semantic Kernel Python native plugin 验证 plugin/function metadata、参数 required/type 处理、应用层写工具审批和 side-effect trace。
+    - 状态：真实 harness 已完成单独本地 run，见 [Real Semantic Kernel Plugin Validation](real-semantic-kernel-plugin-validation/README.md) 和 [2026-07-12 结果](real-semantic-kernel-plugin-validation/results-2026-07-12.md)。它支撑 native plugin runtime 的窄观察：metadata 暴露、缺参/不可解析类型拒绝、可解析字符串数值执行、未审批写工具不转发、已审批写工具产生 side effect。它不证明真实模型 tool selection、OpenAPI/MCP plugin、Agent Framework、Process Framework、HITL UI、参数快照、幂等恢复、成本、延迟或生产安全。
 
 ## 实验记录要求
 

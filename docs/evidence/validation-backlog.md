@@ -44,7 +44,7 @@
 
 ## 工具调用
 
-- Function calling、tool use、structured output 在不同框架中的术语差异是什么？“Tool use 可以连接外部工具能力”和 OpenAI API 层“Function Calling 本身不执行工具”的窄边界已升级为可入正文；跨框架 tool / function / plugin / retriever / flow 术语对照已完成第一轮文档交叉验证。仍需真实最小实现记录工具定义、参数校验、错误回传、权限确认、trace 字段和恢复行为差异。
+- Function calling、tool use、structured output 在不同框架中的术语差异是什么？“Tool use 可以连接外部工具能力”和 OpenAI API 层“Function Calling 本身不执行工具”的窄边界已升级为可入正文；跨框架 tool / function / plugin / retriever / flow 术语对照已完成第一轮文档交叉验证；Real Semantic Kernel Plugin Validation 已补 native plugin / kernel function metadata、required/type 参数处理、应用层写工具审批 wrapper 和 side-effect trace 的本地 runtime 观察。仍需真实最小实现记录 OpenAI Agents SDK、LangGraph、LlamaIndex、OpenAPI/MCP plugin、错误回传、权限确认、trace 字段和恢复行为差异。
 - 工具参数校验和重试的最佳实践有哪些官方或工程 references？已完成标准库模拟实验，支持“应用层校验、错误回传、有限重试”的流程；真实 Responses API harness 已准备并接入统一 runner，当前无 API key 只验证 skip 分支；仍需配置 API key 后记录真实 API / SDK 行为和框架默认行为对照。
 - 工具调用权限应该如何设计确认边界？窄结论已可入正文：高风险工具需要系统/应用层最小权限、参数校验、人工确认、审批状态恢复、幂等执行和审计 trace 的组合，不能只靠模型自觉。标准库 prompt injection / tool permission、安全 regression set、审批状态恢复和 agentic security regression set 实验已完成；LangGraph current docs 已确认 interrupt/resume、checkpointer、`thread_id`、node restart、interrupt 顺序和 side-effect idempotency 的机制边界；Real LangGraph Interrupt Recovery completed run 已验证一个 `MemorySaver` 最小审批 graph 的批准、拒绝、参数 hash、重复恢复不重复执行和 trace 脱敏观察，也完成一个 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case；OWASP Agentic AI resources 已补 goal hijacking、tool misuse、identity / privilege abuse、memory poisoning、多 Agent 通信、级联失败和 rogue agent 等风险分类；MITRE ATLAS 已补 LLM Prompt Injection、AI Agent Tool Invocation、AI Agent Tool Poisoning、memory / MCP / computer-use case-study-derived regression set 边界；仍需真实 Responses API / Agents SDK / MCP / Semantic Kernel 等框架实验验证 guardrail/HITL 覆盖范围、误报漏报、真实模型行为、部署式服务恢复、并发恢复、真实副作用事务、agentic-specific regression cases 和跨框架差异。
 - 真实 tool-calling 实验中，参数校验失败后模型能否稳定修正？标准库 fake model 已复现流程，真实 API harness 已准备但当前只验证 skip 分支，不能证明真实模型稳定性，仍需实际运行结果。
@@ -93,5 +93,5 @@
 
 ## 框架生态
 
-- 同一任务在 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel 下的实现成本、trace、权限和错误处理如何比较？窄结论已可入正文：框架应按任务难点和能力边界比较，不能写成某个框架默认最好；框架定位已完成第一轮验证，LangGraph current docs / quickstart 已复核且历史 examples 已确认归档，框架能力交叉表和标准库 rubric smoke test 已验证任务画像、主轴定位和比较维度；仍需真实框架横向实验。
-- Semantic Kernel Process Framework 当前标注 experimental；后续复核时需要确认其稳定性和 API 变化。
+- 同一任务在 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel 下的实现成本、trace、权限和错误处理如何比较？窄结论已可入正文：框架应按任务难点和能力边界比较，不能写成某个框架默认最好；框架定位已完成第一轮验证，LangGraph current docs / quickstart 已复核且历史 examples 已确认归档，Semantic Kernel native plugin runtime 已完成本地窄观察，框架能力交叉表和标准库 rubric smoke test 已验证任务画像、主轴定位和比较维度；仍需真实框架横向实验，尤其是真实模型 tool selection、OpenAPI/MCP plugin、HITL UI、trace、权限和错误恢复。
+- Semantic Kernel Process Framework 当前标注 experimental；后续复核时需要确认其稳定性和 API 变化。当前 completed run 只覆盖 native plugin / kernel function runtime，不覆盖 Process Framework。

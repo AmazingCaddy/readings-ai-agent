@@ -58,6 +58,10 @@ HARNESSES = [
         ROOT / "docs/experiments/real-langgraph-memory-store-validation/real_langgraph_memory_store_validation.py",
     ),
     Harness(
+        "real_semantic_kernel_plugin",
+        ROOT / "docs/experiments/real-semantic-kernel-plugin-validation/real_semantic_kernel_plugin_validation.py",
+    ),
+    Harness(
         "real_moderation_safety",
         ROOT / "docs/experiments/real-moderation-safety-validation/real_moderation_safety_validation.py",
     ),
@@ -79,12 +83,21 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
     }
     for key in [
         "reason",
+        "error",
         "model",
         "api_url",
         "retrieval",
         "framework",
+        "version",
         "store",
         "namespace_policy",
+        "plugin_count",
+        "function_count",
+        "missing_required_rejected",
+        "invalid_type_rejected",
+        "coercible_argument_invoked",
+        "rejected_write_forwarded",
+        "approved_write_count",
         "index",
         "embedding",
         "llm_synthesis",
