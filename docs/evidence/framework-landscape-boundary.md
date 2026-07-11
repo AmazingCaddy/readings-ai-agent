@@ -19,7 +19,7 @@ Agent 框架应按任务核心难点来比较，而不是按流行度排名。Op
 
 ## 交叉验证结果
 
-- 一致点：OpenAI Agents SDK 文档支持 managed agent loop、tool execution、guardrails、handoffs、sessions 和 tracing；它适合作为理解轻量 SDK runtime 的入口。
+- 一致点：OpenAI Agents SDK 文档支持 managed agent loop、tool execution、guardrails、handoffs、sessions 和 tracing；它适合作为理解轻量 SDK runtime 的入口。2026-07-12 复核补强了 guardrail / approval / tracing 覆盖边界：tool guardrails 只覆盖 `function_tool`，hosted shell approval 和 serialized RunState 治理需要单独处理。
 - 一致点：LangGraph 文档把自己定位为 low-level orchestration framework and runtime，支持 long-running, stateful workflow or agent、durable execution、persistence、human-in-the-loop 和 trace/debug。
 - 一致点：LlamaIndex 文档支持 context augmentation、RAG 五阶段、Documents / Nodes、Indexes、Retrievers 和 Query Engines；它适合作为 data/RAG framework 参考。
 - 一致点：AutoGen 文档支持 AgentChat、Teams、Selector Group Chat、Swarm、GraphFlow、logging/tracing 等多 Agent 协调抽象。
@@ -38,7 +38,7 @@ Agent 框架应按任务核心难点来比较，而不是按流行度排名。Op
 
 ## 结论状态
 
-- 可入正文：窄结论“Agent 框架应按任务难点和能力边界比较，不应写成某个框架默认最好”已完成第一轮交叉验证。OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI 和 Semantic Kernel 文档分别支撑轻量 runtime、状态编排、RAG/data、多 Agent 协作和企业集成等不同主轴；框架能力交叉表和标准库 rubric smoke test 支撑 required / nice-to-have / avoid / missing required / cautions 的任务画像式比较方法。
+- 可入正文：窄结论“Agent 框架应按任务难点和能力边界比较，不应写成某个框架默认最好”已完成第一轮交叉验证。OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI 和 Semantic Kernel 文档分别支撑轻量 runtime、状态编排、RAG/data、多 Agent 协作和企业集成等不同主轴；框架能力交叉表和标准库 rubric smoke test 支撑 required / nice-to-have / avoid / missing required / cautions 的任务画像式比较方法。OpenAI Agents SDK 2026-07-12 复核进一步说明，即使同一框架内也要区分 function-tool guardrail、hosted/built-in 工具、HITL approval、trace sensitive-data 和 serialized state 的覆盖边界。
 - 部分验证：同一任务的真实框架横向实验、更细的 observability / permission / HITL / RAG citation / tool error recovery 对比、实现成本、维护成本、latency 和 token cost 仍待实测；不能写成任何框架真实更快、更便宜、更可靠或默认适合初学者。
 
 ## 可进入章节

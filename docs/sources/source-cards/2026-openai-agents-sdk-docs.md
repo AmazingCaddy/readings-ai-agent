@@ -8,13 +8,13 @@
   - https://openai.github.io/openai-agents-python/human_in_the_loop/
   - https://openai.github.io/openai-agents-python/tracing/
 - 作者 / 机构：OpenAI
-- 发布时间：持续更新文档；README、文档首页、tools、guardrails、`human_in_the_loop`、tracing 页面复核为 2026-07-11
-- 最后复核日期：2026-07-11
+- 发布时间：持续更新文档；README、文档首页、tools、guardrails、`human_in_the_loop`、tracing 页面复核为 2026-07-12
+- 最后复核日期：2026-07-12
 - 类型：官方文档 / 框架文档
 - 主题：Agent Framework / Tool Use / Tracing
 - 适合阶段：入门 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接、README、文档首页、`llms.txt`、tools、guardrails、`human_in_the_loop`、tracing 关键段落和 HTTP metadata 已复核；Agent/Workflow、自治程度和复杂架构默认可靠性窄边界可入正文；高风险工具权限窄边界可入正文；跨框架术语对照第一轮已完成；安全 regression set 和审批状态恢复实验已完成；Real OpenAI Agents SDK Guardrail Validation 已用 `openai-agents==0.18.2` / fake model 跑通 input guardrail、output guardrail、function-tool input/output guardrail 和 `needs_approval` metadata 的本地 runtime surface；真实模型安全、hosted/MCP/Shell/ApplyPatch 工具覆盖、生产 tracing 和真实 HITL UI 仍部分验证
+- 是否已验证：来源链接、README、文档首页、`llms.txt`、tools、guardrails、`human_in_the_loop`、tracing 关键段落和 HTTP metadata 已复核；Agent/Workflow、自治程度和复杂架构默认可靠性窄边界可入正文；高风险工具权限窄边界可入正文；跨框架术语对照第一轮已完成；安全 regression set 和审批状态恢复实验已完成；Real OpenAI Agents SDK Guardrail Validation 已用 `openai-agents==0.18.2` / fake model 跑通 input guardrail、output guardrail、function-tool input/output guardrail 和 `needs_approval` metadata 的本地 runtime surface；真实模型安全、hosted/MCP/Shell/ApplyPatch 工具覆盖、生产 tracing、serialized state 治理和真实 HITL UI 仍部分验证
 
 ## 一句话总结
 
@@ -29,34 +29,39 @@ OpenAI Agents SDK 文档适合用于解释现代 Agent SDK 的基本抽象、工
 - SDK 提供 tracing，用于 visualize、debug、monitor workflows，并支持 evaluation 等后续工作。
 - Guardrails 文档区分 input、output 和 tool guardrails；tool guardrails 可在 custom function-tool 调用前后验证或阻断工具调用。
 - Guardrails 文档说明 blocking input guardrails 可以在 agent 启动前运行，避免 token consumption 和潜在工具副作用；parallel guardrails 可能在失败前已消耗 tokens 或开始工具执行。
-- Human-in-the-loop 文档说明敏感 tool calls 可以暂停 agent execution，等待人工 approve 或 reject；`needs_approval` / `require_approval` 支持 function tools、agent-as-tool、Shell/ApplyPatch、本地 MCP 和 Hosted MCP 等不同工具面。
-- Tracing 文档说明 SDK 默认记录 LLM generations、tool calls、handoffs、guardrails 等 spans；同时提醒 generation/function spans 可能捕获敏感数据，可通过 `trace_include_sensitive_data` 关闭输入/输出捕获。
+- Tool guardrails 只应用于 `function_tool` 创建的 function tools；handoffs、hosted tools、built-in execution tools 和 `Agent.as_tool()` 本身不走同一 tool-guardrail pipeline。
+- Human-in-the-loop 文档说明敏感 tool calls 可以暂停 agent execution，等待人工 approve 或 reject；`needs_approval` / `require_approval` 支持 function tools、agent-as-tool、Shell/ApplyPatch、本地 MCP 和 Hosted MCP 等不同工具面，但 hosted shell environments 不支持 `needs_approval` 或 `on_approval`。
+- Tracing 文档说明 SDK 默认记录 LLM generations、tool calls、handoffs、guardrails 等 spans；同时提醒 generation/function spans 可能捕获敏感数据，`trace_include_sensitive_data` 默认是 `True`，可通过 `RunConfig` 或环境变量关闭输入/输出捕获。
+- HITL 文档说明 serialized `RunState` 会包含 app context、SDK runtime metadata、approvals、usage、serialized `tool_input`、nested agent resumptions、trace metadata 和 server-managed conversation settings；持久化或传输时应当把它当作敏感数据处理。
+- Tools 文档说明 hosted-container `ShellTool` 不应设置 `executor`、`needs_approval` 或 `on_approval`；`ComputerTool` 仍需要本地 `Computer` / `AsyncComputer` harness；`codex_tool` 是 experimental surface。
 - Tools 文档区分 hosted tools、local/runtime tools、function tools、agent-as-tool 和 Codex tool；local runtime tools 仍由应用或配置环境执行。
 
 ## 支撑证据
 
 - 文档首页和 GitHub README 均返回 HTTP 200。
-- `llms.txt` 返回 HTTP 200，并列出 Overview、Agents、Guardrails、Tools、Model Context Protocol、Tracing 等页面；它把 Human-in-the-loop 页面列为 `https://openai.github.io/openai-agents-python/human_in_the_loop/`。
+- `llms.txt` 返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 01:28:27 GMT`；并列出 Overview、Agents、Guardrails、Tools、Model Context Protocol、Tracing 等页面；它把 Human-in-the-loop 页面列为 `https://openai.github.io/openai-agents-python/human_in_the_loop/`。
 - Tools、Guardrails、Human-in-the-loop 和 Tracing 页面均返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 01:28:27 GMT`；`content-type: text/html; charset=utf-8`。
 - 复核时确认 `https://openai.github.io/openai-agents-python/human-in-the-loop/` 返回 HTTP 404；正确路径是下划线版本 `human_in_the_loop/`。
 - 文档首页写明 SDK 的 primitives 包括 Agents、Agents as tools / Handoffs、Guardrails，并说明 tracing 可用于 visualize and debug agentic flows。
 - 文档首页 features 写明 Agent loop handles tool invocation, sends results back to the LLM, and continues until the task is complete。
 - 文档首页建议短生命周期、主要返回模型响应的 workflow 可直接用 Responses API；需要 runtime 管理 turns、tool execution、guardrails、handoffs、sessions 时使用 Agents SDK。
 - README core concepts 写明 Tools let agents take actions，Guardrails 是 input/output validation safety checks，Human in the loop 支持跨 agent runs 让人参与。
-- `guardrails.md` 写明 tool guardrails wrap function tools and let you validate or block tool calls before and after execution。
+- Guardrails 页面写明 tool guardrails wrap function tools and let you validate or block tool calls before and after execution；同时写明 tool guardrails only apply to function tools created with `function_tool`，不覆盖 handoff call itself、hosted tools、built-in execution tools 或 `Agent.as_tool()` 的直接 tool-guardrail options。
 - `guardrails.md` 写明 blocking execution 在 guardrail tripwire 触发时 agent never executes，可防止 token consumption 和 tool execution。
 - `human_in_the_loop.md` 写明 HITL flow pauses agent execution until a person approves or rejects sensitive tool calls；pending approvals surface as interruptions and RunState can serialize/resume runs。
-- `human_in_the_loop.md` 写明 `needs_approval` 可用于 function_tool、Agent.as_tool、ShellTool、ApplyPatchTool；本地/Hosted MCP 也有 require_approval / approval callback 机制。
+- Human-in-the-loop 页面写明 `needs_approval` 可用于 function_tool、Agent.as_tool、ShellTool、ApplyPatchTool；本地/Hosted MCP 也有 require_approval / approval callback 机制；Tools 页面同时写明 hosted shell environments 不支持 `needs_approval` 或 `on_approval`。
 - `tracing.md` 写明默认 tracing 包含 Runner run、agent_span、generation_span、function_span、guardrail_span、handoff_span。
-- `tracing.md` 写明 generation_span 和 function_span 可能包含敏感数据，可通过 RunConfig.trace_include_sensitive_data 或环境变量控制。
+- Tracing 页面写明 generation_span 和 function_span 可能包含敏感数据，可通过 RunConfig.trace_include_sensitive_data 或环境变量控制，并说明默认 `trace_include_sensitive_data=True`。
+- Human-in-the-loop 页面写明 serialized `RunState` 包含 app context、approvals、usage、serialized tool input、nested resumptions 和 trace metadata，存储/传输时应避免把 secrets 放入 context。
 - Real OpenAI Agents SDK Guardrail Validation 在 `openai-agents==0.18.2` 下观察到：blocking input guardrail tripwire 在 fake model 调用前触发，output guardrail tripwire 在 fake model 返回后触发，function-tool input guardrail 的 `reject_content` 在 Runner 路径上阻止本地函数工具副作用，function-tool output guardrail 的 `reject_content` 发生在本地函数工具执行之后，只替换工具输出；发布 trace 未泄露示例 secret。
 
 ## 可能的问题
 
 - Agents SDK 是 OpenAI Python SDK 生态中的具体实现，不是所有 Agent 框架的通用标准。
 - Guardrails 和 approvals 是工程控制机制，但仍需按具体工具、数据和权限模型做本地安全测试。
-- Tool guardrails 不覆盖所有工具类型；文档明确 hosted tools、built-in execution tools、handoffs 等不走同一 tool-guardrail pipeline，需要单独处理。
-- Tracing 默认可能包含敏感输入输出，生产系统需要显式配置脱敏、保留期限和访问控制。
+- Tool guardrails 不覆盖所有工具类型；文档明确 hosted tools、built-in execution tools、handoffs 和 `Agent.as_tool()` 本身不走同一 tool-guardrail pipeline，需要单独处理。
+- HITL approval 支持面不等于所有执行环境都有同样暂停能力：hosted-container ShellTool 不支持 `needs_approval` / `on_approval`，需要用外层 policy、容器权限和审计弥补。
+- Tracing 默认可能包含敏感输入输出，serialized RunState 也可能持久化 context、tool input、usage 和 trace metadata；生产系统需要显式配置脱敏、保留期限、访问控制和 state 存储策略。
 
 ## 初学者阅读建议
 
