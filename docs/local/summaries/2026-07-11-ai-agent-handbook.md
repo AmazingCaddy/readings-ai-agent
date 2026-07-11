@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 22:05 CST
+**Last Updated:** 2026-07-11 22:12 CST
 **Status:** In Progress
 
 ## Objective
@@ -88,9 +88,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 71. Synced the Source Cards directory page with the actual source-card files by adding LangSmith and Arize Phoenix. A file-vs-directory comparison now shows no missing source cards in `docs/sources/source-cards/index.md`.
 72. Clarified the experiments index status wording. `docs/experiments/README.md` now uses “实验清单与状态” instead of “候选实验” and defines `标准库模拟已完成`, `真实 harness 已准备`, and `真实实验待跑`. Chapter 12 now links to the experiments index alongside source/evidence indexes.
 73. Clarified candidate/reference wording in `docs/references/coverage-matrix.md`. The matrix now states that `待建卡` and `待试跑` entries are future expansion items and cannot support current `可入正文` conclusions. Old reference-column labels like `OpenAI cookbook 候选`, `LangGraph examples 候选`, `LlamaIndex examples 候选`, `官方 examples 候选`, `Self-RAG 候选`, and `Multi-agent debate 候选` were replaced with more precise status labels.
+74. Updated the homepage current-status wording. `docs/index.md` now describes the project as being in evidence-upgrade and real-experiment-preparation stage rather than content-blueprint stage, and it exposes Evidence Notes and Experiments as core entry points.
 
 ## Technical Context
-- Files modified recently: `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/index.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 

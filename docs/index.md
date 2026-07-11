@@ -16,7 +16,7 @@
 
 ## 当前状态
 
-当前处于内容蓝图阶段。候选资料尚未全部完成联网复核和交叉验证，因此不能直接视为已验证结论。
+当前处于证据升级和真实实验准备阶段。章节正文、source cards、claim ledger、coverage matrix 和多组标准库实验已经建立；`可入正文` 只表示窄口径概念、协议或工程边界可追溯，真实模型、真实 API、真实框架、成本、延迟和稳定性仍需继续实验验证。
 
 ## 核心文档
 
@@ -43,4 +43,6 @@
 - [候选资料清单](sources/seed-candidates.md)
 - [Source Card 索引](sources/source-card-index.md)
 - [待验证问题](evidence/validation-backlog.md)
+- [Evidence Notes 索引](evidence/README.md)
 - [结论证据台账](evidence/claim-ledger.md)
+- [实验与复现](experiments/README.md)
