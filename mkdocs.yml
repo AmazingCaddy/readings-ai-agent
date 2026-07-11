@@ -1,0 +1,46 @@
+site_name: AI Agent 学习手册
+site_description: 面向初学者、由浅入深、带可靠 references 的 AI Agent 中文学习手册。
+site_url: https://example.github.io/readings-ai-agent/
+repo_name: readings-ai-agent
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - 首页: index.md
+  - 内容蓝图:
+      - 主题地图: topic-map.md
+      - 章节目录: chapter-outline.md
+  - 治理:
+      - Goal: governance/goal.md
+      - 质量标准: governance/quality-standard.md
+      - References 规范: governance/references-style.md
+  - 资料:
+      - 资料库说明: sources/README.md
+      - 候选资料清单: sources/seed-candidates.md
+      - Source Card 索引: sources/source-card-index.md
+  - References:
+      - 覆盖矩阵: references/coverage-matrix.md
+  - 证据与实验:
+      - 待验证问题: evidence/validation-backlog.md
+      - 实验说明: experiments/README.md
+  - 模板:
+      - 资料卡片模板: templates/source-card.md
+      - 章节模板: templates/chapter-template.md
+      - Evidence Note 模板: templates/evidence-note.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
