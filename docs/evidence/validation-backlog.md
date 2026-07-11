@@ -8,6 +8,22 @@
 - “自治程度”是否可以作为分类维度？已完成第一轮边界验证：它可以作为控制权和风险面的连续谱维度，但不能写成能力等级；仍需真实模型 / 框架 / 成本 / 权限实验。
 - RAG 和 Memory 的边界如何解释给初学者？已完成第一轮验证、标准库 RAG / short-term / long-term memory 对比实验和最小 RAG pipeline / citation 模拟；仍需真实 RAG / memory framework / 多会话质量实验。
 
+## 真实验证执行队列
+
+这些任务优先补“标准库模拟无法证明”的部分。每个任务完成后，应同步更新 source card、claim ledger、coverage matrix 和相关章节的“已验证结论 / 待验证问题”。
+
+| 优先级 | 验证任务 | 主要验证对象 | 最小产出物 | 仍需保守的边界 |
+| --- | --- | --- | --- | --- |
+| P0 | 真实 tool-calling 参数校验与有限重试 | OpenAI Responses / Function Calling API | 可复现实验脚本、失败样例、trace、成本/延迟记录 | 只能验证所选模型和 schema，不代表所有模型稳定修正 |
+| P0 | 真实 Structured Outputs / JSON mode / refusal 对比 | OpenAI Structured Outputs / Responses API | schema valid、semantic valid、refusal、retry 结果表 | schema 通过不等于事实正确或业务正确 |
+| P0 | 真实 prompt injection + tool permission / HITL | OpenAI Agents SDK 或一个轻量 tool agent | 攻击样例、阻断/漏报/误报、审批和 trace 脱敏结果 | 不证明 guardrail 完全安全，只能记录覆盖范围 |
+| P1 | 真实 RAG citation correctness | LlamaIndex 或轻量 vector store + LLM synthesis | chunk 配置、top-k、citation correctness、faithfulness、成本/延迟 | 不证明某个 chunk/rerank 策略默认最优 |
+| P1 | 真实 Agent trace-aware eval | OpenAI Evals / LangSmith / Phoenix 中至少一种 | runs/traces、final-only vs trace-aware 对比、人工复核样例 | 自动评分不能当真值，需保留人工抽样 |
+| P1 | 真实 MCP host/client/server trace | MCP SDK / host | tools/resources/prompts 调用 trace、approval/resource review、token/resource 泄露检查 | 不同 host 实现差异可能很大 |
+| P2 | 真实 memory framework 多会话对比 | LangGraph memory / Letta / Zep 中至少一种 | 写入、查看、编辑、删除、失效历史、污染样例 | 不写成长期记忆一定提升质量 |
+| P2 | 同一任务框架横向对比 | OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel | 相同任务实现、LOC、trace、权限、错误恢复、成本/延迟 | 不得推出“某框架默认最好” |
+| P2 | Cookbook 初学者项目试跑 | Structured Outputs、File Search/RAG、Eval、Cost/Rate limit recipes | 环境步骤、阻塞点、费用、失败样例、可跟练教程草稿 | Cookbook 是练习入口，不是生产保证 |
+
 ## 架构模式
 
 - ReAct 在哪些任务中确实优于单次提示或简单 workflow？已完成论文摘要第一轮验证和标准库 ReAct-like tool loop 对比；仍需真实模型、真实工具和真实任务实验。
