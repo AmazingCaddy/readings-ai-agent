@@ -4,6 +4,8 @@
 
 Source Reference Integrity Audit 会检查本索引与 `source-cards/` 目录的双向一致性、source card 基础元数据和章节结构、章节 References 以及本地 Markdown 链接是否断开。该 audit 只验证本地引用结构，不验证外部 URL 当前可访问或资料内容正确。
 
+Source URL Availability Audit 会对 source card 元数据中的主来源 URL 做联网快照；2026-07-12 本地运行检查了 56 张 source cards 的 73 个主 URL，全部可访问。该 audit 只证明本次网络环境下 URL 可达，不验证资料内容、章节解释、真实模型/API/框架行为或未来可用性。
+
 ## 已创建卡片
 
 | Source card | 主题 | 类型 | 可信度 | 当前验证状态 | 下一步 |
