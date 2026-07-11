@@ -18,6 +18,8 @@
 
 框架是把模型、工具、状态、数据、编排和可观测性组织起来的工程外壳；选框架前，先明确你要控制什么。
 
+Anthropic 的 Building effective agents 给了一个有用提醒：框架可以简化模型调用、工具定义/解析和链式调用，但也可能增加抽象层，遮蔽底层 prompts / responses，让调试更难，并诱导不必要复杂度。因此选框架时不仅要看功能表，还要看能否看清真实输入输出、工具参数、状态转移和失败原因。
+
 ## 基础概念
 
 ### SDK
@@ -225,6 +227,7 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 - LlamaIndex source card 明确其适合 RAG、数据连接、索引和 agent data framework；需区分通用 RAG 概念和框架实现。
 - Semantic Kernel source card 已于 2026-07-12 复核 overview、TOC、plugins、task automation、agent framework、process framework 和 experimental attribute，可支撑 enterprise integration、plugins/functions、native/OpenAPI/MCP plugin 导入、agent framework、human-in-the-loop filter 和 process orchestration 的框架定位；Real Semantic Kernel Plugin Validation 已补 native plugin runtime 的 metadata、参数处理和应用层审批 wrapper 观察；其 Process Framework 当前入口是 `frameworks/process/process-framework`，旧 `frameworks/process/` 返回 404，且 package 仍标注 experimental，只能作为方向性参考。
 - “Agent 框架应按任务难点和能力边界比较，不应写成某个框架默认最好”已升级为可入正文：框架生态定位边界、框架能力交叉表和标准库 rubric smoke test 支撑各框架适合解决不同工程难点，任务画像应记录 required、nice-to-have、avoid、missing required 和 cautions；Real OpenAI Agents SDK Guardrail Validation、Real Framework Same-Task Comparison 和 Real Multi-Agent Framework Validation 进一步支撑同任务 run 应拆分 framework-owned capabilities 和 application-owned capabilities，并区分 guardrail / approval 发生在模型调用前后、工具副作用前后、hosted/local 工具面还是应用层 wrapper 中；Agents SDK 2026-07-12 复核还补强了 function-tool-only guardrail、hosted shell approval 限制、trace 敏感数据默认捕获和 serialized RunState 治理边界；但不能从文档、rubric 或本地 fake-model / deterministic-node run 直接推出真实成本、可靠性或性能排名，也不能把 fake-model Agents SDK `Runner`、AutoGen team loop、CrewAI sequential crew 或 LangGraph local node graph 行为等同于真实模型、hosted tracing、hosted/MCP/Shell/ApplyPatch 工具覆盖或生产审批 UI。
+- Anthropic Building effective agents 补强框架抽象边界：框架能降低上手成本，但可能遮蔽底层 prompt/response、增加调试难度并诱导过早复杂化；这支持本章“先按任务难点和可调试性选框架”的写法，但不证明简单实现或任何特定框架默认更可靠。
 - 框架能力交叉表已把 6 个常见框架的主轴、适合学习内容、不应误读点和真实实验缺口整理到 evidence note；它支撑本章的定位表，但仍不能替代真实框架横向实验。
 - Tool / Function / Plugin 术语对照已完成第一轮文档交叉验证，可支撑“框架术语不能直接当成行业通用定义”的保守表述。OpenAI API 的 function/tool calling、OpenAI Agents SDK 的 runtime tools / agent-as-tool、Semantic Kernel 的 plugins/functions、LlamaIndex 的 retriever/query engine、LangGraph 的 state graph、AutoGen/CrewAI 的 multi-agent / Flow 抽象处在不同层级；Semantic Kernel native plugin 已有本地 runtime 观察，但真实框架默认错误处理、权限、HITL、trace 和成本仍需同任务实验。
 
@@ -249,6 +252,7 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 ### Framework Docs
 
 - [OpenAI Agents SDK Documentation](../sources/source-cards/2026-openai-agents-sdk-docs.md)
+- [Anthropic Building effective agents](../sources/source-cards/2024-anthropic-building-effective-agents.md)
 - [LangGraph Documentation](../sources/source-cards/2026-langgraph-docs.md)
 - [Real LangGraph Interrupt Recovery](../experiments/real-langgraph-interrupt-recovery/README.md)
 - [LlamaIndex Documentation](../sources/source-cards/2026-llamaindex-docs.md)
