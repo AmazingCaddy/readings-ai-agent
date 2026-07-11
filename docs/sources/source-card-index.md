@@ -24,7 +24,7 @@
 | [LangGraph docs](source-cards/2026-langgraph-docs.md) | Agent 架构 / Orchestration | Framework Docs | A | 关键 stateful workflow / agent / durable execution / HITL 段落已精读；多个 architecture evidence 已引用；部分验证 | 补真实 LangGraph workflow / agent 对比实验 |
 | [LangGraph memory docs](source-cards/2026-langgraph-memory-docs.md) | Short-term / Long-term memory | Framework Docs | A | 关键 short-term / long-term memory 边界已精读；RAG/Memory 对比实验已完成；部分验证 | 补真实 memory framework、用户编辑/删除和多会话收益实验 |
 | [Letta docs](source-cards/2026-letta-docs.md) | Agent memory / Stateful agents | Framework Docs | B | 关键 memory inspection/editing/versioning 段落已精读；长期记忆治理 evidence 已引用；部分验证 | 和 Zep / LangGraph 做真实 memory governance 对比实验 |
-| [LlamaIndex docs](source-cards/2026-llamaindex-docs.md) | RAG / Data framework | Framework Docs | A | 关键页面已精读；RAG pipeline / citation 模拟实验已完成；部分验证 | 补真实 embedding / LlamaIndex pipeline 和 citation correctness 实验 |
+| [LlamaIndex docs](source-cards/2026-llamaindex-docs.md) | RAG / Data framework | Framework Docs | A | 关键页面已精读；RAG pipeline / citation 模拟实验已完成；真实 LLM citation harness 已准备；部分验证 | 实际运行 LLM citation harness，并补真实 embedding / LlamaIndex pipeline 和 citation correctness 实验 |
 | [NIST AI RMF](source-cards/2026-nist-ai-rmf.md) | Risk / Governance | Standard / Guidance | A | 关键风险治理段落已精读；security / memory / production evidence 已引用；部分验证 | 补真实风险评审清单和安全 regression set |
 | [OpenAI Agents SDK docs](source-cards/2026-openai-agents-sdk-docs.md) | Agent Framework | Official Docs | A | 关键页面已精读；prompt injection / permission 标准库实验已完成；部分验证 | 补真实 guardrails/HITL/tool permission 和框架横向对比实验 |
 | [OpenAI Cookbook](source-cards/2026-openai-cookbook.md) | Examples / Practice | Official Examples | A/B | 具体 recipe 已复核；部分验证 | 本地试跑最小项目并记录成本、失败样例和初学者阻塞点 |
