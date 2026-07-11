@@ -12,6 +12,7 @@ from __future__ import annotations
 import hashlib
 import importlib.metadata
 import json
+import subprocess
 import sys
 import tempfile
 import time
@@ -326,6 +327,114 @@ def run_sqlite_restart_case() -> dict[str, Any]:
     }
 
 
+def sqlite_prepare_subprocess(db_path: str, meta_path: str) -> None:
+    from langgraph.checkpoint.sqlite import SqliteSaver
+
+    thread_id = f"thread_sqlite_subprocess_{uuid.uuid4().hex[:8]}"
+    ledger = ToolLedger()
+    with SqliteSaver.from_conn_string(db_path) as saver:
+        graph = build_graph(ledger, checkpointer=saver)
+        pending = invoke_until_interrupt(graph, base_state(), thread_id)
+        interrupt_payload = extract_interrupt_payload(pending["result"])
+    payload = {
+        "thread_id": thread_id,
+        "config": pending["config"],
+        "interrupt_payload": interrupt_payload,
+        "tool_execution_count_before_restart": len(ledger.executions),
+    }
+    Path(meta_path).write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def sqlite_resume_subprocess(db_path: str, meta_path: str, result_path: str) -> None:
+    from langgraph.checkpoint.sqlite import SqliteSaver
+
+    meta = json.loads(Path(meta_path).read_text(encoding="utf-8"))
+    interrupt_payload = meta.get("interrupt_payload")
+    if not isinstance(interrupt_payload, dict):
+        result = {
+            "status": "failed",
+            "reason": "interrupt_payload_missing",
+        }
+    else:
+        ledger = ToolLedger()
+        with SqliteSaver.from_conn_string(db_path) as saver:
+            graph = build_graph(ledger, checkpointer=saver)
+            final_state = resume_graph(
+                graph,
+                meta["config"],
+                {"approved": True, "args_hash": interrupt_payload["args_hash"]},
+            )
+        trace = final_state.get("trace", []) if isinstance(final_state, dict) else []
+        result = {
+            "status": "completed",
+            "thread_id": meta["thread_id"],
+            "approval_status": final_state.get("approval_status") if isinstance(final_state, dict) else None,
+            "blocked_reason": final_state.get("blocked_reason") if isinstance(final_state, dict) else None,
+            "tool_execution_count_before_restart": meta["tool_execution_count_before_restart"],
+            "tool_execution_count_after_restart": len(ledger.executions),
+            "trace_event_count": len(trace),
+            "secret_leaked_in_trace": has_secret_leak(trace) or has_secret_leak(interrupt_payload),
+        }
+    Path(result_path).write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def run_sqlite_subprocess_restart_case() -> dict[str, Any]:
+    try:
+        import langgraph.checkpoint.sqlite  # noqa: F401
+    except ImportError:
+        return {
+            "case": "sqlite_subprocess_restart",
+            "status": "skipped",
+            "reason": "langgraph_checkpoint_sqlite_not_installed",
+        }
+
+    started = time.perf_counter()
+    with tempfile.TemporaryDirectory(prefix="langgraph-subprocess-checkpoint-") as tmpdir:
+        tmp_path = Path(tmpdir)
+        db_path = tmp_path / "checkpoints.sqlite"
+        meta_path = tmp_path / "pending.json"
+        result_path = tmp_path / "result.json"
+        script_path = Path(__file__).resolve()
+        prepare = subprocess.run(
+            [sys.executable, str(script_path), "_sqlite_prepare", str(db_path), str(meta_path)],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        if prepare.returncode != 0:
+            return {
+                "case": "sqlite_subprocess_restart",
+                "status": "failed",
+                "reason": "prepare_subprocess_failed",
+                "prepare_stderr_preview": prepare.stderr[:500],
+            }
+        resume = subprocess.run(
+            [sys.executable, str(script_path), "_sqlite_resume", str(db_path), str(meta_path), str(result_path)],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        if resume.returncode != 0:
+            return {
+                "case": "sqlite_subprocess_restart",
+                "status": "failed",
+                "reason": "resume_subprocess_failed",
+                "resume_stderr_preview": resume.stderr[:500],
+            }
+        result = json.loads(result_path.read_text(encoding="utf-8"))
+
+    return {
+        "case": "sqlite_subprocess_restart",
+        "checkpointer": "SqliteSaver",
+        "new_python_processes": True,
+        "same_thread_id": True,
+        "latency_ms": int((time.perf_counter() - started) * 1000),
+        **result,
+    }
+
+
 def run_validation() -> dict[str, Any]:
     try:
         import langgraph  # noqa: F401
@@ -342,9 +451,12 @@ def run_validation() -> dict[str, Any]:
         run_case("tampered_args", "tampered"),
         run_side_effect_risk_case(),
         run_sqlite_restart_case(),
+        run_sqlite_subprocess_restart_case(),
     ]
     persistent_restart_tested = any(
-        case.get("case") == "sqlite_process_restart" and case.get("status") == "completed" for case in cases
+        case.get("case") in {"sqlite_process_restart", "sqlite_subprocess_restart"}
+        and case.get("status") == "completed"
+        for case in cases
     )
     return {
         "status": "completed",
@@ -354,7 +466,7 @@ def run_validation() -> dict[str, Any]:
         "case_count": len(cases),
         "cases": cases,
         "limitations": [
-            "The SQLite restart case rebuilds the saver and graph in one Python process; it is a minimal local persistence proxy, not a full multi-process deployment test.",
+            "The SQLite subprocess case uses separate local Python processes, but it is still a local SQLite test, not a deployed service restart, concurrency, or failure-injection test.",
             "The refund tool is local and fake; no real payment, database, email, or external API is called.",
             "Results only cover the selected LangGraph version, Python version, graph shape, and local runtime.",
         ],
@@ -362,6 +474,12 @@ def run_validation() -> dict[str, Any]:
 
 
 def main() -> None:
+    if len(sys.argv) > 1 and sys.argv[1] == "_sqlite_prepare":
+        sqlite_prepare_subprocess(sys.argv[2], sys.argv[3])
+        return
+    if len(sys.argv) > 1 and sys.argv[1] == "_sqlite_resume":
+        sqlite_resume_subprocess(sys.argv[2], sys.argv[3], sys.argv[4])
+        return
     print(json.dumps(run_validation(), ensure_ascii=False, indent=2))
 
 
