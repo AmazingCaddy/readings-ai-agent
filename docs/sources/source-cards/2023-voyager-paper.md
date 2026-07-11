@@ -5,12 +5,12 @@
 - 代码链接：https://github.com/MineDojo/Voyager
 - 作者 / 机构：Guanzhi Wang, Yuqi Xie, Yunfan Jiang, Ajay Mandlekar, Chaowei Xiao, Yuke Zhu, Linxi Fan, Anima Anandkumar
 - 发布时间：2023-05-25；arXiv v2 updated 2023-10-19
-- 最后复核日期：2026-07-11
+- 最后复核日期：2026-07-12
 - 类型：论文 / Source / Embodied agent
 - 主题：Embodied Agent / Lifelong Learning / Minecraft / Skill Library / Self-improvement
 - 适合阶段：进阶
 - 可信度等级：A
-- 是否已验证：来源链接、arXiv 元数据、项目站点、GitHub repo metadata 和 README 已复核；摘要和 README 关键段落已精读；支撑开放式具身 Agent 的 automatic curriculum、executable skill library、environment feedback、execution error、自我验证和程序改进的研究机制边界；标准库 Voyager-style toy environment 已完成，支撑 curriculum、技能修正、verified skill library、sandbox rejection 和 trace 形状的窄观察；真实复现、成本、环境依赖、Minecraft 以外泛化能力和当前模型表现仍部分验证
+- 是否已验证：arXiv API 元数据、HTTP metadata、项目站点、GitHub repo metadata 和 README 已于 2026-07-12 复核；摘要和 README 关键段落已精读；支撑开放式具身 Agent 的 automatic curriculum、executable skill library、environment feedback、execution error、自我验证和程序改进的研究机制边界；标准库 Voyager-style toy environment 已完成，支撑 curriculum、技能修正、verified skill library、sandbox rejection 和 trace 形状的窄观察；真实复现、成本、环境依赖、Minecraft 以外泛化能力和当前模型表现仍部分验证
 
 ## 一句话总结
 
@@ -30,16 +30,15 @@ Voyager 适合用来理解开放式具身 Agent：它把环境探索、技能库
 
 ## 支撑证据
 
-- arXiv 页面返回 HTTP 200；HTTP `last-modified` 为 2023-10-20。
-- arXiv API 元数据显示 v1 published on 2023-05-25，v2 updated on 2023-10-19。
-- arXiv 摘要写明 Voyager is the first LLM-powered embodied lifelong learning agent in Minecraft that continuously explores the world, acquires diverse skills, and makes novel discoveries without human intervention。
-- arXiv 摘要列出三个组件：automatic curriculum、ever-growing skill library of executable code、iterative prompting mechanism。
-- arXiv 摘要写明 iterative prompting incorporates environment feedback, execution errors, and self-verification for program improvement。
-- arXiv 摘要写明 Voyager interacts with GPT-4 via blackbox queries，bypasses the need for model parameter fine-tuning。
-- arXiv 摘要报告 3.3x more unique items、2.3x longer distances、15.3x faster key tech tree milestones，并说明 learned skill library 可迁移到新 Minecraft world 处理新任务。
-- 项目站点 `https://voyager.minedojo.org/` 返回 HTTP 200。
-- GitHub API 返回 repo `MineDojo/Voyager` metadata：public、MIT license、default branch `main`、topics 包含 `embodied-learning`、`large-language-models`、`minecraft`、`open-ended-learning`。
-- GitHub README 重复论文摘要的三组件说明，并说明运行需要 Python >= 3.9、Node.js >= 16.13.0、Minecraft instance、Fabric mods、OpenAI API key 和 GPT-4。
+- 2026-07-12 抓取 arXiv 页面返回 HTTP 200；响应头 `last-modified: Fri, 20 Oct 2023 00:34:29 GMT`。
+- arXiv API 返回有效条目：`2305.16291v2`，published `2023-05-25T17:46:38Z`，updated `2023-10-19T16:27:03Z`，primary category `cs.AI`。
+- API 摘要写明 Voyager is the first LLM-powered embodied lifelong learning agent in Minecraft that continuously explores the world, acquires diverse skills, and makes novel discoveries without human intervention。
+- API 摘要列出三个组件：automatic curriculum、ever-growing skill library of executable code、iterative prompting mechanism；并写明 iterative prompting incorporates environment feedback, execution errors, and self-verification for program improvement。
+- API 摘要写明 Voyager interacts with GPT-4 via blackbox queries，bypasses the need for model parameter fine-tuning。
+- API 摘要报告 3.3x more unique items、2.3x longer distances、15.3x faster key tech tree milestones，并说明 learned skill library 可迁移到新 Minecraft world 处理新任务；这些只能作为论文实验设置下的 Minecraft 观察，不能外推为当前模型能力、其他环境泛化能力或生产可靠性。
+- 项目站点 `https://voyager.minedojo.org/` 于 2026-07-12 返回 HTTP 200；响应头 `last-modified: Sun, 04 Jan 2026 18:17:52 GMT`。
+- GitHub API 返回 repo `MineDojo/Voyager` metadata：public、MIT license、default branch `main`、`archived=false`、language `JavaScript`、`updated_at=2026-07-11T16:51:13Z`、`pushed_at=2024-04-03T18:51:36Z`，topics 包含 `embodied-learning`、`large-language-models`、`minecraft`、`open-ended-learning`。
+- GitHub README 于 2026-07-12 可达，重复论文摘要的三组件说明，并说明运行需要 Python >= 3.9、Node.js >= 16.13.0、Minecraft instance、Fabric mods、OpenAI API key 和 GPT-4。
 - GitHub README 明确声明：This project is strictly for research purposes, and not an official product from NVIDIA。
 - [Voyager-style Toy Embodied Agent 实验](../../experiments/voyager-style-toy-agent/results-2026-07-11.md) 用标准库 toy environment 跑通 3 个 curriculum task；治理策略通过环境反馈修正 `craft_pickaxe`、拒绝并修正 `unsafe_spawn_stone`、自我验证后保存 3 个 verified skills，成功 3/3；无技能库和未验证技能库策略均只成功 1/3。
 

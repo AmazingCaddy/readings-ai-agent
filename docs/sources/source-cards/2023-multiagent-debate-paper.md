@@ -3,13 +3,13 @@
 - 来源链接：https://arxiv.org/abs/2305.14325
 - DOI：https://doi.org/10.48550/arXiv.2305.14325
 - 作者 / 机构：Yilun Du, Shuang Li, Antonio Torralba, Joshua B. Tenenbaum, Igor Mordatch
-- 发布时间：2023-05-23
-- 最后复核日期：2026-07-11
+- 发布时间：2023-05-23；arXiv v1 updated 2023-05-23
+- 最后复核日期：2026-07-12
 - 类型：论文 / Multi-agent reasoning
 - 主题：Multi-agent Debate / Factuality / Reasoning
 - 适合阶段：进阶 / 研究方向
 - 可信度等级：A
-- 是否已验证：来源链接、HTTP metadata、arXiv 元数据和摘要已复核；支撑“多 Agent debate 是一种让多个模型实例提出、辩论并汇总答案的研究机制”的窄边界；真实工程多 Agent 收益、成本、延迟、冲突处理和框架表现仍部分验证
+- 是否已验证：arXiv API 元数据、HTTP metadata、摘要、项目页、GitHub repo metadata 和 README 已于 2026-07-12 复核；支撑“多 Agent debate 是一种让多个模型实例提出、辩论并汇总答案的研究机制”的窄边界；真实工程多 Agent 收益、成本、延迟、冲突处理和框架表现仍部分验证
 
 ## 一句话总结
 
@@ -25,12 +25,14 @@
 
 ## 支撑证据
 
-- arXiv 页面返回 HTTP 200；HTTP `last-modified` 为 2023-05-24。
-- arXiv 元数据显示 submitted on 2023-05-23，当前版本 v1。
-- 摘要写明 multiple language model instances propose and debate their individual responses and reasoning processes over multiple rounds to arrive at a common final answer。
-- 摘要写明 findings indicate enhanced mathematical and strategic reasoning across a number of tasks。
-- 摘要写明 improves factual validity, reducing fallacious answers and hallucinations。
-- arXiv metadata comments 提供项目页面和代码链接：`https://composable-models.github.io/llm_debate/`。
+- 2026-07-12 抓取 arXiv 页面返回 HTTP 200；响应头 `last-modified: Wed, 24 May 2023 00:29:08 GMT`。
+- arXiv API 返回有效条目：`2305.14325v1`，published / updated `2023-05-23T17:55:11Z`，primary category `cs.CL`。
+- API 摘要写明 multiple language model instances propose and debate their individual responses and reasoning processes over multiple rounds to arrive at a common final answer。
+- API 摘要写明 findings indicate enhanced mathematical and strategic reasoning across a number of tasks，并写明 improves factual validity, reducing fallacious answers and hallucinations；这些只能作为论文实验设置下的效果声明，不能外推为工程多 Agent 默认更可靠。
+- arXiv comment 标注 Project Webpage and Code：`https://composable-models.github.io/llm_debate/`。
+- 项目页于 2026-07-12 返回 HTTP 200，页面标注 ICML 2024，并链接 OpenReview paper 和 `https://github.com/composable-models/llm_multiagent_debate` code。
+- GitHub API 返回 repo `composable-models/llm_multiagent_debate` metadata：public、Python、default branch `main`、`archived=false`、`updated_at=2026-07-07T07:48:02Z`、`pushed_at=2025-04-24T21:49:03Z`。
+- README 于 2026-07-12 可达，明确称这是 paper 的 preliminary implementation，more tasks and settings will be released soon，并列出 arithmetic、GSM、biography 和 MMLU 子目录。这支撑研究代码入口，不支撑生产多 Agent 框架质量。
 
 ## 是否进入正文
 
