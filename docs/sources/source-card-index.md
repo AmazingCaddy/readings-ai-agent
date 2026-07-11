@@ -44,6 +44,7 @@
 | [OpenAI Structured Outputs docs](source-cards/2026-openai-structured-outputs-docs.md) | Structured Outputs / JSON Schema | Official Docs | A | “schema valid 不等于事实/权限/业务正确”已可入正文；标准库上下文/结构化输出实验已完成；真实 API harness 已准备；真实 refusal/retry 稳定性仍部分验证 | 实际运行真实 Structured Outputs / JSON mode / refusal / semantic validator 实验 |
 | [OpenAI Text Generation docs](source-cards/2026-openai-text-generation-docs.md) | Text Generation / Context | Official Docs | A | output array、message roles、instructions 和 context window 边界已精读；输入输出不是简单字符串、长上下文不能替代治理的窄边界可入正文；上下文治理实验和上下文策略对比实验已完成；真实运行行为仍部分验证 | 补真实 Responses API 输出结构、长上下文 / RAG / 摘要成本和跨模型稳定性实验 |
 | [OWASP LLM Top 10](source-cards/2026-owasp-llm-top-10.md) | Security | Security Guidance | A | 关键风险项已精读；prompt injection / permission evidence 已引用；prompt 不是充分安全边界的窄结论可入正文；安全 regression set 已完成；真实 API harness 已准备 | 实际运行真实攻击样例和框架 guardrail，记录误报/漏报 |
+| [Microsoft Prompt Shields docs](source-cards/2026-microsoft-prompt-shields-docs.md) | Security / Prompt Injection | Official Docs | A | Prompt Shields concept page 和 quickstart 已精读；支撑 user prompt attack、document attack、`shieldPrompt` API、`attackDetected` 字段和 false positive / false negative 边界；真实检测效果仍部分验证 | 接入真实 prompt injection / permission harness，记录误报、漏报、成本、延迟和审批负担 |
 | [Semantic Kernel docs](source-cards/2026-semantic-kernel-docs.md) | Framework / Enterprise integration | Framework Docs | A | 插件、task automation、agent framework、process framework 段落已精读；framework/security evidence、审批状态恢复实验、框架能力交叉表和跨框架术语对照已引用；高风险工具权限和框架选型窄边界可入正文；真实插件/HITL 行为仍部分验证 | 补真实 Semantic Kernel plugin / HITL / process 对比实验 |
 | [LangSmith docs](source-cards/2026-langsmith-docs.md) | Observability / Evaluation | Framework Docs | B | 关键页面已精读；trace-aware eval 和 trace schema audit 标准库实验已完成；trace 作为 eval/审计/回归输入和字段用途设计的窄边界可入正文；真实平台字段映射仍部分验证 | 实际运行真实平台 traces、LLM-as-judge 误判和人工复核实验 |
 | [Arize Phoenix docs](source-cards/2026-arize-phoenix-docs.md) | Observability / Evaluation | Framework Docs | B | 关键页面已精读；trace-aware eval 和 trace schema audit 标准库实验已完成；trace 作为 eval/审计/回归输入和字段用途设计的窄边界可入正文；真实平台字段映射仍部分验证 | 实际运行真实平台 traces/spans/sessions、token/latency 和人工复核实验 |
@@ -53,5 +54,5 @@
 
 | 候选来源 | 主题 | 理由 |
 | --- | --- | --- |
-| Additional prompt injection security writeups | Security | 已有 Indirect Prompt Injection paper、OWASP/NIST 和标准库攻击实验；仍需要更多真实攻击样例、防护工程实践和误报/漏报资料 |
+| Additional prompt injection security writeups | Security | Microsoft Prompt Shields docs 已补一组官方检测层资料；仍需要更多独立真实攻击样例、防护工程实践和误报/漏报资料 |
 | Memory framework implementation case studies | Memory | 已有 Letta/Zep/LangGraph 第一轮资料、标准库写入守门和 lifecycle audit；仍需真实 memory framework 的用户查看/编辑/删除、权限和隐私边界案例 |

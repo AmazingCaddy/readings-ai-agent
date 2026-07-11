@@ -196,7 +196,8 @@ Browser Agent 是另一类高风险工具连接。它可能复用真实浏览器
 
 - Indirect Prompt Injection paper 和 OWASP LLM Top 10 的关键风险项已完成第一轮精读，可支撑外部内容模糊数据/指令边界、prompt injection、敏感信息泄露、工具/插件访问控制和 excessive agency 的保守风险表述。
 - NIST AI RMF 的概述段落已完成第一轮精读，可支撑生产化章节的风险管理和治理视角；它不是 Agent 专用工程指南。
-- “Prompt injection 不能只靠 prompt 解决；外部内容应被当作不可信数据，工具权限和写操作审批必须由应用/系统层控制”已升级为可入正文。Indirect Prompt Injection paper 支撑外部检索数据中的恶意 prompt 可影响应用行为和 API 调用的风险边界；OWASP 支撑风险分类，NIST 支撑全生命周期风险治理，OpenAI 工具调用文档支撑应用侧执行和控制边界。
+- “Prompt injection 不能只靠 prompt 解决；外部内容应被当作不可信数据，工具权限和写操作审批必须由应用/系统层控制”已升级为可入正文。Indirect Prompt Injection paper 支撑外部检索数据中的恶意 prompt 可影响应用行为和 API 调用的风险边界；OWASP 支撑风险分类，NIST 支撑全生命周期风险治理，Microsoft Prompt Shields 支撑 user prompt attack / document attack 分类、生成前检测接口和误报/漏报边界，OpenAI 工具调用文档支撑应用侧执行和控制边界。
+- Microsoft Prompt Shields 文档已补充检测层工程资料：`shieldPrompt` API 可以分析 `userPrompt` 和 `documents`，返回 `attackDetected` 字段；但文档也明确提示可能出现 false positives / negatives，并建议 additional validation layers。因此它只能支撑“检测层应纳入安全 workflow”，不能支撑“接入检测后就安全”。
 - OpenAI Agents SDK 和 Semantic Kernel 文档已补充第一轮工程资料，可支撑 guardrails、human approval、tool approval、sensitive trace 控制和 task automation approval 的保守表述；标准库 prompt injection / tool permission 实验、安全 regression set 和审批状态恢复实验已覆盖最小权限、trace 脱敏、误报/漏报字段、多类风险 case、审批恢复、参数快照和幂等执行。“高风险工具应使用最小权限、参数校验、guardrails、人工确认、审批状态恢复和审计 trace 的组合”已升级为可入正文。真实 prompt injection / permission harness 已准备，但结果待跑，仍需真实模型 / 框架 guardrail 与 HITL 实验验证误报、漏报和覆盖范围。
 - Anthropic MCP connector / tunnels 文档已补充 remote MCP tools 和私有网络 MCP server 的产品集成证据：allowlist/denylist、per-tool config、OAuth bearer token、third-party server trust review、data retention、outbound-only tunnel、inner TLS、allowed IPs、凭据保护和 shared responsibility。它们支撑“远程工具连接也要纳入权限、数据保留和审计设计”的窄边界，但不证明 connector、tunnel 或任意 MCP server 默认安全或生产可靠。
 - Browser Use / Playwright 资料已补充 browser agent 的工程边界：浏览器动作、登录态 profile、文件上传、表单提交、custom tools、human-in-the-loop 和 Playwright action trace 都需要纳入权限、审计和脱敏设计。它们不能证明真实网站任务、CAPTCHA/stealth、合规或生产可靠性。
@@ -211,7 +212,7 @@ Browser Agent 是另一类高风险工具连接。它可能复用真实浏览器
 - MCP 工具生态中的安全边界应该如何落到 host、client 和 server 实现？
 - Anthropic MCP connector / tunnels 的 allowlist/denylist、OAuth token、data retention、shared responsibility 和 tunnel credential rotation 在真实试跑中如何记录到 trace 和安全检查清单？
 - Browser Agent 如何在真实或仿真网站中隔离 profile、限制登录态、确认表单/购物/上传等写操作，并记录可审计 action trace？
-- 真实模型 / 框架 guardrail 下，prompt injection 防护的误报、漏报、成本、延迟和人工审批负担如何测量？真实 API harness 已准备，仍需实际运行并扩展到框架 guardrail / HITL 对照。
+- 真实模型 / 框架 guardrail / Prompt Shields 或同类检测层下，prompt injection 防护的误报、漏报、成本、延迟和人工审批负担如何测量？真实 API harness 已准备，仍需实际运行并比较 prompt-only、detector-only、policy-enforced 和 HITL 对照。
 - 哪些日志字段既能支持审计，又不会引入新的隐私风险？已完成 observability/trace 第一轮验证，仍需脱敏和访问控制实验。
 - 成本和延迟应该如何纳入 Agent eval？
 
@@ -229,6 +230,7 @@ Browser Agent 是另一类高风险工具连接。它可能复用真实浏览器
 
 - [OWASP Top 10 for Large Language Model Applications](../sources/source-cards/2026-owasp-llm-top-10.md)
 - [NIST AI Risk Management Framework](../sources/source-cards/2026-nist-ai-rmf.md)
+- [Microsoft Prompt Shields Documentation](../sources/source-cards/2026-microsoft-prompt-shields-docs.md)
 - [Anthropic MCP Connector and Tunnels Documentation](../sources/source-cards/2026-anthropic-mcp-docs.md)
 - [Browser Use and Playwright Browser Automation References](../sources/source-cards/2026-browser-use-playwright.md)
 

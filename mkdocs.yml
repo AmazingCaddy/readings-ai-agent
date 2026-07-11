@@ -82,6 +82,7 @@ nav:
           - OpenAI Structured Outputs docs: sources/source-cards/2026-openai-structured-outputs-docs.md
           - OpenAI Text Generation docs: sources/source-cards/2026-openai-text-generation-docs.md
           - OWASP LLM Top 10: sources/source-cards/2026-owasp-llm-top-10.md
+          - Microsoft Prompt Shields docs: sources/source-cards/2026-microsoft-prompt-shields-docs.md
           - Semantic Kernel docs: sources/source-cards/2026-semantic-kernel-docs.md
           - LangSmith docs: sources/source-cards/2026-langsmith-docs.md
           - Arize Phoenix docs: sources/source-cards/2026-arize-phoenix-docs.md
