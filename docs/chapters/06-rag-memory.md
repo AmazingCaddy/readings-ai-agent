@@ -172,7 +172,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 - RAG 论文摘要支持“外部检索可以帮助知识密集型生成任务”这一基础动机，并明确提到 provenance 和 world knowledge 更新问题。
 - RAG 论文中的 non-parametric memory 指外部可检索索引一类机制，不应和 Agent 长期记忆治理直接混同。
 - LlamaIndex 文档支持现代工程 RAG 的五阶段流程：Loading、Indexing、Storing、Querying、Evaluation；Documents / Nodes、Indexes、Retrievers 和 Query Engines 可作为初学者理解工程组件的参考。
-- 本地标准库 RAG pipeline 模拟实验复现了 chunk、retrieve、synthesize 三个可观察阶段，输出 chunk-level citations，并在 unsupported question 上返回 `grounded=false`；它支撑最小 citation/source 追溯设计，但不证明真实 embedding / LLM synthesis 的效果。
+- 本地标准库 RAG pipeline 模拟实验复现了 chunk、retrieve、synthesize 三个可观察阶段，输出 chunk-level citations，并在 unsupported question 上返回 `grounded=false`；它支撑最小 citation/source 追溯设计。真实 LLM citation synthesis harness 已准备，但仍使用本地关键词检索且结果待跑，不证明真实 embedding / vector store / rerank 效果。
 - 本地标准库 RAG / Memory 对比实验显示：RAG 适合外部知识和 citation，short-term memory 适合当前 thread state，guarded long-term memory 适合用户确认的跨会话偏好和纠正事实；敏感且无安全来源的问题应拒答。该实验支撑分层治理边界，但不证明真实框架质量。
 - LangGraph memory 文档按 recall scope 区分 short-term/thread-scoped memory 和 long-term/cross-session memory，可作为短期/长期记忆工程边界的参考。
 - LangGraph memory 文档强调 long-term memory 没有 one-size-fits-all solution，写入方式有 hot path 和 background 两类权衡。
@@ -182,7 +182,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 
 ## 待验证问题
 
-- 真实 embedding / vector store / LLM synthesis 下，最小 RAG baseline 应该包含哪些指标？
+- 真实 embedding / vector store / LLM synthesis 下，最小 RAG baseline 应该包含哪些指标？当前真实 LLM citation harness 已准备，仍需实际运行并扩展到 embedding / vector store / rerank。
 - chunk size、top-k 和 rerank/filter 如何影响 citation correctness、answer faithfulness、latency 和 token cost？
 - 真实多会话 Agent 中，长期记忆在哪些任务中有稳定收益？
 - 真实 memory framework 中，写入守门、用户查看/编辑/删除和失效历史如何实现？
@@ -222,5 +222,6 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 - [RAG、短期记忆与长期记忆对比实验结果](../experiments/rag-memory-comparison/results-2026-07-11.md)
 - [Evidence Note: RAG 工程流程边界](../evidence/rag-engineering-boundary.md)
 - [RAG 最小 Pipeline 与 Citation 实验结果](../experiments/rag-pipeline/results-2026-07-11.md)
+- [Real RAG Citation Synthesis 实验](../experiments/real-rag-citation-validation/README.md)
 - [Evidence Note: 长期记忆治理与风险边界](../evidence/memory-governance-risk-boundary.md)
 - [长期记忆写入守门与治理实验结果](../experiments/memory-governance/results-2026-07-11.md)
