@@ -134,6 +134,8 @@ Prompt injection / tool permission 标准库模拟实验已经完成，可帮助
 
 核心 source cards 已经完成多轮链接、元数据和关键段落复核，能支撑章节中的学习方向、术语边界和部分验证结论。主索引已同步这些状态：论文、官方文档、框架文档和安全资料会标注“关键段落已精读 / 部分验证 / 下一步真实实验”。OpenAI Cookbook 已完成 Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits 等具体 recipe 的第一轮复核，可支撑实践项目参考。仍处于候选或只完成链接复核的资料，不能支撑过强的工程断言。
 
+Coverage matrix 的“入门资料”列现在优先使用本手册章节和已精读的核心 docs / papers，目的是给初学者提供阅读入口；它不等同于把真实模型、真实框架或真实生产效果升级为已验证结论。
+
 ## 如何继续扩展资料库
 
 新增资料时，先问五个问题：
