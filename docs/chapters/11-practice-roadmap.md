@@ -341,7 +341,7 @@
 - MCP 实验应选择哪个只读 server 作为最小示例？
 - 如何把这些项目逐步发布成 GitHub Pages 的可跟练教程？
 - 如何把安全 regression set 迁移到真实 tool-calling / Agents SDK / MCP 工具练习？
-- Repo Issue Agent 应优先用 SWE-agent、mini-SWE-agent、OpenAI Agents SDK、LangGraph 还是固定 workflow 做最小对比？成本、sandbox、回滚和测试反馈如何记录？
+- Repo Issue Agent 应优先用 SWE-agent、mini-SWE-agent、OpenAI Agents SDK、LangGraph 还是固定 workflow 做最小对比？toy repo 实验设计已准备；仍需真实运行记录成本、sandbox、回滚和测试反馈。
 - 固定 Playwright workflow 与 Browser Use / browser agent 在同一 demo site 上的成功率、步骤数、失败原因、成本、延迟、trace 可读性和审批负担有什么差异？
 
 ## 本章小结
@@ -373,6 +373,7 @@
 - [Evidence Note: 实践路线与 Cookbook 示例边界](../evidence/practice-roadmap-cookbook-boundary.md)
 - [Evidence Note: Browser Agent 与网页自动化边界](../evidence/browser-agent-boundary.md)
 - [实践路线 Smoke Harness 结果](../experiments/practice-roadmap-harness/results-2026-07-11.md)
+- [Real Repo Issue Agent Toy 实验设计](../experiments/real-repo-issue-agent-toy/README.md)
 
 ### Governance
 

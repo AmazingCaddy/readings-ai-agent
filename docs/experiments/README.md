@@ -78,6 +78,10 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
     - 目标：验证外部知识检索、当前 thread state 和跨会话 guarded memory 的适用边界。
     - 状态：已完成标准库对比实验，见 [RAG、短期记忆与长期记忆对比实验](rag-memory-comparison/README.md) 和 [2026-07-11 结果](rag-memory-comparison/results-2026-07-11.md)。仍需真实 RAG / memory framework / 多会话实验。
 
+15. Repo Issue Agent toy 实验
+    - 目标：验证 coding agent 进阶项目是否能用 toy repo、安全 sandbox、确认模式、trajectory、diff/rollback、测试输出和成本/延迟记录来复现。
+    - 状态：真实实验设计已准备，见 [Real Repo Issue Agent Toy 实验](real-repo-issue-agent-toy/README.md)。尚未运行 mini-SWE-agent、SWE-agent、真实模型或 toy repo；不能证明任何 coding agent 默认可靠。
+
 ## 实验记录要求
 
 - 明确假设。
