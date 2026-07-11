@@ -214,6 +214,8 @@
 
 成本和延迟记录也不要只写“看起来还行”。最小记录表应包含：input tokens、output tokens、request count、model、rate-limit headers、retry count、平均 latency、P95 latency、cost estimate、budget threshold、超预算后的停止或降级行为。先把这些字段记录下来，再讨论减少输出 token、换模型、streaming、Batch、Flex、Prompt Caching 或异步处理是否真的改善了你的任务。
 
+如果你用 Cookbook 做练习，Usage/Cost recipe 更适合帮你设计 usage/cost 表：`start_time`、`end_time`、`bucket_width`、`group_by`、`project_id`、`line_item`、`amount.value`、`amount.currency`。Rate limits recipe 更适合帮你设计限流和降级表：429 / `RateLimitError`、重试次数、等待时间、失败请求、主动节流、RPM/RPD/TPM、`max_tokens`、batching、fallback model 和质量/成本/延迟对照。没有真实 API run 时，这些字段只能作为模板，不能当作优化已经有效。
+
 标准库 production cost / latency / rate-limit audit 可以作为无 API key 时的字段模板：它检查 usage/token accounting、rate-limit headers、bounded retry、latency distribution、budget gate、model/output controls、Batch boundary、Flex fallback 和 Prompt Caching read/write 字段。真实项目仍要用真实 API 日志、rate-limit headers、usage/cost 记录、latency 样本和质量 eval 复核，不能把模板通过当成优化有效。
 
 数据治理记录也要具体。最小记录表应包含：是否产生服务端 application state、对象如何删除、trace 是否脱敏、是否发送 `safety_identifier`、API key 如何存放和撤销、remote MCP / web search / hosted tool / browser 工具会看到哪些数据，以及这些第三方服务的数据保留政策由谁负责。标准库 production safety / data governance checklist audit 可以作为无 API key 时的字段模板；真实项目仍要用平台配置、应用日志和 runbook 复核。
@@ -226,6 +228,7 @@
 
 - OpenAI Cookbook 的 `How to use the Usage API and Cost API to monitor your OpenAI usage`。
 - OpenAI Cookbook 的 `How to handle rate limits`。
+- 这两个 Cookbook recipe 适合做字段化练习：前者看 usage/cost 聚合和 dashboard 原型，后者看 429、backoff、主动节流、batching、fallback 和并发处理脚本；它们不是生产成本或限流可靠性的证明。
 - OpenAI Production / Cost / Latency / Rate Limit source card。它适合用来理解 usage dashboard、billing / usage limits、token counting、rate-limit headers、exponential backoff、`max_tokens`、streaming、batching 和预算阈值的工程边界。
 - OpenAI Batch / Flex / Prompt Caching source card。它适合用来理解 Batch 的离线任务边界、Flex 的低优先级取舍，以及 Prompt Caching 的 cache read/write 观测字段。
 - [Production Cost / Latency / Rate-Limit Audit](../experiments/production-cost-latency-rate-limit/README.md)。它适合在无 API key 时练习生产字段检查，但不能替代真实成本、延迟、限流和质量实验。
