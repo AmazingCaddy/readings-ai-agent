@@ -12,7 +12,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`。部分框架 harness 可以用 `uv run --with ...` 临时依赖运行。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
 
-当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-11.md)：2026-07-11 运行覆盖 11 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，Playwright harness 因本地依赖缺失保守跳过，LangGraph harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，1 个本地 MCP stdio harness 完成。
+当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-11.md)：2026-07-11 运行覆盖 11 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，1 个本地 MCP stdio harness 完成。
 
 ## 实验清单与状态
 
@@ -100,11 +100,11 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 20. Browser action trace audit 实验
     - 目标：把 Browser Use、Playwright、Anthropic Computer Use 和权限 / observability evidence 中的 browser agent 边界整理成可审计 action trace 字段表。
-    - 状态：已完成标准库 field audit，见 [Browser Action Trace Audit](browser-action-trace-audit/README.md) 和 [2026-07-11 结果](browser-action-trace-audit/results-2026-07-11.md)。尚未启动真实浏览器、运行 Playwright / Browser Use / Anthropic computer use 或调用真实模型；不能证明真实网页任务成功率、点击精度、classifier 效果、CAPTCHA/2FA/stealth、成本、延迟、合规或生产可靠性。
+    - 状态：已完成标准库 field audit，见 [Browser Action Trace Audit](browser-action-trace-audit/README.md) 和 [2026-07-11 结果](browser-action-trace-audit/results-2026-07-11.md)。标准库 audit 不启动真实浏览器；真实浏览器固定 workflow 已由下一项 Playwright harness 覆盖。该 audit 不能证明真实网页任务成功率、点击精度、classifier 效果、CAPTCHA/2FA/stealth、成本、延迟、合规或生产可靠性。
 
 21. Real Browser Playwright validation 实验
     - 目标：在本地 demo page 上用固定 Playwright workflow 收集真实 browser action trace、DOM/screenshot state、文件上传、提交审批和失败分类，作为 Browser Use / computer-use-style action loop 的后续对照组。
-    - 状态：真实 harness 已准备，见 [Real Browser Playwright Validation](real-browser-playwright-validation/README.md) 和 [2026-07-11 结果](real-browser-playwright-validation/results-2026-07-11.md)。当前环境未安装 Playwright，运行结果为 `skipped`；尚未产生真实浏览器 completed run，不能证明 Playwright、Browser Use、Anthropic computer use 或任何模型的真实网页任务表现。
+    - 状态：真实 harness 已完成固定本地 demo page run，见 [Real Browser Playwright Validation](real-browser-playwright-validation/README.md) 和 [2026-07-11 结果](real-browser-playwright-validation/results-2026-07-11.md)。本次记录 4 条 action record、DOM/screenshot hash、redacted invoice 文件上传、submit order 审批阻断和 trace.zip metadata；它只证明固定 Playwright workflow 的动作/trace 记录入口，不证明 Browser Use、Anthropic computer use、任何模型、真实网站或生产网页任务表现。
 
 22. Real Batch / Flex / Prompt Caching validation 实验
     - 目标：为 Batch API、Flex processing 和 Prompt Caching 准备真实 API 观测入口，记录 `custom_id` / batch status、Flex fallback、`cached_tokens` / `cache_write_tokens`、latency 和 rate-limit headers。

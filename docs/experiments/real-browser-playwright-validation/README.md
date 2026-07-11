@@ -9,16 +9,22 @@
 ## 当前状态
 
 - Harness 已准备：`real_browser_playwright_validation.py`
-- 当前本地运行状态：`skipped`，因为环境未安装 Playwright。
+- 当前本地运行状态：`completed`。2026-07-11 使用临时 Playwright 依赖和本地 Chromium headless shell 跑通固定 demo page workflow，生成 4 条 action record 和 trace.zip。
 - 结果页：[2026-07-11 结果](results-2026-07-11.md)
 
 ## 运行方式
 
 ```bash
-uv run python docs/experiments/real-browser-playwright-validation/real_browser_playwright_validation.py
+uv run --with playwright python docs/experiments/real-browser-playwright-validation/real_browser_playwright_validation.py
 ```
 
-如果 Playwright 和 browser binaries 已安装，脚本会：
+如果 Playwright browser binaries 尚未安装，先执行：
+
+```bash
+uv run --with playwright playwright install chromium
+```
+
+依赖齐全后，脚本会：
 
 1. 创建临时本地 demo page。
 2. 启动本地 HTTP server。
@@ -42,11 +48,11 @@ uv run python docs/experiments/real-browser-playwright-validation/real_browser_p
 
 ## 结论边界
 
-- 可支撑：真实 Playwright 固定 workflow 可以作为 browser agent 对照组入口；如果本地依赖齐全，能收集真实 browser action trace、DOM/screenshot hash、文件上传和审批阻断记录。
-- 当前不能支撑：当前环境未安装 Playwright，尚未产生真实浏览器运行结果。即使运行成功，也只能验证固定 demo page 和 Playwright workflow；不能证明 Browser Use、Anthropic computer use、任意模型、真实网站、CAPTCHA/2FA/stealth、classifier、防护层、成本、延迟、合规或生产可靠性。
+- 可支撑：真实 Playwright 固定 workflow 可以作为 browser agent 对照组入口；本次 completed run 收集了真实 browser action trace、DOM/screenshot hash、文件上传、审批阻断和 trace.zip metadata。
+- 当前不能支撑：本次只验证固定 demo page 和固定 Playwright workflow；不能证明 Browser Use、Anthropic computer use、任意模型、真实网站、CAPTCHA/2FA/stealth、classifier、防护层、成本、延迟、合规或生产可靠性。
 
 ## 下一步
 
-1. 安装 Playwright 和 browser binaries 后运行本 harness，保存真实 completed 结果。
-2. 在同一 demo page 上增加 Browser Use browser agent 对照。
-3. 可选增加 computer-use-style action loop，对比 screenshot/coordinate action、approval burden、trace readability、成本和延迟。
+1. 在同一 demo page 上增加 Browser Use browser agent 对照。
+2. 可选增加 computer-use-style action loop，对比 screenshot/coordinate action、approval burden、trace readability、成本和延迟。
+3. 增加错误元素、登录态 profile、下载/删除类按钮和截图注入 case。
