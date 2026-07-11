@@ -47,7 +47,7 @@ Phoenix 文档适合学习 AI 应用 tracing、evaluations、datasets/experiment
 
 ## 可复现实验
 
-- 已完成标准库 trace-aware eval 最小实验；后续应扩展为真实客服/RAG/tool traces，记录 LLM call、tool execution、retrieval、latency、token usage 和 session id。
+- 已完成标准库 trace-aware eval 最小实验；已准备真实模型 trace-aware eval harness，可记录 tool call/result/error/approval/final response 并比较 final-only 与 trace-aware scoring；后续仍需扩展为真实客服/RAG/tool traces，记录 LLM call、tool execution、retrieval、latency、token usage、session id，并做 Phoenix 平台对照。
 
 ## 是否进入正文
 

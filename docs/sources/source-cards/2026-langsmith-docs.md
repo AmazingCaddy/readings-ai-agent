@@ -45,7 +45,7 @@ LangSmith 文档适合学习 LLM/Agent 应用的 tracing、offline eval、online
 
 ## 可复现实验
 
-- 已完成标准库 trace-aware eval 最小实验；后续应扩展为真实 RAG/tool-calling traces、LLM-as-judge、人工抽样复核和平台对照。
+- 已完成标准库 trace-aware eval 最小实验；已准备真实模型 trace-aware eval harness，可记录 tool call/result/error/approval/final response 并比较 final-only 与 trace-aware scoring；后续仍需扩展为真实 RAG/tool-calling traces、LLM-as-judge、人工抽样复核和 LangSmith 平台对照。
 
 ## 是否进入正文
 
