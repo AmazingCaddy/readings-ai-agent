@@ -80,6 +80,7 @@ nav:
           - NIST AI RMF: sources/source-cards/2026-nist-ai-rmf.md
           - OpenAI Agents SDK docs: sources/source-cards/2026-openai-agents-sdk-docs.md
           - OpenAI Production Cost/Latency docs: sources/source-cards/2026-openai-production-cost-latency-docs.md
+          - OpenAI Safety/Data Controls docs: sources/source-cards/2026-openai-safety-data-controls-docs.md
           - OpenAI Cookbook: sources/source-cards/2026-openai-cookbook.md
           - OpenAI Evals repo: sources/source-cards/2026-openai-evals-repo.md
           - OpenAI Evaluation guides: sources/source-cards/2026-openai-evaluation-guides.md
