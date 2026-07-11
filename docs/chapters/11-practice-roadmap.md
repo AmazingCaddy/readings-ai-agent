@@ -191,7 +191,7 @@ OpenAI Cookbook 的具体 recipe 已于 2026-07-12 复核可访问性和页面 m
 
 - OpenAI Cookbook 的 `Getting Started with OpenAI Evals`。
 - OpenAI Cookbook 的 `Evaluating Agents with Langfuse`，用于理解 trace、online evaluation、offline evaluation 和 dataset evaluation 的工程形态。
-- OpenAI Evaluation guides，用于理解 eval-driven development、trace grading、dataset / eval run 和 LLM-as-judge 校准边界；注意 OpenAI Evals platform 正在退役。
+- OpenAI Evaluation guides，用于理解 eval-driven development、trace grading、dataset / eval run、edge/adversarial cases 和 LLM-as-judge / human-label 校准边界；注意 OpenAI Evals platform 正在退役。
 
 ## 项目 8：生产化前检查
 
@@ -334,7 +334,7 @@ OpenAI Cookbook 的具体 recipe 已于 2026-07-12 复核可访问性和页面 m
 - OpenAI File Search / Retrieval docs 可作为 File Search RAG 项目的 API 边界 reference：托管 `file_search` 仍需要记录 included search results、citations、filters、ranking/chunking、batch ingestion、attributes、rate limits、storage pricing、ZDR/data residency、成本、延迟和删除一致性。
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源：2026-07-12 复核确认当前 reference servers 包括 Everything、Fetch、Filesystem、Git、Memory、Sequential Thinking 和 Time；Filesystem 可学习 allowed directories、Roots 和 ToolAnnotations，Git 可学习为什么写仓库工具需要审批和审计。但具体 server 的权限、安全假设、host UI、rollback 和 trace 脱敏仍需要逐个检查。
-- OpenAI Evals repo、OpenAI Evaluation guides 和 OpenAI Graders docs 可作为小型回归测试、trace grading、dataset / eval run、tool-call grading、LLM-as-judge 校准和 reward hacking 风险的结构参考；标准库 grader misalignment / reward hacking audit 可作为无模型时的最小误判样本模板；Agent eval 仍应结合 trace、业务任务和人工复核。OpenAI Evals / graders platform 正在退役，具体平台入口需要按当前官方文档复核。
+- OpenAI Evals repo、OpenAI Evaluation guides 和 OpenAI Graders docs 可作为小型回归测试、trace grading、dataset / eval run、tool-call grading、edge/adversarial cases、LLM-as-judge 校准和 reward hacking 风险的结构参考；标准库 grader misalignment / reward hacking audit 可作为无模型时的最小误判样本模板；Agent eval 仍应结合 trace、业务任务、human labels 和人工复核。OpenAI Evals / graders platform 正在退役，具体平台入口需要按当前官方文档复核。
 - SWE-agent 论文和 mini-SWE-agent docs/source 可作为 repo issue / coding agent 进阶练习参考：SWE-agent 支撑 agent-computer interface、仓库导航、文件编辑和测试执行的重要性；mini-SWE-agent 补强当前轻量 coding agent 入口、bash-only 最小控制流、confirm/yolo/human 模式、trajectory、cost/call limit、CLI options、默认配置和 runtime/trajectory 边界。Real Repo Issue Agent Toy 已完成固定 workflow baseline 和确定性 workflow-agent hybrid baseline，证明 toy repo / failing tests / implementation-only diff / trajectory 对照组，以及建议、人工审批、风险命令拒绝、scoped diff 和复跑测试记录可复现；Real mini-SWE-agent CLI Surface Validation 已完成安装 / CLI / 默认配置表面检查；Real mini-SWE-agent Runtime Surface Validation 已完成 deterministic fake-model toy repo run，并观察到 configured env marker 会进入 trajectory；真实 coding-agent 试跑仍需复核 sandbox、权限、成本、模型行为、confirm 人工负担和 repo issue 修复质量。
 - Browser Use / Playwright / Anthropic Computer Use source cards 可作为 Browser / Computer Use Agent 进阶练习参考：它们支撑浏览器动作、profile/auth 风险、custom tools、screenshot/mouse/keyboard control、VM/container 隔离、action validation/logging 和 trace viewer 的工程边界；Real Browser Use Package Surface Validation 已完成 Browser Use package / source surface 检查；Real Browser Playwright Validation 已完成固定本地 demo page workflow 和 deterministic computer-use-style loop，可作为固定 workflow / 坐标动作对照入口。真实 Browser Use agent / Anthropic computer-use agent 任务成功率、点击精度、classifier 行为、成本、延迟、CAPTCHA/stealth、合规和生产可靠性仍待实验。
 - Agent trace 应记录输入、输出、中间步骤、工具调用、检索、错误、延迟/成本、反馈和版本信息；实践项目从第一版开始就应保存这些字段，用于调试、审计、回归和在线/离线评测，而不是等 demo 成功后再补日志。
