@@ -7,11 +7,11 @@
 | Source card | 主题 | 类型 | 可信度 | 当前验证状态 | 下一步 |
 | --- | --- | --- | --- | --- | --- |
 | [ReAct paper](source-cards/2022-react-paper.md) | Agent 架构 / Tool Use | Paper | A | 摘要/核心模式已精读；ReAct 推理/行动交替机制、Agent/Workflow 控制权连续谱和复杂架构不是默认更可靠的窄边界可入正文；ReAct 效果仍部分验证 | 补真实模型 / 框架任务对比，避免泛化为 ReAct 默认更优 |
-| [RAG paper](source-cards/2020-rag-paper.md) | RAG | Paper | A | 摘要和关键动机已精读；支撑外部检索、provenance 和知识更新动机；RAG / Memory 术语边界和 RAG 工程 pipeline 窄边界已可入正文；工程质量仍部分验证 | 补真实 RAG stack、citation correctness 和成本/延迟实验 |
+| [RAG paper](source-cards/2020-rag-paper.md) | RAG | Paper | A | 摘要和关键动机已精读；外部检索、provenance 和知识更新动机可入正文；RAG / Memory 术语边界和 RAG 工程 pipeline 窄边界已可入正文；工程质量仍部分验证 | 补真实 RAG stack、citation correctness 和成本/延迟实验 |
 | [Generative Agents paper](source-cards/2023-generative-agents-paper.md) | Memory / Reflection / Planning | Paper | A | 摘要和 memory/reflection/planning 关系已精读；支撑长期记忆治理窄边界；真实收益仍部分验证 | 补真实多会话 Agent / memory framework 收益与污染实验 |
 | [MemoryBank paper](source-cards/2023-memorybank-paper.md) | Long-term memory | Paper | A | 摘要和长期记忆更新/遗忘方向已精读；支撑长期记忆治理窄边界；真实收益仍部分验证 | 补真实长期记忆收益、过时和隐私实验 |
 | [MemGPT paper](source-cards/2023-memgpt-paper.md) | Memory management / Context | Paper | A | 摘要和显式 memory management 方向已精读；RAG/Memory 与长期记忆治理窄边界已引用；真实 memory 行为仍部分验证 | 补真实 memory tier / context management 实验 |
-| [Toolformer paper](source-cards/2023-toolformer-paper.md) | Tool Use | Paper | A | 摘要和研究式 tool use 边界已精读；Function Calling evidence 已引用；部分验证 | 补真实 API tool-calling validation / retry 实验 |
+| [Toolformer paper](source-cards/2023-toolformer-paper.md) | Tool Use | Paper | A | 摘要和研究式 tool use 边界已精读；tool use 可以连接外部工具能力的基础概念可入正文；Function Calling evidence 已引用；真实 API 行为仍部分验证 | 补真实 API tool-calling validation / retry 实验 |
 | [Tree of Thoughts paper](source-cards/2023-tree-of-thoughts-paper.md) | Planning | Paper | A | 摘要和搜索式推理边界已精读；ToT 搜索式推理路径不是生产编排框架、复杂架构不是默认更可靠的窄边界可入正文；Planner/Executor 边界另由实验和编排 evidence 支撑；ToT 效果仍部分验证 | 补真实 planning/search 与 workflow 对比实验 |
 | [Reflexion paper](source-cards/2023-reflexion-paper.md) | Reflection / Eval | Paper | A | 摘要和语言反馈/反思边界已精读；reflection retry 实验已完成；支撑复杂架构不是默认更可靠和 Reflection 需要可校验反馈/范围控制/trace 的窄边界；真实效果仍部分验证 | 补真实 critic、长期 episodic memory、成本和人工评审实验 |
 | [AgentBench paper](source-cards/2023-agentbench-paper.md) | Eval / Benchmark | Paper | A | 摘要和 benchmark / trajectory 边界已精读；支撑公开 benchmark 不能直接代表真实业务 Agent 质量、工具/副作用 Agent 不能只看最终答案的窄结论；其余部分验证 | 补真实 Agent trace、LLM-as-judge 和人工复核实验 |

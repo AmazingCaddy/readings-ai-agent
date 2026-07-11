@@ -28,9 +28,10 @@ Function calling / tool calling 是模型与应用程序协作调用外部工具
 
 ## 结论状态
 
+- 可入正文：窄结论“Tool use 可以让模型通过应用或运行时连接外部 API、搜索、计算器、日历、数据库等工具能力”已完成第一轮交叉验证。Toolformer 摘要支撑 calculator、QA system、search engines、translation system 和 calendar 等工具使用研究方向；OpenAI Function Calling / Responses API 文档支撑现代 API 通过工具定义、参数 schema、工具调用请求和工具结果回传来组织这类能力。
 - 可入正文：窄结论“Function Calling / Tool Calling 本身不执行工具；工具执行发生在应用程序或工具运行时，并由应用侧把结果回传模型”由 OpenAI 官方文档直接支撑，并被 Responses API source card 和本地参数校验实验交叉支撑。
-- 部分验证：参数校验失败后真实模型能否稳定修正、不同框架的 tool/function/structured output 术语是否一致、真实 API 错误恢复和成本表现仍待验证。
+- 部分验证：Toolformer 的训练式 tool use 效果、现代 API tool-calling 的真实模型稳定性、参数校验失败后真实模型能否稳定修正、不同框架的 tool/function/structured output 术语是否一致、真实 API 错误恢复和成本表现仍待验证。
 
 ## 可进入章节
 
-- 是，但应保留工程边界说明：Function Calling 是结构化协作接口，不是模型直接执行函数；参数校验和重试逻辑应由应用层显式设计。
+- 是。可以确定写成：Tool use 是让模型通过系统暴露的工具能力连接外部 API、搜索、计算器等能力；Function Calling 是现代 API 中组织工具调用的结构化协作接口，不是模型直接执行函数。参数校验和重试逻辑应由应用层显式设计。

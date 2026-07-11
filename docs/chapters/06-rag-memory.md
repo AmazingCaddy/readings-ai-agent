@@ -173,7 +173,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 
 ## 已验证结论
 
-- RAG 论文摘要支持“外部检索可以帮助知识密集型生成任务”这一基础动机，并明确提到 provenance 和 world knowledge 更新问题。
+- “RAG 的动机包括外部知识访问、知识更新和 provenance”已升级为可入正文：RAG 论文摘要支持外部检索可以帮助知识密集型生成任务，并明确提到 provenance 和 world knowledge 更新问题；真实 RAG stack 的质量、成本和延迟仍需实验验证。
 - RAG 论文中的 non-parametric memory 指外部可检索索引一类机制，不应和 Agent 长期记忆治理直接混同。
 - “RAG 偏外部知识检索和 provenance，Memory 偏状态、历史经验和跨会话数据治理”是本章可入正文的术语边界；真实 RAG / memory framework 的质量、成本和隐私收益仍需实验验证。
 - “工程 RAG 是 loading、indexing、storing、querying/retrieval、response synthesis 和 evaluation 等阶段组成的可观察 pipeline，不是单个 prompt 技巧”已升级为可入正文：RAG paper 支撑外部检索、provenance 和知识更新动机，LlamaIndex 文档支持现代工程 RAG 的五阶段流程，Documents / Nodes、Indexes、Retrievers 和 Query Engines 可作为初学者理解工程组件的参考。

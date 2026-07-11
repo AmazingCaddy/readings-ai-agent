@@ -34,9 +34,10 @@
 
 ## 结论状态
 
+- 可入正文：窄结论“RAG 的基础动机包括外部知识访问、知识更新和 provenance / source traceability”已完成第一轮交叉验证。RAG paper 摘要直接支撑知识密集任务、外部检索、provenance 和 world knowledge 更新动机；LlamaIndex RAG 文档支撑现代工程中通过 loading / indexing / retrieval / response synthesis / evaluation 把外部数据接入 LLM 上下文。
 - 可入正文：窄结论“工程 RAG 是 loading、indexing、storing、querying/retrieval、response synthesis 和 evaluation 等阶段组成的可观察 pipeline，不是单个 prompt 技巧；最小可治理 RAG 应保留 chunk metadata、retrieval trace、citation/source 绑定和无证据拒答或 `grounded=false` 标记”已完成第一轮交叉验证。RAG paper 支撑外部检索、provenance 和知识更新动机，LlamaIndex 支撑现代工程流程和组件边界，标准库最小 pipeline 实验复现了 chunk / retrieve / synthesize trace、chunk-level citations 和 unsupported question 拒答流程。
 - 部分验证：真实 RAG stack、embedding / vector store、chunk size/top-k/rerank 对比、LLM synthesis faithfulness、citation correctness、latency、token cost 和生产权限边界仍需实验；不能写成某个检索或 chunk 策略默认最优。
 
 ## 可进入章节
 
-- 是。可以确定写成：RAG 是一条工程 pipeline，而不是单个 prompt 技巧。初学者应先保证加载、切分、索引、检索、回答合成、citation/source 绑定和评测可观察；没有检索证据时应拒答或标记 `grounded=false`。真实 embedding、rerank、hybrid retrieval 或 agentic RAG 的质量和成本仍需要实验比较。
+- 是。可以确定写成：RAG 的动机是让生成系统能使用外部知识、处理知识更新并保留 provenance / source traceability；工程 RAG 是一条 pipeline，而不是单个 prompt 技巧。初学者应先保证加载、切分、索引、检索、回答合成、citation/source 绑定和评测可观察；没有检索证据时应拒答或标记 `grounded=false`。真实 embedding、rerank、hybrid retrieval 或 agentic RAG 的质量和成本仍需要实验比较。

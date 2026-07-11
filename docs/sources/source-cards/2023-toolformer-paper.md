@@ -8,7 +8,7 @@
 - 主题：Tool Use
 - 适合阶段：进阶
 - 可信度等级：A
-- 是否已验证：来源链接、arXiv 元数据和摘要已复核；与 OpenAI Function Calling docs 完成交叉验证
+- 是否已验证：来源链接、arXiv 元数据和摘要已复核；与 OpenAI Function Calling docs 完成交叉验证；tool use 可以连接外部工具能力的基础概念可入正文；真实 API 行为仍部分验证
 
 ## 一句话总结
 
@@ -29,8 +29,8 @@ Toolformer 是理解语言模型使用外部工具能力的重要论文，可辅
 
 ## 是否进入正文
 
-- 结论：进入
-- 原因：适合作为 Tool Use 章节的研究 reference。
+- 结论：进入；tool use 基础概念可入正文
+- 原因：适合作为 Tool Use 章节的研究 reference。摘要可支撑模型使用 calculator、QA system、search engines、translation system 和 calendar 等外部工具能力的研究脉络；结合 OpenAI Function Calling / Responses API 文档，可支撑现代工程中 tool use 与 API tool calling 的基础边界。真实 API 稳定性、参数修正、成本和跨框架术语仍需实验。
 
 ## 可能的问题
 
