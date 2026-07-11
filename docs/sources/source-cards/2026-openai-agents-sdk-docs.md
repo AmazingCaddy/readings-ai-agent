@@ -59,7 +59,7 @@ OpenAI Agents SDK 文档适合用于解释现代 Agent SDK 的基本抽象、工
 - 已完成标准库审批状态恢复与幂等性实验，可作为后续迁移到 Agents SDK HITL 的 case matrix：记录 approval state、RunState / resume、参数快照、重复恢复、拒绝恢复和 trace 脱敏。当前结果不代表 Agents SDK 的真实 HITL 行为。
 - Agent/Workflow 和自治程度窄边界已升级为可入正文：Agents SDK 文档直接支撑 managed agent loop、runtime 管理 turns/tool execution/state handling，以及直接使用 Responses API 时开发者自行控制 loop/tool dispatch/state handling 的边界。真实 SDK 任务表现、成本和失败恢复仍需实验。
 - 复杂架构默认可靠性窄边界已升级为可入正文：Agents SDK 支撑 agent loop、handoffs、guardrails、sessions 和 tracing 等工程抽象，但这些抽象需要结合任务、权限、trace、成本和实验选择，不能直接推出复杂 Agent runtime 默认比简单 workflow 更可靠。
-- 已纳入框架能力交叉表，用于支撑“轻量 agent runtime / tool loop / tracing / guardrails / sessions”的保守定位；不代表真实横向性能结论。
+- 已纳入框架能力交叉表，用于支撑“轻量 agent runtime / tool loop / tracing / guardrails / sessions”的保守定位；与其他框架卡片和 rubric smoke test 共同支撑“框架应按任务难点比较，不能写成某个框架默认最好”的窄边界；不代表真实横向性能结论。
 
 ## 是否进入正文
 

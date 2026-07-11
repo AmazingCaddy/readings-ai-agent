@@ -112,7 +112,7 @@ Prompt injection / tool permission 标准库模拟实验已经完成，可帮助
 先读手册 10 和 11，再横向阅读 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI、Semantic Kernel 和 OpenAI Cookbook 的具体 recipe。
 
 阅读重点是选择维度、可迁移概念和可复现练习，而不是追随单一框架或照搬复杂 demo。
-框架选择 rubric smoke test 已经完成，可帮助理解如何把框架比较拆成 required、nice-to-have、avoid、missing required 和 cautions；真实同一任务框架横向实验仍需后续试跑。
+框架选择 rubric smoke test 已经完成，可帮助理解如何把框架比较拆成 required、nice-to-have、avoid、missing required 和 cautions；窄结论“框架应按任务难点和能力边界比较，不能写成某个框架默认最好”已可入正文。真实同一任务框架横向实验仍需后续试跑。
 实践路线 smoke harness 已经完成，可帮助理解如何把结构化输出、工具参数、RAG 引用、eval cases 和成本闸门组织成可运行验收流程；真实 Cookbook / API recipe 的依赖、成本和初学者阻塞点仍需后续试跑。
 
 ## 当前 Source Card 状态
@@ -168,7 +168,7 @@ Prompt injection / tool permission 标准库模拟实验已经完成，可帮助
 - Memory / 知识库治理已补标准库写入守门模拟实验和生命周期权限审计，窄结论“长期记忆不能默认自动写入或默认提升表现，必须配套写入守门、生命周期权限、跨用户隔离和 trace 脱敏”已可入正文；仍缺真实多会话 Agent / memory framework 的收益、污染、权限、隐私和用户查看/编辑/删除实验。
 - Evaluation / Observability 已补 AgentBench、WebArena、OpenAI Evals、标准库 trace-aware eval 模拟实验和 trace schema audit，窄结论“公开 benchmark 不能直接代表真实业务 Agent 质量”“工具/副作用 Agent 不能只看最终答案”和“trace 字段要按 debug/audit/regression/cost/RAG/privacy 用途设计”已可入正文；仍缺真实 Agent trace、LLM-as-judge 误判分析、人工复核、平台字段映射和回归集工程案例。
 - Production / Security 已补标准库 prompt injection / tool permission 模拟实验，可支撑 prompt-only 风险、写工具阻断和 trace 脱敏流程；仍缺真实模型 / 框架 guardrail / HITL approval 实验、跨框架权限对比和审计脱敏策略。
-- Framework landscape 已补标准库框架选择 rubric smoke test，可支撑任务画像、能力标签、missing required 和 cautions 的比较方法；仍缺真实同一任务框架横向实验。
+- Framework landscape 已补主要框架文档、框架能力交叉表和标准库框架选择 rubric smoke test，窄结论“框架应按任务难点和能力边界比较，不能写成某个框架默认最好”已可入正文；仍缺真实同一任务框架横向实验。
 - Cookbook 的具体 recipe 已能支撑实践项目路线，标准库 smoke harness 已支撑项目验收结构和 trace / 失败分类设计；仍需要真实本地试跑来确认依赖、成本、失败样例和初学者阻塞点。
 - Claim ledger 规定只有状态为“可入正文”的结论，才能写成确定性表述；其他结论需要保守表达。
 
