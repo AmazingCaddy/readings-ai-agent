@@ -8,7 +8,7 @@
 - 主题：Multi-agent / Agent Framework / Orchestration
 - 适合阶段：进阶 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接已复核；内容待精读；结论待交叉验证
+- 是否已验证：来源链接、AgentChat 页面和源 Markdown 已复核；关键段落已精读；结论已部分交叉验证
 
 ## 一句话总结
 
@@ -16,11 +16,18 @@ AutoGen 是理解多 Agent 对话、协作和框架抽象的重要工程 referen
 
 ## 核心结论
 
-- 待精读后提取。
+- AutoGen 文档将其定位为 building AI agents and applications 的框架。
+- 首页说明 AgentChat 是用于 conversational single and multi-agent applications 的 programming framework。
+- AgentChat 文档说明它是 building multi-agent applications 的 high-level API，并提供 Agents、Teams 和 predefined multi-agent design patterns。
+- AutoGen Core 被描述为 event-driven programming framework，用于 scalable multi-agent AI systems，包含 deterministic and dynamic agentic workflows、multi-agent collaboration 和 distributed agents 等场景。
+- 文档提供 Selector Group Chat、Swarm、GraphFlow、logging、tracing 等多 Agent 协调和可观测性入口；这说明多 Agent 需要明确协调机制和 trace。
 
 ## 支撑证据
 
-- 官方文档入口返回 HTTP 200。
+- 官方文档入口、AgentChat 页面和 `_sources` Markdown 均返回 HTTP 200。
+- 首页写明 AgentChat 是 conversational single and multi-agent applications 的框架。
+- AgentChat Markdown 写明它是 high-level API for building multi-agent applications，提供 Agents 和 Teams 以及 multi-agent design patterns。
+- 首页写明 Core 是 event-driven programming framework for scalable multi-agent AI systems，并列出 deterministic/dynamic workflows、multi-agent collaboration、distributed agents。
 
 ## 可能的问题
 
@@ -37,6 +44,5 @@ AutoGen 是理解多 Agent 对话、协作和框架抽象的重要工程 referen
 
 ## 是否进入正文
 
-- 结论：进入
-- 原因：多 Agent 和框架生态章节需要官方框架 reference。
-
+- 结论：部分进入
+- 原因：可支撑多 Agent、Teams、coordination patterns、GraphFlow 和 trace/logging 的工程抽象；不能单独证明多 Agent 默认优于单 Agent 或 workflow。

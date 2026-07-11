@@ -13,6 +13,7 @@
 - ReAct 在哪些任务中确实优于单次提示或简单 workflow？
 - Plan-and-Execute 的收益是否足以抵消额外成本和错误传播？
 - Reflection / Critic 模式在真实任务中是否稳定提升质量？
+- 多 Agent 的收益是否足以抵消通信成本、协调复杂度和调试难度？已完成 AutoGen/CrewAI 第一轮资料验证，仍需最小对比实验。
 
 ## 工具调用
 

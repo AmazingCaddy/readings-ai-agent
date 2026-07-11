@@ -116,13 +116,13 @@ Enterprise integration 更强调和现有系统、权限、插件、业务流程
 
 它适合在理解单 Agent 和编排之后阅读，用来分析多 Agent 的价值和复杂度。
 
-需要注意：多 Agent 示例容易显得强大，但要评估成本、调试、失败恢复和最终决策责任。
+AutoGen 文档已确认它提供 AgentChat、Teams、Selector Group Chat、Swarm、GraphFlow、logging 等多 Agent 协调抽象。需要注意：多 Agent 示例容易显得强大，但要评估成本、调试、失败恢复和最终决策责任。
 
 ### CrewAI
 
 适合作为多 Agent 工程生态的补充资料。它的文档可用于横向比较角色、任务和协作抽象。
 
-需要注意：当前 source card 将其可信度标为 B，正文应重点用来比较抽象和适用场景，而不是引用营销式结论。
+CrewAI 文档已确认它把系统拆成 Flows 和 Crews：Flow 管理状态和执行控制，Crew 是 Flow 内协作完成特定任务的 agent team。需要注意：当前 source card 将其可信度标为 B，正文应重点用来比较抽象和适用场景，而不是引用营销式结论。
 
 ### Semantic Kernel
 
@@ -182,9 +182,10 @@ Enterprise integration 更强调和现有系统、权限、插件、业务流程
 
 ## 已验证结论
 
-- OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、Semantic Kernel 均有 A 级 source card，可作为框架生态章节的重要 references；多数内容仍待精读。
-- CrewAI source card 当前可信度为 B，可作为生态补充和横向比较资料，不宜单独支撑关键结论。
+- OpenAI Agents SDK、LangGraph、AutoGen 均已完成关键段落第一轮精读，可支撑 SDK runtime、orchestration runtime 和多 Agent 协调抽象的保守表述。
+- CrewAI source card 当前可信度为 B，但其 Introduction Markdown 可作为 Flows / Crews 抽象的补充证据；不宜单独支撑关键结论或营销式效果判断。
 - LangGraph source card 明确其适合状态图、可控 workflow 和复杂任务编排；但它是特定框架，不应被写成通用定义。
+- 多 Agent 框架适合学习角色协作和任务分配，但“多 Agent 默认更好”没有被框架文档证明，仍需用同一任务的成本、延迟、trace 和成功率对比验证。
 - LlamaIndex source card 明确其适合 RAG、数据连接、索引和 agent data framework；需区分通用 RAG 概念和框架实现。
 
 ## 待验证问题
@@ -218,3 +219,4 @@ Enterprise integration 更强调和现有系统、权限、插件、业务流程
 
 - [References 覆盖矩阵](../references/coverage-matrix.md)
 - [结论证据台账](../evidence/claim-ledger.md)
+- [Evidence Note: 多 Agent 不是默认更好](../evidence/multi-agent-default-boundary.md)

@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 16:00 Asia/Shanghai
+**Last Updated:** 2026-07-11 16:05 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -29,15 +29,17 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 12. Completed first evidence upgrade for Prompt Injection / Production Security boundary using OWASP LLM Top 10 key risk items, NIST AI RMF overview, and existing tool-calling evidence.
 13. Completed first evidence upgrade for Agent Eval / Trajectory boundary using AgentBench and WebArena abstracts plus OpenAI Evals README.
 14. Completed first evidence upgrade for Agent vs Workflow boundary using OpenAI Agents SDK docs/README, LangGraph overview markdown, and ReAct.
+15. Completed first evidence upgrade for Multi-agent default boundary using AutoGen AgentChat docs, CrewAI Introduction markdown, AgentBench, and eval evidence.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2026-openai-agents-sdk-docs.md`, `docs/sources/source-cards/2026-langgraph-docs.md`, `docs/evidence/agent-workflow-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/01-agent-landscape.md`, `docs/chapters/04-agent-architecture.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2026-autogen-docs.md`, `docs/sources/source-cards/2026-crewai-docs.md`, `docs/evidence/multi-agent-default-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/07-planning-orchestration.md`, `docs/chapters/10-framework-landscape.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
 ## Open Questions
 - Run the minimal tool-calling experiment to upgrade the Function Calling boundary from partial verification toward `可入正文`.
 - Run a workflow vs workflow-agent hybrid vs agent loop comparison experiment for the same task.
+- Run a single-agent vs planner/executor vs multi-agent comparison experiment for the same research/writing task.
 - Run a toy Agent eval experiment comparing final-answer-only scoring with trajectory/trace-aware scoring.
 - Run a minimal read-only MCP trace experiment to upgrade the MCP role boundary from partial verification toward `可入正文`.
 - Run a minimal RAG vs short-term vs long-term memory comparison experiment.

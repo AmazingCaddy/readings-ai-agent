@@ -8,7 +8,7 @@
 - 主题：Multi-agent / Agent Framework
 - 适合阶段：进阶 / 工程实践
 - 可信度等级：B
-- 是否已验证：来源链接已复核；内容待精读；结论待交叉验证
+- 是否已验证：来源链接和 Introduction Markdown 已复核；关键段落已精读；结论已部分交叉验证
 
 ## 一句话总结
 
@@ -16,16 +16,25 @@ CrewAI 是多 Agent 工程生态中的常见框架，可作为框架比较和多
 
 ## 核心结论
 
-- 待精读后提取。
+- CrewAI 文档将 CrewAI 定位为 orchestrating autonomous AI agents and building complex workflows 的框架。
+- 文档把 CrewAI 架构拆成 `Flows` 和 `Crews`：Flows 管理 state 和 control execution，Crews 是在 Flow 内协作完成特定任务的 agent teams。
+- 文档明确写出 “For any production-ready application, start with a Flow.”
+- 文档建议在需要 team of agents 执行 specific, complex task that requires autonomy 时，在 Flow step 中使用 Crew。
+- 这些段落支持正文中“多 Agent 应嵌入受控流程，而不是默认替代流程”的保守表述。
 
 ## 支撑证据
 
-- 官方文档入口返回 HTTP 200。
+- 官方文档入口和 Introduction Markdown 返回 HTTP 200。
+- Introduction Markdown 写明 Flows create structured, event-driven workflows that manage state and control execution。
+- Introduction Markdown 写明 Crews are teams of autonomous agents that collaborate to solve specific tasks delegated to them by the Flow。
+- Introduction Markdown 写明 Flow manages state and decides what to do next，再 delegates a complex task to a Crew。
+- Introduction Markdown 的 “When to Use Crews vs. Flows” 小节写明 production-ready application 应 start with a Flow。
 
 ## 可能的问题
 
 - 需要警惕框架文档中的产品定位和营销倾向。
 - 正文应重点比较抽象和适用场景，而不是宣传特性。
+- CrewAI 当前可信度仍保持 B；它适合作为生态和抽象对照，不单独支撑关键结论。
 
 ## 初学者阅读建议
 
@@ -37,6 +46,5 @@ CrewAI 是多 Agent 工程生态中的常见框架，可作为框架比较和多
 
 ## 是否进入正文
 
-- 结论：作为补充进入
-- 原因：生态覆盖需要，但正文结论需和其他框架交叉验证。
-
+- 结论：部分进入
+- 原因：可支撑 Flows / Crews 的多 Agent workflow 抽象，并与 AutoGen/LangGraph 交叉验证；产品化宣传和效果结论需保守处理。

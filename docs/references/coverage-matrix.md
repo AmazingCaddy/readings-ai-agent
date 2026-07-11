@@ -21,7 +21,7 @@
 | RAG | 待补 | RAG paper；Self-RAG 候选；LlamaIndex docs | LlamaIndex examples 候选 | RAG paper 摘要已精读；部分验证 | 需要现代 RAG 工程实践和最小实验 |
 | Memory / 知识库治理 | LangGraph memory docs | MemGPT；MemoryBank；Generative Agents；LangGraph memory docs | Letta docs；Zep docs | LangGraph memory 关键段落已精读；部分验证 | 仍缺写入守门、冲突治理、隐私边界的工程案例 |
 | Planning / Orchestration | 待补 | Tree of Thoughts；Reflexion；LangGraph docs | LangGraph docs | 部分链接已复核 | 需要 planner/executor 和状态机工程资料 |
-| 多 Agent | 待补 | Multi-agent debate 候选；AutoGen docs；CrewAI docs | AutoGen docs；CrewAI docs | 部分链接已复核 | 需要真实工程边界和成本资料 |
+| 多 Agent | 待补 | Multi-agent debate 候选；AutoGen docs；CrewAI docs；AgentBench | AutoGen docs；CrewAI docs | 关键段落已精读；部分验证 | 需要最小对比实验、真实工程边界和成本资料 |
 | Evaluation / Observability | 待补 | AgentBench；WebArena | OpenAI Evals；LangSmith；Phoenix 候选 | 关键摘要/README 已精读；部分验证 | 需要 trace observability 资料、trajectory 最小实验、回归集工程案例 |
 | Production / 安全 / 成本 | 待补 | OWASP LLM Top 10；NIST AI RMF | 框架安全文档候选 | 关键风险项已精读；部分验证 | 需要最小 prompt injection 实验、框架安全资料、审计资料 |
 | 框架生态 | 待补 | OpenAI Agents SDK；LangGraph；LlamaIndex；AutoGen；Semantic Kernel；CrewAI | 官方 examples 候选 | 部分链接已复核 | 需要统一比较维度 |
