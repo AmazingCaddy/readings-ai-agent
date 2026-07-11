@@ -4,12 +4,12 @@
 - DOI：https://doi.org/10.48550/arXiv.2310.11511
 - 作者 / 机构：Akari Asai, Zeqiu Wu, Yizhong Wang, Avirup Sil, Hannaneh Hajishirzi
 - 发布时间：2023-10-17
-- 最后复核日期：2026-07-11
+- 最后复核日期：2026-07-12
 - 类型：论文 / RAG
 - 主题：RAG / Adaptive Retrieval / Self-Reflection / Citation Accuracy
 - 适合阶段：进阶 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接、HTTP metadata、arXiv 元数据和摘要已复核；支撑“RAG 不能机械固定检索，retrieval necessity、passage relevance、generation critique 和 citation accuracy 都需要评估”的窄边界；标准库 RAG retrieval strategy audit 已补 top-k / filter / chunking / rerank 需要 eval 的本地固定失败样例；真实工程 RAG stack、当前模型表现、成本和延迟仍部分验证
+- 是否已验证：来源链接、HTTP metadata、arXiv API 元数据和摘要已于 2026-07-12 复核；支撑“RAG 不能机械固定检索，retrieval necessity、passage relevance、generation critique 和 citation accuracy 都需要评估”的窄边界；标准库 RAG retrieval strategy audit 已补 top-k / filter / chunking / rerank 需要 eval 的本地固定失败样例；真实工程 RAG stack、当前模型表现、成本和延迟仍部分验证
 
 ## 一句话总结
 
@@ -25,12 +25,13 @@ Self-RAG 适合用来解释进阶 RAG 的一个关键问题：不是每个问题
 
 ## 支撑证据
 
-- arXiv 页面返回 HTTP 200；HTTP `last-modified` 为 2023-10-19。
-- arXiv 元数据显示 submitted on 2023-10-17，当前版本 v1。
-- 摘要写明 RAG decreases factual inaccuracies from sole reliance on parametric knowledge。
-- 摘要写明固定数量检索、不判断是否必要或 passage 是否相关，可能 diminishes LM versatility 或导致 unhelpful response generation。
-- 摘要写明 Self-RAG adaptively retrieves passages on-demand，并通过 reflection tokens 生成和反思 retrieved passages 及自身生成。
-- 摘要写明其在 long-form generations 的 factuality 和 citation accuracy 上相对比较模型有提升。
+- 2026-07-12 抓取 arXiv 页面返回 HTTP 200；响应头 `last-modified: Thu, 19 Oct 2023 00:02:46 GMT`。
+- arXiv API 返回有效条目：`2310.11511v1`，published / updated `2023-10-17T18:18:32Z`，primary category `cs.CL`。
+- arXiv comment 标注 `30 pages, 2 figures, 12 tables`。
+- API 摘要写明 RAG decreases factual inaccuracies from sole reliance on parametric knowledge。
+- API 摘要写明固定数量检索、不判断是否必要或 passage 是否相关，可能 diminishes LM versatility 或导致 unhelpful response generation。
+- API 摘要写明 Self-RAG adaptively retrieves passages on-demand，并通过 reflection tokens 生成和反思 retrieved passages 及自身生成。
+- API 摘要写明其在 long-form generations 的 factuality 和 citation accuracy 上相对比较模型有提升；该声明只属于论文实验设置，不能外推为当前 API 模型、普通工程 RAG 或托管检索默认收益。
 
 ## 是否进入正文
 
