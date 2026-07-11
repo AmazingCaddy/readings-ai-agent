@@ -98,6 +98,10 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
     - 目标：把 Production、Cost、Latency、Rate Limits、Token Counting、Batch、Flex 和 Prompt Caching 文档中的生产质量边界整理成可审计字段表。
     - 状态：已完成标准库 field audit，见 [Production Cost / Latency / Rate-Limit Audit](production-cost-latency-rate-limit/README.md) 和 [2026-07-11 结果](production-cost-latency-rate-limit/results-2026-07-11.md)；真实 API harness 已准备，见 [Real Production Cost / Latency / Rate-Limit Validation](real-production-cost-latency-validation/README.md)。尚未调用真实 API、读取真实 rate-limit headers、提交 Batch job、使用 Flex 或触发 Prompt Caching；不能证明任何真实成本、P95 latency、吞吐、缓存命中率、优化收益或生产可靠性。
 
+20. Browser action trace audit 实验
+    - 目标：把 Browser Use、Playwright、Anthropic Computer Use 和权限 / observability evidence 中的 browser agent 边界整理成可审计 action trace 字段表。
+    - 状态：已完成标准库 field audit，见 [Browser Action Trace Audit](browser-action-trace-audit/README.md) 和 [2026-07-11 结果](browser-action-trace-audit/results-2026-07-11.md)。尚未启动真实浏览器、运行 Playwright / Browser Use / Anthropic computer use 或调用真实模型；不能证明真实网页任务成功率、点击精度、classifier 效果、CAPTCHA/2FA/stealth、成本、延迟、合规或生产可靠性。
+
 ## 实验记录要求
 
 - 明确假设。

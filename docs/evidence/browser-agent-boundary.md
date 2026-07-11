@@ -32,8 +32,10 @@ Browser Agent 是高风险的工具型 Agent：它把模型决策连接到真实
 ## 实验验证
 
 - 是否需要实验：是
-- 实验设计：在本地 demo website 上实现同一任务的多个版本：固定 Playwright workflow、Browser Use browser agent，以及可选 Anthropic computer-use-style action loop。任务包括只读信息提取、表单填写但不提交、需要确认后提交、文件上传、错误元素、外部页面/截图注入和登录态 profile。记录 browser action trace、DOM / screenshot state、tool decisions、action validation、approval、cost、latency、失败分类和敏感字段脱敏。
-- 结果：尚未完成真实实验。当前只有文档和 source card 交叉验证，不能证明 Browser Use 或任意浏览器 Agent 的真实成功率、稳定性、成本、CAPTCHA/stealth 或生产可靠性。
+- 已完成：标准库 [Browser Action Trace Audit](../experiments/browser-action-trace-audit/README.md)。该 audit 比较 `naive_trace` 和 `governed_trace`：`naive_trace` 0/8 通过，`governed_trace` 8/8 通过，覆盖 action trace、page state、side-effect approval、profile isolation、file upload control、external content untrusted boundary、sensitive trace redaction 和 failure classification。
+- 支撑范围：该结果支撑“浏览器 Agent 练习和评测需要记录哪些字段”的窄结论。
+- 仍需实验：在本地 demo website 上实现同一任务的多个版本：固定 Playwright workflow、Browser Use browser agent，以及可选 Anthropic computer-use-style action loop。任务包括只读信息提取、表单填写但不提交、需要确认后提交、文件上传、错误元素、外部页面/截图注入和登录态 profile。记录 browser action trace、DOM / screenshot state、tool decisions、action validation、approval、cost、latency、失败分类和敏感字段脱敏。
+- 结果边界：尚未完成真实浏览器 / 模型实验。当前标准库 audit 不启动浏览器、不读取真实 DOM / screenshot、不调用 Browser Use / Playwright / Anthropic API，不能证明 Browser Use 或任意浏览器 Agent 的真实成功率、点击精度、classifier 行为、成本、CAPTCHA/stealth、合规或生产可靠性。
 
 ## 结论状态
 

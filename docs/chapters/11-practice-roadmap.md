@@ -330,6 +330,7 @@
 - OpenAI Evals repo、OpenAI Evaluation guides 和 OpenAI Graders docs 可作为小型回归测试、trace grading、dataset / eval run、tool-call grading、LLM-as-judge 校准和 reward hacking 风险的结构参考；标准库 grader misalignment / reward hacking audit 可作为无模型时的最小误判样本模板；Agent eval 仍应结合 trace、业务任务和人工复核。OpenAI Evals / graders platform 正在退役，具体平台入口需要按当前官方文档复核。
 - SWE-agent 论文和 mini-SWE-agent docs/source 可作为 repo issue / coding agent 进阶练习参考：SWE-agent 支撑 agent-computer interface、仓库导航、文件编辑和测试执行的重要性；mini-SWE-agent 补强当前轻量 coding agent 入口、bash-only 最小控制流、confirm/yolo/human 模式、trajectory、cost/call limit 和 sandbox 配置边界。真实试跑仍需复核安装、sandbox、权限和成本。
 - Browser Use / Playwright / Anthropic Computer Use source cards 可作为 Browser / Computer Use Agent 进阶练习参考：它们支撑浏览器动作、profile/auth 风险、custom tools、screenshot/mouse/keyboard control、VM/container 隔离、action validation/logging 和 trace viewer 的工程边界；真实 browser/computer-use agent 任务成功率、点击精度、classifier 行为、成本、延迟、CAPTCHA/stealth、合规和生产可靠性仍待实验。
+- Browser Action Trace Audit 可作为无真实浏览器时的验收字段模板：项目应记录 action trace、DOM/screenshot state、side-effect approval、profile isolation、file upload control、external content boundary、trace redaction 和 failure classification。它不能替代固定 Playwright workflow、Browser Use 或 computer-use-style action loop 的真实试跑。
 - 实践路线 smoke harness 已完成标准库试跑，支持“每个项目都要有验收标准、trace、失败分类和可重复运行命令”的学习建议；仍不能替代真实 Structured Outputs、File Search/RAG、轻量 eval harness、Agents SDK trace/eval、Usage/Cost 和 Rate limits 试跑。
 - 安全 regression set 最小实验已完成标准库试跑，支持“生产化练习需要覆盖多类安全 case，并记录误报、漏报和 trace 泄漏”的学习建议；仍不能替代真实模型 / 框架 guardrail / HITL approval 试跑。
 
@@ -345,7 +346,7 @@
 - 如何把这些项目逐步发布成 GitHub Pages 的可跟练教程？
 - 如何把安全 regression set 迁移到真实 tool-calling / Agents SDK / MCP 工具练习？
 - Repo Issue Agent 应优先用 SWE-agent、mini-SWE-agent、OpenAI Agents SDK、LangGraph 还是固定 workflow 做最小对比？toy repo 实验设计已准备；仍需真实运行记录成本、sandbox、回滚和测试反馈。
-- 固定 Playwright workflow 与 Browser Use / browser agent 在同一 demo site 上的成功率、步骤数、失败原因、成本、延迟、trace 可读性和审批负担有什么差异？
+- 固定 Playwright workflow 与 Browser Use / browser agent 在同一 demo site 上的成功率、步骤数、失败原因、成本、延迟、trace 可读性和审批负担有什么差异？标准库 browser action trace audit 已给出字段模板，真实 demo site 对比仍待做。
 
 ## 本章小结
 
@@ -375,6 +376,7 @@
 - [SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering](../sources/source-cards/2024-swe-agent-paper.md)
 - [mini-SWE-agent Documentation and Source](../sources/source-cards/2026-mini-swe-agent-docs.md)
 - [Browser Use and Playwright Browser Automation References](../sources/source-cards/2026-browser-use-playwright.md)
+- [Browser Action Trace Audit](../experiments/browser-action-trace-audit/README.md)
 - [Evidence Note: 实践路线与 Cookbook 示例边界](../evidence/practice-roadmap-cookbook-boundary.md)
 - [Evidence Note: Browser Agent 与网页自动化边界](../evidence/browser-agent-boundary.md)
 - [实践路线 Smoke Harness 结果](../experiments/practice-roadmap-harness/results-2026-07-11.md)

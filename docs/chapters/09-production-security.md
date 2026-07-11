@@ -230,6 +230,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - LangGraph current docs 已补充 HITL interrupt / persistence 的框架机制证据：`interrupt()` 可暂停 graph execution，`Command(resume=...)` 可恢复，checkpointer 按 `thread_id` 保存 graph state snapshots，approval workflow、review/edit state 和 tool 内中断可放在 critical actions 前；但文档也明确 resume 会重新执行 node、`interrupt()` 前代码会重跑、interrupt 顺序不能随意变化、side effects 需要幂等或放在确认之后，内存型 checkpointer 不适合生产持久化。这支撑“审批要进入可恢复状态机”的窄边界，不证明真实 LangGraph 生产审批流程默认安全。
 - Anthropic MCP connector / tunnels 文档已补充 remote MCP tools 和私有网络 MCP server 的产品集成证据：allowlist/denylist、per-tool config、OAuth bearer token、third-party server trust review、data retention、outbound-only tunnel、inner TLS、allowed IPs、凭据保护和 shared responsibility。它们支撑“远程工具连接也要纳入权限、数据保留和审计设计”的窄边界，但不证明 connector、tunnel 或任意 MCP server 默认安全或生产可靠。
 - Browser Use / Playwright / Anthropic Computer Use 资料已补充 browser agent 和 computer-use agent 的工程边界：浏览器动作、登录态 profile、截图、鼠标键盘控制、文件上传、表单提交、custom tools、human-in-the-loop、VM/container 隔离、domain allowlist、action validation/logging 和 Playwright action trace 都需要纳入权限、审计和脱敏设计。Anthropic 文档还提示网页或图片中的指令可能造成 prompt injection，并提供 screenshot classifier 作为一层确认机制；这些资料不能证明真实网站任务、点击精度、classifier 效果、CAPTCHA/stealth、合规或生产可靠性。
+- 本地标准库 browser action trace audit 显示，browser/computer-use 工具的生产前检查应把 action trace、DOM/screenshot state、side-effect approval、profile isolation、file upload control、外部内容不可信边界、trace 脱敏和 failure classification 拆成可审计字段。该实验支撑权限和审计字段设计，但不证明真实 browser agent、防护层、screenshot classifier 或 sandbox 有效。
 - 本地标准库 prompt injection / tool permission 实验显示，prompt-only 模式会产生退款副作用并泄露假 secret 到 trace；应用层权限策略可以阻断写工具、记录拒绝原因并脱敏敏感字段。该实验支撑最小权限、写工具审批和 trace 脱敏的流程设计；真实 API harness 已准备但结果待跑，仍需真实模型和框架 guardrail 实验。
 - 本地标准库安全 regression set 显示，回归测试应同时覆盖 prompt injection、授权、数据边界、金额阈值、敏感信息、破坏性工具、幂等性和 benign case；该实验支撑安全测试矩阵设计，但不证明真实 guardrail 拦截率。
 - 本地标准库 agentic security regression set 显示，agentic-specific 安全回归还应覆盖 tool poisoning、memory poisoning、MCP / remote tool 外传、computer-use destructive action、runaway loop 和 inter-agent message 边界；toy runtime 中 `policy_enforced_hitl` 仍未阻断 computer-use destructive action，说明 HITL 不能替代 sandbox / runtime containment。该结果不证明真实 sandbox、detector、guardrail 或 HITL 有效。
@@ -246,7 +247,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - 针对具体 Agent 框架，guardrails、approval、sensitive trace 和 tool permission 覆盖范围有哪些差异？已完成 OpenAI Agents SDK、LangGraph 和 Semantic Kernel 第一轮文档验证，仍需横向比较真实 pause/resume、审批状态序列化、参数快照、幂等执行和 trace 脱敏。
 - MCP 工具生态中的安全边界应该如何落到 host、client 和 server 实现？
 - Anthropic MCP connector / tunnels 的 allowlist/denylist、OAuth token、data retention、shared responsibility 和 tunnel credential rotation 在真实试跑中如何记录到 trace 和安全检查清单？
-- Browser Agent 如何在真实或仿真网站中隔离 profile、限制登录态、确认表单/购物/上传等写操作，并记录可审计 action trace？
+- Browser Agent 如何在真实或仿真网站中隔离 profile、限制登录态、确认表单/购物/上传等写操作，并记录可审计 action trace？标准库 browser action trace audit 已完成字段模板，真实 Playwright / Browser Use / computer-use 对照仍待做。
 - 真实模型 / 框架 guardrail / Prompt Shields 或同类检测层下，prompt injection 防护的误报、漏报、成本、延迟和人工审批负担如何测量？真实 API harness 已准备，仍需实际运行并比较 prompt-only、detector-only、policy-enforced 和 HITL 对照。
 - agentic-specific 安全 regression set 应如何覆盖 goal hijacking、tool misuse、identity / privilege abuse、memory poisoning、insecure inter-agent communication、cascading failures 和 rogue agent / runaway loop 停止条件？
 - 哪些日志字段既能支持审计，又不会引入新的隐私风险？已完成 observability/trace 第一轮验证，仍需脱敏和访问控制实验。
@@ -277,6 +278,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - [Anthropic MCP Connector and Tunnels Documentation](../sources/source-cards/2026-anthropic-mcp-docs.md)
 - [Browser Use and Playwright Browser Automation References](../sources/source-cards/2026-browser-use-playwright.md)
 - [Anthropic Computer Use Tool Documentation](../sources/source-cards/2026-anthropic-computer-use-docs.md)
+- [Browser Action Trace Audit](../experiments/browser-action-trace-audit/README.md)
 - [OpenAI Production, Cost, Latency and Rate Limit Documentation](../sources/source-cards/2026-openai-production-cost-latency-docs.md)
 - [OpenAI Batch, Flex Processing and Prompt Caching Documentation](../sources/source-cards/2026-openai-batch-flex-prompt-caching-docs.md)
 - [OpenAI Moderation Documentation](../sources/source-cards/2026-openai-moderation-docs.md)

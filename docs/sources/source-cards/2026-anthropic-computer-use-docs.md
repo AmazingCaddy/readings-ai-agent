@@ -9,7 +9,7 @@
 - 主题：Computer Use / Browser Agent / Desktop Automation / Security / Trace
 - 适合阶段：进阶 / Browser Agent 与 Production 安全
 - 可信度等级：A
-- 是否已验证：官方 Markdown 页面和 HTTP metadata 已复核；支撑 computer use beta、screenshot / mouse / keyboard action model、client-side tool execution、container / VM isolation、minimal privileges、sensitive data avoidance、domain allowlist、human confirmation、screenshot prompt injection classifiers、action validation、action logging、latency / vision / coordinate / reliability limitations、data retention 和 token overhead 边界；不证明真实网页/桌面任务成功率、点击精度、classifier 拦截率、成本、延迟、合规或生产可靠性
+- 是否已验证：官方 Markdown 页面和 HTTP metadata 已复核；标准库 Browser Action Trace Audit 已完成字段审计；支撑 computer use beta、screenshot / mouse / keyboard action model、client-side tool execution、container / VM isolation、minimal privileges、sensitive data avoidance、domain allowlist、human confirmation、screenshot prompt injection classifiers、action validation、action logging、latency / vision / coordinate / reliability limitations、data retention、token overhead、trace 脱敏和失败分类边界；不证明真实网页/桌面任务成功率、点击精度、classifier 拦截率、成本、延迟、合规或生产可靠性
 
 ## 一句话总结
 
@@ -31,6 +31,7 @@ Anthropic computer use 文档适合说明“让模型看屏幕并操作鼠标键
 - Limitations 明确包括 latency、computer vision accuracy、tool selection reliability、scrolling reliability、spreadsheet interaction、账号创建/社交平台内容限制、vulnerabilities、illegal actions 等。
 - Data retention 段落说明 computer use 是 client-side tool，screenshots、mouse actions、keyboard inputs 和 session files 存储在开发者环境中；Anthropic 按 API data retention 处理 API 请求。
 - Pricing 段落说明 computer use beta 会增加 system prompt overhead，tool definition 也有 token 开销，截图和 tool execution results 会产生额外 token 消耗。
+- 本地标准库 Browser Action Trace Audit 把上述安全和 logging 边界拆成 action trace、DOM/screenshot state、side-effect approval、profile isolation、file upload control、external content untrusted boundary、sensitive trace redaction 和 failure classification 字段模板。
 
 ## 支撑证据
 
@@ -45,11 +46,13 @@ Anthropic computer use 文档适合说明“让模型看屏幕并操作鼠标键
 - Best practices 段落给出 validate actions before running them 和 log actions for debugging 的应用侧代码形态。
 - Limitations 段落明确 computer use is in beta，并列出 latency、vision accuracy、tool selection reliability 和 vulnerabilities 等限制。
 - Data retention 段落说明 computer use data 由开发者应用控制存储位置和方式，ZDR eligibility 取决于相应安排和 API data retention。
+- 2026-07-11 运行 [Browser Action Trace Audit](../../experiments/browser-action-trace-audit/README.md) 成功；`naive_trace` 0/8 通过，`governed_trace` 8/8 通过。该结果只支撑 browser/computer-use action trace 字段设计，不调用 Anthropic API、不启动真实 VM/container，也不验证 screenshot classifier 行为。
 
 ## 可能的问题
 
 - 这是 Anthropic 产品文档，不是独立评测；不能证明真实点击精度、任务完成率、跨网站稳定性、classifier 拦截率或生产安全效果。
 - Screenshot prompt injection classifier 是供应商实现细节；正文只能写成“可以作为一层防护”，不能写成通用浏览器 Agent 默认能力。
+- Browser Action Trace Audit 是标准库字段审计，不是 Anthropic computer use 实测；它不能证明真实点击精度、坐标/滚动可靠性、classifier 拦截率、成本、延迟或生产安全效果。
 - Computer use 涉及真实桌面、网页、文件、账号和外部副作用；初学者练习应使用 demo site、测试账号、隔离 profile、最小权限和人工确认。
 - 文档给出 token overhead 和 screenshot token 消耗方向，但本手册未实测具体成本、延迟或缓存效果。
 
@@ -64,8 +67,9 @@ Anthropic computer use 文档适合说明“让模型看屏幕并操作鼠标键
 - 在本地 demo site 上比较固定 Playwright workflow、Browser Use browser agent 和 Anthropic computer-use-style action loop 的 trace 字段、人工确认点和失败分类。
 - 加入网页文本注入、截图/OCR 注入、误点击 destructive button、坐标缩放错误、登录态 profile 和文件上传 case，记录 allow/block/confirm、action log、screenshot history、成本、延迟和敏感数据脱敏。
 - 如果接入 Anthropic API，必须单独记录 beta header、模型、token overhead、screenshot token usage、classifier 是否要求确认和用户确认后的动作。
+- 当前已完成无 API 字段审计；真实 computer-use-style action loop 仍需单独实验记录真实 screenshot/DOM state、动作日志、确认点、成本、延迟和失败样例。
 
 ## 是否进入正文
 
 - 结论：部分进入
-- 原因：可作为 Browser/Computer-use Agent 的官方工程边界资料，支撑 sandbox / VM / container、最小权限、domain allowlist、人工确认、prompt injection classifier、action validation、action logging、limitations、data retention 和 token overhead 的保守正文；不能支撑真实任务成功率、点击精度、安全 classifier 效果、成本、延迟或生产可靠性结论。
+- 原因：可作为 Browser/Computer-use Agent 的官方工程边界资料，支撑 sandbox / VM / container、最小权限、domain allowlist、人工确认、prompt injection classifier、action validation、action logging、limitations、data retention、token overhead、trace 脱敏和失败分类的保守正文；不能支撑真实任务成功率、点击精度、安全 classifier 效果、成本、延迟或生产可靠性结论。
