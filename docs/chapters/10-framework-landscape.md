@@ -1,0 +1,220 @@
+# 框架生态比较
+
+## 本章适合谁
+
+如果你已经知道 Agent 的核心组件，但面对 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI、Semantic Kernel 等框架不知道怎么选，这一章适合阅读。
+
+本章不做“最佳框架排行榜”。框架更新很快，初学者更应该先学会比较维度，再根据任务选择。
+
+## 你会学到什么
+
+- 为什么不要从框架名开始学习 Agent。
+- 比较 Agent 框架时应该看哪些维度。
+- 常见框架大致适合解决什么问题。
+- 如何用同一个小任务评估多个框架。
+- 为什么框架文档不能直接替代基础概念学习。
+
+## 先用一句话理解
+
+框架是把模型、工具、状态、数据、编排和可观测性组织起来的工程外壳；选框架前，先明确你要控制什么。
+
+## 基础概念
+
+### SDK
+
+SDK 通常提供较轻量的开发抽象，让你更方便地调用模型、定义工具、组织 agent、记录 trace。
+
+它适合从最小 Agent 开始，逐步理解工具调用和运行过程。
+
+### Workflow / Graph Framework
+
+Workflow 或 graph framework 更强调状态、节点、边、条件分支、持久化和恢复。
+
+它适合步骤较多、需要可控流程、需要重试和中断恢复的任务。
+
+### Data / RAG Framework
+
+Data 或 RAG framework 更强调文档接入、切分、索引、检索、reranking、query engine 和知识库治理。
+
+如果你的 Agent 主要问题是“如何可靠使用外部知识”，这类框架通常更相关。
+
+### Multi-agent Framework
+
+Multi-agent framework 强调角色、协作、对话、任务分配和结果合并。
+
+它适合研究或构建多角色任务，但初学者不应把多 Agent 作为默认起点。
+
+### Enterprise Integration
+
+Enterprise integration 更强调和现有系统、权限、插件、业务流程、监控和治理结合。
+
+这类框架可能更适合企业应用，但学习曲线和环境复杂度也更高。
+
+## 比较维度
+
+选择框架时，可以用下面这些问题逐项比较。
+
+### 学习成本
+
+你能否在一天内做出一个最小可运行 demo？核心概念是否容易解释？错误信息是否清楚？
+
+### 控制力
+
+你能否明确控制模型输入、工具调用、状态更新、重试、人工确认和输出格式？
+
+框架越自动，初学者越要小心：自动化能提高效率，也可能隐藏失败原因。
+
+### 状态和编排
+
+系统是否支持任务状态、分支、循环、中断恢复和持久化？复杂任务通常需要这些能力。
+
+### 工具生态
+
+工具定义是否清晰？是否容易做参数校验、权限控制和错误处理？是否能接入 MCP 或现有服务？
+
+### RAG 和 Memory
+
+框架是否擅长文档接入、检索、记忆写入、长期状态和知识更新？如果任务重依赖知识库，这一点比多 Agent 更重要。
+
+### Observability
+
+是否能看到 trace、工具调用、状态变化、成本和错误？没有可观测性，复杂 Agent 很难调试。
+
+### 生产化边界
+
+框架是否支持权限、审计、部署、版本管理、回滚和人类确认？如果不支持，应用层需要自己补齐。
+
+## 常见框架的学习定位
+
+下面是基于当前 source cards 的保守定位。多数框架资料目前是“链接已复核，内容待精读”，因此不把这些定位写成绝对结论。
+
+### OpenAI Agents SDK
+
+适合作为理解现代 Agent SDK 抽象、工具调用和 tracing 的入口。它和 OpenAI API 生态结合紧密，适合先做最小 tool-calling agent。
+
+需要注意：SDK 抽象不等于 Agent 的全部理论，也不替代权限和评测设计。
+
+### LangGraph
+
+适合学习状态图、workflow-agent hybrid、可控编排、持久化和复杂流程。
+
+如果你的任务需要分支、循环、中断、重试和状态恢复，LangGraph 这类 graph 抽象很有学习价值。
+
+需要注意：LangGraph 的术语是框架抽象，不应直接当作所有 Agent 系统的通用定义。
+
+### LlamaIndex
+
+适合学习 RAG、数据连接、索引、retriever、query engine 和 agent data framework。
+
+如果你的核心问题是“让 Agent 正确使用文档和知识库”，LlamaIndex 这类 data framework 比多 Agent 框架更直接。
+
+需要注意：RAG 的通用概念和框架实现细节要分开理解。
+
+### AutoGen
+
+适合学习多 Agent 对话、协作和角色化任务组织。
+
+它适合在理解单 Agent 和编排之后阅读，用来分析多 Agent 的价值和复杂度。
+
+需要注意：多 Agent 示例容易显得强大，但要评估成本、调试、失败恢复和最终决策责任。
+
+### CrewAI
+
+适合作为多 Agent 工程生态的补充资料。它的文档可用于横向比较角色、任务和协作抽象。
+
+需要注意：当前 source card 将其可信度标为 B，正文应重点用来比较抽象和适用场景，而不是引用营销式结论。
+
+### Semantic Kernel
+
+适合理解企业应用中模型、插件、工具和编排集成，尤其是 Microsoft 生态内的实践。
+
+需要注意：企业集成概念较多，初学者应先掌握工具调用、状态和编排，再读复杂集成文档。
+
+## 通俗例子
+
+假设你要做“读取公司 FAQ，并在必要时查询订单系统”的客服 Agent。
+
+如果你主要想学习最小工具调用，可以从 SDK 开始。
+
+如果你最难的是文档检索质量，可以优先看 RAG/data framework。
+
+如果流程包含多个状态、审批和失败恢复，可以看 graph/workflow framework。
+
+如果任务天然需要多个角色协作，例如 researcher、writer、reviewer，再考虑 multi-agent framework。
+
+同一个任务可以用不同框架完成。比较时不要只看代码行数，还要看 trace 是否清楚、失败是否容易定位、权限是否可控、后续维护是否简单。
+
+## 工程实践
+
+### 用同一个小任务比较框架
+
+设计一个固定任务，例如：用户提出问题，系统检索文档，必要时调用一个查询工具，最后输出带来源的答案。
+
+用不同框架实现同一任务，记录这些指标：
+
+- 完成最小 demo 的时间。
+- 工具 schema 是否清晰。
+- 错误处理是否自然。
+- trace 是否容易阅读。
+- 状态是否容易恢复。
+- 增加人工确认是否方便。
+- 加入 eval 是否方便。
+
+### 先掌握底层概念
+
+不要把框架教程当成 Agent 概念本身。先理解 tool use、RAG、memory、planning、eval、security，再看框架如何封装这些概念。
+
+### 避免过早框架锁定
+
+早期学习项目可以选择简单工具，但不要把所有章节都绑定到一个框架。手册的目标是建立可迁移知识。
+
+### 记录版本和复核日期
+
+框架文档变化很快。引用时应该记录复核日期，避免读者拿旧抽象理解新版本。
+
+## 常见误区
+
+- 误区一：最流行的框架就是最适合自己的框架。任务边界比流行度更重要。
+- 误区二：框架能自动解决 Agent 安全问题。权限、审计和 eval 仍需要系统设计。
+- 误区三：多 Agent 框架适合所有复杂任务。很多任务更需要 workflow、RAG 或回归测试。
+- 误区四：示例跑通就代表可生产。示例通常没有覆盖权限、成本、失败恢复和审计。
+- 误区五：框架抽象就是行业标准术语。框架术语需要和通用概念区分。
+
+## 已验证结论
+
+- OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、Semantic Kernel 均有 A 级 source card，可作为框架生态章节的重要 references；多数内容仍待精读。
+- CrewAI source card 当前可信度为 B，可作为生态补充和横向比较资料，不宜单独支撑关键结论。
+- LangGraph source card 明确其适合状态图、可控 workflow 和复杂任务编排；但它是特定框架，不应被写成通用定义。
+- LlamaIndex source card 明确其适合 RAG、数据连接、索引和 agent data framework；需区分通用 RAG 概念和框架实现。
+
+## 待验证问题
+
+- 各框架的 tracing 和 observability 能力如何实际比较？
+- 哪些框架更容易实现权限隔离和人工确认？
+- 同一任务在不同框架下的成本、延迟和可调试性差异有多大？
+- 框架版本演进是否改变了核心抽象？
+- 如何为初学者设计不被框架绑定的实践项目？
+
+## 本章小结
+
+- 选框架前，先明确任务的核心难点。
+- SDK、graph/workflow、RAG/data、multi-agent、enterprise integration 各有侧重。
+- 比较框架时要看控制力、状态、工具、RAG/memory、observability 和生产化边界。
+- 初学者应先学底层概念，再用框架提高工程效率。
+- 框架文档适合做 reference，但关键结论仍需要精读和交叉验证。
+
+## References
+
+### Framework Docs
+
+- [OpenAI Agents SDK Documentation](../sources/source-cards/2026-openai-agents-sdk-docs.md)
+- [LangGraph Documentation](../sources/source-cards/2026-langgraph-docs.md)
+- [LlamaIndex Documentation](../sources/source-cards/2026-llamaindex-docs.md)
+- [Microsoft AutoGen Documentation](../sources/source-cards/2026-autogen-docs.md)
+- [CrewAI Documentation](../sources/source-cards/2026-crewai-docs.md)
+- [Microsoft Semantic Kernel Documentation](../sources/source-cards/2026-semantic-kernel-docs.md)
+
+### Governance
+
+- [References 覆盖矩阵](../references/coverage-matrix.md)
+- [结论证据台账](../evidence/claim-ledger.md)

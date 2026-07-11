@@ -1,0 +1,174 @@
+# 论文、文档与资料地图
+
+## 本章适合谁
+
+如果你想继续深入学习 AI Agent，但不想被资料海淹没，这一章适合阅读。
+
+本章把当前资料库按主题整理，并说明每类资料适合什么时候读、应该怎样读、哪些结论仍需验证。
+
+## 你会学到什么
+
+- 如何区分论文、官方文档、框架文档、源码和安全指南。
+- 初学者应该按什么顺序读资料。
+- 当前手册的 source cards 覆盖了哪些主题。
+- 哪些资料已可支撑正文，哪些还只是候选。
+- 如何继续扩展资料库而不降低正确性。
+
+## 先用一句话理解
+
+资料地图不是链接收藏夹，而是把资料按主题、可信度、学习阶段和验证状态组织起来。
+
+## 资料类型
+
+### 论文
+
+论文适合理解一个想法的来源、实验设置和研究边界。
+
+但论文不等于工程最佳实践。很多论文使用的模型、环境和 API 已经过时，不能直接搬到生产系统。
+
+### 官方 API 文档
+
+官方 API 文档适合理解当前接口、参数、限制和推荐用法。
+
+它通常最接近实际开发，但可能不解释完整背景。初学者应先读手册概念，再把 API 文档当查询资料。
+
+### 框架文档
+
+框架文档适合理解工程抽象和实践路径。
+
+但框架文档会带有产品定位，也会随版本变化。引用时要记录复核日期，并避免把框架术语当成行业通用定义。
+
+### 源码和示例
+
+源码和示例适合学习可运行结构、目录组织、错误处理和测试方式。
+
+但示例往往简化了权限、部署、成本和安全边界，不能直接代表生产方案。
+
+### 安全和治理指南
+
+安全和治理指南适合建立风险意识、检查清单和上线前审查方法。
+
+它们通常不是 Agent 专用教程，需要和具体工具、数据流、权限模型结合。
+
+## 按主题阅读
+
+### Agent 基础与架构
+
+先读手册 01 和 04，再看 ReAct、Reflexion、Tree of Thoughts 和 LangGraph 文档。
+
+阅读重点不是记住所有方法名，而是理解：模型如何在观察、行动、状态和反馈之间循环。
+
+### LLM 接口与工具调用
+
+先读手册 02 和 03，再看 Responses API、Function Calling docs 和 Toolformer。
+
+阅读重点是区分：模型生成工具调用参数，应用程序执行工具，工具结果再回到模型上下文。
+
+### MCP 与工具生态
+
+先读手册 05，再看 MCP official docs 和 MCP servers repo。
+
+阅读重点是 host、client、server、tools、resources 和权限边界。
+
+### RAG 与 Memory
+
+先读手册 06，再看 RAG paper、LlamaIndex、LangGraph memory、MemGPT、MemoryBank、Generative Agents、Letta 和 Zep。
+
+阅读重点是区分外部知识检索、短期状态、长期记忆、写入守门和隐私风险。
+
+### Planning、Orchestration 与多 Agent
+
+先读手册 07，再看 Tree of Thoughts、Reflexion、AutoGen、CrewAI 和 LangGraph。
+
+阅读重点是任务拆解、状态管理、反馈、重规划、角色协作和成本。
+
+### Evaluation 与 Observability
+
+先读手册 08，再看 AgentBench、WebArena 和 OpenAI Evals。
+
+阅读重点是任务环境、trajectory、trace、regression set 和错误分类。
+
+### Production、安全与治理
+
+先读手册 09，再看 OWASP LLM Top 10 和 NIST AI RMF。
+
+阅读重点是 prompt injection、权限、数据边界、审计、人工确认、降级和风险管理。
+
+### 框架生态与实践
+
+先读手册 10 和 11，再横向阅读 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI、Semantic Kernel 和 OpenAI Cookbook。
+
+阅读重点是选择维度和可迁移概念，而不是追随单一框架。
+
+## 当前 Source Card 状态
+
+当前资料库已经覆盖这些大类：
+
+- Agent 架构：ReAct、Reflexion、Tree of Thoughts、LangGraph。
+- Tool Use：Toolformer、OpenAI Function Calling docs、Responses API docs。
+- MCP：MCP official docs、MCP servers repo。
+- RAG：RAG paper、LlamaIndex。
+- Memory：MemGPT、MemoryBank、Generative Agents、LangGraph memory、Letta、Zep。
+- Eval：AgentBench、WebArena、OpenAI Evals repo。
+- Security / Production：OWASP LLM Top 10、NIST AI RMF。
+- Frameworks：OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI、Semantic Kernel。
+- Practice：OpenAI Cookbook、MCP servers repo、OpenAI Evals repo。
+
+大部分 source cards 目前是“链接或元数据已复核，内容待精读”。因此它们可以支撑章节中的学习方向、术语边界和保守结论，但还不能支撑过强的工程断言。
+
+## 如何继续扩展资料库
+
+新增资料时，先问五个问题：
+
+1. 资料来自谁？官方、论文、源码、框架团队、个人博客还是营销材料？
+2. 它解决哪个主题？是否补齐当前覆盖矩阵缺口？
+3. 链接和元数据是否可验证？
+4. 核心结论是否能被另一个独立来源或实验支撑？
+5. 初学者是否应该现在读，还是放到进阶资料？
+
+只有通过这些问题的资料，才适合进入 source cards。只有完成精读和交叉验证的结论，才适合迁移到正文。
+
+## 常见误区
+
+- 误区一：资料越多越好。没有验证状态的资料会增加噪声。
+- 误区二：论文结论可以直接当工程建议。研究环境和生产环境不同。
+- 误区三：官方文档永远完整。官方文档可能偏 API 细节，缺少学习路径。
+- 误区四：框架示例就是生产方案。示例通常省略权限、审计和回滚。
+- 误区五：只看最新资料。经典论文和协议文档仍然能提供概念源头。
+
+## 已验证结论
+
+- 当前手册已经建立 source card index、coverage matrix 和 claim ledger，用于控制资料进入正文的门槛。
+- Source card index 明确记录了每张卡片的可信度、验证状态和下一步。
+- Coverage matrix 显示 Evaluation / Observability、Production / Security 等主题仍有缺口，需要继续补 trace、权限、审计和工程案例。
+- Claim ledger 规定只有状态为“可入正文”的结论，才能写成确定性表述；其他结论需要保守表达。
+
+## 待验证问题
+
+- 哪些安全资料最适合补充 prompt injection 的工程案例？
+- 哪些 observability 工具文档适合作为 trace 和 trajectory 的实践 reference？
+- 是否需要为每个框架增加最小示例 source card？
+- 是否需要补充面向初学者的视频课程或书籍？
+- 哪些论文结论已经被现代框架吸收，哪些仍主要是研究方向？
+
+## 本章小结
+
+- 资料地图的目标是组织可信学习路径，不是堆链接。
+- 论文、官方文档、框架文档、源码示例和治理指南各有用途。
+- Source cards、coverage matrix 和 claim ledger 是控制正确性的核心机制。
+- 大部分资料仍需精读和交叉验证，正文应保持保守表述。
+- 后续扩展资料库时，应优先补当前矩阵中的缺口。
+
+## References
+
+### Indexes
+
+- [Source Card 索引](../sources/source-card-index.md)
+- [References 覆盖矩阵](../references/coverage-matrix.md)
+- [结论证据台账](../evidence/claim-ledger.md)
+- [待验证问题](../evidence/validation-backlog.md)
+
+### Templates
+
+- [资料卡片模板](../governance/templates/source-card.md)
+- [Evidence Note 模板](../governance/templates/evidence-note.md)
