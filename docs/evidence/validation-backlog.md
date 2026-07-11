@@ -24,6 +24,8 @@
 | P2 | 同一任务框架横向对比 | OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel | 相同任务实现、LOC、trace、权限、错误恢复、成本/延迟 | 不得推出“某框架默认最好” |
 | P2 | Cookbook 初学者项目试跑 | Structured Outputs、File Search/RAG、Eval、Cost/Rate limit recipes | 环境步骤、阻塞点、费用、失败样例、可跟练教程草稿 | Cookbook 是练习入口，不是生产保证 |
 
+统一运行入口：`uv run python docs/experiments/validation-harness-runner/run_validation_harnesses.py`。无 API key 时，API 类 harness 应返回 `skipped`；本地 stdio / 标准库 harness 应返回 `completed`。runner 结果只说明入口可运行，不代表真实验证完成。
+
 ## 架构模式
 
 - ReAct 在哪些任务中确实优于单次提示或简单 workflow？已完成论文摘要第一轮验证和标准库 ReAct-like tool loop 对比；仍需真实模型、真实工具和真实任务实验。

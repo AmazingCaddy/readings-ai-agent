@@ -2,6 +2,16 @@
 
 实验用于验证工程结论，而不是展示 demo。
 
+## 统一运行入口
+
+真实 / 准真实验证 harness 可以通过统一 runner 执行：
+
+```bash
+uv run python docs/experiments/validation-harness-runner/run_validation_harnesses.py
+```
+
+没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
+
 ## 候选实验
 
 1. Tool calling 参数错误恢复
