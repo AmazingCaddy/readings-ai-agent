@@ -32,7 +32,8 @@
 ## RAG 与 Memory
 
 - 长期记忆是否一定提升 Agent 表现？已完成第一轮验证：不能写成“一定提升”，仍需多会话实验验证在哪些任务中可能造成污染。
-- Chunk size、embedding model、reranking 对结果的影响如何验证？
+- Chunk size、embedding model、reranking 对结果的影响如何验证？LlamaIndex 已完成第一轮工程流程验证，仍需最小 RAG pipeline 实验。
+- RAG 答案如何稳定带 source citation / source nodes？本轮 LlamaIndex 文档搜索未找到直接证据，需补具体示例或实验。
 - Memory 写入守门有哪些可复用设计？Letta/Zep 已提供第一轮工程模式参考，仍需结合本地实验验证。
 - RAG paper 中的 non-parametric memory 与 Agent long-term memory 如何避免术语混淆？
 

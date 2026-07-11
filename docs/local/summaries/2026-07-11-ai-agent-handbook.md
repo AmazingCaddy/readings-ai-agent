@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 16:08 Asia/Shanghai
+**Last Updated:** 2026-07-11 16:09 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -33,9 +33,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 16. Completed first evidence upgrade for long-term memory governance and risk boundary using MemoryBank, MemGPT, Generative Agents, Letta memory docs, Zep concepts docs, OWASP LLM Top 10, and NIST AI RMF.
 17. Completed first evidence upgrade for LLM context engineering and structured output boundaries using OpenAI Text Generation docs, Structured Outputs docs, Responses API reference, Function Calling docs, and existing RAG/Memory and Prompt Injection evidence.
 18. Completed first evidence upgrade for Agent architecture pattern boundaries using ReAct, Reflexion, Tree of Thoughts, LangGraph, OpenAI Agents SDK, and existing Agent/Workflow plus Multi-agent evidence.
+19. Completed first evidence upgrade for RAG engineering flow using RAG paper, LlamaIndex framework overview, RAG overview, Documents / Nodes, Indexing, Retriever, and Query Engine docs.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2022-react-paper.md`, `docs/sources/source-cards/2023-reflexion-paper.md`, `docs/sources/source-cards/2023-tree-of-thoughts-paper.md`, `docs/evidence/agent-architecture-pattern-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/04-agent-architecture.md`, `docs/chapters/07-planning-orchestration.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2026-llamaindex-docs.md`, `docs/evidence/rag-engineering-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/06-rag-memory.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
@@ -49,6 +50,7 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 - Run a toy Agent eval experiment comparing final-answer-only scoring with trajectory/trace-aware scoring.
 - Run a minimal read-only MCP trace experiment to upgrade the MCP role boundary from partial verification toward `可入正文`.
 - Run a minimal RAG vs short-term vs long-term memory comparison experiment.
+- Run a minimal RAG pipeline experiment comparing chunk size, metadata, top-k, rerank/filter, citation correctness, answer faithfulness, latency, and token cost. LlamaIndex docs search did not directly verify source citation/source_nodes behavior in the latest docs.
 - Run a multi-session long-term memory governance experiment covering explicit write confirmation, automatic write failure modes, stale preference invalidation, conflicting facts, and sensitive information handling.
 - Run a minimal prompt-injection permission-boundary experiment covering external document injection, read/write tool separation, parameter validation, human confirmation, and audit logs.
 - In a new session, verify whether the newly added `openaiDeveloperDocs` MCP tools are exposed.

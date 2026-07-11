@@ -35,6 +35,8 @@ RAG 的核心动机包括：
 
 RAG 论文中的设定和现代工程 RAG 系统不完全相同。初学者可以先掌握工程直觉：文档进入知识库，系统把文档切成片段，建立索引，用户提问时检索相关片段，再把片段放进模型上下文。
 
+LlamaIndex 文档把工程 RAG 拆成 Loading、Indexing、Storing、Querying、Evaluation 五个阶段。它还区分 Document 和 Node：Document 是数据源容器，Node 是从源 Document 切出的 chunk，并带有 metadata 和 relationships。这个拆分能帮助初学者理解：RAG 的质量不只取决于模型，也取决于数据如何加载、切分、索引、检索和评测。
+
 ### Memory
 
 Memory 是 Agent 保存和使用历史状态的机制。它可以包括当前任务状态、用户偏好、历史对话、工具结果、反思总结、结构化事实或知识图谱。
@@ -159,6 +161,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 
 - RAG 论文摘要支持“外部检索可以帮助知识密集型生成任务”这一基础动机，并明确提到 provenance 和 world knowledge 更新问题。
 - RAG 论文中的 non-parametric memory 指外部可检索索引一类机制，不应和 Agent 长期记忆治理直接混同。
+- LlamaIndex 文档支持现代工程 RAG 的五阶段流程：Loading、Indexing、Storing、Querying、Evaluation；Documents / Nodes、Indexes、Retrievers 和 Query Engines 可作为初学者理解工程组件的参考。
 - LangGraph memory 文档按 recall scope 区分 short-term/thread-scoped memory 和 long-term/cross-session memory，可作为短期/长期记忆工程边界的参考。
 - LangGraph memory 文档强调 long-term memory 没有 one-size-fits-all solution，写入方式有 hot path 和 background 两类权衡。
 - MemGPT、MemoryBank、Generative Agents 支持长期记忆和记忆管理的研究方向，但不能泛化为“加长期记忆总是更好”。
@@ -202,4 +205,5 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 - [术语边界表](../glossary.md)
 - [结论证据台账](../evidence/claim-ledger.md)
 - [Evidence Note: RAG 与 Memory 边界](../evidence/rag-memory-boundary.md)
+- [Evidence Note: RAG 工程流程边界](../evidence/rag-engineering-boundary.md)
 - [Evidence Note: 长期记忆治理与风险边界](../evidence/memory-governance-risk-boundary.md)

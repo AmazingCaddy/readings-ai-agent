@@ -18,7 +18,7 @@
 | Tool Use / Function Calling | OpenAI function calling docs | Toolformer paper；OpenAI function calling docs；OpenAI Responses API docs | OpenAI cookbook 候选 | 关键段落已精读；部分验证 | 需要最小实验、SDK 文档和其他框架术语对照 |
 | Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；OpenAI Agents SDK docs；LangGraph docs | LangGraph examples 候选 | 关键论文摘要和框架段落已精读；部分验证 | 需要固定 workflow、ReAct、planner/executor、reflection 最小对比实验 |
 | MCP | MCP official docs | MCP official docs | MCP servers repo | 关键段落已精读；部分验证 | 需要 spec 细节、安全边界和最小 trace 实验 |
-| RAG | 待补 | RAG paper；Self-RAG 候选；LlamaIndex docs | LlamaIndex examples 候选 | RAG paper 摘要已精读；部分验证 | 需要现代 RAG 工程实践和最小实验 |
+| RAG | LlamaIndex RAG docs | RAG paper；LlamaIndex docs；Self-RAG 候选 | LlamaIndex examples 候选 | RAG paper 摘要和 LlamaIndex 核心页面已精读；部分验证 | 需要最小 RAG pipeline 实验和 citation/source 追溯示例 |
 | Memory / 知识库治理 | LangGraph memory docs | MemGPT；MemoryBank；Generative Agents；LangGraph memory docs；OWASP LLM Top 10；NIST AI RMF | Letta docs；Zep docs | 关键论文、框架文档和风险资料已精读；部分验证 | 仍缺多会话长期记忆最小实验和更多隐私/权限工程资料 |
 | Planning / Orchestration | 待补 | Tree of Thoughts；Reflexion；LangGraph docs | LangGraph docs | 关键论文摘要和 LangGraph 段落已精读；部分验证 | 需要 planner/executor、状态机和 reflection 对比实验 |
 | 多 Agent | 待补 | Multi-agent debate 候选；AutoGen docs；CrewAI docs；AgentBench | AutoGen docs；CrewAI docs | 关键段落已精读；部分验证 | 需要最小对比实验、真实工程边界和成本资料 |
