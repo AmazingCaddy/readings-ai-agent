@@ -30,8 +30,8 @@
 ## 架构模式
 
 - 复杂 Agent 架构不是默认更可靠的窄边界已可入正文：引入 ReAct、Planner / Executor、Reflection、Tree of Thoughts、状态图或多 Agent 前，应用 trace、成本、失败原因、权限和实验结果比较。仍需真实模型 / 框架实验验证不同架构在真实任务中的收益、成本和错误恢复。
-- ReAct 在哪些任务中确实优于单次提示或简单 workflow？已完成论文摘要第一轮验证和标准库 ReAct-like tool loop 对比；仍需真实模型、真实工具和真实任务实验。
-- Plan-and-Execute 的收益是否足以抵消额外成本和错误传播？窄结论已可入正文：Planner / Executor 需要可执行计划、证据校验、失败反馈和重规划 trace；一次性计划可能传播遗漏。已完成相关架构模式第一轮验证、标准库 planner/executor 对比实验和 reflection retry 对照；仍需真实模型 / Agent framework / repo issue 实验验证收益、成本和错误恢复。
+- ReAct 在哪些任务中确实优于单次提示或简单 workflow？窄结论已可入正文：ReAct 的核心思想是交替生成 reasoning traces 和 task-specific actions；已完成论文摘要第一轮验证和标准库 ReAct-like tool loop 对比；仍需真实模型、真实工具和真实任务实验验证收益、成本和错误恢复。
+- Plan-and-Execute / Tree of Thoughts 等规划和搜索模式的收益是否足以抵消额外成本和错误传播？窄结论已可入正文：Tree of Thoughts 支持搜索式推理路径但不等同于生产 Agent 编排框架；Planner / Executor 需要可执行计划、证据校验、失败反馈和重规划 trace；一次性计划可能传播遗漏。已完成相关架构模式第一轮验证、标准库 planner/executor 对比实验和 reflection retry 对照；仍需真实模型 / Agent framework / repo issue 实验验证收益、成本和错误恢复。
 - Reflection / Critic 模式在真实任务中是否稳定提升质量？窄结论已可入正文：Reflection 可以利用任务反馈和文字反思改进后续尝试，但必须绑定可校验反馈、范围控制和 trace；未验证反思不应直接写入长期记忆或后续策略。Reflexion 已完成论文摘要第一轮验证，标准库 reflection/retry 实验已验证 verified feedback 可补证据、unverified reflection 会重复错误；仍需结合真实模型、长期 episodic memory、成本和人工评审实验验证真实收益。
 - 多 Agent 的收益是否足以抵消通信成本、协调复杂度和调试难度？窄结论已可入正文：多 Agent 不是复杂任务默认升级路径，必须先明确角色边界、证据分配、冲突处理、review trace 和成本预算。已完成 AutoGen/CrewAI 第一轮资料验证和标准库单流程 / 无控制多 Agent / Flow 控制多 Agent 对比；仍需真实模型、真实框架、token/latency/cost 和复杂多视角任务实验。
 

@@ -58,6 +58,7 @@
 
 阅读重点不是记住所有方法名，而是理解：模型如何在观察、行动、状态和反馈之间循环。
 Agent/Workflow 与自治程度窄边界已升级为可入正文，可帮助理解固定 workflow、workflow-agent hybrid 和更开放 tool loop 是控制权连续谱，不是能力等级排行。
+ReAct 推理/行动交替和 Tree of Thoughts 搜索式推理路径的机制边界已可入正文；二者适合学习架构思想，但不能写成真实任务默认更优或默认生产编排方案。
 Workflow / Hybrid / ReAct-like 标准库对比实验已经完成，可帮助理解固定流程、受控动态查询和 tool loop 在成功率、工具调用数、失败原因和 trace 上的差异；真实模型 / Agent framework / repo issue 仍需后续实验。
 
 ### LLM 接口与工具调用
@@ -157,7 +158,7 @@ Prompt injection / tool permission 标准库模拟实验已经完成，可帮助
 - Source card index 明确记录了每张卡片的可信度、验证状态和下一步。
 - Coverage matrix 显示 Agent/Workflow、LLM / Context、Evaluation / Observability、Production / Security 和 Memory / 知识库治理都已补标准库模拟实验；这些实验支撑流程和 trace 设计，但仍需要真实模型、真实框架和真实多会话实验来升级结论强度。
 - Agent / Workflow 和自治程度边界已补标准库 workflow / hybrid / ReAct-like 对比实验，窄结论“Agent 和 Workflow 是控制权与编排方式的连续谱，自治程度不是能力等级”已可入正文；仍缺真实模型 / Agent framework / repo issue、token/latency/cost、权限确认和工具错误恢复实验。
-- Agent 架构模式边界已补论文 / 框架资料和多组标准库对比实验，窄结论“复杂 Agent 架构不是默认更可靠，需要用 trace、成本、失败原因、权限和实验结果比较”已可入正文；仍缺真实模型 / 框架任务中的收益、成本、延迟和错误恢复实验。
+- Agent 架构模式边界已补论文 / 框架资料和多组标准库对比实验，窄结论“ReAct 是推理/行动交替模式”“Tree of Thoughts 是搜索式推理路径而非生产编排框架”“复杂 Agent 架构不是默认更可靠，需要用 trace、成本、失败原因、权限和实验结果比较”已可入正文；仍缺真实模型 / 框架任务中的收益、成本、延迟和错误恢复实验。
 - Planner / Executor 已补标准库对比实验，窄结论“计划需要可执行，执行结果需要证据校验，失败需要反馈给 planner 并记录重规划 trace”已可入正文；Reflection / Retry 已补标准库错误反思实验，窄结论“Reflection 需要可校验反馈、范围控制和 trace，未验证反思可能污染后续尝试”已可入正文；仍缺真实模型 / 框架 / repo issue、token/latency/cost、长期记忆和人工评审实验。
 - 多 Agent 已补标准库单流程 / 无控制多 Agent / Flow 控制多 Agent 对比实验，窄结论“多 Agent 不是复杂任务默认升级路径；引入前应明确角色边界、证据分配、冲突处理、review trace 和成本预算”已可入正文；仍缺真实模型、真实框架、token/latency/cost 和复杂任务实验。
 - MCP official docs 已补 2025-11-25 tools/resources/prompts/authorization/roots/elicitation/sampling spec 和 Security Best Practices 第一轮精读；MCP 最小 trace 标准库模拟实验和本地 stdio JSON-RPC harness 已完成，窄结论“authorization 是 optional，roots 不等于 sandbox，token passthrough 被禁止，高风险能力仍需权限/隔离/审计/trace 脱敏”已可入正文；仍缺真实 MCP SDK / host trace、权限确认、URL mode / OAuth、恶意 resource/prompt 和 host 实现差异实验。
