@@ -172,6 +172,8 @@
 
 为前面的 tool-calling 或 RAG Agent 建立 20 条测试任务。每条任务记录预期行为、实际 trace、是否成功和失败分类。
 
+建议先用轻量自定义 harness：用本地文件保存 case、expected behavior、trace 和评分结果。等任务定义稳定后，再参考官方 eval / trace grading 文档，把代表性 traces 整理成 dataset 和 eval runs。不要把某个正在退役的平台入口当成长期稳定学习路线。
+
 ### 验收标准
 
 - 至少 20 条任务。
@@ -187,6 +189,7 @@
 
 - OpenAI Cookbook 的 `Getting Started with OpenAI Evals`。
 - OpenAI Cookbook 的 `Evaluating Agents with Langfuse`，用于理解 trace、online evaluation、offline evaluation 和 dataset evaluation 的工程形态。
+- OpenAI Evaluation guides，用于理解 eval-driven development、trace grading、dataset / eval run 和 LLM-as-judge 校准边界；注意 OpenAI Evals platform 正在退役。
 
 ## 项目 8：生产化前检查
 
@@ -310,17 +313,17 @@
 - OpenAI File Search / Retrieval docs 可作为 File Search RAG 项目的 API 边界 reference：托管 `file_search` 仍需要记录 included search results、citations、filters、ranking/chunking、成本、延迟和删除一致性。
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源，但具体 server 的权限和安全假设需要逐个检查。
-- OpenAI Evals repo 可作为小型回归测试和 eval 结构参考；Agent eval 仍应结合 trace 和业务任务。
+- OpenAI Evals repo 和 OpenAI Evaluation guides 可作为小型回归测试、trace grading、dataset / eval run 和 LLM-as-judge 校准的结构参考；Agent eval 仍应结合 trace、业务任务和人工复核。OpenAI Evals platform 正在退役，具体平台入口需要按当前官方文档复核。
 - SWE-agent 论文和 README 可作为 repo issue / coding agent 进阶练习参考：它支撑 agent-computer interface、仓库导航、文件编辑和测试执行的重要性；README 已提示当前推荐 mini-SWE-agent，真实试跑仍需复核当前文档、sandbox、权限和成本。
 - Browser Use / Playwright / Anthropic Computer Use source cards 可作为 Browser / Computer Use Agent 进阶练习参考：它们支撑浏览器动作、profile/auth 风险、custom tools、screenshot/mouse/keyboard control、VM/container 隔离、action validation/logging 和 trace viewer 的工程边界；真实 browser/computer-use agent 任务成功率、点击精度、classifier 行为、成本、延迟、CAPTCHA/stealth、合规和生产可靠性仍待实验。
-- 实践路线 smoke harness 已完成标准库试跑，支持“每个项目都要有验收标准、trace、失败分类和可重复运行命令”的学习建议；仍不能替代真实 Structured Outputs、File Search/RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits 试跑。
+- 实践路线 smoke harness 已完成标准库试跑，支持“每个项目都要有验收标准、trace、失败分类和可重复运行命令”的学习建议；仍不能替代真实 Structured Outputs、File Search/RAG、轻量 eval harness、Agents SDK trace/eval、Usage/Cost 和 Rate limits 试跑。
 - 安全 regression set 最小实验已完成标准库试跑，支持“生产化练习需要覆盖多类安全 case，并记录误报、漏报和 trace 泄漏”的学习建议；仍不能替代真实模型 / 框架 guardrail / HITL approval 试跑。
 
 ## 待验证问题
 
 - 这些 Cookbook recipe 真实本地试跑时的依赖、成本、失败样例和初学者阻塞点是什么？
 - 每个项目应使用哪个最小技术栈，才能降低环境成本？
-- 如何为项目 7 设计可自动运行的 eval harness？
+- 如何为项目 7 设计可自动运行的轻量 eval harness，并把 trace grading、dataset / eval run 和人工复核串起来？
 - MCP 实验应选择哪个只读 server 作为最小示例？
 - 如何把这些项目逐步发布成 GitHub Pages 的可跟练教程？
 - 如何把安全 regression set 迁移到真实 tool-calling / Agents SDK / MCP 工具练习？
@@ -344,6 +347,7 @@
 - [OpenAI Cookbook](../sources/source-cards/2026-openai-cookbook.md)
 - [MCP servers repo](../sources/source-cards/2026-mcp-servers-repo.md)
 - [OpenAI Evals Repository](../sources/source-cards/2026-openai-evals-repo.md)
+- [OpenAI Evaluation Guides](../sources/source-cards/2026-openai-evaluation-guides.md)
 - [SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering](../sources/source-cards/2024-swe-agent-paper.md)
 - [Browser Use and Playwright Browser Automation References](../sources/source-cards/2026-browser-use-playwright.md)
 - [Evidence Note: 实践路线与 Cookbook 示例边界](../evidence/practice-roadmap-cookbook-boundary.md)
