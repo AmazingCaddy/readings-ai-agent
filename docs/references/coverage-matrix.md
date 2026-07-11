@@ -14,7 +14,7 @@
 | 主题 | 入门资料 | 高可信 reference | 工程/源码 reference | 当前状态 | 缺口 |
 | --- | --- | --- | --- | --- | --- |
 | AI Agent 定义与边界 | 待补 | OpenAI Agents SDK docs；LangGraph docs；ReAct paper | 待补 | 关键段落已精读；部分验证 | 需要 workflow-agent hybrid 最小实验和更多框架横向资料 |
-| LLM 与上下文工程 | OpenAI Responses API docs | OpenAI Responses API docs | OpenAI cookbook 候选 | 部分链接已复核 | 需要结构化输出和上下文失败模式资料 |
+| LLM 与上下文工程 | OpenAI Text Generation docs；OpenAI Responses API docs | OpenAI Text Generation docs；OpenAI Structured Outputs docs；OpenAI Responses API docs | OpenAI cookbook 候选 | 关键段落已精读；部分验证 | 需要输出解析、结构化输出和长上下文失败模式最小实验 |
 | Tool Use / Function Calling | OpenAI function calling docs | Toolformer paper；OpenAI function calling docs；OpenAI Responses API docs | OpenAI cookbook 候选 | 关键段落已精读；部分验证 | 需要最小实验、SDK 文档和其他框架术语对照 |
 | Agent 架构模式 | 待补 | ReAct paper；Reflexion paper；Tree of Thoughts paper；OpenAI Agents SDK docs；LangGraph docs | LangGraph examples 候选 | Agent/workflow 边界已部分验证 | 需要 Plan-and-Execute、Reflection、workflow-agent hybrid 实验 |
 | MCP | MCP official docs | MCP official docs | MCP servers repo | 关键段落已精读；部分验证 | 需要 spec 细节、安全边界和最小 trace 实验 |
@@ -30,7 +30,7 @@
 ## 当前优先级
 
 1. 补齐基础定义和术语边界的高可信 references。
-2. 精读并提取已经链接复核的论文、官方文档和安全资料。Tool Use / Function Calling、MCP、RAG / Memory、Production / Security 已完成第一轮。
+2. 精读并提取已经链接复核的论文、官方文档和安全资料。LLM / Context、Tool Use / Function Calling、MCP、RAG / Memory、Production / Security 已完成第一轮。
 3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。Eval 已完成 OpenAI Evals README 第一轮，仍需 trace/observability 工程资料。
 4. 为 Memory / 知识库治理补充长期记忆最小实验，并继续扩展隐私/权限工程资料。
 5. 为 Production / Security 补充 prompt injection 最小实验、工具权限工程案例和审计资料。

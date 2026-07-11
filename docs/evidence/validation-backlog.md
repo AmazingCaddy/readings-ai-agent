@@ -17,7 +17,7 @@
 
 ## 工具调用
 
-- Function calling、tool use、structured output 在不同框架中的术语差异是什么？OpenAI API 层边界已完成第一轮验证，仍需补其他框架术语对照。
+- Function calling、tool use、structured output 在不同框架中的术语差异是什么？OpenAI API 层和 Structured Outputs 边界已完成第一轮验证，仍需补其他框架术语对照。
 - 工具参数校验和重试的最佳实践有哪些官方或工程 references？
 - 工具调用权限应该如何设计确认边界？
 - 最小 tool-calling 实验中，参数校验失败后模型能否稳定修正？
@@ -38,6 +38,7 @@
 
 ## Eval 与生产化
 
+- 上下文工程中的输出解析、Structured Outputs、JSON mode 和长上下文失败模式如何设计最小实验？已完成 OpenAI 官方文档第一轮验证，仍需本地实验。
 - Agent eval 应该优先评估最终结果还是完整 trajectory？已确认 AgentBench/WebArena/OpenAI Evals 支撑过程与交互评测的重要性，仍需补本地实验验证评分差异。
 - 通用 benchmark 对真实业务 agent 的代表性有多强？已确认公开 benchmark 可学习评测思想，但业务系统仍需 custom/private eval。
 - Trace 字段如何设计，才能同时支持调试、审计、回归和隐私控制？
