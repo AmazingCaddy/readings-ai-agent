@@ -51,9 +51,9 @@
 
 ## 实践路线
 
-- 哪些 OpenAI Cookbook 示例最适合初学者作为项目模板？已完成第一轮验证：Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost、Rate limits 适合作为候选；仍需本地试跑确认依赖、成本和阻塞点。
-- 每个项目应使用哪个最小技术栈，才能降低环境成本？需要基于本地试跑和 GitHub Pages 教程形态决定。
-- 如何为项目 7 设计可自动运行的 eval harness？OpenAI Evals repo 和 Cookbook 可提供方向，仍需本地最小实现。
+- 哪些 OpenAI Cookbook 示例最适合初学者作为项目模板？已完成第一轮验证：Structured Outputs、File Search RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost、Rate limits 适合作为候选；标准库 smoke harness 已验证无模型验收结构；仍需真实 Cookbook / API 本地试跑确认依赖、成本和阻塞点。
+- 每个项目应使用哪个最小技术栈，才能降低环境成本？标准库 smoke harness 可作为无模型入门层；真实技术栈仍需基于本地试跑和 GitHub Pages 教程形态决定。
+- 如何为项目 7 设计可自动运行的 eval harness？标准库 smoke harness 已给出最小 eval cases / pass-fail 结构；仍需扩展到真实 OpenAI Evals 或轻量自定义 harness。
 - 如何把 Cookbook recipe 改写成初学者可跟练教程，同时保留 references、trace、失败样例和成本记录？
 
 ## 框架生态

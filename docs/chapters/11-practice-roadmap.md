@@ -18,6 +18,8 @@
 
 学习 Agent 最稳的路线是：先做小而可测的工具调用，再逐步加入 RAG、memory、编排、eval 和生产化边界。
 
+本手册的实践路线 smoke harness 把部分项目验收标准转成了 6 条可运行 eval cases：结构化输出、refusal 记录、工具参数校验、RAG 引用、资料不足拒答和成本预算阻断。它不调用真实模型，也不能替代 Cookbook/API 试跑，但可以作为初学者理解“项目要可测、可复盘、可失败分类”的起点。
+
 ## 项目 1：最小问答应用
 
 ### 学习目标
@@ -235,10 +237,11 @@
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源，但具体 server 的权限和安全假设需要逐个检查。
 - OpenAI Evals repo 可作为小型回归测试和 eval 结构参考；Agent eval 仍应结合 trace 和业务任务。
+- 实践路线 smoke harness 已完成标准库试跑，支持“每个项目都要有验收标准、trace、失败分类和可重复运行命令”的学习建议；仍不能替代真实 Structured Outputs、File Search/RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits 试跑。
 
 ## 待验证问题
 
-- 这些 Cookbook recipe 本地试跑时的依赖、成本、失败样例和初学者阻塞点是什么？
+- 这些 Cookbook recipe 真实本地试跑时的依赖、成本、失败样例和初学者阻塞点是什么？
 - 每个项目应使用哪个最小技术栈，才能降低环境成本？
 - 如何为项目 7 设计可自动运行的 eval harness？
 - MCP 实验应选择哪个只读 server 作为最小示例？
@@ -261,6 +264,7 @@
 - [MCP servers repo](../sources/source-cards/2026-mcp-servers-repo.md)
 - [OpenAI Evals Repository](../sources/source-cards/2026-openai-evals-repo.md)
 - [Evidence Note: 实践路线与 Cookbook 示例边界](../evidence/practice-roadmap-cookbook-boundary.md)
+- [实践路线 Smoke Harness 结果](../experiments/practice-roadmap-harness/results-2026-07-11.md)
 
 ### Governance
 

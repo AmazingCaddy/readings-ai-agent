@@ -109,6 +109,7 @@ Prompt injection / tool permission 标准库模拟实验已经完成，可帮助
 先读手册 10 和 11，再横向阅读 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen、CrewAI、Semantic Kernel 和 OpenAI Cookbook 的具体 recipe。
 
 阅读重点是选择维度、可迁移概念和可复现练习，而不是追随单一框架或照搬复杂 demo。
+实践路线 smoke harness 已经完成，可帮助理解如何把结构化输出、工具参数、RAG 引用、eval cases 和成本闸门组织成可运行验收流程；真实 Cookbook / API recipe 的依赖、成本和初学者阻塞点仍需后续试跑。
 
 ## 当前 Source Card 状态
 
@@ -161,7 +162,7 @@ Prompt injection / tool permission 标准库模拟实验已经完成，可帮助
 - Memory / 知识库治理已补标准库写入守门模拟实验，可支撑显式写入、敏感信息拒绝、低置信推断拒绝、用户纠正、失效历史和 trace 脱敏流程；仍缺真实多会话 Agent / memory framework 的收益、污染、权限、隐私和用户查看/编辑/删除实验。
 - Evaluation / Observability 已补标准库 trace-aware eval 模拟实验，可支撑 final-answer-only 与 trace-aware scoring 的差异说明；仍缺真实 Agent trace、LLM-as-judge 误判分析、人工复核和回归集工程案例。
 - Production / Security 已补标准库 prompt injection / tool permission 模拟实验，可支撑 prompt-only 风险、写工具阻断和 trace 脱敏流程；仍缺真实模型 / 框架 guardrail / HITL approval 实验、跨框架权限对比和审计脱敏策略。
-- Cookbook 的具体 recipe 已能支撑实践项目路线，但仍需要本地试跑来确认依赖、成本、失败样例和初学者阻塞点。
+- Cookbook 的具体 recipe 已能支撑实践项目路线，标准库 smoke harness 已支撑项目验收结构和 trace / 失败分类设计；仍需要真实本地试跑来确认依赖、成本、失败样例和初学者阻塞点。
 - Claim ledger 规定只有状态为“可入正文”的结论，才能写成确定性表述；其他结论需要保守表达。
 
 ## 待验证问题

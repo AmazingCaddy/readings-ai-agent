@@ -25,7 +25,7 @@
 | Evaluation / Observability | LangSmith docs；Phoenix docs | AgentBench；WebArena；LangSmith docs；Phoenix docs | OpenAI Evals；OpenAI Cookbook；LangSmith docs；Phoenix docs；Trace-aware eval 模拟实验 | 关键论文/README/工程文档已精读；标准库模拟实验已完成；部分验证 | 需要真实 Agent trace、自动评分误判分析、人工复核和回归集工程案例 |
 | Production / 安全 / 成本 | OpenAI Agents SDK docs；OpenAI Cookbook | OWASP LLM Top 10；NIST AI RMF；OpenAI Agents SDK docs；Semantic Kernel docs | OpenAI Responses API docs；OpenAI Agents SDK docs；OpenAI Cookbook；Observability docs；Prompt injection / tool permission 模拟实验 | 风险资料和框架工程资料已精读；标准库攻击模拟已完成；部分验证 | 需要真实模型 / 框架 guardrail / HITL approval 实验、跨框架权限对比、审计脱敏策略 |
 | 框架生态 | 待补 | OpenAI Agents SDK；LangGraph；LlamaIndex；AutoGen；Semantic Kernel；CrewAI | 官方 examples 候选 | 关键框架定位已精读；部分验证 | 需要同一任务横向实验、observability/permission 对比和官方 examples |
-| 实践项目路线 | OpenAI Cookbook | OpenAI Cookbook；OpenAI Function Calling docs；OpenAI Responses API docs；OpenAI Evals repo | OpenAI Cookbook；MCP servers repo；LangGraph examples 候选 | 具体 Cookbook recipe 已精读；部分验证 | 需要本地试跑最小项目、选择低成本技术栈、补 MCP/LangGraph examples |
+| 实践项目路线 | OpenAI Cookbook | OpenAI Cookbook；OpenAI Function Calling docs；OpenAI Responses API docs；OpenAI Evals repo | 实践路线 smoke harness；OpenAI Cookbook；MCP servers repo；LangGraph examples 候选 | 具体 Cookbook recipe 已精读；标准库 smoke harness 已完成；部分验证 | 需要真实 Cookbook / API 本地试跑最小项目、选择低成本技术栈、补 MCP/LangGraph examples |
 
 ## 当前优先级
 
@@ -34,7 +34,7 @@
 3. 为 MCP、Tool Use、RAG、Eval 四个主题补齐源码 examples。MCP 已完成官方 spec、安全、授权第一轮和标准库 trace 模拟，仍需真实 MCP SDK / host trace 与权限实验；Tool Use 已完成参数校验/重试标准库模拟，仍需真实模型 / API 实验和框架对照；Eval 已完成 OpenAI Evals README、Cookbook、LangSmith、Phoenix 和标准库 trace-aware eval 第一轮，仍需真实 Agent trace、自动评分误判和人工复核实验。
 4. 为 Memory / 知识库治理补充真实多会话 Agent / memory framework 实验。标准库写入守门模拟已完成，仍需扩展隐私、权限、查看、编辑和删除工程资料。
 5. 为 Production / Security 补充真实模型 / 框架 guardrail / HITL approval 实验、跨框架权限对比和审计脱敏策略。标准库 prompt injection / tool permission 模拟已完成。
-6. 为实践项目路线试跑 Structured Outputs、RAG/File Search、eval harness、成本/限流练习，记录初学者阻塞点。
+6. 为实践项目路线试跑 Structured Outputs、RAG/File Search、eval harness、成本/限流练习，记录初学者阻塞点。标准库 smoke harness 已完成，可作为无模型验收结构；仍需真实 Cookbook / API 试跑。
 
 ## 入正文门槛
 
