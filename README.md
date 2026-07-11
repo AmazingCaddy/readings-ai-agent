@@ -67,6 +67,8 @@ uv run mkdocs build
 - [03. Tool Use、Function Calling 与 Structured Output](docs/chapters/03-tool-use.md)
 - [04. Agent 架构模式](docs/chapters/04-agent-architecture.md)
 - [05. MCP 与工具生态](docs/chapters/05-mcp.md)
+- [06. RAG、Memory 与知识库治理](docs/chapters/06-rag-memory.md)
+- [07. Planning、Orchestration 与多 Agent](docs/chapters/07-planning-orchestration.md)
 - [候选资料清单](docs/sources/seed-candidates.md)
 - [Source Card 索引](docs/sources/source-card-index.md)
 - [Source Cards](docs/sources/source-cards/index.md)

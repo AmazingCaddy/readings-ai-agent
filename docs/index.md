@@ -32,6 +32,8 @@
 - [03. Tool Use、Function Calling 与 Structured Output](chapters/03-tool-use.md)
 - [04. Agent 架构模式](chapters/04-agent-architecture.md)
 - [05. MCP 与工具生态](chapters/05-mcp.md)
+- [06. RAG、Memory 与知识库治理](chapters/06-rag-memory.md)
+- [07. Planning、Orchestration 与多 Agent](chapters/07-planning-orchestration.md)
 - [References 覆盖矩阵](references/coverage-matrix.md)
 - [候选资料清单](sources/seed-candidates.md)
 - [Source Card 索引](sources/source-card-index.md)

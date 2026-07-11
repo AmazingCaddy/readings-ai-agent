@@ -1,0 +1,181 @@
+# Planning、Orchestration 与多 Agent
+
+## 本章适合谁
+
+如果你已经了解 Agent 架构模式，但还不清楚 Planning 和 Orchestration 的区别，也不确定什么时候需要多 Agent，这一章适合阅读。
+
+本章会把“任务怎么拆”和“系统怎么管”分开讲，再讨论多 Agent 为什么不是默认答案。
+
+## 你会学到什么
+
+- Planning 和 Orchestration 的区别。
+- Planner / Executor 模式解决什么问题。
+- 多 Agent 常见协作模式。
+- 为什么多 Agent 会增加成本和调试难度。
+- 如何为复杂任务设计人工确认和恢复策略。
+
+## 先用一句话理解
+
+Planning 关注“下一步该做什么”，Orchestration 关注“整个系统如何把步骤、工具、状态、错误和人类确认组织起来”。
+
+## 基础概念
+
+### Planning
+
+Planning 是把目标拆成步骤，并根据反馈调整计划。它可以是模型一次性生成计划，也可以是在执行过程中动态调整。
+
+Planning 的风险是：计划看起来合理，不代表可执行。复杂计划需要检查点和失败恢复。
+
+### Orchestration
+
+Orchestration 是系统层面的编排。它包括任务流、状态转移、工具调用、并发、重试、人工确认、日志和恢复。
+
+Planning 更偏决策，Orchestration 更偏工程控制。
+
+### Planner / Executor
+
+Planner / Executor 是常见拆分方式：planner 负责拆解任务，executor 负责执行具体步骤。
+
+这种模式能让职责更清楚，但也会带来接口问题。planner 生成的步骤必须足够具体，否则 executor 很难执行；executor 的失败也必须能反馈给 planner。
+
+### Critic / Reviewer
+
+Critic 或 reviewer 负责检查计划、结果或中间步骤。它可以发现遗漏，但不能保证正确。它本身也可能误判。
+
+### Human-in-the-loop
+
+Human-in-the-loop 是把人类确认放入流程。涉及高风险操作、模糊判断、写操作或业务责任时，人类确认是控制风险的重要机制。
+
+## 多 Agent 是什么
+
+多 Agent 是让多个角色化 Agent 协作完成任务。常见角色包括：
+
+- Planner：拆解任务。
+- Executor：执行步骤。
+- Researcher：查资料。
+- Critic：审查结果。
+- Summarizer：汇总输出。
+- Router：决定任务分配。
+
+多 Agent 的价值在于分工和视角多样性，但它也会增加通信成本、协调复杂度和调试难度。
+
+## 通俗例子
+
+假设任务是“为一个新功能写技术方案”。
+
+单 Agent 可能自己读需求、查代码、写方案、检查遗漏。
+
+Planner / Executor 可能先生成计划：读需求、查现有模块、识别风险、写方案。然后 executor 按步骤执行。
+
+多 Agent 可能让 researcher 查资料，让 architect 写方案，让 critic 审查风险，让 summarizer 输出最终文档。
+
+听起来多 Agent 更完整，但也更复杂：谁决定最终结论？意见冲突怎么办？critic 错了怎么办？每个 Agent 都调用工具，成本怎么控制？
+
+## 工作原理
+
+一个复杂任务编排通常需要这些机制。
+
+### 任务分解
+
+把大目标拆成可执行任务。每个任务应该有输入、输出、成功标准和失败处理。
+
+### 状态持久化
+
+保存任务列表、执行状态、工具结果、错误和人工决策。没有状态持久化，任务中断后很难恢复。
+
+### 调度和依赖
+
+有些步骤可以并行，有些必须串行。调度器需要知道依赖关系，避免重复劳动或顺序错误。
+
+### 反馈和重规划
+
+工具失败、资料不足、结果冲突时，系统需要决定重试、换工具、修改计划还是请求用户。
+
+### 人工确认
+
+涉及外部副作用、业务判断或高风险结论时，需要把确认点放进流程，而不是最后才让人检查一大段输出。
+
+## 工程实践
+
+### 先定义任务边界
+
+不要先问“要不要多 Agent”。先问：任务的输入是什么，输出是什么，成功标准是什么，失败代价是什么。
+
+### 用 checklist 替代过度自治
+
+很多任务不需要 planner。一个清晰 checklist 加上固定 workflow 就足够。只有当步骤依赖动态观察时，才需要模型参与规划。
+
+### 控制任务粒度
+
+任务太大，Agent 容易泛化和遗漏。任务太小，调度开销会变大。好的任务粒度应该能被独立执行、独立验证。
+
+### 为冲突设计规则
+
+多 Agent 之间意见不一致时，需要明确谁有最终决定权，或者什么时候请求人类判断。
+
+### 记录成本和延迟
+
+多 Agent 常常增加模型调用次数。没有成本和延迟记录，就无法判断架构收益是否值得。
+
+## 常见误区
+
+- 误区一：复杂任务一定需要多 Agent。很多复杂任务更适合 workflow + 少量模型判断。
+- 误区二：Planner 写出计划就代表任务可执行。计划必须被校验和更新。
+- 误区三：Critic 能保证质量。Critic 也会出错。
+- 误区四：多角色就等于专业分工。角色 prompt 不等于真实能力边界。
+- 误区五：并行越多越快。并行会增加合并、冲突和重复成本。
+
+## 什么时候不该用多 Agent
+
+以下情况不建议优先使用多 Agent：
+
+- 单 Agent 或 workflow 已经能稳定完成任务。
+- 没有明确的角色边界。
+- 没有冲突处理策略。
+- 没有成本预算和 trace。
+- 任务成功标准不清楚。
+
+多 Agent 更适合这些场景：任务天然有多个专业视角，步骤可以相对独立，结果需要审查，且系统能记录和评估每个角色贡献。
+
+## 已验证结论
+
+- Tree of Thoughts 支持“搜索式规划路径”这一研究方向，但不等同于生产编排框架。
+- Reflexion 支持“语言反馈和反思可用于后续尝试”的研究方向，但效果边界需要复核。
+- AutoGen 和 CrewAI 文档说明多 Agent 是主流工程生态的一部分，但不能证明多 Agent 默认更优。
+- LangGraph 文档可作为状态图和编排工程参考，但其抽象属于具体框架。
+
+## 待验证问题
+
+- Planner / Executor 在真实工程任务中如何定义接口最稳定？
+- 哪些任务适合多 Agent，哪些任务只需要 workflow？
+- 多 Agent 的成功率提升是否能抵消成本和延迟？
+- Critic / Reviewer 的错误率如何评估？
+- Human-in-the-loop 应该放在流程中哪些位置？
+
+## 本章小结
+
+- Planning 负责拆解和调整任务，Orchestration 负责组织系统执行。
+- Planner / Executor 可以让职责更清楚，但需要反馈和重规划。
+- 多 Agent 是一种编排方式，不是默认升级路径。
+- 成本、延迟、冲突和 trace 是多 Agent 设计的核心问题。
+- 初学者应先掌握 workflow-agent hybrid，再尝试多 Agent。
+
+## References
+
+### Papers
+
+- [Tree of Thoughts: Deliberate Problem Solving with Large Language Models](../sources/source-cards/2023-tree-of-thoughts-paper.md)
+- [Reflexion: Language Agents with Verbal Reinforcement Learning](../sources/source-cards/2023-reflexion-paper.md)
+- [ReAct: Synergizing Reasoning and Acting in Language Models](../sources/source-cards/2022-react-paper.md)
+
+### Framework Docs
+
+- [LangGraph Documentation](../sources/source-cards/2026-langgraph-docs.md)
+- [Microsoft AutoGen Documentation](../sources/source-cards/2026-autogen-docs.md)
+- [CrewAI Documentation](../sources/source-cards/2026-crewai-docs.md)
+
+### Governance
+
+- [术语边界表](../glossary.md)
+- [结论证据台账](../evidence/claim-ledger.md)
+
