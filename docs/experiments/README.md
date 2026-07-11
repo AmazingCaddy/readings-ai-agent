@@ -96,7 +96,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 19. Production cost / latency / rate-limit audit 实验
     - 目标：把 Production、Cost、Latency、Rate Limits、Token Counting、Batch、Flex 和 Prompt Caching 文档中的生产质量边界整理成可审计字段表。
-    - 状态：已完成标准库 field audit，见 [Production Cost / Latency / Rate-Limit Audit](production-cost-latency-rate-limit/README.md) 和 [2026-07-11 结果](production-cost-latency-rate-limit/results-2026-07-11.md)；真实 API harness 已准备，见 [Real Production Cost / Latency / Rate-Limit Validation](real-production-cost-latency-validation/README.md)。尚未调用真实 API、读取真实 rate-limit headers、提交 Batch job、使用 Flex 或触发 Prompt Caching；不能证明任何真实成本、P95 latency、吞吐、缓存命中率、优化收益或生产可靠性。
+    - 状态：已完成标准库 field audit，见 [Production Cost / Latency / Rate-Limit Audit](production-cost-latency-rate-limit/README.md) 和 [2026-07-11 结果](production-cost-latency-rate-limit/results-2026-07-11.md)；真实 API harness 已准备，见 [Real Production Cost / Latency / Rate-Limit Validation](real-production-cost-latency-validation/README.md) 和 [Real Batch / Flex / Prompt Caching Validation](real-batch-flex-caching-validation/README.md)。当前无 API key，真实 harness 只验证 skip 分支；尚未调用真实 API、读取真实 rate-limit headers、提交 Batch job、使用 Flex 或触发 Prompt Caching；不能证明任何真实成本、P95 latency、吞吐、缓存命中率、优化收益或生产可靠性。
 
 20. Browser action trace audit 实验
     - 目标：把 Browser Use、Playwright、Anthropic Computer Use 和权限 / observability evidence 中的 browser agent 边界整理成可审计 action trace 字段表。
@@ -105,6 +105,10 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 21. Real Browser Playwright validation 实验
     - 目标：在本地 demo page 上用固定 Playwright workflow 收集真实 browser action trace、DOM/screenshot state、文件上传、提交审批和失败分类，作为 Browser Use / computer-use-style action loop 的后续对照组。
     - 状态：真实 harness 已准备，见 [Real Browser Playwright Validation](real-browser-playwright-validation/README.md) 和 [2026-07-11 结果](real-browser-playwright-validation/results-2026-07-11.md)。当前环境未安装 Playwright，运行结果为 `skipped`；尚未产生真实浏览器 completed run，不能证明 Playwright、Browser Use、Anthropic computer use 或任何模型的真实网页任务表现。
+
+22. Real Batch / Flex / Prompt Caching validation 实验
+    - 目标：为 Batch API、Flex processing 和 Prompt Caching 准备真实 API 观测入口，记录 `custom_id` / batch status、Flex fallback、`cached_tokens` / `cache_write_tokens`、latency 和 rate-limit headers。
+    - 状态：真实 harness 已准备，见 [Real Batch / Flex / Prompt Caching Validation](real-batch-flex-caching-validation/README.md) 和 [2026-07-11 结果](real-batch-flex-caching-validation/results-2026-07-11.md)。当前无 API key，运行结果为 `skipped`；Batch job 提交默认 opt-in，尚未产生真实 completed run，不能证明 Batch / Flex / Prompt Caching 的收益、命中率、成本、延迟、质量取舍或生产可靠性。
 
 ## 实验记录要求
 

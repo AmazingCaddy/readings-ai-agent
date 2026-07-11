@@ -41,6 +41,10 @@ HARNESSES = [
         "real_browser_playwright",
         ROOT / "docs/experiments/real-browser-playwright-validation/real_browser_playwright_validation.py",
     ),
+    Harness(
+        "real_batch_flex_caching",
+        ROOT / "docs/experiments/real-batch-flex-caching-validation/real_batch_flex_caching_validation.py",
+    ),
     Harness("mcp_stdio_trace", ROOT / "docs/experiments/real-mcp-stdio-trace/mcp_stdio_trace.py"),
 ]
 
@@ -76,6 +80,10 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
     ]:
         if key in payload:
             compact[key] = payload[key]
+    for key in ["prompt_caching", "flex_processing", "batch_api"]:
+        if key in payload:
+            value = payload[key]
+            compact[key] = value.get("status") if isinstance(value, dict) else value
     if "results" in payload and isinstance(payload["results"], list):
         compact["result_count"] = len(payload["results"])
         compact["result_statuses"] = [item.get("status") for item in payload["results"] if isinstance(item, dict)]
