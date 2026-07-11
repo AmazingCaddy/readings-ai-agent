@@ -16,6 +16,7 @@
 | [Reflexion paper](source-cards/2023-reflexion-paper.md) | Reflection / Eval | Paper | A | 摘要和语言反馈/反思边界已精读；reflection retry 实验已完成；支撑复杂架构不是默认更可靠和 Reflection 需要可校验反馈/范围控制/trace 的窄边界；真实效果仍部分验证 | 补真实 critic、长期 episodic memory、成本和人工评审实验 |
 | [AgentBench paper](source-cards/2023-agentbench-paper.md) | Eval / Benchmark | Paper | A | 摘要和 benchmark / trajectory 边界已精读；支撑公开 benchmark 不能直接代表真实业务 Agent 质量、工具/副作用 Agent 不能只看最终答案的窄结论；其余部分验证 | 补真实 Agent trace、LLM-as-judge 和人工复核实验 |
 | [WebArena paper](source-cards/2023-webarena-paper.md) | Web Agent / Eval | Paper | A | 摘要和 Web Agent 评测复杂度已精读；支撑公开 benchmark 不能直接代表真实业务 Agent 质量和过程/交互评测窄结论；其余部分验证 | 补真实 web/tool trace 评测和失败分类实验 |
+| [Indirect Prompt Injection paper](source-cards/2023-indirect-prompt-injection-paper.md) | Security / Prompt Injection | Paper | A | arXiv 元数据和摘要已精读；支撑外部内容模糊数据/指令边界、远程注入到被检索数据和工具/API 调用风险的安全窄边界；真实 guardrail/HITL 效果仍部分验证 | 补真实攻击样例、框架 guardrail/HITL 误报漏报和成本/延迟实验 |
 | [AutoGen docs](source-cards/2026-autogen-docs.md) | Multi-agent / Framework | Framework Docs | A | 关键多 Agent/Teams/GraphFlow 段落已精读；支撑多 Agent 不是默认升级路径、框架应按任务难点比较和跨框架术语对照的窄边界；真实 AutoGen 表现仍部分验证 | 补真实 AutoGen / CrewAI / LangGraph 同任务横向实验 |
 | [CrewAI docs](source-cards/2026-crewai-docs.md) | Multi-agent / Framework | Framework Docs | B | Introduction / Flows / Crews 抽象已精读；支撑先用 Flow 控制、按需调用 Crew、框架应按任务难点比较和跨框架术语对照的窄边界；真实 CrewAI 表现仍部分验证 | 和 AutoGen / LangGraph 做真实横向比较，避免营销式结论 |
 | [MCP servers repo](source-cards/2026-mcp-servers-repo.md) | MCP / Examples | Source Code | A | README / reference implementations 已复核；MCP role evidence 已引用；部分验证 | 补真实 MCP server 示例结构、权限假设和 host trace 实验 |
@@ -42,5 +43,5 @@
 
 | 候选来源 | 主题 | 理由 |
 | --- | --- | --- |
-| Prompt injection papers and security writeups | Security | 已有 OWASP/NIST 和标准库攻击实验；仍需要更多真实攻击样例、防护工程实践和误报/漏报资料 |
+| Additional prompt injection security writeups | Security | 已有 Indirect Prompt Injection paper、OWASP/NIST 和标准库攻击实验；仍需要更多真实攻击样例、防护工程实践和误报/漏报资料 |
 | Memory framework implementation case studies | Memory | 已有 Letta/Zep/LangGraph 第一轮资料、标准库写入守门和 lifecycle audit；仍需真实 memory framework 的用户查看/编辑/删除、权限和隐私边界案例 |

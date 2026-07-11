@@ -54,6 +54,7 @@ nav:
           - Toolformer paper: sources/source-cards/2023-toolformer-paper.md
           - Tree of Thoughts paper: sources/source-cards/2023-tree-of-thoughts-paper.md
           - WebArena paper: sources/source-cards/2023-webarena-paper.md
+          - Indirect Prompt Injection paper: sources/source-cards/2023-indirect-prompt-injection-paper.md
           - AutoGen docs: sources/source-cards/2026-autogen-docs.md
           - CrewAI docs: sources/source-cards/2026-crewai-docs.md
           - MCP servers repo: sources/source-cards/2026-mcp-servers-repo.md
