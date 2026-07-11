@@ -8,7 +8,7 @@
 - 主题：Agent Framework / Tool Use / Tracing
 - 适合阶段：入门 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接、README、文档首页、guardrails、tools、tracing、human-in-the-loop 关键段落已复核；结论已部分交叉验证
+- 是否已验证：来源链接、README、文档首页、guardrails、tools、tracing、human-in-the-loop 关键段落已复核；结论已部分交叉验证；安全 regression set 已完成
 
 ## 一句话总结
 
@@ -55,6 +55,7 @@ OpenAI Agents SDK 文档适合用于解释现代 Agent SDK 的基本抽象、工
 ## 可复现实验
 
 - 构建一个最小 tool-calling 任务，对比 Responses API 自己管理 loop 与 Agents SDK 管理 loop 的 trace、guardrails、human approval、敏感 trace 数据配置和状态管理成本。
+- 已完成标准库安全 regression set，可作为后续迁移到 Agents SDK guardrails / HITL 的 case matrix：记录 `allow`、`block`、`require_approval`、false positive、false negative 和 trace secret 泄漏。当前结果不代表 Agents SDK 的真实拦截率。
 
 ## 是否进入正文
 

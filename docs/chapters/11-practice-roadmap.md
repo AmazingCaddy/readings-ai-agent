@@ -205,6 +205,8 @@
 - 有降级路径和人工接管方式。
 - 有安全类 regression cases。
 
+安全 regression cases 不应只写“有一个 prompt injection 测试”。更实用的最小集合应同时包含：外部文档注入、跨用户数据访问、高金额写操作、敏感字段外泄、破坏性工具、重复提交和一个正常请求。每条 case 都应记录预期行为、实际行为、是否误报、是否漏报和 trace 是否泄露敏感字段。
+
 ### 关联章节
 
 - [Production：安全、权限、成本与部署](09-production-security.md)
@@ -238,6 +240,7 @@
 - MCP servers repo 可作为 MCP 工具生态示例来源，但具体 server 的权限和安全假设需要逐个检查。
 - OpenAI Evals repo 可作为小型回归测试和 eval 结构参考；Agent eval 仍应结合 trace 和业务任务。
 - 实践路线 smoke harness 已完成标准库试跑，支持“每个项目都要有验收标准、trace、失败分类和可重复运行命令”的学习建议；仍不能替代真实 Structured Outputs、File Search/RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits 试跑。
+- 安全 regression set 最小实验已完成标准库试跑，支持“生产化练习需要覆盖多类安全 case，并记录误报、漏报和 trace 泄漏”的学习建议；仍不能替代真实模型 / 框架 guardrail / HITL approval 试跑。
 
 ## 待验证问题
 
@@ -246,6 +249,7 @@
 - 如何为项目 7 设计可自动运行的 eval harness？
 - MCP 实验应选择哪个只读 server 作为最小示例？
 - 如何把这些项目逐步发布成 GitHub Pages 的可跟练教程？
+- 如何把安全 regression set 迁移到真实 tool-calling / Agents SDK / MCP 工具练习？
 
 ## 本章小结
 
