@@ -82,6 +82,10 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
     - 目标：验证 coding agent 进阶项目是否能用 toy repo、安全 sandbox、确认模式、trajectory、diff/rollback、测试输出和成本/延迟记录来复现。
     - 状态：真实实验设计已准备，见 [Real Repo Issue Agent Toy 实验](real-repo-issue-agent-toy/README.md)。尚未运行 mini-SWE-agent、SWE-agent、真实模型或 toy repo；不能证明任何 coding agent 默认可靠。
 
+16. LangGraph interrupt recovery 实验
+    - 目标：验证 LangGraph `interrupt()`、checkpointer、`thread_id` 和 `Command(resume=...)` 在高风险工具审批流程中的恢复、幂等和审计边界。
+    - 状态：真实实验设计已准备，见 [Real LangGraph Interrupt Recovery 实验](real-langgraph-interrupt-recovery/README.md)。尚未安装或运行 LangGraph；不能证明 LangGraph interrupt、checkpointer 或任何 HITL 框架默认生产安全。
+
 ## 实验记录要求
 
 - 明确假设。
