@@ -112,7 +112,7 @@ Enterprise integration 更强调和现有系统、权限、插件、业务流程
 
 如果你的任务需要分支、循环、中断、重试和状态恢复，LangGraph 这类 graph 抽象很有学习价值。
 
-当前 LangGraph interrupts / persistence 文档还适合用来学习审批和恢复的工程细节：`interrupt()` 可以暂停 graph，resume 依赖 checkpointer 和 `thread_id`；approval workflow、review/edit state 和 tool 内中断可放在关键动作前。需要注意的是，恢复时 node 会从头执行，确认点前代码可能重跑，副作用需要幂等或放在确认之后，内存型 checkpointer 不等于生产持久化。
+当前 LangGraph overview / interrupts / persistence / thinking-in-langgraph 文档还适合用来学习审批和恢复的工程细节：`interrupt()` 可以暂停 graph，event streaming 可以暴露暂停状态，resume 依赖 checkpointer 和 `thread_id`；approval workflow、review/edit state、tool 内中断、多 interrupt 恢复和 conditional-edge validation loop 都有明确参考。需要注意的是，恢复时 node 会从头执行，确认点前代码可能重跑，副作用需要幂等或放在确认之后，内存型 checkpointer 重启会丢失，长会话 checkpoint 还需要清理/保留策略。Thinking-in-LangGraph 还强调 state 应保存 raw data，错误要按 transient、LLM-recoverable、user-fixable、retry-exhausted 和 unexpected 分流；这些是编排设计建议，不是生产安全自动保证。
 
 本手册的 Real LangGraph Interrupt Recovery 最小 run 已在 LangGraph 1.2.9 和 `MemorySaver` 下跑通一个退款审批 graph：批准后执行 1 次本地假工具，拒绝和参数 hash 不匹配时不执行，重复 resume 没有造成第二次执行，trace 未泄露实验 secret marker。它还用 `langgraph-checkpoint-sqlite` 3.1.0 / `SqliteSaver` 跑通了本地 SQLite checkpoint 恢复和并发 resume case：同进程重建 graph、双本地 Python 进程恢复都能执行 1 次本地假工具；两个本地 Python resume 进程同时恢复同一暂停审批时，共享副作用日志只有 1 条记录，但两个 resume 都返回 `approved_executed`。这个结果适合说明“框架机制需要用具体 case 验证”，但仍不能说明 LangGraph 默认具备生产级审批、安全、部署式服务恢复或真实服务并发恢复能力。
 
@@ -218,7 +218,7 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 
 - OpenAI Agents SDK、LangGraph、AutoGen 均已完成关键段落第一轮精读，可支撑 SDK runtime、orchestration runtime 和多 Agent 协调抽象的保守表述。
 - CrewAI source card 当前可信度为 B，但其 Introduction Markdown 可作为 Flows / Crews 抽象的补充证据；不宜单独支撑关键结论或营销式效果判断。
-- LangGraph source card 明确其适合状态图、可控 workflow 和复杂任务编排；interrupts / persistence 文档补强了 pause/resume、checkpointer、`thread_id` 和 side-effect idempotency 边界；Real LangGraph Interrupt Recovery harness 已完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case。LangGraph 是特定框架，不应被写成通用定义，也不证明真实生产审批流程默认安全。
+- LangGraph source card 明确其适合状态图、可控 workflow 和复杂任务编排；2026-07-12 复核的 overview / interrupts / persistence / thinking-in-langgraph 文档补强了 pause/resume、event streaming interrupt observation、multiple-interrupt resume map、checkpointer/store、`thread_id`、raw state、error routing、conditional-edge validation loop、checkpoint retention 和 side-effect idempotency 边界；Real LangGraph Interrupt Recovery harness 已完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case。LangGraph 是特定框架，不应被写成通用定义，也不证明真实生产审批流程默认安全。
 - 多 Agent 框架适合学习角色协作和任务分配，但“多 Agent 默认更好”没有被框架文档证明。“多 Agent 不是复杂任务默认升级路径；引入前应明确角色边界、证据分配、冲突处理、review trace 和成本预算”已升级为可入正文。标准库多 Agent 对比实验已验证无控制角色协作会带来重复读取、缺证据和冲突风险；Real Multi-Agent Framework Validation 已补 AutoGen AgentChat / CrewAI 的本地 fake-model runtime surface 观察，也补了 LangGraph deterministic `StateGraph` multi-role surface 观察。真实模型、多轮冲突合并、成本、延迟、trace 可读性和成功率仍需同任务对比验证。
 - LlamaIndex source card 明确其适合 RAG、数据连接、索引和 agent data framework；需区分通用 RAG 概念和框架实现。
 - Semantic Kernel source card 已完成第一轮精读，可支撑 enterprise integration、plugins/functions、native/OpenAPI/MCP plugin 导入、agent framework、human-in-the-loop 和 process orchestration 的框架定位；Real Semantic Kernel Plugin Validation 已补 native plugin runtime 的 metadata、参数处理和应用层审批 wrapper 观察；其 Process Framework 当前仍标注 experimental。
@@ -229,7 +229,7 @@ Real Semantic Kernel Plugin Validation 已跑通 Python 1.36.0 的 native plugin
 ## 待验证问题
 
 - 各框架的 tracing 和 observability 能力如何实际比较？
-- 哪些框架更容易实现权限隔离和人工确认？OpenAI Agents SDK guardrail harness 已补 input/output/tool guardrail 位置边界，2026-07-12 文档复核已补 tool-guardrail 覆盖限制、hosted shell approval 限制、trace 默认敏感数据捕获和 serialized RunState 风险；LangGraph 文档机制已补 interrupt / persistence 边界，Real LangGraph Interrupt Recovery 已完成一个最小真实框架 run、本地 SQLite 同进程恢复、双本地 Python 进程恢复和双本地 Python 进程并发 resume case；Real Framework Same-Task Comparison 已补一个本地同任务 runtime 对照，但审批 policy 多数仍是应用层代码；仍需真实同任务对比 OpenAI Agents SDK、LangGraph、Semantic Kernel、MCP 等工具面的审批状态、参数快照、部署式服务恢复、真实服务并发恢复、幂等执行、hosted/MCP/Shell/ApplyPatch 工具覆盖和 trace 脱敏。
+- 哪些框架更容易实现权限隔离和人工确认？OpenAI Agents SDK guardrail harness 已补 input/output/tool guardrail 位置边界，2026-07-12 文档复核已补 tool-guardrail 覆盖限制、hosted shell approval 限制、trace 默认敏感数据捕获和 serialized RunState 风险；LangGraph 文档机制已补 interrupt / persistence / checkpointer-store / event streaming / checkpoint retention 边界，Real LangGraph Interrupt Recovery 已完成一个最小真实框架 run、本地 SQLite 同进程恢复、双本地 Python 进程恢复和双本地 Python 进程并发 resume case；Real Framework Same-Task Comparison 已补一个本地同任务 runtime 对照，但审批 policy 多数仍是应用层代码；仍需真实同任务对比 OpenAI Agents SDK、LangGraph、Semantic Kernel、MCP 等工具面的审批状态、参数快照、部署式服务恢复、真实服务并发恢复、幂等执行、checkpoint retention、hosted/MCP/Shell/ApplyPatch 工具覆盖和 trace 脱敏。
 - 同一任务在不同真实框架下的成本、延迟和可调试性差异有多大？
 - 框架版本演进是否改变了核心抽象？
 - 如何为初学者设计不被框架绑定的实践项目？
