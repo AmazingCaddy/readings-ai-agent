@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Real LLM RAG citation synthesis harness with local keyword retrieval."""
+"""RAG citation synthesis and citation-verifier harness with local keyword retrieval."""
 
 from __future__ import annotations
 
@@ -77,6 +77,14 @@ class CaseResult:
     semantic_valid: bool
     details: dict[str, Any] = field(default_factory=dict)
     timestamp: str = field(default_factory=utc_now)
+
+
+@dataclass(frozen=True)
+class AdversarialFixture:
+    name: str
+    case: EvalCase
+    data: dict[str, Any]
+    expected_error_fragments: set[str]
 
 
 CHUNKS = [
@@ -278,6 +286,21 @@ def validate_citations(data: dict[str, Any], retrieved_ids: set[str]) -> list[st
     return errors
 
 
+def validate_citation_quotes(data: dict[str, Any], retrieved_by_id: dict[str, Chunk]) -> list[str]:
+    errors: list[str] = []
+    for citation in data.get("citations", []):
+        if not isinstance(citation, dict):
+            continue
+        chunk_id = citation.get("chunk_id")
+        quote = str(citation.get("quote", "")).strip()
+        chunk = retrieved_by_id.get(chunk_id)
+        if chunk is None or not quote:
+            continue
+        if quote.lower() not in chunk.text.lower():
+            errors.append(f"quote not found in cited chunk: {chunk_id}")
+    return errors
+
+
 def validate_semantics(case: EvalCase, data: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     if data.get("grounded") != case.expected_grounded:
@@ -293,7 +316,8 @@ def run_case(case: EvalCase, api_key: str) -> CaseResult:
     retrieved = retrieve(case.question)
     response = post_response(payload_for(case, retrieved), api_key)
     text = response_text(response)
-    retrieved_ids = {item["chunk"].chunk_id for item in retrieved}
+    retrieved_by_id = {item["chunk"].chunk_id: item["chunk"] for item in retrieved}
+    retrieved_ids = set(retrieved_by_id)
     details: dict[str, Any] = {
         "response_id": response.get("id"),
         "retrieved": [
@@ -313,7 +337,11 @@ def run_case(case: EvalCase, api_key: str) -> CaseResult:
         return CaseResult(case.question, "parse_failed", False, False, False, details)
 
     schema_errors = validate_schema(data)
-    citation_errors = validate_citations(data, retrieved_ids) if not schema_errors else ["schema invalid"]
+    citation_errors = (
+        validate_citations(data, retrieved_ids) + validate_citation_quotes(data, retrieved_by_id)
+        if not schema_errors
+        else ["schema invalid"]
+    )
     semantic_errors = validate_semantics(case, data) if not schema_errors else ["schema invalid"]
     details["parsed"] = data
     details["schema_errors"] = schema_errors
@@ -323,14 +351,170 @@ def run_case(case: EvalCase, api_key: str) -> CaseResult:
     return CaseResult(case.question, status, not schema_errors, not citation_errors, not semantic_errors, details)
 
 
+def deterministic_synthesis(case: EvalCase, retrieved: list[dict[str, Any]]) -> dict[str, Any]:
+    retrieved_by_id = {item["chunk"].chunk_id: item["chunk"] for item in retrieved}
+    if not case.expected_grounded:
+        return {"answer": "The available chunks do not support an answer.", "grounded": False, "citations": []}
+    if "rag-paper#1" in retrieved_by_id:
+        return {
+            "answer": "RAG uses non-parametric memory to help with provenance and updating world knowledge.",
+            "grounded": True,
+            "citations": [
+                {
+                    "chunk_id": "rag-paper#1",
+                    "quote": "provenance, and updating world knowledge",
+                }
+            ],
+        }
+    if "llamaindex-rag#1" in retrieved_by_id:
+        return {
+            "answer": "Engineering RAG includes loading, indexing, storing, querying, and evaluation.",
+            "grounded": True,
+            "citations": [
+                {
+                    "chunk_id": "llamaindex-rag#1",
+                    "quote": "loading, indexing, storing, querying, and evaluation",
+                }
+            ],
+        }
+    return {"answer": "The available chunks do not support an answer.", "grounded": False, "citations": []}
+
+
+def evaluate_data(case: EvalCase, retrieved: list[dict[str, Any]], data: dict[str, Any]) -> CaseResult:
+    retrieved_by_id = {item["chunk"].chunk_id: item["chunk"] for item in retrieved}
+    retrieved_ids = set(retrieved_by_id)
+    details: dict[str, Any] = {
+        "retrieved": [
+            {
+                "chunk_id": item["chunk"].chunk_id,
+                "score": item["score"],
+                "matched_terms": item["matched_terms"],
+            }
+            for item in retrieved
+        ],
+        "parsed": data,
+    }
+    schema_errors = validate_schema(data)
+    citation_errors = (
+        validate_citations(data, retrieved_ids) + validate_citation_quotes(data, retrieved_by_id)
+        if not schema_errors
+        else ["schema invalid"]
+    )
+    semantic_errors = validate_semantics(case, data) if not schema_errors else ["schema invalid"]
+    details["schema_errors"] = schema_errors
+    details["citation_errors"] = citation_errors
+    details["semantic_errors"] = semantic_errors
+    status = "ok" if not schema_errors and not citation_errors and not semantic_errors else "invalid"
+    return CaseResult(case.question, status, not schema_errors, not citation_errors, not semantic_errors, details)
+
+
+ADVERSARIAL_FIXTURES = [
+    AdversarialFixture(
+        name="unknown_chunk_id",
+        case=CASES[0],
+        data={
+            "answer": "Engineering RAG includes loading, indexing, storing, querying, and evaluation.",
+            "grounded": True,
+            "citations": [{"chunk_id": "made-up#1", "quote": "loading, indexing"}],
+        },
+        expected_error_fragments={"unknown citations"},
+    ),
+    AdversarialFixture(
+        name="missing_grounded_citation",
+        case=CASES[0],
+        data={
+            "answer": "Engineering RAG includes loading, indexing, storing, querying, and evaluation.",
+            "grounded": True,
+            "citations": [],
+        },
+        expected_error_fragments={"grounded answer must include citations"},
+    ),
+    AdversarialFixture(
+        name="ungrounded_with_citation",
+        case=CASES[2],
+        data={
+            "answer": "The available chunks do not support an answer.",
+            "grounded": False,
+            "citations": [{"chunk_id": "rag-paper#1", "quote": "provenance"}],
+        },
+        expected_error_fragments={"ungrounded answer should not include citations"},
+    ),
+    AdversarialFixture(
+        name="quote_not_in_cited_chunk",
+        case=CASES[1],
+        data={
+            "answer": "RAG uses provenance and world knowledge updates.",
+            "grounded": True,
+            "citations": [{"chunk_id": "rag-paper#1", "quote": "best managed vector database pricing"}],
+        },
+        expected_error_fragments={"quote not found in cited chunk"},
+    ),
+    AdversarialFixture(
+        name="unsupported_question_marked_grounded",
+        case=CASES[2],
+        data={
+            "answer": "Vendor X has the best managed vector index pricing in 2026.",
+            "grounded": True,
+            "citations": [{"chunk_id": "rag-paper#1", "quote": "provenance"}],
+        },
+        expected_error_fragments={"grounded should be False"},
+    ),
+]
+
+
+def run_verifier_control() -> dict[str, Any]:
+    control_results = []
+    for case in CASES:
+        retrieved = retrieve(case.question)
+        data = deterministic_synthesis(case, retrieved)
+        control_results.append(evaluate_data(case, retrieved, data).__dict__)
+
+    adversarial_results = []
+    for fixture in ADVERSARIAL_FIXTURES:
+        retrieved = retrieve(fixture.case.question)
+        result = evaluate_data(fixture.case, retrieved, fixture.data)
+        errors = result.details.get("citation_errors", []) + result.details.get("semantic_errors", [])
+        error_text = "\n".join(errors)
+        expected_errors_seen = all(fragment in error_text for fragment in fixture.expected_error_fragments)
+        result.details["fixture_name"] = fixture.name
+        result.details["expected_error_fragments"] = sorted(fixture.expected_error_fragments)
+        result.details["expected_errors_seen"] = expected_errors_seen
+        adversarial_results.append(result.__dict__)
+
+    control_passed = all(result["status"] == "ok" for result in control_results)
+    adversarial_rejected = all(
+        result["status"] == "invalid" and result["details"].get("expected_errors_seen")
+        for result in adversarial_results
+    )
+    return {
+        "status": "completed",
+        "api_status": "skipped_without_openai_api_key",
+        "reason": "OPENAI_API_KEY is not set",
+        "model": MODEL,
+        "retrieval": "local_keyword_overlap",
+        "llm_synthesis": "deterministic_control_only",
+        "real_model_validated": False,
+        "citation_verifier_passed": control_passed and adversarial_rejected,
+        "control_case_count": len(control_results),
+        "adversarial_case_count": len(adversarial_results),
+        "all_passed": control_passed and adversarial_rejected,
+        "results": control_results + adversarial_results,
+    }
+
+
 def run(api_key: str) -> dict[str, Any]:
     started = time.perf_counter()
     results = [run_case(case, api_key).__dict__ for case in CASES]
+    all_passed = all(result["status"] == "ok" for result in results)
     return {
         "status": "completed",
+        "api_status": "completed",
         "model": MODEL,
         "api_url": API_URL,
         "retrieval": "local_keyword_overlap",
+        "llm_synthesis": "real_openai_responses_api",
+        "real_model_validated": True,
+        "all_passed": all_passed,
         "elapsed_seconds": round(time.perf_counter() - started, 3),
         "results": results,
     }
@@ -339,18 +523,7 @@ def run(api_key: str) -> dict[str, Any]:
 def main() -> int:
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
-        print(
-            json.dumps(
-                {
-                    "status": "skipped",
-                    "reason": "OPENAI_API_KEY is not set",
-                    "model": MODEL,
-                    "retrieval": "local_keyword_overlap",
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+        print(json.dumps(run_verifier_control(), ensure_ascii=False, indent=2))
         return 0
 
     try:

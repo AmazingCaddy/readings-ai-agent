@@ -52,4 +52,4 @@ Self-RAG 适合用来解释进阶 RAG 的一个关键问题：不是每个问题
 
 - 本手册已完成标准库 RAG 最小 pipeline / citation 模拟实验，覆盖 chunk metadata、retrieval trace、chunk-level citations 和无证据拒答。
 - 本手册已完成上下文策略对比实验，显示基础 keyword RAG 可能召回不可信外部文档，说明 RAG 需要 trust/freshness metadata、filter 和 citation 校验。
-- 真实 LLM citation synthesis harness 已准备并记录无 API key skipped 结果；仍需配置 API key 后实际运行 completed case，并扩展到 embedding、vector store、top-k、rerank/filter、citation correctness、faithfulness、latency 和 token cost 对比。
+- Real RAG Citation Synthesis harness 已完成本地 deterministic citation verifier control，覆盖 citation id、quote matching、grounded/ungrounded citation 和 unsupported grounded claim 的失败样例；仍需配置 API key 后实际运行真实 LLM completed case，并扩展到 embedding、vector store、top-k、rerank/filter、citation correctness、faithfulness、latency 和 token cost 对比。

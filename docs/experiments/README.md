@@ -28,7 +28,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 2. RAG chunk size 对召回质量的影响
    - 目标：比较不同 chunk size 和 overlap 对答案准确率的影响。
-   - 状态：已完成标准库最小 pipeline / citation 模拟实验，见 [RAG 最小 Pipeline 与 Citation 实验](rag-pipeline/README.md) 和 [2026-07-11 结果](rag-pipeline/results-2026-07-11.md)；真实 LLM citation synthesis harness 已准备，见 [Real RAG Citation Synthesis 实验](real-rag-citation-validation/README.md) 和 [2026-07-11 结果](real-rag-citation-validation/results-2026-07-11.md)，当前无 API key，运行结果为 `skipped`；已完成本地 LlamaIndex `VectorStoreIndex` / retriever / QueryEngine / `MockLLM` / source-node metadata run，见 [Real LlamaIndex RAG Source-Node Validation](real-llamaindex-rag-validation/README.md) 和 [2026-07-11 结果](real-llamaindex-rag-validation/results-2026-07-11.md)。仍需真实 LLM synthesis completed run、真实 embedding / vector store / rerank 和 chunk size 对比实验。
+   - 状态：已完成标准库最小 pipeline / citation 模拟实验，见 [RAG 最小 Pipeline 与 Citation 实验](rag-pipeline/README.md) 和 [2026-07-11 结果](rag-pipeline/results-2026-07-11.md)；[Real RAG Citation Synthesis 实验](real-rag-citation-validation/README.md) 已完成本地 deterministic citation verifier control，3 个正常 case 通过、5 个 adversarial fixture 被拒绝，见 [2026-07-11 结果](real-rag-citation-validation/results-2026-07-11.md)，当前无 API key，真实 LLM synthesis 仍未运行；已完成本地 LlamaIndex `VectorStoreIndex` / retriever / QueryEngine / `MockLLM` / source-node metadata run，见 [Real LlamaIndex RAG Source-Node Validation](real-llamaindex-rag-validation/README.md) 和 [2026-07-11 结果](real-llamaindex-rag-validation/results-2026-07-11.md)。仍需真实 LLM synthesis completed run、真实 embedding / vector store / rerank 和 chunk size 对比实验。
 
 3. Long-term memory 写入守门
    - 目标：验证自动写入记忆是否会引入冲突、过时和脏数据。
