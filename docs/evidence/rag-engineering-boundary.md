@@ -12,10 +12,13 @@
 - Source 4：[Evidence Note: 上下文工程与结构化输出边界](context-structured-output-boundary.md)
 - Source 5：[RAG 最小 Pipeline 与 Citation 实验结果](../experiments/rag-pipeline/results-2026-07-11.md)
 - Source 6：[上下文策略对比实验结果](../experiments/context-strategy-comparison/results-2026-07-11.md)
+- Source 7：[Self-RAG paper](../sources/source-cards/2023-self-rag-paper.md)
 
 ## 交叉验证结果
 
 - 一致点：RAG paper 摘要支持外部检索增强生成的基础动机，包括知识密集任务、provenance 和 world knowledge 更新。
+- 一致点：Self-RAG paper 摘要指出，盲目固定检索并塞入固定数量 passage，即使 retrieval 不必要或 passage 不相关，也可能降低模型 versatility 或产生 unhelpful response；这支持“RAG 需要检索必要性、passage relevance、faithfulness 和 citation correctness 评估”的工程边界。
+- 一致点：Self-RAG paper 用 on-demand retrieval、对 retrieved passages 和自身生成的 reflection / critique，以及 citation accuracy 作为实验关注点；这与本手册要求记录 retrieval trace、citation/source 绑定和无证据拒答的方向一致。
 - 一致点：LlamaIndex RAG 总览把流程拆成 Loading、Indexing、Storing、Querying、Evaluation 五个阶段；这支持第 06 章的最小 RAG 流程。
 - 一致点：LlamaIndex Documents / Nodes 页面定义 Document 是数据源容器，Node 是源 Document 的 chunk，并包含 metadata 和 relationship 信息；这支持“chunk 需要保留来源和上下文关系”的工程解释。
 - 一致点：LlamaIndex Indexing 页面把 Index 定义为快速检索相关 context 的数据结构，通常存储 Nodes 并暴露 Retriever 接口。
@@ -35,9 +38,9 @@
 ## 结论状态
 
 - 可入正文：窄结论“RAG 的基础动机包括外部知识访问、知识更新和 provenance / source traceability”已完成第一轮交叉验证。RAG paper 摘要直接支撑知识密集任务、外部检索、provenance 和 world knowledge 更新动机；LlamaIndex RAG 文档支撑现代工程中通过 loading / indexing / retrieval / response synthesis / evaluation 把外部数据接入 LLM 上下文。
-- 可入正文：窄结论“工程 RAG 是 loading、indexing、storing、querying/retrieval、response synthesis 和 evaluation 等阶段组成的可观察 pipeline，不是单个 prompt 技巧；最小可治理 RAG 应保留 chunk metadata、retrieval trace、citation/source 绑定和无证据拒答或 `grounded=false` 标记”已完成第一轮交叉验证。RAG paper 支撑外部检索、provenance 和知识更新动机，LlamaIndex 支撑现代工程流程和组件边界，标准库最小 pipeline 实验复现了 chunk / retrieve / synthesize trace、chunk-level citations 和 unsupported question 拒答流程。
+- 可入正文：窄结论“工程 RAG 是 loading、indexing、storing、querying/retrieval、response synthesis 和 evaluation 等阶段组成的可观察 pipeline，不是单个 prompt 技巧；最小可治理 RAG 应保留 chunk metadata、retrieval trace、citation/source 绑定、检索必要性/相关性判断和无证据拒答或 `grounded=false` 标记”已完成第一轮交叉验证。RAG paper 支撑外部检索、provenance 和知识更新动机，Self-RAG paper 支撑不要盲目固定检索、需要评估 retrieval necessity / passage relevance / critique / citation accuracy，LlamaIndex 支撑现代工程流程和组件边界，标准库最小 pipeline 实验复现了 chunk / retrieve / synthesize trace、chunk-level citations 和 unsupported question 拒答流程。
 - 部分验证：真实 RAG stack、embedding / vector store、chunk size/top-k/rerank 对比、LLM synthesis faithfulness、citation correctness、latency、token cost 和生产权限边界仍需实验；不能写成某个检索或 chunk 策略默认最优。
 
 ## 可进入章节
 
-- 是。可以确定写成：RAG 的动机是让生成系统能使用外部知识、处理知识更新并保留 provenance / source traceability；工程 RAG 是一条 pipeline，而不是单个 prompt 技巧。初学者应先保证加载、切分、索引、检索、回答合成、citation/source 绑定和评测可观察；没有检索证据时应拒答或标记 `grounded=false`。真实 embedding、rerank、hybrid retrieval 或 agentic RAG 的质量和成本仍需要实验比较。
+- 是。可以确定写成：RAG 的动机是让生成系统能使用外部知识、处理知识更新并保留 provenance / source traceability；工程 RAG 是一条 pipeline，而不是单个 prompt 技巧。初学者应先保证加载、切分、索引、检索、回答合成、citation/source 绑定和评测可观察；还要避免盲目固定检索，至少记录检索是否必要、passage 是否相关以及无证据时如何拒答或标记 `grounded=false`。真实 embedding、rerank、hybrid retrieval、Self-RAG/agentic RAG 的质量和成本仍需要实验比较。

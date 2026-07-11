@@ -8,6 +8,7 @@
 | --- | --- | --- | --- | --- | --- |
 | [ReAct paper](source-cards/2022-react-paper.md) | Agent 架构 / Tool Use | Paper | A | 摘要/核心模式已精读；ReAct 推理/行动交替机制、Agent/Workflow 控制权连续谱和复杂架构不是默认更可靠的窄边界可入正文；ReAct 效果仍部分验证 | 补真实模型 / 框架任务对比，避免泛化为 ReAct 默认更优 |
 | [RAG paper](source-cards/2020-rag-paper.md) | RAG | Paper | A | 摘要和关键动机已精读；外部检索、provenance 和知识更新动机可入正文；RAG / Memory 术语边界和 RAG 工程 pipeline 窄边界已可入正文；工程质量仍部分验证 | 补真实 RAG stack、citation correctness 和成本/延迟实验 |
+| [Self-RAG paper](source-cards/2023-self-rag-paper.md) | RAG / Adaptive retrieval | Paper | A | arXiv 元数据和摘要已精读；支撑固定 top-k 盲检索风险、on-demand retrieval、reflection / critique 和 citation accuracy 评估的窄边界；真实工程 RAG 表现仍部分验证 | 补真实 embedding / vector store / rerank / citation correctness / 成本延迟实验，避免写成 Self-RAG 默认更优 |
 | [Generative Agents paper](source-cards/2023-generative-agents-paper.md) | Memory / Reflection / Planning | Paper | A | 摘要和 memory/reflection/planning 关系已精读；支撑长期记忆治理窄边界；真实收益仍部分验证 | 补真实多会话 Agent / memory framework 收益与污染实验 |
 | [MemoryBank paper](source-cards/2023-memorybank-paper.md) | Long-term memory | Paper | A | 摘要和长期记忆更新/遗忘方向已精读；支撑长期记忆治理窄边界；真实收益仍部分验证 | 补真实长期记忆收益、过时和隐私实验 |
 | [MemGPT paper](source-cards/2023-memgpt-paper.md) | Memory management / Context | Paper | A | 摘要和显式 memory management 方向已精读；RAG/Memory 与长期记忆治理窄边界已引用；真实 memory 行为仍部分验证 | 补真实 memory tier / context management 实验 |

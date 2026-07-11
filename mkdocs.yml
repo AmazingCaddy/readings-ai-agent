@@ -45,6 +45,7 @@ nav:
       - Source Cards:
           - 目录: sources/source-cards/index.md
           - RAG paper: sources/source-cards/2020-rag-paper.md
+          - Self-RAG paper: sources/source-cards/2023-self-rag-paper.md
           - ReAct paper: sources/source-cards/2022-react-paper.md
           - Generative Agents paper: sources/source-cards/2023-generative-agents-paper.md
           - MemoryBank paper: sources/source-cards/2023-memorybank-paper.md

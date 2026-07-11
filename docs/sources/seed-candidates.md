@@ -25,7 +25,7 @@
 | Tool use | Toolformer: Language Models Can Teach Themselves to Use Tools | Paper | A | 元数据已复核；source card 已创建 |
 | Modular tool reasoning | MRKL Systems: A modular, neuro-symbolic architecture | Paper | A | 待复核 |
 | RAG | Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks | Paper | A | 元数据已复核；source card 已创建 |
-| Self-RAG | Self-RAG: Learning to Retrieve, Generate, and Critique | Paper | A | 待复核 |
+| Self-RAG | Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection | Paper | A | arXiv 元数据已复核；source card 已创建 |
 | Planning | Tree of Thoughts: Deliberate Problem Solving with Large Language Models | Paper | A | 元数据已复核；source card 已创建 |
 | Reflection | Reflexion: Language Agents with Verbal Reinforcement Learning | Paper | A | 元数据已复核；source card 已创建 |
 | Multi-agent debate | Improving Factuality and Reasoning in Language Models through Multiagent Debate | Paper | A | 待复核 |

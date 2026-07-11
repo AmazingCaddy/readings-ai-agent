@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 22:33 CST
+**Last Updated:** 2026-07-11 22:42 CST
 **Status:** In Progress
 
 ## Objective
@@ -92,9 +92,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 75. Re-ran the validation harness runner. It completed with 6 harnesses, 0 failures, 5 real API harnesses skipped because `OPENAI_API_KEY` is not set, and the local MCP stdio harness completed with 17 trace events and `leaked_secret_in_trace=false`. Updated the runner result wording so it no longer conflicts with existing narrow `可入正文` claims; the limitation now applies specifically to real model/API/framework/cost/latency/stability conclusions.
 76. Clarified `docs/evidence/validation-backlog.md`. The introduction now explains that some backlog items already have narrow `可入正文` conclusions but remain open for real model/API/framework/cost/latency/stability validation. The tool-permission confirmation-boundary item now points to the completed standard-library security, permission, regression, and approval-state experiments while keeping real framework guardrail/HITL behavior pending.
 77. Added a high-priority security source card for Greshake et al.'s Indirect Prompt Injection paper (`docs/sources/source-cards/2023-indirect-prompt-injection-paper.md`). The card records arXiv metadata, HTTP metadata, abstract-level findings about data/instruction boundary blurring, remote injection into retrieved data, and tool/API call risk. Synced MkDocs nav, source-card directory, source-card index, seed candidates, prompt-injection evidence, claim ledger, coverage matrix, chapter 09, and chapter 12. This strengthens the prompt-injection boundary evidence without upgrading any real guardrail/HITL effectiveness claims.
+78. Added a RAG source card for Self-RAG (`docs/sources/source-cards/2023-self-rag-paper.md`). The card records arXiv metadata, HTTP metadata, and abstract-level findings that fixed passage retrieval can hurt when retrieval is unnecessary or irrelevant, while on-demand retrieval, reflection/critique, factuality, and citation accuracy need evaluation. Synced MkDocs nav, source-card directory, source-card index, seed candidates, RAG engineering evidence, claim ledger, coverage matrix, chapter 06, and chapter 12. This removes the `Self-RAG 待建卡` coverage gap while keeping real embedding/vector-store/rerank/LLM synthesis quality pending.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2023-indirect-prompt-injection-paper.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/index.md`, `docs/sources/seed-candidates.md`, `docs/evidence/prompt-injection-permission-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/references/coverage-matrix.md`, `docs/chapters/09-production-security.md`, `docs/chapters/12-source-map.md`, `mkdocs.yml`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2023-self-rag-paper.md`, `docs/sources/source-card-index.md`, `docs/sources/source-cards/index.md`, `docs/sources/seed-candidates.md`, `docs/evidence/rag-engineering-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/references/coverage-matrix.md`, `docs/chapters/06-rag-memory.md`, `docs/chapters/12-source-map.md`, `mkdocs.yml`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
