@@ -70,9 +70,10 @@
 | LLM 应用安全 | OWASP Top 10 for LLM Applications | Security Guidance | A | 链接已复核；source card 已创建 |
 | Agentic AI 安全 | OWASP Agentic Security Initiative resources | Security Guidance / Whitepaper Metadata | A/B | 公开资源页和 WP JSON 摘要已复核；source card 已创建；白皮书下载受限，全文未精读；真实 agentic-specific mitigation 效果待实验 |
 | AI 攻击技术 / 案例 | MITRE ATLAS | Threat Knowledge Base / YAML Dataset | A | 主页、manifest、latest v6 YAML、HTTP metadata 和 term catalog 已复核；source card 已创建；适合支撑 technique / case-study-derived regression set，不支撑 mitigation 效果 |
+| Tool-agent prompt injection benchmark | AgentDojo | Paper / Benchmark / Source | A | arXiv v3 metadata、PDF、GitHub repo metadata、README、项目站点和 results 页面已复核；source card 已创建；适合支撑 stateful tool-agent security eval 和 regression set 设计，不支撑当前模型或生产防护效果 |
 | AI 风险管理 | NIST AI Risk Management Framework | Standard / Guidance | A | 链接已复核；source card 已创建 |
 | Responsible AI / 安全治理 | Google Cloud Responsible AI documentation | Official Docs | A | Google Cloud 页面和关键段落已复核；source card 已创建；真实过滤、grounding、监控效果待实验 |
-| Prompt injection | Indirect Prompt Injection paper；MITRE ATLAS；Microsoft Prompt Shields docs；Anthropic jailbreak mitigation docs；OWASP Agentic Security Initiative resources；additional security writeups | Paper / Engineering | A/B | arXiv paper 元数据、MITRE ATLAS latest v6 YAML、Microsoft Learn Prompt Shields concept/quickstart、Anthropic 官方 Markdown mitigation page 和 OWASP agentic security 公开资源页已复核；source cards 已创建；更多框架 guardrail/HITL 行为和误报/漏报资料待复核 |
+| Prompt injection | Indirect Prompt Injection paper；AgentDojo；MITRE ATLAS；Microsoft Prompt Shields docs；Anthropic jailbreak mitigation docs；OWASP Agentic Security Initiative resources；additional security writeups | Paper / Engineering | A/B | arXiv paper 元数据、AgentDojo arXiv/GitHub/README/站点、MITRE ATLAS latest v6 YAML、Microsoft Learn Prompt Shields concept/quickstart、Anthropic 官方 Markdown mitigation page 和 OWASP agentic security 公开资源页已复核；source cards 已创建；更多框架 guardrail/HITL 行为和误报/漏报资料待复核 |
 | Tool permissions | Framework security guidance for tools and agents | Official Docs | A/B | OpenAI Agents SDK / Semantic Kernel 已完成第一轮；仍需横向补充 |
 
 ## Courses / Beginner-Friendly Materials
