@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 17:16 Asia/Shanghai
+**Last Updated:** 2026-07-11 17:19 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -53,9 +53,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 36. Completed a standard-library practice roadmap smoke harness under `docs/experiments/practice-roadmap-harness/`. It runs 6/6 passing eval cases across structured output, refusal recording, tool validation retry, grounded RAG, unsupported-question refusal, and a budget-exceeded production check. This supports the chapter 11 guidance that beginner projects need acceptance criteria, trace, failure categories, and repeatable commands, but it does not validate real Cookbook/API dependencies, cost, latency, rate limits, or model behavior.
 37. Completed a standard-library framework selection rubric smoke test under `docs/experiments/framework-selection-rubric/`. It maps five task profiles to framework directions using required/nice-to-have/avoid capabilities, missing required capabilities, and cautions. It supports the chapter 10 guidance to compare frameworks by task difficulty and tradeoffs, but it does not validate real framework implementation cost, trace, permissions, latency, token cost, or maintenance burden.
 38. Completed a first evidence note for Agent autonomy-level boundaries under `docs/evidence/autonomy-level-boundary.md`. It frames autonomy as a control/right-to-act and risk-surface continuum, not a capability rank. Chapter 01, chapter 04, glossary, claim ledger, validation backlog, coverage matrix, and source map now point to this boundary. It relies on existing official docs/evidence and the workflow/hybrid/ReAct-like simulation; no new script was added.
+39. Completed a standard-library RAG vs short-term vs long-term memory comparison under `docs/experiments/rag-memory-comparison/`. It passes 5/5 cases: external knowledge uses RAG plus citation, current-session continuation uses thread state, cross-session language preference uses confirmed long-term memory, stale assistant guess is skipped in favor of user-corrected MkDocs memory, and a private API key request is refused because no safe source exists. This supports the chapter 06 boundary between RAG, short-term memory, and guarded long-term memory, but it does not validate real embedding/vector store/LLM synthesis or real memory framework behavior.
 
 ## Technical Context
-- Files modified recently: `docs/chapters/01-agent-landscape.md`, `docs/chapters/04-agent-architecture.md`, `docs/chapters/12-source-map.md`, `docs/evidence/autonomy-level-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/glossary.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/chapters/06-rag-memory.md`, `docs/chapters/12-source-map.md`, `docs/evidence/rag-memory-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/rag-memory-comparison/README.md`, `docs/experiments/rag-memory-comparison/rag_memory_comparison.py`, `docs/experiments/rag-memory-comparison/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
@@ -74,7 +75,7 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 - Run LLM-as-judge and online evaluator misclassification checks with human spot review, cost tracking, and privacy/redaction constraints.
 - Run a real MCP SDK / host trace experiment to upgrade the MCP role boundary beyond the current standard-library simulation, covering `tools/list`, `tools/call`, `resources/list`, `resources/read`, host/client/server trace fields, and how the host presents tool inputs/results.
 - Run a real MCP security experiment covering user rejection, roots behavior, URL mode elicitation, malicious resource/prompt content, token/log redaction, and a simulated write tool requiring confirmation.
-- Run a minimal RAG vs short-term vs long-term memory comparison experiment.
+- Run a real RAG vs short-term vs long-term memory comparison experiment. Standard-library boundary comparison is done; still need real embedding/vector store/LLM synthesis, real memory framework behavior, citation correctness, personalization benefit, privacy controls, token/latency/cost, and user edit/delete flows.
 - Run a real RAG stack experiment beyond the current standard-library simulation, comparing chunk size, metadata, top-k, rerank/filter, citation correctness, answer faithfulness, latency, and token cost. LlamaIndex docs search did not directly verify source citation/source_nodes behavior in the latest docs.
 - Run a real multi-session long-term memory governance experiment beyond the current standard-library simulation, covering no-memory vs guarded-memory vs auto-memory, real model/framework behavior, user viewing/editing/deleting memories, privacy/permission boundaries, task quality, stale preference invalidation, conflicting facts, and sensitive information handling.
 - Run a real model/framework prompt-injection permission-boundary experiment beyond the current standard-library simulation, covering external document injection, read/write tool separation, parameter validation, human confirmation, and audit logs.

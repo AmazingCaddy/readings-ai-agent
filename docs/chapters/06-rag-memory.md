@@ -59,6 +59,8 @@ Memory 不等于把全部聊天历史塞进 prompt。那只是最简单也最脆
 
 RAG 偏向“外部知识检索”。Memory 偏向“系统状态和历史经验管理”。
 
+本手册的 RAG / Memory 对比实验把同一学习助手任务分给三类上下文来源：外部知识问题由 RAG 回答并带 `rag_paper` citation；“继续刚才步骤”由 thread-scoped short-term memory 回答；跨会话语言偏好和用户纠正后的站点技术栈由 guarded long-term memory 回答；私密 API key 请求则没有安全上下文来源，系统拒答。这个实验不证明真实 RAG 或记忆框架的质量，但能说明三者不应混成一个“记住更多信息”的概念。
+
 可以用几个问题区分：
 
 - 这条信息来自外部资料库，还是来自历史交互？
@@ -171,6 +173,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 - RAG 论文中的 non-parametric memory 指外部可检索索引一类机制，不应和 Agent 长期记忆治理直接混同。
 - LlamaIndex 文档支持现代工程 RAG 的五阶段流程：Loading、Indexing、Storing、Querying、Evaluation；Documents / Nodes、Indexes、Retrievers 和 Query Engines 可作为初学者理解工程组件的参考。
 - 本地标准库 RAG pipeline 模拟实验复现了 chunk、retrieve、synthesize 三个可观察阶段，输出 chunk-level citations，并在 unsupported question 上返回 `grounded=false`；它支撑最小 citation/source 追溯设计，但不证明真实 embedding / LLM synthesis 的效果。
+- 本地标准库 RAG / Memory 对比实验显示：RAG 适合外部知识和 citation，short-term memory 适合当前 thread state，guarded long-term memory 适合用户确认的跨会话偏好和纠正事实；敏感且无安全来源的问题应拒答。该实验支撑分层治理边界，但不证明真实框架质量。
 - LangGraph memory 文档按 recall scope 区分 short-term/thread-scoped memory 和 long-term/cross-session memory，可作为短期/长期记忆工程边界的参考。
 - LangGraph memory 文档强调 long-term memory 没有 one-size-fits-all solution，写入方式有 hot path 和 background 两类权衡。
 - MemGPT、MemoryBank、Generative Agents 支持长期记忆和记忆管理的研究方向，但不能泛化为“加长期记忆总是更好”。
@@ -185,7 +188,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 - 真实 memory framework 中，写入守门、用户查看/编辑/删除和失效历史如何实现？
 - 冲突记忆、过时记忆和隐私记忆应该如何处理？
 - RAG 和 Memory 组合时，优先召回哪个信息源？
-- 如何设计最小实验对比 RAG、thread-scoped memory 和 long-term memory？
+- 如何用真实模型和框架对比 RAG、thread-scoped memory 和 long-term memory？标准库实验已验证最小分流边界，仍需真实 citation correctness、个性化收益、token/latency/cost 和隐私权限实验。
 
 ## 本章小结
 
@@ -216,6 +219,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 - [术语边界表](../glossary.md)
 - [结论证据台账](../evidence/claim-ledger.md)
 - [Evidence Note: RAG 与 Memory 边界](../evidence/rag-memory-boundary.md)
+- [RAG、短期记忆与长期记忆对比实验结果](../experiments/rag-memory-comparison/results-2026-07-11.md)
 - [Evidence Note: RAG 工程流程边界](../evidence/rag-engineering-boundary.md)
 - [RAG 最小 Pipeline 与 Citation 实验结果](../experiments/rag-pipeline/results-2026-07-11.md)
 - [Evidence Note: 长期记忆治理与风险边界](../evidence/memory-governance-risk-boundary.md)

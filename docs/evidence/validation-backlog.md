@@ -6,7 +6,7 @@
 
 - Agent 和 Workflow 的边界如何定义才准确？已完成第一轮 OpenAI Agents SDK、LangGraph、ReAct 交叉验证和标准库 workflow / hybrid / ReAct-like 对比实验；仍需真实模型 / Agent framework / repo issue 实验。
 - “自治程度”是否可以作为分类维度？已完成第一轮边界验证：它可以作为控制权和风险面的连续谱维度，但不能写成能力等级；仍需真实模型 / 框架 / 成本 / 权限实验。
-- RAG 和 Memory 的边界如何解释给初学者？已完成第一轮验证和标准库最小 RAG pipeline / citation 模拟；仍需 RAG vs short-term vs long-term memory 对比实验。
+- RAG 和 Memory 的边界如何解释给初学者？已完成第一轮验证、标准库 RAG / short-term / long-term memory 对比实验和最小 RAG pipeline / citation 模拟；仍需真实 RAG / memory framework / 多会话质量实验。
 
 ## 架构模式
 
@@ -36,7 +36,7 @@
 - Chunk size、embedding model、reranking 对结果的影响如何验证？LlamaIndex 已完成第一轮工程流程验证，标准库最小 pipeline 已验证 trace/citation 字段；仍需真实 embedding / vector store / rerank 对比实验。
 - RAG 答案如何稳定带 source citation / source nodes？标准库模拟实验已验证 chunk-level citation 字段设计；仍需真实 RAG stack 和 LLM synthesis 下的 citation correctness / faithfulness 实验。
 - Memory 写入守门有哪些可复用设计？Letta/Zep 已提供第一轮工程模式参考，标准库模拟已验证显式写入、敏感信息拒绝、低置信推断拒绝、用户纠正和失效历史的最小流程；仍需真实 framework 的查看、编辑、删除、权限和隐私边界实验。
-- RAG paper 中的 non-parametric memory 与 Agent long-term memory 如何避免术语混淆？
+- RAG paper 中的 non-parametric memory 与 Agent long-term memory 如何避免术语混淆？已完成第一轮边界解释和标准库 RAG / Memory 分流实验；后续仍需真实教程示例避免术语误用。
 
 ## Eval 与生产化
 

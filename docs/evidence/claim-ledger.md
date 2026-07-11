@@ -27,7 +27,7 @@
 | Function calling 本身不执行工具，执行发生在应用程序或工具运行时。 | OpenAI Function Calling docs；OpenAI Responses API docs；Evidence Note: Tool Use 与 Function Calling 边界；Tool Calling 参数校验与重试实验结果 | 部分验证 | 可作为工程边界写入正文；标准库模拟实验已验证参数校验、错误回传和有限重试流程，仍需真实模型 / API 实验。 |
 | RAG 的动机包括外部知识访问、知识更新和 provenance。 | RAG paper；LlamaIndex docs；Evidence Note: RAG 与 Memory 边界；Evidence Note: RAG 工程流程边界 | 部分验证 | 可作为 RAG 章节基础动机；现代工程流程需结合框架文档和实验。 |
 | 工程 RAG 是 loading、indexing、storing、querying、evaluation 等阶段组成的 pipeline，不是单个 prompt 技巧。 | LlamaIndex docs；RAG paper；Evidence Note: RAG 工程流程边界；RAG 最小 Pipeline 与 Citation 实验结果 | 部分验证 | 可作为第 06 章工程流程解释；标准库模拟实验已验证 chunk metadata、retrieval trace、citation 和无证据拒答流程，真实 embedding / rerank / LLM synthesis 仍需实验。 |
-| Memory 不等于 RAG，也不等于把完整历史塞进 prompt。 | RAG paper；MemGPT；MemoryBank；LangGraph memory docs；Evidence Note: RAG 与 Memory 边界 | 部分验证 | 可作为术语边界写入正文；需提醒 RAG paper 中的 non-parametric memory 不是 Agent 长期记忆治理。 |
+| Memory 不等于 RAG，也不等于把完整历史塞进 prompt。 | RAG paper；MemGPT；MemoryBank；LangGraph memory docs；Evidence Note: RAG 与 Memory 边界；RAG / Memory 对比实验结果 | 部分验证 | 可作为术语边界写入正文；标准库实验支撑 RAG、thread state 和 guarded long-term memory 的最小分流；需提醒 RAG paper 中的 non-parametric memory 不是 Agent 长期记忆治理。 |
 | 长期记忆可能提升持续交互体验，但也会引入错误写入、过时和隐私风险。 | MemoryBank；MemGPT；Generative Agents；Letta docs；Zep docs；OWASP LLM Top 10；NIST AI RMF；Evidence Note: 长期记忆治理与风险边界；长期记忆写入守门与治理实验结果 | 部分验证 | 可作为长期记忆章节的保守边界；标准库实验已验证自动写入会持久化敏感信息和低置信推断，写入守门可降低污染；不应写成“长期记忆总是提升 Agent”。 |
 | Benchmark 不能直接代表真实业务 Agent 质量。 | AgentBench；WebArena；OpenAI Evals repo；Evidence Note: Agent Eval 与 Trajectory 边界 | 部分验证 | 可作为 Eval 章节核心提醒；公开 benchmark 可学习评测思想，但业务系统仍需 custom/private eval 和 trace。 |
 | Agent eval 不应只看最终答案，还应检查关键 trajectory / trace。 | AgentBench；WebArena；OpenAI Evals repo；LangSmith docs；Phoenix docs；OpenAI Cookbook；Evidence Note: Agent Eval 与 Trajectory 边界；Evidence Note: Observability 与 Trace 工程边界；Trace-Aware Eval 最小实验结果 | 部分验证 | 可写入 Eval 章节；标准库实验已验证 final-only 会漏掉无审批副作用工具和工具错误未恢复，真实 Agent trace / LLM-as-judge / 人工复核仍待验证。 |
@@ -44,7 +44,7 @@
 
 1. Agent vs Workflow / 自治程度的边界。已完成第一轮 OpenAI Agents SDK、LangGraph、ReAct 交叉验证、Agent 自治程度 evidence 和标准库 workflow / hybrid / ReAct-like 对比实验，待补真实模型 / 框架 / repo issue 实验。
 2. Tool Use vs Function Calling 的边界。已完成第一轮官方文档交叉验证和标准库参数校验/重试模拟，待补真实模型 / API 实验和其他框架术语对照。
-3. RAG vs Memory 的边界与工程 RAG 流程。已完成第一轮论文和框架文档交叉验证及标准库最小 RAG pipeline / citation 模拟，待补真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank 和成本/延迟实验。
+3. RAG vs Memory 的边界与工程 RAG 流程。已完成第一轮论文和框架文档交叉验证、标准库 RAG / Memory 对比实验及最小 RAG pipeline / citation 模拟，待补真实 embedding / vector store / LLM synthesis、chunk size/top-k/rerank、真实 memory framework 和成本/延迟实验。
 4. MCP server/client/host 的职责边界与安全/授权/权限边界。已完成第一轮官方文档交叉验证和标准库最小 trace 模拟，待补真实 MCP SDK / host 的 trace、权限确认、URL mode / OAuth 和恶意 resource/prompt 实验。
 5. Agent eval 为什么要看 trajectory。已完成第一轮 benchmark、eval framework、observability 工程资料交叉验证和标准库 trace-aware eval 模拟，待补真实 Agent trace、LLM-as-judge 误判分析和人工复核实验。
 6. Prompt injection 为什么需要权限和隔离，而不是只靠提示词。已完成第一轮风险资料、框架工程资料交叉验证和标准库攻击/权限模拟，待补真实模型 / 框架 guardrail / HITL approval 误报漏报实验。
