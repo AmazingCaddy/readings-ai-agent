@@ -74,6 +74,7 @@ nav:
   - References:
       - 覆盖矩阵: references/coverage-matrix.md
   - 证据与实验:
+      - Evidence Notes 索引: evidence/README.md
       - 待验证问题: evidence/validation-backlog.md
       - 结论证据台账: evidence/claim-ledger.md
       - 实验说明: experiments/README.md
