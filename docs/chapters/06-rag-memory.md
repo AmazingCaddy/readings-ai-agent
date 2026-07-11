@@ -186,6 +186,7 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 - “RAG 的动机包括外部知识访问、知识更新和 provenance”已升级为可入正文：RAG 论文摘要支持外部检索可以帮助知识密集型生成任务，并明确提到 provenance 和 world knowledge 更新问题；真实 RAG stack 的质量、成本和延迟仍需实验验证。
 - RAG 论文中的 non-parametric memory 指外部可检索索引一类机制，不应和 Agent 长期记忆治理直接混同。
 - “RAG 偏外部知识检索和 provenance，Memory 偏状态、历史经验和跨会话数据治理”是本章可入正文的术语边界；真实 RAG / memory framework 的质量、成本和隐私收益仍需实验验证。
+- “Memory 不等于 RAG，也不等于把完整历史塞进 prompt”是本章可入正文的术语边界；RAG 强调外部知识检索和 citation，Memory 强调 thread state、跨会话偏好、历史经验、写入守门和生命周期治理。
 - “工程 RAG 是 loading、indexing、storing、querying/retrieval、response synthesis 和 evaluation 等阶段组成的可观察 pipeline，不是单个 prompt 技巧”已升级为可入正文：RAG paper 支撑外部检索、provenance 和知识更新动机，LlamaIndex 文档支持现代工程 RAG 的五阶段流程，Documents / Nodes、Indexes、Retrievers 和 Query Engines 可作为初学者理解工程组件的参考。
 - Self-RAG 论文摘要已完成第一轮精读，可支撑“不要盲目固定检索；需要评估 retrieval necessity、passage relevance、answer faithfulness 和 citation accuracy”的进阶 RAG 边界。它不能证明当前工程默认应使用 Self-RAG，也不能替代真实 embedding / vector store / rerank / LLM synthesis 实验。
 - 本地标准库 RAG pipeline 模拟实验复现了 chunk、retrieve、synthesize 三个可观察阶段，输出 chunk-level citations，并在 unsupported question 上返回 `grounded=false`；它支撑最小 citation/source 追溯和无证据拒答设计。该实验还补了 deterministic retrieval strategy audit：3 个 case、4 个 strategy、12 个结果、4 个 expected failure 均按预期暴露，覆盖 top-k 过小漏多来源、metadata filter 错配隐藏必要来源、细 chunk + rerank terms 仍可能漏召回。Real RAG Citation Synthesis harness 已完成本地 deterministic citation verifier control：3 个正常 case 通过，5 个 adversarial fixture 被拒绝，覆盖 citation id、quote matching、grounded/ungrounded citation 和 unsupported grounded claim 的校验边界；当前无 API key，真实 LLM synthesis 未运行，不证明真实 LLM citation correctness、embedding / vector store / rerank 效果。
@@ -193,12 +194,14 @@ Letta 文档中的 `/remember`、`/doctor`、git-backed memory 和 direct inspec
 - LlamaIndex examples repo 已完成第一轮复核：`CitationQueryEngine` / `response.source_nodes`、RAG workflow with reranking、BM25 / hybrid retrieval 等示例可作为工程结构 reference；这些示例不能证明 citation correctness、answer faithfulness、最佳 chunk/top-k/rerank 策略或生产可靠性。
 - OpenAI File Search / Retrieval 文档已完成第一轮复核：Responses API 的 `file_search` 是 hosted tool，可基于 vector stores 检索已上传文件，并返回 `file_search_call` 与 `file_citation` annotations；Retrieval guide 补充 semantic search、query rewriting、attribute filtering、ranking options、chunking defaults/limits、expiration、pricing 和删除 eventually consistent 边界。它适合支撑“托管检索也要记录 search results、citations、filters、ranking/chunking、成本和延迟”的工程表述，但不能证明 File Search 默认引用正确、默认低成本或默认生产可靠。
 - 本地标准库上下文策略对比实验显示，基础 keyword RAG 可能召回不可信外部文档，lossy summary 可能丢失 source id；它支撑 RAG 需要 trust/freshness metadata、citation 和 human gate trace 的工程边界，但不证明真实 embedding / rerank 表现。
+- 长上下文不能替代上下文治理：RAG 和 Memory 仍需要选择来源、保留 provenance、处理过时资料、隔离不可信外部内容、控制敏感信息和记录 trace；真实长上下文 / RAG / 摘要策略的质量、成本、延迟和跨模型稳定性仍待验证。
 - 本地标准库 RAG / Memory 对比实验显示：RAG 适合外部知识和 citation，short-term memory 适合当前 thread state，guarded long-term memory 适合用户确认的跨会话偏好和纠正事实；敏感且无安全来源的问题应拒答。该实验支撑分层治理边界，但不证明真实框架质量。
 - LangGraph memory 文档按 recall scope 区分 short-term/thread-scoped memory 和 long-term/cross-session memory，可作为短期/长期记忆工程边界的参考。
 - LangGraph memory 文档强调 long-term memory 没有 one-size-fits-all solution，写入方式有 hot path 和 background 两类权衡。
 - Real LangGraph Memory Store Validation 已完成本地 `InMemoryStore` run：4 个 case 全部通过，user-scoped namespace search 只返回当前用户 namespace，broad prefix search 可看到多个 user namespace，应用层 wrapper 可记录 invalidated history，delete 后 active item 不再召回，trace 未泄露示例 secret。它支撑真实框架 store 原语和应用层治理包装的最小观察，但不证明长期记忆提升质量、真实模型正确使用记忆、持久化、UI、组织权限、合规删除、成本或延迟。
 - MemGPT、MemoryBank、Generative Agents 支持长期记忆和记忆管理的研究方向，但不能泛化为“加长期记忆总是更好”。
 - 长期记忆治理与风险边界已升级为可入正文：长期记忆可能适合持续交互、个性化和跨会话任务，但不能默认自动写入或默认提升表现；系统必须配套写入守门、冲突/失效处理、用户可检查/可编辑/可删除、跨用户权限隔离和敏感 trace 脱敏。真实多会话 Agent / memory framework 的收益、污染率、成本、延迟和用户控制体验仍需实验。
+- “长期记忆可能提升持续交互体验，但也会引入错误写入、过时、权限和隐私风险”是本章可入正文的治理边界；它只支持保守设计要求，不证明长期记忆默认提升表现。
 - 本地标准库 memory governance 实验显示，自动写入会持久化敏感信息和低置信推断；写入守门可以拒绝敏感数据、低置信推断和助手猜测，并保留偏好变化的失效历史。该实验支撑治理流程设计，但不证明长期记忆提升任务质量。
 - 本地标准库 memory lifecycle audit 实验显示，长期记忆还需要 inspect/edit/delete/recall 层面的权限和生命周期控制：跨用户访问应被阻断，编辑应保留 invalidated history，删除后的敏感记录不应再被召回，trace 应脱敏。该实验不证明真实 memory framework 默认具备这些能力。
 

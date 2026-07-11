@@ -108,6 +108,10 @@ HARNESSES = [
         ROOT / "docs/experiments/chapter-evidence-alignment-audit/chapter_evidence_alignment_audit.py",
     ),
     Harness(
+        "claim_to_chapter_landing",
+        ROOT / "docs/experiments/claim-to-chapter-landing-audit/claim_to_chapter_landing_audit.py",
+    ),
+    Harness(
         "source_reference_integrity",
         ROOT / "docs/experiments/source-reference-integrity-audit/source_reference_integrity_audit.py",
     ),
@@ -288,6 +292,8 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "check_count",
         "source_card_count",
         "content_chapter_count",
+        "body_entry_claim_count",
+        "declared_target_count",
         "failed_checks",
     ]:
         if key in payload:
@@ -333,7 +339,13 @@ def run_harness(harness: Harness) -> dict[str, Any]:
 
 def main() -> int:
     results = [run_harness(harness) for harness in HARNESSES]
-    failed = [item for item in results if item["exit_code"] != 0 or item["summary"].get("status") in {"error", "api_error"}]
+    failed = [
+        item
+        for item in results
+        if item["exit_code"] != 0
+        or item["summary"].get("status") in {"error", "api_error"}
+        or item["summary"].get("all_passed") is False
+    ]
     summary = {
         "status": "failed" if failed else "completed",
         "harness_count": len(results),
