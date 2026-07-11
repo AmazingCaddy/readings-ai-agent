@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 15:52 Asia/Shanghai
+**Last Updated:** 2026-07-11 15:55 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -27,14 +27,16 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 10. Completed first evidence upgrade for MCP host/client/server boundary using MCP architecture, server concepts, client concepts, and MCP servers README.
 11. Completed first evidence upgrade for RAG vs Memory boundary using RAG paper abstract and LangGraph memory docs.
 12. Completed first evidence upgrade for Prompt Injection / Production Security boundary using OWASP LLM Top 10 key risk items, NIST AI RMF overview, and existing tool-calling evidence.
+13. Completed first evidence upgrade for Agent Eval / Trajectory boundary using AgentBench and WebArena abstracts plus OpenAI Evals README.
 
 ## Technical Context
-- Files modified recently: `docs/sources/source-cards/2026-owasp-llm-top-10.md`, `docs/sources/source-cards/2026-nist-ai-rmf.md`, `docs/evidence/prompt-injection-permission-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/09-production-security.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/2023-agentbench-paper.md`, `docs/sources/source-cards/2023-webarena-paper.md`, `docs/sources/source-cards/2026-openai-evals-repo.md`, `docs/evidence/agent-eval-trajectory-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/references/coverage-matrix.md`, `docs/chapters/08-evaluation-observability.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
 ## Open Questions
 - Run the minimal tool-calling experiment to upgrade the Function Calling boundary from partial verification toward `可入正文`.
+- Run a toy Agent eval experiment comparing final-answer-only scoring with trajectory/trace-aware scoring.
 - Run a minimal read-only MCP trace experiment to upgrade the MCP role boundary from partial verification toward `可入正文`.
 - Run a minimal RAG vs short-term vs long-term memory comparison experiment.
 - Run a minimal prompt-injection permission-boundary experiment covering external document injection, read/write tool separation, parameter validation, human confirmation, and audit logs.

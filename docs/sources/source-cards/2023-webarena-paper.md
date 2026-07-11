@@ -8,7 +8,7 @@
 - 主题：Web Agent / Evaluation
 - 适合阶段：进阶
 - 可信度等级：A
-- 是否已验证：来源链接和 arXiv 元数据已复核；内容待精读；结论待交叉验证
+- 是否已验证：来源链接和 arXiv 元数据已复核；摘要已精读；结论已部分交叉验证
 
 ## 一句话总结
 
@@ -19,11 +19,20 @@ WebArena 适合用于理解 Web Agent 的评测环境和真实任务复杂度。
 - 论文构建了一个用于 language-guided web agents 的真实且可复现环境。
 - 摘要描述环境包含四类功能网站：e-commerce、social forum discussions、collaborative software development 和 content management。
 - 摘要报告其最佳 GPT-4-based agent 端到端任务成功率为 14.41%，低于人类表现 78.24%，显示真实 Web Agent 任务仍很难。
+- 摘要强调 benchmark tasks 关注 task completions 的 functional correctness，任务 diverse、long-horizon，并模拟人类日常互联网任务。
+
+## 支撑证据
+
+- arXiv 页面返回 HTTP 200；metadata 显示 submitted on 2023-07-25，last revised 2024-04-16。
+- 摘要写明 WebArena 建立 highly realistic and reproducible 的 language-guided agent 环境。
+- 摘要写明环境包含 fully functional websites，并配有 tools 和 external knowledge bases。
+- 摘要写明任务关注 functional correctness of task completions，且 diverse、long-horizon。
+- 摘要报告最佳 GPT-4-based agent end-to-end task success rate 为 14.41%，human performance 为 78.24%。
 
 ## 是否进入正文
 
-- 结论：作为进阶资料进入
-- 原因：适合 Eval 和实践项目章节。
+- 结论：部分进入
+- 原因：可支撑真实 Web Agent 任务需要端到端环境、工具、外部知识和 long-horizon 评测；具体数值不能泛化为当前模型能力。
 
 ## 可能的问题
 
