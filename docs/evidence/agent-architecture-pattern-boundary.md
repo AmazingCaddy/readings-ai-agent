@@ -38,9 +38,10 @@ ReAct、Reflection / Reflexion、Tree of Thoughts、状态图和 workflow-agent 
 
 ## 结论状态
 
-- 可入正文：窄结论“Planner / Executor 不能只停留在一次性计划；计划需要可执行，执行结果需要证据校验，失败需要反馈给 planner 并记录重规划 trace”已完成第一轮交叉验证。LangGraph 和 OpenAI Agents SDK 支撑现代工程编排、状态和 trace 边界；标准库 planner/executor 对比复现了一次性计划漏掉 migration evidence，而带 validation feedback 的流程通过 `validation_failed` 和 `plan_revised` 补齐证据。
-- 部分验证：ReAct、Reflection / Reflexion、Tree of Thoughts、状态图和 workflow-agent hybrid 的真实任务收益、成本、延迟、工具错误恢复和人工介入仍缺真实模型 / 框架对比实验；不能写成复杂架构默认更可靠。
+- 可入正文：窄结论“复杂 Agent 架构不是默认更可靠；是否引入 ReAct、Planner / Executor、Reflection、Tree of Thoughts、状态图或多 Agent，需要看任务边界、trace、成本、失败原因、权限和实验结果”已完成第一轮交叉验证。论文支撑不同研究模式，LangGraph 和 OpenAI Agents SDK 支撑现代工程编排、状态和 trace 边界；多组标准库实验显示复杂控制结构会带来额外工具调用、错误传播、错误反思、重复读取或冲突风险。
+- 可入正文：窄结论“Planner / Executor 不能只停留在一次性计划；计划需要可执行，执行结果需要证据校验，失败需要反馈给 planner 并记录重规划 trace”已完成第一轮交叉验证。标准库 planner/executor 对比复现了一次性计划漏掉 migration evidence，而带 validation feedback 的流程通过 `validation_failed` 和 `plan_revised` 补齐证据。
+- 部分验证：ReAct、Reflection / Reflexion、Tree of Thoughts、状态图和 workflow-agent hybrid 的真实任务收益、成本、延迟、工具错误恢复和人工介入仍缺真实模型 / 框架对比实验；不能写成某个复杂架构在真实任务中稳定更优。
 
 ## 可进入章节
 
-- 是。可以确定写成：Planner / Executor 要有可执行计划、证据校验、失败反馈和重规划 trace；计划本身不是质量保证。也可以保守写成：ReAct、Reflection、Tree of Thoughts、状态图和 workflow-agent hybrid 解决的问题不同；初学者应先理解任务边界、状态、工具权限、trace 和停止条件，再决定是否引入更复杂的规划、反思或搜索机制。
+- 是。可以确定写成：复杂 Agent 架构不是默认升级路径；初学者应先理解任务边界、状态、工具权限、trace、成本和停止条件，再决定是否引入更复杂的规划、反思、搜索或多 Agent 机制。Planner / Executor 还可以确定写成：要有可执行计划、证据校验、失败反馈和重规划 trace；计划本身不是质量保证。
