@@ -4,12 +4,12 @@
 - DOI：https://doi.org/10.48550/arXiv.2302.12173
 - 作者 / 机构：Kai Greshake, Sahar Abdelnabi, Shailesh Mishra, Christoph Endres, Thorsten Holz, Mario Fritz
 - 发布时间：2023-02-23；arXiv v2 updated 2023-05-05
-- 最后复核日期：2026-07-11
+- 最后复核日期：2026-07-12
 - 类型：论文 / Security
 - 主题：Prompt Injection / LLM-integrated Applications / Tool Security
 - 适合阶段：工程实践 / 生产化
 - 可信度等级：A
-- 是否已验证：来源链接、HTTP metadata、arXiv 元数据和摘要已复核；支撑“外部内容会模糊数据与指令边界”和“prompt injection 不能只靠 prompt 解决”的安全窄边界；真实 guardrail / HITL / 框架防护效果仍部分验证
+- 是否已验证：来源链接、HTTP metadata、arXiv API 元数据、HTML metadata 和摘要已于 2026-07-12 复核；支撑“外部内容会模糊数据与指令边界”和“prompt injection 不能只靠 prompt 解决”的安全窄边界；真实 guardrail / HITL / 框架防护效果仍部分验证
 
 ## 一句话总结
 
@@ -21,16 +21,18 @@
 - Indirect prompt injection 允许攻击者在没有直接访问聊天界面的情况下，把恶意 prompt 注入到目标应用可能检索的数据中。
 - 摘要列出的影响包括 data theft、worming、information ecosystem contamination，以及控制应用功能或 API 调用方式等风险。
 - 论文把 processing retrieved prompts 类比为 arbitrary code execution 的风险信号；对初学者来说，保守理解应是：外部内容不能直接获得系统指令或工具调用权限。
+- arXiv API 当前记录 primary category 为 `cs.CR`，并列 `cs.AI`、`cs.CL`、`cs.CY`；这支撑它既是安全论文，也与 AI / 语言模型 / 社会影响相关。
 - 论文声称当时 effective mitigations 仍不足；这支持正文中“不能把某个 guardrail 写成默认充分安全”的保守边界。
 
 ## 支撑证据
 
-- arXiv 页面返回 HTTP 200；HTTP `last-modified` 为 2023-05-08。
-- arXiv 元数据显示 submitted on 2023-02-23，last revised 2023-05-05，当前版本 v2。
+- arXiv 页面于 2026-07-12 返回 HTTP 200；响应头 `last-modified: Mon, 08 May 2023 00:14:58 GMT`。
+- arXiv HTML 页面 canonical 为 `https://arxiv.org/abs/2302.12173`，Open Graph URL 为 `https://arxiv.org/abs/2302.12173v2`，页面 dateline 写明 submitted on 23 Feb 2023，last revised 5 May 2023 (v2)。
+- arXiv API 于 2026-07-12 返回 entry `http://arxiv.org/abs/2302.12173v2`，published `2023-02-23T17:14:38Z`，updated `2023-05-05T14:26:17Z`，primary category `cs.CR`，并列 `cs.AI`、`cs.CL`、`cs.CY`。
 - 摘要写明 Prompt Injection attacks enable attackers to override original instructions and employed controls。
 - 摘要写明 LLM-Integrated Applications blur the line between data and instructions。
 - 摘要写明 Indirect Prompt Injection 可以通过 injecting prompts into data likely to be retrieved 远程利用 LLM-integrated applications。
-- 摘要写明攻击影响包括 data theft、worming、information ecosystem contamination，以及 manipulate application's functionality and control how and if other APIs are called。
+- 摘要写明攻击影响包括 data theft、worming、information ecosystem contamination，以及 manipulate application's functionality and control how and if other APIs are called；HTML metadata 也保留同样摘要。
 
 ## 是否进入正文
 
@@ -42,6 +44,7 @@
 - 论文中的具体真实系统案例反映 2023 年前后的系统和模型环境，不能直接泛化为当前所有模型或产品的拦截率。
 - 摘要支撑风险类别和攻击面边界，但不能证明某个防护方案有效。
 - 正文不应写成“处理外部文本等同于传统 RCE”，更稳妥的写法是：处理被注入的外部 prompt 可能控制模型后续行为和工具/API 调用，因此需要系统层权限隔离和审计。
+- 论文摘要中 real-world systems 和 GPT-4 示例只能作为当时攻击可行性证据，不能替代当前模型、当前浏览器 / RAG / tool-agent 框架的复现实验。
 
 ## 初学者阅读建议
 
