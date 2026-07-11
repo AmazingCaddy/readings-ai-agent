@@ -66,6 +66,7 @@ nav:
           - OpenAI Function Calling docs: sources/source-cards/2026-openai-function-calling-docs.md
           - MCP official docs: sources/source-cards/2026-mcp-official-docs.md
           - LangGraph docs: sources/source-cards/2026-langgraph-docs.md
+          - LangGraph examples repo: sources/source-cards/2026-langgraph-examples-repo.md
           - LangGraph memory docs: sources/source-cards/2026-langgraph-memory-docs.md
           - Letta docs: sources/source-cards/2026-letta-docs.md
           - LlamaIndex docs: sources/source-cards/2026-llamaindex-docs.md

@@ -44,7 +44,7 @@
 | Evals | OpenAI Evals repository | Source Code | A | 链接已复核；source card 已创建 |
 | Browser agents | Playwright / browser-use related examples | Source / Engineering | B/C | 待复核 |
 | RAG implementation | LlamaIndex examples repository | Source Code | A/B | GitHub 仓库元数据、README、examples index 和关键 notebook 抽样已复核；source card 已创建；真实试跑待做 |
-| LangGraph examples | LangGraph examples repository | Source Code | A/B | 待复核 |
+| LangGraph examples | LangGraph examples repository | Source Code | A/B | GitHub 仓库元数据、current docs quickstart、examples README 和历史 notebook 抽样已复核；source card 已创建；examples 目录已归档，真实试跑应使用当前 docs |
 | MCP examples | MCP official example servers | Source Code | A | 链接已复核；source card 已创建 |
 
 ## Memory / Knowledge Governance

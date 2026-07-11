@@ -22,7 +22,7 @@
 | P1 | 真实 Agent trace-aware eval | Responses API toy agent trace；后续扩展到 OpenAI Evals / LangSmith / Phoenix | runs/traces、final-only vs trace-aware 对比、人工复核样例；真实模型 trace harness 已准备，结果待跑 | 自动评分不能当真值，需保留人工抽样 |
 | P1 | 真实 MCP host/client/server trace | 本地 stdio JSON-RPC harness；后续扩展到 MCP SDK / host | tools/resources/prompts 调用 trace、approval/resource review、token/resource 泄露检查；stdio harness 已完成 | 不同 host 实现差异可能很大 |
 | P2 | 真实 memory framework 多会话对比 | LangGraph memory / Letta / Zep 中至少一种 | 写入、查看、编辑、删除、失效历史、跨用户隔离、删除后召回、污染样例；标准库 lifecycle audit 已覆盖最小验收结构 | 不写成长期记忆一定提升质量 |
-| P2 | 同一任务框架横向对比 | OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel | 相同任务实现、LOC、trace、权限、错误恢复、成本/延迟 | 不得推出“某框架默认最好” |
+| P2 | 同一任务框架横向对比 | OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel | 相同任务实现、LOC、trace、权限、错误恢复、成本/延迟；LangGraph current docs / quickstart 已复核，历史 examples 已确认归档 | 不得推出“某框架默认最好” |
 | P2 | Cookbook 初学者项目试跑 | Structured Outputs、File Search/RAG、Eval、Cost/Rate limit recipes | 环境步骤、阻塞点、费用、失败样例、可跟练教程草稿 | Cookbook 是练习入口，不是生产保证 |
 
 统一运行入口：`uv run python docs/experiments/validation-harness-runner/run_validation_harnesses.py`。无 API key 时，API 类 harness 应返回 `skipped`；本地 stdio / 标准库 harness 应返回 `completed`。runner 结果只说明入口可运行，不代表真实验证完成。
@@ -80,5 +80,5 @@
 
 ## 框架生态
 
-- 同一任务在 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel 下的实现成本、trace、权限和错误处理如何比较？窄结论已可入正文：框架应按任务难点和能力边界比较，不能写成某个框架默认最好；框架定位已完成第一轮验证，框架能力交叉表和标准库 rubric smoke test 已验证任务画像、主轴定位和比较维度；仍需真实框架横向实验。
+- 同一任务在 OpenAI Agents SDK、LangGraph、LlamaIndex、AutoGen/CrewAI、Semantic Kernel 下的实现成本、trace、权限和错误处理如何比较？窄结论已可入正文：框架应按任务难点和能力边界比较，不能写成某个框架默认最好；框架定位已完成第一轮验证，LangGraph current docs / quickstart 已复核且历史 examples 已确认归档，框架能力交叉表和标准库 rubric smoke test 已验证任务画像、主轴定位和比较维度；仍需真实框架横向实验。
 - Semantic Kernel Process Framework 当前标注 experimental；后续复核时需要确认其稳定性和 API 变化。
