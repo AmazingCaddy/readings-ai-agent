@@ -10,6 +10,7 @@ Function calling / tool calling 是模型与应用程序协作调用外部工具
 - Source 2：[OpenAI Responses API Reference](../sources/source-cards/2026-openai-responses-api-docs.md)
 - Source 3：[Toolformer: Language Models Can Teach Themselves to Use Tools](../sources/source-cards/2023-toolformer-paper.md)
 - Source 4：[Tool Calling 参数校验与重试实验结果](../experiments/tool-calling-validation/results-2026-07-11.md)
+- Source 5：[Evidence Note: Tool / Function / Plugin 术语对照边界](tool-terminology-crosswalk.md)
 
 ## 交叉验证结果
 
@@ -19,6 +20,7 @@ Function calling / tool calling 是模型与应用程序协作调用外部工具
 - 分歧点：Toolformer 是训练方法和论文实验，OpenAI Function Calling 是现代 API 机制。两者都涉及工具使用，但抽象层级不同。
 - 可能原因：研究论文讨论模型能力形成方式，API 文档讨论应用如何把工具暴露给模型并执行工具调用流程。
 - 本地实验：标准库模拟实验使用 fake model 生成一次错误参数 `unit=kelvin`，应用层返回可操作校验错误，fake model 第二轮改为 `unit=celsius`，应用层执行工具并记录 trace。这支持“参数校验、错误回传和有限重试是应用控制循环的一部分”的工程边界。
+- 术语对照：跨框架文档交叉验证显示，OpenAI API 的 function/tool calling、OpenAI Agents SDK 的 runtime tools / agent-as-tool、Semantic Kernel 的 plugins/functions、LlamaIndex 的 retriever/query engine、LangGraph 的 state graph、AutoGen/CrewAI 的 multi-agent / Flow 抽象处在不同层级。它们都可围绕外部能力组织 Agent 系统，但不能直接当成同义词。
 
 ## 实验验证
 
@@ -30,7 +32,8 @@ Function calling / tool calling 是模型与应用程序协作调用外部工具
 
 - 可入正文：窄结论“Tool use 可以让模型通过应用或运行时连接外部 API、搜索、计算器、日历、数据库等工具能力”已完成第一轮交叉验证。Toolformer 摘要支撑 calculator、QA system、search engines、translation system 和 calendar 等工具使用研究方向；OpenAI Function Calling / Responses API 文档支撑现代 API 通过工具定义、参数 schema、工具调用请求和工具结果回传来组织这类能力。
 - 可入正文：窄结论“Function Calling / Tool Calling 本身不执行工具；工具执行发生在应用程序或工具运行时，并由应用侧把结果回传模型”由 OpenAI 官方文档直接支撑，并被 Responses API source card 和本地参数校验实验交叉支撑。
-- 部分验证：Toolformer 的训练式 tool use 效果、现代 API tool-calling 的真实模型稳定性、参数校验失败后真实模型能否稳定修正、不同框架的 tool/function/structured output 术语是否一致、真实 API 错误恢复和成本表现仍待验证。
+- 可入正文：窄结论“不同框架的 tool / function / plugin / retriever / flow 等术语不能直接互换；学习时应优先比较执行边界、状态边界、权限边界和 trace 边界”已完成第一轮文档交叉验证。
+- 部分验证：Toolformer 的训练式 tool use 效果、现代 API tool-calling 的真实模型稳定性、参数校验失败后真实模型能否稳定修正、真实框架默认错误恢复、权限覆盖、trace 字段和成本表现仍待验证。
 
 ## 可进入章节
 

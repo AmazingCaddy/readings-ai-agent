@@ -8,7 +8,7 @@
 - 主题：Tool Use / Function Calling / Structured Output
 - 适合阶段：入门 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接已复核；关键段落已精读；“Function Calling 本身不执行工具”边界已可入正文；参数校验/重试标准库模拟实验已完成
+- 是否已验证：来源链接已复核；关键段落已精读；“Function Calling 本身不执行工具”边界已可入正文；参数校验/重试标准库模拟实验和跨框架术语对照第一轮已完成
 
 ## 一句话总结
 
@@ -43,9 +43,10 @@
 ## 可复现实验
 
 - 已完成一个参数校验失败的标准库模拟实验：fake model 第一轮生成错误参数，应用层返回可操作错误，第二轮修正后执行工具。该实验支撑应用层校验/错误回传/有限重试流程，但不证明真实模型稳定修正参数。
+- 已完成跨框架术语对照 evidence：OpenAI API 的 function/tool calling、OpenAI Agents SDK 的 runtime tools / agent-as-tool、Semantic Kernel plugins/functions、LlamaIndex retriever/query engine、LangGraph state graph、AutoGen/CrewAI multi-agent / Flow 抽象不能直接互换；应按执行、状态、权限和 trace 边界比较。该对照不证明真实框架默认行为。
 - 已准备真实 Responses API tool-calling harness：无 API key 时跳过，配置后可记录真实 tool call、validation error、tool result、最终响应、成本/延迟相关字段；结果待跑，不能提前升级结论。
 
 ## 是否进入正文
 
 - 结论：进入；窄边界可入正文
-- 原因：Tool Use / Function Calling 章节需要官方 API reference；官方五步流程直接支撑“模型生成工具调用请求，应用侧执行工具并回传结果”。真实模型参数修正稳定性和跨框架默认行为仍需实测。
+- 原因：Tool Use / Function Calling 章节需要官方 API reference；官方五步流程直接支撑“模型生成工具调用请求，应用侧执行工具并回传结果”。跨框架术语对照已补第一轮文档交叉验证；真实模型参数修正稳定性和跨框架默认行为仍需实测。

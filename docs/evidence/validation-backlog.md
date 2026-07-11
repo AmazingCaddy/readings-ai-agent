@@ -37,7 +37,7 @@
 
 ## 工具调用
 
-- Function calling、tool use、structured output 在不同框架中的术语差异是什么？“Tool use 可以连接外部工具能力”和 OpenAI API 层“Function Calling 本身不执行工具”的窄边界已升级为可入正文；Structured Outputs 边界已完成第一轮验证，仍需补其他框架术语对照。
+- Function calling、tool use、structured output 在不同框架中的术语差异是什么？“Tool use 可以连接外部工具能力”和 OpenAI API 层“Function Calling 本身不执行工具”的窄边界已升级为可入正文；跨框架 tool / function / plugin / retriever / flow 术语对照已完成第一轮文档交叉验证。仍需真实最小实现记录工具定义、参数校验、错误回传、权限确认、trace 字段和恢复行为差异。
 - 工具参数校验和重试的最佳实践有哪些官方或工程 references？已完成标准库模拟实验，支持“应用层校验、错误回传、有限重试”的流程；真实 Responses API harness 已准备，仍需配置 API key 后记录真实 API / SDK 行为和框架默认行为对照。
 - 工具调用权限应该如何设计确认边界？
 - 真实 tool-calling 实验中，参数校验失败后模型能否稳定修正？标准库 fake model 已复现流程，真实 API harness 已准备，但不能证明真实模型稳定性，仍需实际运行结果。
