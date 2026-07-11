@@ -45,6 +45,10 @@ HARNESSES = [
         "real_batch_flex_caching",
         ROOT / "docs/experiments/real-batch-flex-caching-validation/real_batch_flex_caching_validation.py",
     ),
+    Harness(
+        "real_langgraph_interrupt_recovery",
+        ROOT / "docs/experiments/real-langgraph-interrupt-recovery/real_langgraph_interrupt_recovery.py",
+    ),
     Harness("mcp_stdio_trace", ROOT / "docs/experiments/real-mcp-stdio-trace/mcp_stdio_trace.py"),
 ]
 
@@ -76,6 +80,8 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "record_count",
         "trace_zip_created",
         "trace_zip_member_count",
+        "checkpointer",
+        "persistent_restart_tested",
         "leaked_secret_in_trace",
     ]:
         if key in payload:

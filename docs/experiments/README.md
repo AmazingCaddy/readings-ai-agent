@@ -84,7 +84,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 16. LangGraph interrupt recovery 实验
     - 目标：验证 LangGraph `interrupt()`、checkpointer、`thread_id` 和 `Command(resume=...)` 在高风险工具审批流程中的恢复、幂等和审计边界。
-    - 状态：真实实验设计已准备，见 [Real LangGraph Interrupt Recovery 实验](real-langgraph-interrupt-recovery/README.md)。尚未安装或运行 LangGraph；不能证明 LangGraph interrupt、checkpointer 或任何 HITL 框架默认生产安全。
+    - 状态：真实 harness 已准备，见 [Real LangGraph Interrupt Recovery 实验](real-langgraph-interrupt-recovery/README.md) 和 [2026-07-11 结果](real-langgraph-interrupt-recovery/results-2026-07-11.md)。当前环境未安装 LangGraph，运行结果为 `skipped`；不能证明 LangGraph interrupt、checkpointer 或任何 HITL 框架默认生产安全。
 
 17. Agentic security regression set 实验
     - 目标：把 MITRE ATLAS 和 OWASP Agentic AI resources 中的 agentic-specific 风险整理成可迁移到真实模型 / 框架的安全 case matrix。

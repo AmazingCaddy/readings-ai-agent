@@ -8,7 +8,7 @@
 
 ## 实验边界
 
-这是一个真实框架实验设计，当前尚未安装或运行 LangGraph。
+这是一个真实框架实验 harness，当前环境尚未安装 LangGraph，因此只验证了保守 skip 分支。
 
 未运行前，只能支撑“应该如何验证 LangGraph interrupt recovery”的教学边界，不能证明：
 
@@ -74,18 +74,26 @@
 | TODO | persistent | duplicate_resume | pending | TBD | TBD | TBD | pending |
 | TODO | persistent | tampered_args | pending | TBD | TBD | TBD | pending |
 
+## 运行方式
+
+```bash
+uv run python docs/experiments/real-langgraph-interrupt-recovery/real_langgraph_interrupt_recovery.py
+```
+
+当前结果见 [2026-07-11 结果](results-2026-07-11.md)。
+
 ## 结论状态
 
-- 当前状态：实验设计已准备，真实结果待跑。
-- 可支撑：第 07、09 和 10 章可以要求真实 LangGraph HITL 实验记录 interrupt payload、checkpointer、`thread_id`、node restart、side-effect placement、审批状态、参数快照、幂等执行和 trace 脱敏。
+- 当前状态：真实 harness 已准备；当前环境未安装 LangGraph，运行结果为 `skipped`。
+- 可支撑：第 07、09 和 10 章可以要求真实 LangGraph HITL 实验记录 interrupt payload、checkpointer、`thread_id`、node restart、side-effect placement、审批状态、参数快照、幂等执行和 trace 脱敏；无依赖时不能伪造真实结果。
 - 不可支撑：不能写成 LangGraph interrupt、checkpointer 或任意 HITL 框架默认安全、默认生产可用或默认优于应用层状态机。
 
 ## 后续产出
 
-真实运行后应新增：
+真实 completed run 后应新增或更新：
 
-- 最小 LangGraph 脚本或 notebook。
 - 依赖安装记录和版本锁定。
-- `results-YYYY-MM-DD.md`。
+- completed `results-YYYY-MM-DD.md`。
 - 脱敏 trace 样例。
+- 持久化 checkpointer restart case。
 - 对 source card、tool-permission evidence、coverage matrix、validation backlog 和第 07/09/10/12 章的同步更新。

@@ -228,6 +228,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - Anthropic jailbreak / prompt injection mitigation 文档已补充另一组官方工程资料：直接 jailbreak / prompt injection 和 indirect prompt injection 是不同 threat model；网页、邮件、文档、OCR 输出和 tool results 等第三方内容应作为不可信数据处理；工程上可结合 `tool_result` 边界、来源说明、JSON encoding、tool output screening、最小权限、red-team 和持续监控。它支撑这些防护层应进入系统设计，但不证明任意 classifier、prompt、JSON encoding 或 computer-use 机制的真实拦截率。
 - OpenAI Agents SDK 和 Semantic Kernel 文档已补充第一轮工程资料，可支撑 guardrails、human approval、tool approval、sensitive trace 控制和 task automation approval 的保守表述；标准库 prompt injection / tool permission 实验、安全 regression set 和审批状态恢复实验已覆盖最小权限、trace 脱敏、误报/漏报字段、多类风险 case、审批恢复、参数快照和幂等执行。“高风险工具应使用最小权限、参数校验、guardrails、人工确认、审批状态恢复和审计 trace 的组合”已升级为可入正文。真实 prompt injection / permission harness 已准备，但结果待跑，仍需真实模型 / 框架 guardrail 与 HITL 实验验证误报、漏报和覆盖范围。
 - LangGraph current docs 已补充 HITL interrupt / persistence 的框架机制证据：`interrupt()` 可暂停 graph execution，`Command(resume=...)` 可恢复，checkpointer 按 `thread_id` 保存 graph state snapshots，approval workflow、review/edit state 和 tool 内中断可放在 critical actions 前；但文档也明确 resume 会重新执行 node、`interrupt()` 前代码会重跑、interrupt 顺序不能随意变化、side effects 需要幂等或放在确认之后，内存型 checkpointer 不适合生产持久化。这支撑“审批要进入可恢复状态机”的窄边界，不证明真实 LangGraph 生产审批流程默认安全。
+- Real LangGraph Interrupt Recovery harness 已准备并接入统一 runner，覆盖 approved once、duplicate resume、rejected resume、tampered args、side-effect-before-interrupt 和 trace redaction 的最小检查入口；当前环境未安装 LangGraph，结果为 `skipped`，不能证明真实框架行为。
 - Anthropic MCP connector / tunnels 文档已补充 remote MCP tools 和私有网络 MCP server 的产品集成证据：allowlist/denylist、per-tool config、OAuth bearer token、third-party server trust review、data retention、outbound-only tunnel、inner TLS、allowed IPs、凭据保护和 shared responsibility。它们支撑“远程工具连接也要纳入权限、数据保留和审计设计”的窄边界，但不证明 connector、tunnel 或任意 MCP server 默认安全或生产可靠。
 - Browser Use / Playwright / Anthropic Computer Use 资料已补充 browser agent 和 computer-use agent 的工程边界：浏览器动作、登录态 profile、截图、鼠标键盘控制、文件上传、表单提交、custom tools、human-in-the-loop、VM/container 隔离、domain allowlist、action validation/logging 和 Playwright action trace 都需要纳入权限、审计和脱敏设计。Anthropic 文档还提示网页或图片中的指令可能造成 prompt injection，并提供 screenshot classifier 作为一层确认机制；这些资料不能证明真实网站任务、点击精度、classifier 效果、CAPTCHA/stealth、合规或生产可靠性。
 - 本地标准库 browser action trace audit 显示，browser/computer-use 工具的生产前检查应把 action trace、DOM/screenshot state、side-effect approval、profile isolation、file upload control、外部内容不可信边界、trace 脱敏和 failure classification 拆成可审计字段。该实验支撑权限和审计字段设计，但不证明真实 browser agent、防护层、screenshot classifier 或 sandbox 有效。
@@ -245,7 +246,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 
 ## 待验证问题
 
-- 针对具体 Agent 框架，guardrails、approval、sensitive trace 和 tool permission 覆盖范围有哪些差异？已完成 OpenAI Agents SDK、LangGraph 和 Semantic Kernel 第一轮文档验证，仍需横向比较真实 pause/resume、审批状态序列化、参数快照、幂等执行和 trace 脱敏。
+- 针对具体 Agent 框架，guardrails、approval、sensitive trace 和 tool permission 覆盖范围有哪些差异？已完成 OpenAI Agents SDK、LangGraph 和 Semantic Kernel 第一轮文档验证，Real LangGraph Interrupt Recovery harness 已准备但当前 skipped，仍需横向比较真实 pause/resume、审批状态序列化、参数快照、幂等执行和 trace 脱敏。
 - MCP 工具生态中的安全边界应该如何落到 host、client 和 server 实现？
 - Anthropic MCP connector / tunnels 的 allowlist/denylist、OAuth token、data retention、shared responsibility 和 tunnel credential rotation 在真实试跑中如何记录到 trace 和安全检查清单？
 - Browser Agent 如何在真实或仿真网站中隔离 profile、限制登录态、确认表单/购物/上传等写操作，并记录可审计 action trace？标准库 browser action trace audit 已完成字段模板，真实 Playwright / Browser Use / computer-use 对照仍待做。
@@ -282,6 +283,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - [Browser Action Trace Audit](../experiments/browser-action-trace-audit/README.md)
 - [OpenAI Production, Cost, Latency and Rate Limit Documentation](../sources/source-cards/2026-openai-production-cost-latency-docs.md)
 - [OpenAI Batch, Flex Processing and Prompt Caching Documentation](../sources/source-cards/2026-openai-batch-flex-prompt-caching-docs.md)
+- [Real LangGraph Interrupt Recovery](../experiments/real-langgraph-interrupt-recovery/README.md)
 - [OpenAI Moderation Documentation](../sources/source-cards/2026-openai-moderation-docs.md)
 - [OpenAI Safety Best Practices and Data Controls Documentation](../sources/source-cards/2026-openai-safety-data-controls-docs.md)
 
