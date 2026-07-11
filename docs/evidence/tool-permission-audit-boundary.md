@@ -44,7 +44,7 @@
 - 边界：OpenAI Agents SDK tool guardrails 明确不覆盖 hosted tools、built-in execution tools、handoff call 和 `Agent.as_tool()` 直接选项等所有执行面；hosted-container ShellTool 也不支持同一 HITL approval callback 面。因此框架 guardrail / approval 不能被写成全局安全边界。
 - 边界：LangGraph interrupt/resume 不是“任意位置安全暂停”。文档明确 resume 时 node 会从头重新执行，`interrupt()` 前的代码会再次运行；不要重排或条件跳过同一 node 的 interrupt；不要把 interrupt 包在 broad try/except 中；interrupt payload 必须 JSON-serializable；side effects before interrupt 必须幂等，最好放在 interrupt 之后或拆到独立 node。
 - 边界：LangGraph 内存型 checkpointer 只适合教程或进程内实验，进程重启后不会保留 checkpoints；生产恢复需要持久化 checkpointer，并考虑长会话 checkpoint 增长、保留和清理策略。
-- 边界：OWASP Agentic AI resources 当前只复核公开摘要；白皮书全文未精读，不能直接支撑完整控制清单或 mitigation 有效性。
+- 边界：OWASP Agentic AI resources 当前只复核公开摘要和附件 metadata；`Agentic AI - Threats and Mitigations` 下载端点仍重定向到 no-access，media API 只公开封面 PNG，白皮书全文未精读，不能直接支撑完整控制清单或 mitigation 有效性。
 - 边界：MITRE ATLAS mitigations 只能作为控制候选和 checklist 来源；不能单独证明任何权限继承、工具确认、segmentation、memory hardening、validation 或 monitoring 在真实 Agent 系统中有效。
 - 边界：NIST 和 OWASP 支撑风险治理视角，OpenAI/Semantic Kernel 支撑工程机制，但是否有效仍需对具体工具、数据和权限模型做本地攻击/失败实验。
 - 本地实验：标准库 prompt injection / permission 模拟显示，写工具在应用层审批前阻断后不会产生 `refund_issued` 副作用；同一 trace 还演示了敏感字段在写入审计前脱敏。这支持“审批和 trace 隐私治理需要在工具执行路径上实现”的工程表述。
