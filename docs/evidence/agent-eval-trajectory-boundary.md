@@ -22,7 +22,7 @@ Agent eval 不能只看最终答案。对会调用工具、跨多步环境行动
 - 一致点：WebArena 摘要强调真实、可复现的 Web 环境，包含工具和外部知识库，任务 diverse、long-horizon，并关注 task completions 的 functional correctness。
 - 一致点：τ-bench 摘要强调动态用户交互、domain-specific API tools、policy guidelines、conversation 结束后的 database state 和 annotated goal state 对比，以及用 `pass^k` 衡量多次试验一致性。
 - 一致点：Browser Agent evidence 显示浏览器 Agent 的过程包含导航、点击、输入、上传、滚动、登录态和表单/购物等外部动作；这进一步支持 Web/Browser Agent 必须评估 trajectory、页面状态、权限和外部副作用，而不是只看最终文本。
-- 一致点：OpenAI Evals README 将 eval 定义为评估 LLM 或 LLM-based systems 的 framework，并支持 custom/private evals 和 tool-using agents 的高级用例。
+- 一致点：OpenAI Evals repo 2026-07-12 复核确认 README 将 eval 定义为评估 LLM 或 LLM-based systems 的 framework，并支持 custom/private evals；build-eval / completion-fns docs 补强 dataset + registry/YAML、model-graded eval human-label/meta-eval 和 tool/prompt-chain completion function 的工程结构。
 - 一致点：OpenAI Evaluation best practices 将 eval 定义为 structured tests，用来处理 AI output variability；它强调 task-specific evals、log everything、automated scoring、continuous evaluation 和用 human feedback 校准自动评分。
 - 一致点：OpenAI Evaluation best practices 将 single-agent 的 tool selection / data precision 和 multi-agent 的 handoff accuracy 列为需要评估的 nondeterminism 来源；这直接补强工具型和多 Agent 不能只看最终答案的边界。
 - 一致点：OpenAI Agent evals guide 建议调试 workflow behavior 时先从 traces 开始，因为 trace 捕获 model calls、tool calls、guardrails 和 handoffs；知道“good”是什么之后，再迁移到 datasets 和 eval runs 来做 repeatable comparison。
@@ -40,7 +40,7 @@ Agent eval 不能只看最终答案。对会调用工具、跨多步环境行动
 
 ## 结论状态
 
-- 可入正文：窄结论“公开 benchmark 可以帮助学习评测环境、任务设计和失败分类，但不能直接代表真实业务 Agent 质量或产品可用性”已完成第一轮交叉验证。AgentBench、WebArena 和 τ-bench 支撑交互环境、长程任务、工具/外部知识、用户交互、状态评测、functional correctness 和失败原因分析的重要性；OpenAI Evals repo 和 Evaluation guides 支撑为具体 use case 写 task-specific / custom eval，并用 datasets、typical / edge / adversarial cases、human feedback calibration 和持续评估做回归；这共同说明公开 benchmark 更适合学习评测思想和做有限比较，业务系统仍需要自己的任务集、trace、权限和回归评测。
+- 可入正文：窄结论“公开 benchmark 可以帮助学习评测环境、任务设计和失败分类，但不能直接代表真实业务 Agent 质量或产品可用性”已完成第一轮交叉验证。AgentBench、WebArena 和 τ-bench 支撑交互环境、长程任务、工具/外部知识、用户交互、状态评测、functional correctness 和失败原因分析的重要性；OpenAI Evals repo 和 Evaluation guides 支撑为具体 use case 写 task-specific / custom eval，并用 datasets、registry/YAML、typical / edge / adversarial cases、human feedback calibration 和持续评估做回归；这共同说明公开 benchmark 更适合学习评测思想和做有限比较，业务系统仍需要自己的任务集、trace、权限和回归评测。
 - 可入正文：窄结论“对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全；关键 trajectory / trace 应作为 eval、审计和回归输入”已完成第一轮交叉验证。AgentBench 和 WebArena 支撑交互环境、长程任务、工具/外部知识和失败原因分析的重要性；τ-bench 支撑工具 Agent 需要评估动态对话、API tools、policy guidelines、数据库状态和多次试验一致性；Browser Agent evidence 补强网页动作、浏览器状态和表单/购物/登录态等外部副作用边界；OpenAI Evaluation guides 补强 trace grading、tool selection、data precision、handoff accuracy、instruction/safety policy violation、multiple tool calls、circular handoffs、system-prompt conflict 和 dataset/eval run 的工程流程；标准库实验和 Real Trace-Aware Eval scorer control 复现了 final-only scoring 漏掉无审批副作用工具、工具错误未恢复、缺工具调用、缺 error trace 和缺 approval rejection 等过程错误。
 - 部分验证：τ-bench 原始任务已被仓库标注为过期；OpenAI Evals platform 正在退役，deprecations 页面显示 2026-10-31 read-only、2026-11-30 shutdown，eval workflow 的 graders 也在该过渡内；Real Trace-Aware Eval scorer control 只验证本地规则 scorer，不验证真实模型、真实平台或 LLM-as-judge；标准库 grader audit 只验证误判结构，不验证真实 LLM-as-judge 可靠性；真实 Agent trace 字段覆盖、真实业务质量与公开 benchmark 的相关性仍待真实模型、平台映射、τ³-bench 小样本试跑和人工复核实验。
 

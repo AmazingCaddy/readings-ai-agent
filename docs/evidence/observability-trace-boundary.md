@@ -23,7 +23,7 @@ Agent observability 不是普通日志的同义词。对会检索、调用工具
 ## 交叉验证结果
 
 - 一致点：AgentBench 和 WebArena 支撑 Agent eval 需要交互环境、长程任务、工具/外部知识和失败原因分析，而不是只看最终文本。
-- 一致点：OpenAI Evals repo 支撑 custom/private eval 和 tool-using agents 的回归测试思路，但不直接给出通用 trajectory 自动评分标准。
+- 一致点：OpenAI Evals repo 支撑 custom/private eval、dataset + registry/YAML、model-graded eval human-label/meta-eval 和 tool/prompt-chain completion function 的回归测试思路，但不直接给出通用 trajectory 自动评分标准；旧 Evals platform / dashboard / API 路线不能写成长期稳定教程。
 - 一致点：OpenAI Agent evals guide 将 trace 描述为一次运行中 model calls、tool calls、guardrails 和 handoffs 的端到端记录，并建议在调试 workflow behavior 时先用 trace grading 发现 regressions 和 failure modes。
 - 一致点：OpenAI Evaluation best practices 强调 log everything、continuous evaluation 和用 human feedback 校准 automated scoring；这补强 trace 与 dataset / eval run / human review 之间的工作流关系。
 - 一致点：OpenAI Graders docs 列出 string check、text similarity、score model grader、Python grader 和 multigrader，并说明 tool-call grading 可以基于 `sample.output_tools` 检查工具名称和参数；2026-07-12 复核还确认 multigrader 当前标注为只用于 reinforcement fine-tuning，不能泛化为所有 eval workflow 的默认组合方式。
@@ -51,7 +51,7 @@ Agent observability 不是普通日志的同义词。对会检索、调用工具
 
 ## 结论状态
 
-- 可入正文：窄结论“对工具型或有副作用的 Agent，trace 是 eval、审计和回归输入，不只是 debug 日志”已完成第一轮交叉验证。论文/benchmark 支撑过程评测的重要性，OpenAI Evals repo / Evaluation guides / Graders docs 支撑 custom eval、trace grading、tool-call grading、datasets/eval runs、continuous evaluation、typical / edge / adversarial cases、人工校准和 reward hacking 风险，LangSmith/Phoenix/Cookbook 支撑 trace、runs、spans、datasets、online/offline evaluation 和反馈工作流；标准库 trace-aware eval 和 Real Trace-Aware Eval scorer control 支撑 trace 能发现 final-only 漏掉的过程错误，grader audit 支撑自动评分器需要 edge cases、误判统计和人工校准。
+- 可入正文：窄结论“对工具型或有副作用的 Agent，trace 是 eval、审计和回归输入，不只是 debug 日志”已完成第一轮交叉验证。论文/benchmark 支撑过程评测的重要性，OpenAI Evals repo / Evaluation guides / Graders docs 支撑 custom eval、dataset/registry、completion function、trace grading、tool-call grading、datasets/eval runs、continuous evaluation、typical / edge / adversarial cases、人工校准和 reward hacking 风险，LangSmith/Phoenix/Cookbook 支撑 trace、runs、spans、datasets、online/offline evaluation 和反馈工作流；标准库 trace-aware eval 和 Real Trace-Aware Eval scorer control 支撑 trace 能发现 final-only 漏掉的过程错误，grader audit 支撑自动评分器需要 edge cases、误判统计和人工校准。
 - 可入正文：窄结论“trace 不能只保存最终输入输出；字段应按用途覆盖关键工具调用、检索、浏览器动作、页面状态、错误、审批/副作用、版本、延迟/token/成本、dataset/case、citation、隐私脱敏、访问范围和保留策略等信息”已完成第一轮验证。trace schema audit 显示 minimal log 无法支撑 debug/audit/regression/cost/RAG/privacy，debug trace 不等于 audit trace，audit trace 不等于 regression trace，字段够多但未脱敏仍可能隐私失败；Playwright trace viewer 补强了浏览器动作回放、DOM snapshot、log/source/network 等 Web Agent trace 维度。
 - 部分验证：完整通用 trace schema、平台字段覆盖、真实 Agent / RAG traces、真实 LLM-as-judge 误判分析和人工复核设计仍需真实运行与平台对照；不能写成任何平台默认覆盖这些字段，也不能把这份字段清单写成所有 Agent 系统的唯一标准。OpenAI Evals / graders platform 退役不影响 eval 方法本身，但会影响具体平台教程、工具入口和旧 API 路线。
 
