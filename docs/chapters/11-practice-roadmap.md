@@ -324,7 +324,7 @@
 - OpenAI File Search / Retrieval docs 可作为 File Search RAG 项目的 API 边界 reference：托管 `file_search` 仍需要记录 included search results、citations、filters、ranking/chunking、成本、延迟和删除一致性。
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源，但具体 server 的权限和安全假设需要逐个检查。
-- OpenAI Evals repo、OpenAI Evaluation guides 和 OpenAI Graders docs 可作为小型回归测试、trace grading、dataset / eval run、tool-call grading、LLM-as-judge 校准和 reward hacking 风险的结构参考；Agent eval 仍应结合 trace、业务任务和人工复核。OpenAI Evals / graders platform 正在退役，具体平台入口需要按当前官方文档复核。
+- OpenAI Evals repo、OpenAI Evaluation guides 和 OpenAI Graders docs 可作为小型回归测试、trace grading、dataset / eval run、tool-call grading、LLM-as-judge 校准和 reward hacking 风险的结构参考；标准库 grader misalignment / reward hacking audit 可作为无模型时的最小误判样本模板；Agent eval 仍应结合 trace、业务任务和人工复核。OpenAI Evals / graders platform 正在退役，具体平台入口需要按当前官方文档复核。
 - SWE-agent 论文和 mini-SWE-agent docs/source 可作为 repo issue / coding agent 进阶练习参考：SWE-agent 支撑 agent-computer interface、仓库导航、文件编辑和测试执行的重要性；mini-SWE-agent 补强当前轻量 coding agent 入口、bash-only 最小控制流、confirm/yolo/human 模式、trajectory、cost/call limit 和 sandbox 配置边界。真实试跑仍需复核安装、sandbox、权限和成本。
 - Browser Use / Playwright / Anthropic Computer Use source cards 可作为 Browser / Computer Use Agent 进阶练习参考：它们支撑浏览器动作、profile/auth 风险、custom tools、screenshot/mouse/keyboard control、VM/container 隔离、action validation/logging 和 trace viewer 的工程边界；真实 browser/computer-use agent 任务成功率、点击精度、classifier 行为、成本、延迟、CAPTCHA/stealth、合规和生产可靠性仍待实验。
 - 实践路线 smoke harness 已完成标准库试跑，支持“每个项目都要有验收标准、trace、失败分类和可重复运行命令”的学习建议；仍不能替代真实 Structured Outputs、File Search/RAG、轻量 eval harness、Agents SDK trace/eval、Usage/Cost 和 Rate limits 试跑。
@@ -337,7 +337,7 @@
 - 真实项目 8 中，API key、`safety_identifier`、abuse logs、application state、对象删除、third-party tool data flow 和 data retention controls 应如何记录成初学者能复用的模板？
 - 真实项目 8 中，moderation-only、policy-enforced 和 HITL 如何对照记录误报、漏报、延迟、成本和人工复核负担？
 - 每个项目应使用哪个最小技术栈，才能降低环境成本？
-- 如何为项目 7 设计可自动运行的轻量 eval harness，并把 trace grading、dataset / eval run 和人工复核串起来？
+- 如何为项目 7 设计可自动运行的轻量 eval harness，并把 trace grading、dataset / eval run、grader 误判统计和人工复核串起来？标准库 grader audit 已给出最小误判样本，真实 judge / 平台对照仍待做。
 - MCP 实验应选择哪个只读 server 作为最小示例？
 - 如何把这些项目逐步发布成 GitHub Pages 的可跟练教程？
 - 如何把安全 regression set 迁移到真实 tool-calling / Agents SDK / MCP 工具练习？
@@ -368,6 +368,7 @@
 - [OpenAI Evals Repository](../sources/source-cards/2026-openai-evals-repo.md)
 - [OpenAI Evaluation Guides](../sources/source-cards/2026-openai-evaluation-guides.md)
 - [OpenAI Graders Documentation](../sources/source-cards/2026-openai-graders-docs.md)
+- [Grader Misalignment / Reward Hacking 最小实验](../experiments/grader-misalignment/README.md)
 - [SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering](../sources/source-cards/2024-swe-agent-paper.md)
 - [mini-SWE-agent Documentation and Source](../sources/source-cards/2026-mini-swe-agent-docs.md)
 - [Browser Use and Playwright Browser Automation References](../sources/source-cards/2026-browser-use-playwright.md)

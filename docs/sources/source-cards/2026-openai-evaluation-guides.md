@@ -10,7 +10,7 @@
 - 主题：Evaluation / Agent Eval / Trace Grading / LLM-as-judge
 - 适合阶段：工程实践
 - 可信度等级：A
-- 是否已验证：两个官方 Markdown 页面均返回 HTTP 200；关键段落已精读；eval process、trace grading、datasets/eval runs、LLM-as-judge caveats 和 Evals platform deprecation timeline 的窄边界可入正文；真实 grader / judge / platform 可靠性仍部分验证
+- 是否已验证：两个官方 Markdown 页面均返回 HTTP 200；关键段落已精读；eval process、trace grading、datasets/eval runs、LLM-as-judge caveats 和 Evals platform deprecation timeline 的窄边界可入正文；标准库 grader misalignment / reward hacking audit 已完成；真实 grader / judge / platform 可靠性仍部分验证
 
 ## 一句话总结
 
@@ -53,7 +53,8 @@ OpenAI Evaluation Guides 适合用来理解如何为 LLM 应用和 Agent workflo
 
 - 已完成标准库 trace-aware eval 模拟实验，比较 final-only 与 trace-aware scoring 能发现的错误类型。
 - 已完成标准库 trace schema audit，验证不同用途需要不同 trace 字段。
-- 已准备真实模型 trace-aware eval harness，但尚未运行；后续应将 trace grading、dataset eval、LLM-as-judge 和人工抽样复核放到同一实验记录中。
+- 已完成标准库 grader misalignment / reward hacking audit，验证自动评分器需要 edge cases、误判统计和人工校准。
+- 已准备真实模型 trace-aware eval harness，但尚未运行；后续应将 trace grading、dataset eval、真实 LLM-as-judge 和人工抽样复核放到同一实验记录中。
 
 ## 是否进入正文
 

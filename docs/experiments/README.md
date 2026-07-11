@@ -52,7 +52,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 8. Trace-aware eval 最小实验
    - 目标：比较 final-answer-only scoring 和 trace-aware scoring 能发现的错误类型差异。
-   - 状态：已完成标准库模拟实验，见 [Trace-Aware Eval 最小实验](trace-aware-eval/README.md) 和 [2026-07-11 结果](trace-aware-eval/results-2026-07-11.md)；已完成标准库 trace schema audit，见 [Trace Schema Audit 最小实验](trace-schema-audit/README.md) 和 [2026-07-11 结果](trace-schema-audit/results-2026-07-11.md)；真实模型 trace-aware eval harness 已准备，见 [Real Trace-Aware Eval 实验](real-trace-aware-eval/README.md)。仍需配置 API key 后记录真实 Agent trace、LLM-as-judge 误判和人工复核结果。
+   - 状态：已完成标准库模拟实验，见 [Trace-Aware Eval 最小实验](trace-aware-eval/README.md) 和 [2026-07-11 结果](trace-aware-eval/results-2026-07-11.md)；已完成标准库 trace schema audit，见 [Trace Schema Audit 最小实验](trace-schema-audit/README.md) 和 [2026-07-11 结果](trace-schema-audit/results-2026-07-11.md)；已完成标准库 grader misalignment / reward hacking audit，见 [Grader Misalignment / Reward Hacking 最小实验](grader-misalignment/README.md) 和 [2026-07-11 结果](grader-misalignment/results-2026-07-11.md)；真实模型 trace-aware eval harness 已准备，见 [Real Trace-Aware Eval 实验](real-trace-aware-eval/README.md)。仍需配置 API key 后记录真实 Agent trace、真实 LLM-as-judge、平台 grader 和人工复核结果。
 
 9. Reflection / Retry 错误反思实验
    - 目标：验证 reflection 是否能帮助补证据，以及未验证反思是否会污染后续尝试。
