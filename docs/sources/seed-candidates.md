@@ -32,7 +32,7 @@
 | Web agents | WebArena: A Realistic Web Environment for Building Autonomous Agents | Paper / Benchmark | A | 元数据已复核；source card 已创建 |
 | Agent benchmark | AgentBench: Evaluating LLMs as Agents | Paper / Benchmark | A | 元数据已复核；source card 已创建 |
 | Tool-use eval | Tau-bench / tool-agent benchmark materials | Benchmark | A/B | arXiv 元数据和 GitHub README 已复核；source card 已创建；原 repo 已提示任务过期，真实试跑应看 τ³-bench |
-| Software agents | SWE-agent paper and repository | Paper / Source | A | 待复核 |
+| Software agents | SWE-agent paper and repository | Paper / Source | A | arXiv 元数据和 GitHub README 已复核；source card 已创建；README 已提示当前推荐 mini-SWE-agent |
 | Embodied agents | Voyager: An Open-Ended Embodied Agent with LLMs | Paper | A | 待复核 |
 
 ## Engineering / Source Code

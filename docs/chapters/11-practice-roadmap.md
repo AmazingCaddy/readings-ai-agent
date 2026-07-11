@@ -216,6 +216,28 @@
 - OpenAI Cookbook 的 `How to use the Usage API and Cost API to monitor your OpenAI usage`。
 - OpenAI Cookbook 的 `How to handle rate limits`。
 
+## 进阶项目：Repo Issue Agent
+
+### 学习目标
+
+理解软件工程 Agent 为什么需要仓库导航、文件编辑、测试执行、sandbox、回滚和更严格的 trace。
+
+### 任务描述
+
+准备一个 toy repo，放入一个带测试的简单 bug。让 Agent 读取 issue、定位相关文件、提出 patch、运行测试，并输出改动说明。
+
+### 验收标准
+
+- 在隔离目录或 sandbox 中运行，不直接操作重要仓库。
+- 读文件、写文件和执行命令的权限分开记录。
+- 每次文件修改都能 diff 和回滚。
+- 测试失败时不能编造通过结果。
+- 记录 token、耗时、命令、测试输出和人工确认点。
+
+### 可参考资料
+
+- SWE-agent 论文和 README。它适合理解 agent-computer interface、仓库导航、代码编辑和测试执行；但 README 已提示当前推荐 mini-SWE-agent，因此真实试跑前需要复核当前文档。
+
 ## 推荐学习顺序
 
 1. 先完成项目 1 和 2，理解模型调用和工具调用。
@@ -223,6 +245,7 @@
 3. 然后完成项目 4 和 5，学习状态、记忆和编排。
 4. 如果需要工具生态，再做项目 6。
 5. 最后做项目 7 和 8，把质量和生产化边界补上。
+6. 如果你想练软件工程 Agent，再做 Repo Issue Agent；它比前面项目风险更高，必须先用 toy repo 和隔离环境。
 
 ## 常见误区
 
@@ -239,6 +262,7 @@
 - OpenAI Function Calling docs 和 Responses API docs 可支撑最小工具调用和 API 结构练习；具体 API 细节需要按当前文档复核。
 - MCP servers repo 可作为 MCP 工具生态示例来源，但具体 server 的权限和安全假设需要逐个检查。
 - OpenAI Evals repo 可作为小型回归测试和 eval 结构参考；Agent eval 仍应结合 trace 和业务任务。
+- SWE-agent 论文和 README 可作为 repo issue / coding agent 进阶练习参考：它支撑 agent-computer interface、仓库导航、文件编辑和测试执行的重要性；README 已提示当前推荐 mini-SWE-agent，真实试跑仍需复核当前文档、sandbox、权限和成本。
 - 实践路线 smoke harness 已完成标准库试跑，支持“每个项目都要有验收标准、trace、失败分类和可重复运行命令”的学习建议；仍不能替代真实 Structured Outputs、File Search/RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits 试跑。
 - 安全 regression set 最小实验已完成标准库试跑，支持“生产化练习需要覆盖多类安全 case，并记录误报、漏报和 trace 泄漏”的学习建议；仍不能替代真实模型 / 框架 guardrail / HITL approval 试跑。
 
@@ -250,6 +274,7 @@
 - MCP 实验应选择哪个只读 server 作为最小示例？
 - 如何把这些项目逐步发布成 GitHub Pages 的可跟练教程？
 - 如何把安全 regression set 迁移到真实 tool-calling / Agents SDK / MCP 工具练习？
+- Repo Issue Agent 应优先用 SWE-agent、mini-SWE-agent、OpenAI Agents SDK、LangGraph 还是固定 workflow 做最小对比？成本、sandbox、回滚和测试反馈如何记录？
 
 ## 本章小结
 
@@ -260,13 +285,14 @@
 
 ## References
 
-### Official Docs and Examples
+### Official Docs, Examples and Practice Sources
 
 - [OpenAI Responses API Reference](../sources/source-cards/2026-openai-responses-api-docs.md)
 - [OpenAI Function Calling / Tool Calling Documentation](../sources/source-cards/2026-openai-function-calling-docs.md)
 - [OpenAI Cookbook](../sources/source-cards/2026-openai-cookbook.md)
 - [MCP servers repo](../sources/source-cards/2026-mcp-servers-repo.md)
 - [OpenAI Evals Repository](../sources/source-cards/2026-openai-evals-repo.md)
+- [SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering](../sources/source-cards/2024-swe-agent-paper.md)
 - [Evidence Note: 实践路线与 Cookbook 示例边界](../evidence/practice-roadmap-cookbook-boundary.md)
 - [实践路线 Smoke Harness 结果](../experiments/practice-roadmap-harness/results-2026-07-11.md)
 
