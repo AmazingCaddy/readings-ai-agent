@@ -8,7 +8,7 @@
 - 主题：Web Agent / Evaluation
 - 适合阶段：进阶
 - 可信度等级：A
-- 是否已验证：来源链接和 arXiv 元数据已复核；摘要已精读；支撑过程/交互评测窄结论；其余结论部分验证
+- 是否已验证：来源链接和 arXiv 元数据已复核；摘要已精读；支撑公开 benchmark 不能直接代表真实业务 Agent 质量和过程/交互评测窄结论；其余结论部分验证
 
 ## 一句话总结
 
@@ -31,10 +31,11 @@ WebArena 适合用于理解 Web Agent 的评测环境和真实任务复杂度。
 
 ## 是否进入正文
 
-- 结论：部分进入
-- 原因：可支撑真实 Web Agent 任务需要端到端环境、工具、外部知识和 long-horizon 评测，并与 trace-aware eval 实验共同支撑“只看最终答案不足以覆盖过程风险”的窄结论；具体数值不能泛化为当前模型能力。
+- 结论：进入；benchmark 边界和过程评测窄边界可入正文
+- 原因：可支撑真实 Web Agent 任务需要端到端环境、工具、外部知识、long-horizon 评测和 task completion functional correctness，并与 AgentBench、OpenAI Evals 和 trace-aware eval 实验共同支撑“公开 benchmark 不能直接代表真实业务 Agent 质量”和“只看最终答案不足以覆盖过程风险”的窄结论；具体数值不能泛化为当前模型能力。
 
 ## 可能的问题
 
 - 具体数值反映当时实验设置，不能直接代表当前模型能力。
 - 适合用来说明评测环境复杂度和 functional correctness，而不是作为通用 Agent 能力结论。
+- 不能把 WebArena 成绩直接写成产品可用性判断；业务系统还需要自己的权限、数据、工具和回归评测。

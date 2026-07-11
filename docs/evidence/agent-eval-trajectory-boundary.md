@@ -29,9 +29,10 @@ Agent eval 不能只看最终答案。对会调用工具、跨多步环境行动
 
 ## 结论状态
 
+- 可入正文：窄结论“公开 benchmark 可以帮助学习评测环境、任务设计和失败分类，但不能直接代表真实业务 Agent 质量或产品可用性”已完成第一轮交叉验证。AgentBench 和 WebArena 支撑交互环境、长程任务、工具/外部知识、functional correctness 和失败原因分析的重要性；OpenAI Evals 支撑为具体 use case 写 custom/private evals；这共同说明公开 benchmark 更适合学习评测思想和做有限比较，业务系统仍需要自己的任务集、trace、权限和回归评测。
 - 可入正文：窄结论“对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全；关键 trajectory / trace 应作为 eval、审计和回归输入”已完成第一轮交叉验证。AgentBench 和 WebArena 支撑交互环境、长程任务、工具/外部知识和失败原因分析的重要性；OpenAI Evals 支撑为具体 LLM 系统和 tool-using agents 设计 custom eval；标准库实验复现了 final-only scoring 漏掉无审批副作用工具和工具错误未恢复。
 - 部分验证：trajectory 自动评分、LLM-as-judge 可靠性、真实 Agent trace 字段覆盖、真实业务质量与公开 benchmark 的相关性仍待真实模型、平台映射和人工复核实验。
 
 ## 可进入章节
 
-- 是。可以确定写成：对会调用工具或产生外部副作用的 Agent，只看最终文本不足以验证过程安全；关键 trajectory / trace 应进入 eval、审计和回归输入。仍需保守写明：trajectory 自动评分方法、LLM-as-judge 和真实平台字段覆盖必须按任务单独验证。
+- 是。可以确定写成：公开 benchmark 适合学习评测思想和有限比较，但不能替代业务 eval；对会调用工具或产生外部副作用的 Agent，只看最终文本不足以验证过程安全，关键 trajectory / trace 应进入 eval、审计和回归输入。仍需保守写明：公开 benchmark 分数不能直接推出产品可用性，trajectory 自动评分方法、LLM-as-judge 和真实平台字段覆盖必须按任务单独验证。
