@@ -17,6 +17,8 @@ nav:
   - 首页: index.md
   - 内容蓝图:
       - 主题地图: topic-map.md
+      - 术语边界表: glossary.md
+      - 初学者学习路径: learning-path.md
       - 章节目录: chapter-outline.md
   - 治理:
       - Goal: governance/goal.md
@@ -59,6 +61,7 @@ nav:
       - 覆盖矩阵: references/coverage-matrix.md
   - 证据与实验:
       - 待验证问题: evidence/validation-backlog.md
+      - 结论证据台账: evidence/claim-ledger.md
       - 实验说明: experiments/README.md
   - 模板:
       - 资料卡片模板: governance/templates/source-card.md
