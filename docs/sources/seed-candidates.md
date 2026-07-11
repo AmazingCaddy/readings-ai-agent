@@ -43,6 +43,7 @@
 | Agent traces | LangSmith documentation and examples | Engineering Docs | B | 关键页面已复核；source card 已创建 |
 | Observability | Arize Phoenix documentation | Engineering Docs | B | 关键页面已复核；source card 已创建 |
 | Evals | OpenAI Evals repository；OpenAI Evaluation Guides；OpenAI Graders docs | Source Code / Official Docs | A | OpenAI Evals repo README、OpenAI Evaluation / Agent evals 和 Graders 官方 Markdown 已复核；source cards 已创建；Evals / graders platform 正在退役，学习时应区分 eval 设计原则、grader 风险和具体平台入口 |
+| Moderation | OpenAI Moderation docs | Official Docs | A | 官方 Markdown 已精读；source card 已创建；可支撑 moderation 作为 safety signal 的工程边界；真实误报/漏报/阈值待实验 |
 | Production cost / latency | OpenAI Production best practices；Rate limits；Cost optimization；Latency optimization；Token counting | Official Docs | A | 官方 Markdown 已精读；source card 已创建；可支撑成本、延迟、限流和 token 计数的工程边界；真实 cost / latency / throughput / quality tradeoff 待实验 |
 | Safety / data controls | OpenAI Safety best practices；OpenAI Data controls | Official Docs | A | 官方 Markdown 已精读；source card 已创建；可支撑 moderation、red-team、HITL、safety identifier、API key revoke、abuse logs、application state、ZDR/MAM 和 data residency 边界；真实检测/合规效果待实验 |
 | Async cost / caching | OpenAI Batch API；Flex processing；Prompt caching | Official Docs | A | 官方 Markdown 已精读；source card 已创建；可支撑 Batch / Flex / Prompt Caching 的适用边界；真实节省、命中率、等待时间和失败率待实验 |
