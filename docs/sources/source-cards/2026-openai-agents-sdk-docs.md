@@ -1,14 +1,20 @@
 # OpenAI Agents SDK Documentation
 
-- 来源链接：https://openai.github.io/openai-agents-python/
+- 来源链接：
+  - https://openai.github.io/openai-agents-python/
+  - https://openai.github.io/openai-agents-python/llms.txt
+  - https://openai.github.io/openai-agents-python/tools/
+  - https://openai.github.io/openai-agents-python/guardrails/
+  - https://openai.github.io/openai-agents-python/human_in_the_loop/
+  - https://openai.github.io/openai-agents-python/tracing/
 - 作者 / 机构：OpenAI
-- 发布时间：持续更新文档；README、文档首页、guardrails、tools、tracing、human-in-the-loop 页面复核为 2026-07-11
+- 发布时间：持续更新文档；README、文档首页、tools、guardrails、`human_in_the_loop`、tracing 页面复核为 2026-07-11
 - 最后复核日期：2026-07-11
 - 类型：官方文档 / 框架文档
 - 主题：Agent Framework / Tool Use / Tracing
 - 适合阶段：入门 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接、README、文档首页、guardrails、tools、tracing、human-in-the-loop 关键段落已复核；Agent/Workflow、自治程度和复杂架构默认可靠性窄边界可入正文；高风险工具权限窄边界可入正文；跨框架术语对照第一轮已完成；安全 regression set 和审批状态恢复实验已完成；真实 SDK runtime/guardrail/HITL 效果仍部分验证
+- 是否已验证：来源链接、README、文档首页、`llms.txt`、tools、guardrails、`human_in_the_loop`、tracing 关键段落和 HTTP metadata 已复核；Agent/Workflow、自治程度和复杂架构默认可靠性窄边界可入正文；高风险工具权限窄边界可入正文；跨框架术语对照第一轮已完成；安全 regression set 和审批状态恢复实验已完成；真实 SDK runtime/guardrail/HITL 效果仍部分验证
 
 ## 一句话总结
 
@@ -30,6 +36,9 @@ OpenAI Agents SDK 文档适合用于解释现代 Agent SDK 的基本抽象、工
 ## 支撑证据
 
 - 文档首页和 GitHub README 均返回 HTTP 200。
+- `llms.txt` 返回 HTTP 200，并列出 Overview、Agents、Guardrails、Tools、Model Context Protocol、Tracing 等页面；它把 Human-in-the-loop 页面列为 `https://openai.github.io/openai-agents-python/human_in_the_loop/`。
+- Tools、Guardrails、Human-in-the-loop 和 Tracing 页面均返回 HTTP 200；`last-modified: Sat, 11 Jul 2026 01:28:27 GMT`；`content-type: text/html; charset=utf-8`。
+- 复核时确认 `https://openai.github.io/openai-agents-python/human-in-the-loop/` 返回 HTTP 404；正确路径是下划线版本 `human_in_the_loop/`。
 - 文档首页写明 SDK 的 primitives 包括 Agents、Agents as tools / Handoffs、Guardrails，并说明 tracing 可用于 visualize and debug agentic flows。
 - 文档首页 features 写明 Agent loop handles tool invocation, sends results back to the LLM, and continues until the task is complete。
 - 文档首页建议短生命周期、主要返回模型响应的 workflow 可直接用 Responses API；需要 runtime 管理 turns、tool execution、guardrails、handoffs、sessions 时使用 Agents SDK。
