@@ -45,7 +45,7 @@ LangSmith 文档适合学习 LLM/Agent 应用的 tracing、offline eval、online
 
 ## 可复现实验
 
-- 已完成标准库 trace-aware eval 最小实验；已准备真实模型 trace-aware eval harness 并记录无 API key skipped 结果，可在配置 API key 后记录 tool call/result/error/approval/final response 并比较 final-only 与 trace-aware scoring；后续仍需扩展为真实 RAG/tool-calling traces、LLM-as-judge、人工抽样复核和 LangSmith 平台对照。
+- 已完成标准库 trace-aware eval 最小实验和 Real Trace-Aware Eval 本地 scorer control；后者记录 tool call/result/error/approval/final response 并比较 final-only 与 trace-aware scoring，当前无 API key，真实模型 trace 未运行；后续仍需扩展为真实 RAG/tool-calling traces、LLM-as-judge、人工抽样复核和 LangSmith 平台对照。
 - 已完成标准库 trace schema audit，验证 debug、audit、regression、cost/latency、RAG 和 privacy 用途需要不同字段；该结果支撑“字段要按用途设计”的窄边界，后续仍需映射到真实 LangSmith runs/threads/datasets/evaluators 字段。
 
 ## 是否进入正文

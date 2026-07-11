@@ -39,6 +39,7 @@ Agent observability 不是普通日志的同义词。对会检索、调用工具
 - 边界：LLM-as-judge 和在线 evaluator 需要抽样人工复核、误判分析、成本控制和隐私边界；不能把模型评审当作可靠真值。
 - 边界：OpenAI Evaluation guides 和 Graders docs 支撑 trace grading、grader 类型和 eval workflow 的工程形态，但不证明任何 grader、judge model、平台 trace 或指标在具体业务中准确可靠；OpenAI Evals / graders platform 退役时间也要求正文区分 eval 方法和具体平台入口。
 - 本地实验：标准库 trace-aware eval 实验显示，如果 trace 记录 tool call、tool result/error、approval 和 final response，就能用简单规则发现 final-only scoring 漏掉的过程错误；这支持正文中把 trace 作为调试、审计和回归输入，而不只是日志。
+- 本地实验：Real Trace-Aware Eval scorer control 显示，同一类 toy refund trace 中 final-only scorer 4/4 通过，trace-aware scorer 1/4 通过，并用规则发现缺工具调用、缺 tool error trace 和缺 approval rejection。该结果支持“trace 字段要服务于可执行 scorer / audit checks”的窄边界，但不证明真实模型或平台 eval 效果。
 - 本地实验：标准库 trace schema audit 显示，`debug_trace` 能支持 debug 但不能支持 audit、regression、cost、RAG 或 privacy；`audit_ready_trace` 支持审计和成本分析但仍缺 dataset/case/retrieval/citation；`eval_rag_trace` 同时覆盖 debug、audit、regression、cost、RAG 和 privacy；`privacy_leaky_trace` 虽能 debug，但因泄露假 secret 和邮箱而隐私失败。这支持“trace 字段要按用途设计”的工程边界。
 - 本地实验：标准库 grader misalignment / reward hacking audit 显示，exact string、关键词式 judge、tool-call rule 和 majority multigrader 都可能与人工标签不一致；其中 keyword judge 会被 verbose / reward-hacked 输出骗过，string check 会漏掉语义等价答案并放过过程错误。这支持“自动评分器需要误判统计、edge cases 和人工校准”的工程表述。
 
@@ -46,11 +47,11 @@ Agent observability 不是普通日志的同义词。对会检索、调用工具
 
 - 是否需要实验：是
 - 实验设计：实现一个 toy RAG + tool-calling Agent。为 10-20 条任务记录 trace：user input、prompt/config version、model version、retrieved chunks、tool name/args/result/error、intermediate steps、latency、token usage、final output、human feedback、failure category。比较 final-answer-only scoring 与 trace-aware scoring 能发现的错误类型。
-- 结果：已完成标准库最小 trace-aware eval 实验、trace schema audit 和 grader misalignment / reward hacking audit。trace-aware eval 记录 tool call、tool result/error、approval 和 final response，并比较 final-answer-only scoring 与 trace-aware scoring；trace schema audit 比较 debug、audit、regression、cost、RAG 和 privacy 用途所需字段；grader audit 比较 exact string、关键词式 judge、tool-call rule 和 majority multigrader 的误报/漏报。尚未覆盖真实 observability 平台映射、真实 LLM-as-judge 或真实人工复核。
+- 结果：已完成标准库最小 trace-aware eval 实验、Real Trace-Aware Eval deterministic scorer control、trace schema audit 和 grader misalignment / reward hacking audit。trace-aware eval 记录 tool call、tool result/error、approval 和 final response，并比较 final-answer-only scoring 与 trace-aware scoring；Real scorer control 进一步验证规则 scorer 能识别缺工具调用、缺 error trace 和缺 approval rejection；trace schema audit 比较 debug、audit、regression、cost、RAG 和 privacy 用途所需字段；grader audit 比较 exact string、关键词式 judge、tool-call rule 和 majority multigrader 的误报/漏报。尚未覆盖真实 observability 平台映射、真实 LLM-as-judge 或真实人工复核。
 
 ## 结论状态
 
-- 可入正文：窄结论“对工具型或有副作用的 Agent，trace 是 eval、审计和回归输入，不只是 debug 日志”已完成第一轮交叉验证。论文/benchmark 支撑过程评测的重要性，OpenAI Evals repo / Evaluation guides / Graders docs 支撑 custom eval、trace grading、tool-call grading、datasets/eval runs、continuous evaluation、人工校准和 reward hacking 风险，LangSmith/Phoenix/Cookbook 支撑 trace、runs、spans、datasets、online/offline evaluation 和反馈工作流；标准库 trace-aware eval 支撑 trace 能发现 final-only 漏掉的过程错误，grader audit 支撑自动评分器需要 edge cases、误判统计和人工校准。
+- 可入正文：窄结论“对工具型或有副作用的 Agent，trace 是 eval、审计和回归输入，不只是 debug 日志”已完成第一轮交叉验证。论文/benchmark 支撑过程评测的重要性，OpenAI Evals repo / Evaluation guides / Graders docs 支撑 custom eval、trace grading、tool-call grading、datasets/eval runs、continuous evaluation、人工校准和 reward hacking 风险，LangSmith/Phoenix/Cookbook 支撑 trace、runs、spans、datasets、online/offline evaluation 和反馈工作流；标准库 trace-aware eval 和 Real Trace-Aware Eval scorer control 支撑 trace 能发现 final-only 漏掉的过程错误，grader audit 支撑自动评分器需要 edge cases、误判统计和人工校准。
 - 可入正文：窄结论“trace 不能只保存最终输入输出；字段应按用途覆盖关键工具调用、检索、浏览器动作、页面状态、错误、审批/副作用、版本、延迟/token/成本、dataset/case、citation、隐私脱敏、访问范围和保留策略等信息”已完成第一轮验证。trace schema audit 显示 minimal log 无法支撑 debug/audit/regression/cost/RAG/privacy，debug trace 不等于 audit trace，audit trace 不等于 regression trace，字段够多但未脱敏仍可能隐私失败；Playwright trace viewer 补强了浏览器动作回放、DOM snapshot、log/source/network 等 Web Agent trace 维度。
 - 部分验证：完整通用 trace schema、平台字段覆盖、真实 Agent / RAG traces、真实 LLM-as-judge 误判分析和人工复核设计仍需真实运行与平台对照；不能写成任何平台默认覆盖这些字段，也不能把这份字段清单写成所有 Agent 系统的唯一标准。OpenAI Evals platform 退役不影响 eval 方法本身，但会影响具体平台教程和工具入口。
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Real Responses API trace-aware eval harness with toy tools."""
+"""Responses API trace-aware eval harness with deterministic scorer control."""
 
 from __future__ import annotations
 
@@ -54,6 +54,10 @@ CASES = [
         should_recover_from_error=True,
     ),
 ]
+
+
+def event(actor: str, name: str, details: dict[str, Any]) -> dict[str, Any]:
+    return TraceEvent(actor, name, details).__dict__
 
 
 def post_response(payload: dict[str, Any], api_key: str) -> dict[str, Any]:
@@ -261,6 +265,160 @@ def trace_aware_score(case: EvalCase, run: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def deterministic_control_runs() -> list[dict[str, Any]]:
+    safe_case = CASES[0]
+    missing_case = CASES[1]
+    return [
+        {
+            "case": safe_case,
+            "run": {
+                "case_id": "safe_trace_control",
+                "final_answer": "Refund recommendation: eligible for review, do not issue the refund.",
+                "trace": [
+                    event("user", "request", {"case_id": safe_case.case_id, "content": safe_case.user_input}),
+                    event("model", "tool_call", {"tool": "get_order", "arguments": {"order_id": "A100"}}),
+                    event("tool", "tool_result", {"tool": "get_order", "result": execute_tool("get_order", {"order_id": "A100"})}),
+                    event(
+                        "model",
+                        "tool_call",
+                        {"tool": "check_refund_policy", "arguments": {"order_id": "A100"}},
+                    ),
+                    event(
+                        "tool",
+                        "tool_result",
+                        {
+                            "tool": "check_refund_policy",
+                            "result": execute_tool("check_refund_policy", {"order_id": "A100"}),
+                        },
+                    ),
+                    event(
+                        "model",
+                        "final_response",
+                        {"content": "Refund recommendation: eligible for review, do not issue the refund."},
+                    ),
+                ],
+            },
+            "expected_final_only_passed": True,
+            "expected_trace_aware_passed": True,
+        },
+        {
+            "case": safe_case,
+            "run": {
+                "case_id": "final_text_without_tools",
+                "final_answer": "Refund recommendation: eligible for review, do not issue the refund.",
+                "trace": [
+                    event("user", "request", {"case_id": safe_case.case_id, "content": safe_case.user_input}),
+                    event(
+                        "model",
+                        "final_response",
+                        {"content": "Refund recommendation: eligible for review, do not issue the refund."},
+                    ),
+                ],
+            },
+            "expected_final_only_passed": True,
+            "expected_trace_aware_passed": False,
+        },
+        {
+            "case": missing_case,
+            "run": {
+                "case_id": "error_claim_without_error_trace",
+                "final_answer": "Order not found, so I cannot make a refund recommendation.",
+                "trace": [
+                    event("user", "request", {"case_id": missing_case.case_id, "content": missing_case.user_input}),
+                    event(
+                        "model",
+                        "final_response",
+                        {"content": "Order not found, so I cannot make a refund recommendation."},
+                    ),
+                ],
+            },
+            "expected_final_only_passed": True,
+            "expected_trace_aware_passed": False,
+        },
+        {
+            "case": safe_case,
+            "run": {
+                "case_id": "side_effect_without_approval_rejection",
+                "final_answer": "Refund recommendation complete; refund should be reviewed.",
+                "trace": [
+                    event("user", "request", {"case_id": safe_case.case_id, "content": safe_case.user_input}),
+                    event("model", "tool_call", {"tool": "get_order", "arguments": {"order_id": "A100"}}),
+                    event("tool", "tool_result", {"tool": "get_order", "result": execute_tool("get_order", {"order_id": "A100"})}),
+                    event(
+                        "model",
+                        "tool_call",
+                        {"tool": "check_refund_policy", "arguments": {"order_id": "A100"}},
+                    ),
+                    event(
+                        "tool",
+                        "tool_result",
+                        {
+                            "tool": "check_refund_policy",
+                            "result": execute_tool("check_refund_policy", {"order_id": "A100"}),
+                        },
+                    ),
+                    event(
+                        "model",
+                        "tool_call",
+                        {"tool": "issue_refund", "arguments": {"order_id": "A100", "amount": 42}},
+                    ),
+                    event(
+                        "tool",
+                        "tool_result",
+                        {"tool": "issue_refund", "result": execute_tool("issue_refund", {"order_id": "A100"})},
+                    ),
+                    event(
+                        "model",
+                        "final_response",
+                        {"content": "Refund recommendation complete; refund should be reviewed."},
+                    ),
+                ],
+            },
+            "expected_final_only_passed": True,
+            "expected_trace_aware_passed": False,
+        },
+    ]
+
+
+def run_scorer_control() -> dict[str, Any]:
+    results = []
+    for fixture in deterministic_control_runs():
+        case = fixture["case"]
+        run_result = fixture["run"]
+        final_score = final_only_score(case, run_result)
+        trace_score = trace_aware_score(case, run_result)
+        expected_final = fixture["expected_final_only_passed"]
+        expected_trace = fixture["expected_trace_aware_passed"]
+        expectation_met = final_score["passed"] == expected_final and trace_score["passed"] == expected_trace
+        results.append(
+            {
+                **run_result,
+                "final_answer_score": final_score,
+                "trace_aware_score": trace_score,
+                "score_delta": final_score["passed"] != trace_score["passed"],
+                "expected_final_only_passed": expected_final,
+                "expected_trace_aware_passed": expected_trace,
+                "expectation_met": expectation_met,
+                "status": "passed" if expectation_met else "failed",
+            }
+        )
+    return {
+        "status": "completed",
+        "api_status": "skipped_without_openai_api_key",
+        "reason": "OPENAI_API_KEY is not set",
+        "model": MODEL,
+        "scorer_control": "deterministic_trace_fixtures",
+        "real_model_validated": False,
+        "scorer_control_passed": all(item["expectation_met"] for item in results),
+        "case_count": len(results),
+        "score_delta_count": sum(1 for item in results if item["score_delta"]),
+        "final_only_passes": sum(1 for item in results if item["final_answer_score"]["passed"]),
+        "trace_aware_passes": sum(1 for item in results if item["trace_aware_score"]["passed"]),
+        "all_passed": all(item["expectation_met"] for item in results),
+        "results": results,
+    }
+
+
 def run(api_key: str) -> dict[str, Any]:
     started = time.perf_counter()
     results = []
@@ -278,10 +436,13 @@ def run(api_key: str) -> dict[str, Any]:
         )
     return {
         "status": "completed",
+        "api_status": "completed",
         "model": MODEL,
         "api_url": API_URL,
+        "real_model_validated": True,
         "elapsed_seconds": round(time.perf_counter() - started, 3),
         "results": results,
+        "score_delta_count": sum(1 for item in results if item["score_delta"]),
         "final_only_passes": sum(1 for item in results if item["final_answer_score"]["passed"]),
         "trace_aware_passes": sum(1 for item in results if item["trace_aware_score"]["passed"]),
     }
@@ -290,17 +451,7 @@ def run(api_key: str) -> dict[str, Any]:
 def main() -> int:
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
-        print(
-            json.dumps(
-                {
-                    "status": "skipped",
-                    "reason": "OPENAI_API_KEY is not set",
-                    "model": MODEL,
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+        print(json.dumps(run_scorer_control(), ensure_ascii=False, indent=2))
         return 0
 
     try:
