@@ -30,6 +30,7 @@
 
 - [Agent Eval 与 Trajectory 边界](agent-eval-trajectory-boundary.md)
 - [Observability 与 Trace 工程边界](observability-trace-boundary.md)
+- [Browser Agent 与网页自动化边界](browser-agent-boundary.md)
 - [Prompt Injection 与权限边界](prompt-injection-permission-boundary.md)
 
 ## 框架生态与实践

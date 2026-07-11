@@ -10,7 +10,8 @@ Agent eval 不能只看最终答案。对会调用工具、跨多步环境行动
 - Source 2：[WebArena: A Realistic Web Environment for Building Autonomous Agents](../sources/source-cards/2023-webarena-paper.md)
 - Source 3：[τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains](../sources/source-cards/2024-tau-bench-paper.md)
 - Source 4：[OpenAI Evals Repository](../sources/source-cards/2026-openai-evals-repo.md)
-- Source 5：[Trace-Aware Eval 最小实验结果](../experiments/trace-aware-eval/results-2026-07-11.md)
+- Source 5：[Evidence Note: Browser Agent 与网页自动化边界](browser-agent-boundary.md)
+- Source 6：[Trace-Aware Eval 最小实验结果](../experiments/trace-aware-eval/results-2026-07-11.md)
 
 ## 交叉验证结果
 
@@ -18,6 +19,7 @@ Agent eval 不能只看最终答案。对会调用工具、跨多步环境行动
 - 一致点：AgentBench 摘要把失败原因归到 long-term reasoning、decision-making 和 instruction following 等过程性能力，这支持正文中把错误分类和过程诊断作为 eval 的重点。
 - 一致点：WebArena 摘要强调真实、可复现的 Web 环境，包含工具和外部知识库，任务 diverse、long-horizon，并关注 task completions 的 functional correctness。
 - 一致点：τ-bench 摘要强调动态用户交互、domain-specific API tools、policy guidelines、conversation 结束后的 database state 和 annotated goal state 对比，以及用 `pass^k` 衡量多次试验一致性。
+- 一致点：Browser Agent evidence 显示浏览器 Agent 的过程包含导航、点击、输入、上传、滚动、登录态和表单/购物等外部动作；这进一步支持 Web/Browser Agent 必须评估 trajectory、页面状态、权限和外部副作用，而不是只看最终文本。
 - 一致点：OpenAI Evals README 将 eval 定义为评估 LLM 或 LLM-based systems 的 framework，并支持 custom/private evals 和 tool-using agents 的高级用例。
 - 分歧点：WebArena 更强调端到端 Web 任务完成正确性，τ-bench 更强调工具 Agent 与模拟用户和数据库状态的交互评测，OpenAI Evals 更强调 eval 框架和自定义用例；它们都不直接给出通用 trajectory 自动评分标准。
 - 可能原因：Agent eval 同时有 benchmark、工程回归和线上观测三个层面。公开 benchmark 更适合比较环境，工程 eval 更适合诊断业务系统。
@@ -32,7 +34,7 @@ Agent eval 不能只看最终答案。对会调用工具、跨多步环境行动
 ## 结论状态
 
 - 可入正文：窄结论“公开 benchmark 可以帮助学习评测环境、任务设计和失败分类，但不能直接代表真实业务 Agent 质量或产品可用性”已完成第一轮交叉验证。AgentBench、WebArena 和 τ-bench 支撑交互环境、长程任务、工具/外部知识、用户交互、状态评测、functional correctness 和失败原因分析的重要性；OpenAI Evals 支撑为具体 use case 写 custom/private evals；这共同说明公开 benchmark 更适合学习评测思想和做有限比较，业务系统仍需要自己的任务集、trace、权限和回归评测。
-- 可入正文：窄结论“对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全；关键 trajectory / trace 应作为 eval、审计和回归输入”已完成第一轮交叉验证。AgentBench 和 WebArena 支撑交互环境、长程任务、工具/外部知识和失败原因分析的重要性；τ-bench 支撑工具 Agent 需要评估动态对话、API tools、policy guidelines、数据库状态和多次试验一致性；OpenAI Evals 支撑为具体 LLM 系统和 tool-using agents 设计 custom eval；标准库实验复现了 final-only scoring 漏掉无审批副作用工具和工具错误未恢复。
+- 可入正文：窄结论“对会调用工具或产生外部副作用的 Agent，只看最终答案不足以验证过程安全；关键 trajectory / trace 应作为 eval、审计和回归输入”已完成第一轮交叉验证。AgentBench 和 WebArena 支撑交互环境、长程任务、工具/外部知识和失败原因分析的重要性；τ-bench 支撑工具 Agent 需要评估动态对话、API tools、policy guidelines、数据库状态和多次试验一致性；Browser Agent evidence 补强网页动作、浏览器状态和表单/购物/登录态等外部副作用边界；OpenAI Evals 支撑为具体 LLM 系统和 tool-using agents 设计 custom eval；标准库实验复现了 final-only scoring 漏掉无审批副作用工具和工具错误未恢复。
 - 部分验证：τ-bench 原始任务已被仓库标注为过期；trajectory 自动评分、LLM-as-judge 可靠性、真实 Agent trace 字段覆盖、真实业务质量与公开 benchmark 的相关性仍待真实模型、平台映射、τ³-bench 小样本试跑和人工复核实验。
 
 ## 可进入章节

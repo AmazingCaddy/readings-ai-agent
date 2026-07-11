@@ -238,6 +238,29 @@
 
 - SWE-agent 论文和 README。它适合理解 agent-computer interface、仓库导航、代码编辑和测试执行；但 README 已提示当前推荐 mini-SWE-agent，因此真实试跑前需要复核当前文档。
 
+## 进阶项目：Browser Agent
+
+### 学习目标
+
+理解浏览器 Agent 为什么比普通只读问答风险更高：它会触达网页动作、页面状态、登录态、profile、表单、文件上传、提交按钮和第三方站点边界。
+
+### 任务描述
+
+先做一个本地 demo website，包含只读信息页、普通表单、文件上传控件、需要确认的提交按钮和一个 destructive button。然后用两种方式完成同一任务：固定 Playwright workflow，以及 Browser Use 或同类 browser agent 的自然语言任务。
+
+### 验收标准
+
+- 只能使用测试账号、隔离 browser profile 或本地 demo site，不使用真实购物、付款、投递或重要账号。
+- 记录访问 URL、点击元素、输入字段、上传文件、提交动作、页面状态和失败原因。
+- 表单提交、购物、支付、发送消息、文件上传和 destructive button 都必须有人工确认点。
+- 对比固定 Playwright workflow 和 browser agent 的成功率、步骤数、失败原因、成本、延迟和 trace 可读性。
+- 不把 CAPTCHA / stealth / 网站 ToS / 账号风控 / 生产可靠性写成已验证结论，除非后续真实实验覆盖这些问题。
+
+### 可参考资料
+
+- Browser Use README 和 docs。它适合理解 browser agent 的任务形态、custom tools、profile/auth 和 human-in-the-loop 等产品能力边界。
+- Playwright actions 和 trace viewer 文档。它适合理解浏览器动作层和按 action 回放 trace 的工程基础。
+
 ## 推荐学习顺序
 
 1. 先完成项目 1 和 2，理解模型调用和工具调用。
@@ -246,6 +269,7 @@
 4. 如果需要工具生态，再做项目 6。
 5. 最后做项目 7 和 8，把质量和生产化边界补上。
 6. 如果你想练软件工程 Agent，再做 Repo Issue Agent；它比前面项目风险更高，必须先用 toy repo 和隔离环境。
+7. 如果你想练 Browser Agent，把它放在 Repo Issue Agent 之后或同级进阶阶段，只用 demo site、测试账号、隔离 profile 和人工确认来练习。
 
 ## 常见误区
 
@@ -263,6 +287,7 @@
 - MCP servers repo 可作为 MCP 工具生态示例来源，但具体 server 的权限和安全假设需要逐个检查。
 - OpenAI Evals repo 可作为小型回归测试和 eval 结构参考；Agent eval 仍应结合 trace 和业务任务。
 - SWE-agent 论文和 README 可作为 repo issue / coding agent 进阶练习参考：它支撑 agent-computer interface、仓库导航、文件编辑和测试执行的重要性；README 已提示当前推荐 mini-SWE-agent，真实试跑仍需复核当前文档、sandbox、权限和成本。
+- Browser Use / Playwright source card 可作为 Browser Agent 进阶练习参考：它支撑浏览器动作、profile/auth 风险、custom tools 和 trace viewer 的工程边界；真实 browser agent 任务成功率、成本、延迟、CAPTCHA/stealth、合规和生产可靠性仍待实验。
 - 实践路线 smoke harness 已完成标准库试跑，支持“每个项目都要有验收标准、trace、失败分类和可重复运行命令”的学习建议；仍不能替代真实 Structured Outputs、File Search/RAG、OpenAI Evals、Agents SDK trace/eval、Usage/Cost 和 Rate limits 试跑。
 - 安全 regression set 最小实验已完成标准库试跑，支持“生产化练习需要覆盖多类安全 case，并记录误报、漏报和 trace 泄漏”的学习建议；仍不能替代真实模型 / 框架 guardrail / HITL approval 试跑。
 
@@ -275,6 +300,7 @@
 - 如何把这些项目逐步发布成 GitHub Pages 的可跟练教程？
 - 如何把安全 regression set 迁移到真实 tool-calling / Agents SDK / MCP 工具练习？
 - Repo Issue Agent 应优先用 SWE-agent、mini-SWE-agent、OpenAI Agents SDK、LangGraph 还是固定 workflow 做最小对比？成本、sandbox、回滚和测试反馈如何记录？
+- 固定 Playwright workflow 与 Browser Use / browser agent 在同一 demo site 上的成功率、步骤数、失败原因、成本、延迟、trace 可读性和审批负担有什么差异？
 
 ## 本章小结
 
@@ -293,7 +319,9 @@
 - [MCP servers repo](../sources/source-cards/2026-mcp-servers-repo.md)
 - [OpenAI Evals Repository](../sources/source-cards/2026-openai-evals-repo.md)
 - [SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering](../sources/source-cards/2024-swe-agent-paper.md)
+- [Browser Use and Playwright Browser Automation References](../sources/source-cards/2026-browser-use-playwright.md)
 - [Evidence Note: 实践路线与 Cookbook 示例边界](../evidence/practice-roadmap-cookbook-boundary.md)
+- [Evidence Note: Browser Agent 与网页自动化边界](../evidence/browser-agent-boundary.md)
 - [实践路线 Smoke Harness 结果](../experiments/practice-roadmap-harness/results-2026-07-11.md)
 
 ### Governance

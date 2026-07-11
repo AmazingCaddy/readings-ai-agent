@@ -61,6 +61,7 @@ nav:
           - Indirect Prompt Injection paper: sources/source-cards/2023-indirect-prompt-injection-paper.md
           - Multiagent Debate paper: sources/source-cards/2023-multiagent-debate-paper.md
           - Voyager paper: sources/source-cards/2023-voyager-paper.md
+          - Browser Use and Playwright: sources/source-cards/2026-browser-use-playwright.md
           - AutoGen docs: sources/source-cards/2026-autogen-docs.md
           - CrewAI docs: sources/source-cards/2026-crewai-docs.md
           - MCP servers repo: sources/source-cards/2026-mcp-servers-repo.md
