@@ -214,8 +214,8 @@ OpenAI Graders 文档还提供了更具体的评分器类型：string check、te
 
 - AgentBench 的摘要已完成第一轮精读，可支撑“Agent eval 需要交互环境、长期推理、决策和失败原因分析”的保守表述。
 - WebArena 的摘要已完成第一轮精读，可支撑“真实 Web Agent 任务需要端到端环境、工具、外部知识和 long-horizon 评测”的保守表述；论文中的旧实验数值不能泛化为当前模型能力。
-- Browser Use / Playwright / Anthropic Computer Use 资料已完成第一轮复核，可支撑浏览器 / computer-use Agent 的动作层和 trace 边界：任务可能包含打开页面、点击、输入、填表、上传文件、登录态 profile、screenshot/mouse/keyboard control、custom tools 和 human-in-the-loop；Playwright trace viewer 支持按 action 回放页面状态、log、source、network 和 DOM snapshot；Anthropic computer use docs 补强 VM/container 隔离、domain allowlist、action validation/logging、截图 prompt injection classifier 和 beta limitation 边界。Real Browser Playwright Validation 已完成固定本地 demo page run，记录 4 条 action record、DOM/screenshot hash、redacted invoice 文件上传、submit order 审批阻断和 trace.zip metadata。真实 Browser Use / computer-use agent、模型任务成功率、点击精度、classifier 行为、成本、延迟、CAPTCHA/stealth、合规和生产可靠性仍需实验。
-- 本地标准库 browser action trace audit 显示，浏览器 Agent 的最小评测字段应覆盖 action trace、DOM/screenshot state、side-effect approval、profile isolation、file upload control、external content untrusted boundary、trace redaction 和 failure classification。该实验支撑字段设计；真实 Playwright completed run 支撑一个固定浏览器执行层观察；二者都不证明 Browser Use、Anthropic computer use 或任何模型的真实网页任务表现。
+- Browser Use / Playwright / Anthropic Computer Use 资料已完成第一轮复核，可支撑浏览器 / computer-use Agent 的动作层和 trace 边界：任务可能包含打开页面、点击、输入、填表、上传文件、登录态 profile、screenshot/mouse/keyboard control、custom tools 和 human-in-the-loop；Playwright trace viewer 支持按 action 回放页面状态、log、source、network 和 DOM snapshot；Anthropic computer use docs 补强 VM/container 隔离、domain allowlist、action validation/logging、截图 prompt injection classifier 和 beta limitation 边界。Real Browser Use Package Surface Validation 已完成 `browser-use==0.13.3` package / source surface 检查；Real Browser Playwright Validation 已完成固定本地 demo page run，记录 4 条 action record、DOM/screenshot hash、redacted invoice 文件上传、submit order 审批阻断和 trace.zip metadata。真实 Browser Use agent / computer-use agent、模型任务成功率、点击精度、classifier 行为、成本、延迟、CAPTCHA/stealth、合规和生产可靠性仍需实验。
+- 本地标准库 browser action trace audit 显示，浏览器 Agent 的最小评测字段应覆盖 action trace、DOM/screenshot state、side-effect approval、profile isolation、file upload control、external content untrusted boundary、trace redaction 和 failure classification。该实验支撑字段设计；Browser Use package harness 支撑本地入口和源码表面观察；真实 Playwright completed run 支撑一个固定浏览器执行层观察；这些结果都不证明 Browser Use、Anthropic computer use 或任何模型的真实网页任务表现。
 - τ-bench 的摘要和 README 已完成第一轮复核，可支撑“工具 Agent 评测需要动态用户交互、领域 API tools、policy guidelines、数据库状态评测和多次试验一致性”的保守表述；原始 repo 已提示任务不是最新版，实际试跑应优先看 τ³-bench。
 - “公开 benchmark 可以帮助学习评测环境、任务设计、functional correctness、用户交互、状态评测和失败分类，但不能直接代表真实业务 Agent 质量或产品可用性”已升级为可入正文。业务系统仍需要自己的 custom/private eval、trace、权限检查和回归集。
 - OpenAI Evals README 已完成第一轮精读，可支撑 custom eval、private eval 和 tool-using agent eval 的工程思路；标准库 trace-aware eval 已覆盖最小评分字段。真实模型 trace-aware eval harness 已准备并记录无 API key skipped 结果；当前没有 completed run，具体实践仍需结合当前文档、LLM-as-judge 误判和人工复核实验。
@@ -234,7 +234,7 @@ OpenAI Graders 文档还提供了更具体的评分器类型：string check、te
 - 模型评审与人工评审如何组合，才能减少误判？
 - 不同框架的 observability 能力如何比较？
 - AgentBench 和 WebArena 的任务设计对现代业务 Agent 有哪些可迁移经验？
-- Browser Use browser agent 和 computer-use-style action loop 在同一个 demo page 上的 action trace、DOM/screenshot state、权限确认、action validation、成本和失败原因有什么差异？固定 Playwright workflow 已完成本地 demo page run；模型驱动的 browser/computer-use 对照仍待做。
+- Browser Use browser agent 和 computer-use-style action loop 在同一个 demo page 上的 action trace、DOM/screenshot state、权限确认、action validation、成本和失败原因有什么差异？Browser Use package surface 和固定 Playwright workflow 已完成；模型驱动的 browser/computer-use 对照仍待做。
 
 ## 本章小结
 
@@ -252,6 +252,7 @@ OpenAI Graders 文档还提供了更具体的评分器类型：string check、te
 - [τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains](../sources/source-cards/2024-tau-bench-paper.md)
 - [WebArena: A Realistic Web Environment for Building Autonomous Agents](../sources/source-cards/2023-webarena-paper.md)
 - [Browser Use and Playwright Browser Automation References](../sources/source-cards/2026-browser-use-playwright.md)
+- [Real Browser Use Package Surface Validation](../experiments/real-browser-use-package-validation/README.md)
 
 ### Tools and Source Code
 

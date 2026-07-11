@@ -10,9 +10,9 @@
 uv run python docs/experiments/validation-harness-runner/run_validation_harnesses.py
 ```
 
-没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`；官方 MCP SDK harness 在没有 `mcp` Python package 时应返回 `skipped`；LlamaIndex harness 在没有 `llama-index-core` 时应返回 `skipped`；AutoGen/CrewAI harness 在没有对应包时应返回 `skipped`；Repo Issue Agent toy harness 在没有 `pytest` 时应返回 `skipped`；mini-SWE-agent CLI harness 在没有 `mini-swe-agent` 时应返回 `skipped`。部分框架 harness 可以用 `uv run --with ...` 临时依赖运行。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
+没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`；官方 MCP SDK harness 在没有 `mcp` Python package 时应返回 `skipped`；LlamaIndex harness 在没有 `llama-index-core` 时应返回 `skipped`；AutoGen/CrewAI harness 在没有对应包时应返回 `skipped`；Repo Issue Agent toy harness 在没有 `pytest` 时应返回 `skipped`；mini-SWE-agent CLI harness 在没有 `mini-swe-agent` 时应返回 `skipped`；Browser Use package harness 在没有 `browser-use` 时应返回 `skipped`。部分框架 harness 可以用 `uv run --with ...` 临时依赖运行。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
 
-当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-12.md)：2026-07-12 运行覆盖 19 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，LlamaIndex harness 通过临时依赖完成本地 `VectorStoreIndex` / retriever / source-node metadata run，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph interrupt recovery harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，LangGraph memory store harness 完成本地 `InMemoryStore` namespace / put / get / search / delete run，Real Framework Same-Task Comparison 在标准 full runner 中完成 OpenAI Agents SDK / LangGraph / LlamaIndex adapter，本地 MCP stdio harness 和官方 MCP Python SDK stdio harness 完成。Semantic Kernel plugin harness、same-task comparison 的 Semantic Kernel adapter、Real Multi-Agent Framework Validation、Real Repo Issue Agent Toy 和 Real mini-SWE-agent CLI Surface Validation 均已有单独 completed run；在标准 full runner 中因未安装对应依赖而保守 skipped。
+当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-12.md)：2026-07-12 运行覆盖 20 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，LlamaIndex harness 通过临时依赖完成本地 `VectorStoreIndex` / retriever / source-node metadata run，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph interrupt recovery harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，LangGraph memory store harness 完成本地 `InMemoryStore` namespace / put / get / search / delete run，Real Framework Same-Task Comparison 在标准 full runner 中完成 OpenAI Agents SDK / LangGraph / LlamaIndex adapter，本地 MCP stdio harness 和官方 MCP Python SDK stdio harness 完成。Semantic Kernel plugin harness、same-task comparison 的 Semantic Kernel adapter、Real Multi-Agent Framework Validation、Real Repo Issue Agent Toy、Real mini-SWE-agent CLI Surface Validation 和 Real Browser Use Package Surface Validation 均已有单独 completed run；在标准 full runner 中因未安装对应依赖而保守 skipped。
 
 ## 实验清单与状态
 
@@ -114,19 +114,23 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
     - 目标：在本地 demo page 上用固定 Playwright workflow 收集真实 browser action trace、DOM/screenshot state、文件上传、提交审批和失败分类，作为 Browser Use / computer-use-style action loop 的后续对照组。
     - 状态：真实 harness 已完成固定本地 demo page run，见 [Real Browser Playwright Validation](real-browser-playwright-validation/README.md) 和 [2026-07-11 结果](real-browser-playwright-validation/results-2026-07-11.md)。本次记录 4 条 action record、DOM/screenshot hash、redacted invoice 文件上传、submit order 审批阻断和 trace.zip metadata；它只证明固定 Playwright workflow 的动作/trace 记录入口，不证明 Browser Use、Anthropic computer use、任何模型、真实网站或生产网页任务表现。
 
-24. Real Batch / Flex / Prompt Caching validation 实验
+24. Real Browser Use package surface validation 实验
+    - 目标：验证 Browser Use 是否能作为临时依赖安装，并暴露 console script、Agent、BrowserProfile、Tools、allowed domains 和 sensitive data 等 package/source surface。
+    - 状态：真实 harness 已完成 package surface run，见 [Real Browser Use Package Surface Validation](real-browser-use-package-validation/README.md) 和 [2026-07-12 结果](real-browser-use-package-validation/results-2026-07-12.md)。本次用 `browser-use==0.13.3` 验证 entry points 和源码表面；没有导入 `browser_use`、启动浏览器、调用模型、打开网站或运行 Browser Use agent task。
+
+25. Real Batch / Flex / Prompt Caching validation 实验
     - 目标：为 Batch API、Flex processing 和 Prompt Caching 准备真实 API 观测入口，记录 `custom_id` / batch status、Flex fallback、`cached_tokens` / `cache_write_tokens`、latency 和 rate-limit headers。
     - 状态：真实 harness 已准备，见 [Real Batch / Flex / Prompt Caching Validation](real-batch-flex-caching-validation/README.md) 和 [2026-07-11 结果](real-batch-flex-caching-validation/results-2026-07-11.md)。当前无 API key，运行结果为 `skipped`；Batch job 提交默认 opt-in，尚未产生真实 completed run，不能证明 Batch / Flex / Prompt Caching 的收益、命中率、成本、延迟、质量取舍或生产可靠性。
 
-25. Real Moderation safety validation 实验
+26. Real Moderation safety validation 实验
     - 目标：为 OpenAI Moderation API 准备真实安全信号观测入口，记录 `flagged`、categories、scores、latency、expected mismatch、tool arguments / tool output 覆盖和 policy decision。
     - 状态：真实 harness 已准备，见 [Real Moderation Safety Validation](real-moderation-safety-validation/README.md) 和 [2026-07-11 结果](real-moderation-safety-validation/results-2026-07-11.md)。当前无 API key，运行结果为 `skipped`；尚未产生真实 moderation completed run，不能证明误报、漏报、阈值策略、人工复核流程或生产安全效果。
 
-26. Real Semantic Kernel plugin validation 实验
+27. Real Semantic Kernel plugin validation 实验
     - 目标：用 Semantic Kernel Python native plugin 验证 plugin/function metadata、参数 required/type 处理、应用层写工具审批和 side-effect trace。
     - 状态：真实 harness 已完成单独本地 run，见 [Real Semantic Kernel Plugin Validation](real-semantic-kernel-plugin-validation/README.md) 和 [2026-07-12 结果](real-semantic-kernel-plugin-validation/results-2026-07-12.md)。它支撑 native plugin runtime 的窄观察：metadata 暴露、缺参/不可解析类型拒绝、可解析字符串数值执行、未审批写工具不转发、已审批写工具产生 side effect。它不证明真实模型 tool selection、OpenAPI/MCP plugin、Agent Framework、Process Framework、HITL UI、参数快照、幂等恢复、成本、延迟或生产安全。
 
-27. Real Framework Same-Task Comparison 实验
+28. Real Framework Same-Task Comparison 实验
     - 目标：用同一个本地退款政策检索 + 审批退款任务，对比 OpenAI Agents SDK、LangGraph、LlamaIndex 和 Semantic Kernel 的真实 runtime surface，并拆分 framework-owned 与 application-owned capabilities。
     - 状态：真实 harness 已完成 4 adapter 本地 run，见 [Real Framework Same-Task Comparison](real-framework-same-task-comparison/README.md) 和 [2026-07-12 结果](real-framework-same-task-comparison/results-2026-07-12.md)。本次记录 OpenAI Agents SDK `FunctionTool` schema / `needs_approval` / direct `ToolContext` invocation / fake-model `Runner` approval-resume loop、LangGraph `StateGraph` / conditional edge、LlamaIndex `VectorStoreIndex` / retriever source nodes、Semantic Kernel plugin metadata / `Kernel.invoke()`；四个 adapter 均阻断未审批退款、执行一次已审批退款且 trace 未泄露示例 secret。由于 `openai-agents==0.18.2` 与 `semantic-kernel==1.36.0` 在同一临时环境中存在 pydantic import 组合问题，结果使用两组命令覆盖 4 个 adapter。它不证明真实模型行为、成本、延迟、hosted tracing、真实 HITL UI、部署恢复、OpenAPI/MCP plugin 或生产安全，也不能推出框架排名。
 

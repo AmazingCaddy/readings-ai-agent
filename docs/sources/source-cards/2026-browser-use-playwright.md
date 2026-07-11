@@ -4,12 +4,12 @@
 - 相关链接：https://docs.browser-use.com；https://playwright.dev/python/docs/intro；https://playwright.dev/python/docs/input；https://playwright.dev/python/docs/trace-viewer-intro
 - 作者 / 机构：Browser Use project；Microsoft Playwright project
 - 发布时间：Browser Use repo created 2024-10-31；Playwright documentation 持续更新
-- 最后复核日期：2026-07-11
+- 最后复核日期：2026-07-12
 - 类型：Source / Engineering docs
 - 主题：Browser Agent / Browser Automation / Web Agent / Trace
 - 适合阶段：进阶 / 实践扩展
 - 可信度等级：B
-- 是否已验证：Browser Use GitHub metadata、README、docs `llms.txt`、Playwright Python installation/actions/trace viewer 页面已复核；标准库 Browser Action Trace Audit 已完成字段审计；Real Browser Playwright Validation 已在本地 demo page 上完成固定 Playwright workflow run，记录 4 条 action record、DOM/screenshot hash、文件上传、审批阻断和 trace.zip metadata；支撑浏览器 Agent 的动作层、浏览器 profile/auth、custom tools、云端托管、trace、审批、文件上传策略、外部内容边界、脱敏和失败分类边界；README benchmark / leaderboard / hosted model claims 未独立复现，真实 Browser Use / computer-use / 模型任务成功率、成本、延迟、CAPTCHA/stealth、合规和安全仍部分验证
+- 是否已验证：Browser Use GitHub metadata、README、docs `llms.txt`、Playwright Python installation/actions/trace viewer 页面已复核；Real Browser Use Package Surface Validation 已完成本地临时依赖 run，验证 `browser-use==0.13.3` package metadata、console scripts 和 Agent / BrowserProfile / Tools 源码表面；标准库 Browser Action Trace Audit 已完成字段审计；Real Browser Playwright Validation 已在本地 demo page 上完成固定 Playwright workflow run，记录 4 条 action record、DOM/screenshot hash、文件上传、审批阻断和 trace.zip metadata；支撑浏览器 Agent 的动作层、浏览器 profile/auth、custom tools、云端托管、trace、审批、文件上传策略、外部内容边界、脱敏和失败分类边界；README benchmark / leaderboard / hosted model claims 未独立复现，真实 Browser Use agent / computer-use / 模型任务成功率、成本、延迟、CAPTCHA/stealth、合规和安全仍部分验证
 
 ## 一句话总结
 
@@ -47,13 +47,14 @@ Browser Use 和 Playwright 适合说明浏览器 Agent 的工程执行层：Agen
 - Playwright trace viewer 页面说明可用 `--tracing` 或 `context.tracing.start(...)` / `stop(...)` 记录 trace，并用 trace viewer 按 action 回看页面状态、log、source、network 和 DOM snapshot。
 - 2026-07-11 运行 [Browser Action Trace Audit](../../experiments/browser-action-trace-audit/README.md) 成功；`naive_trace` 0/8 通过，`governed_trace` 8/8 通过。该结果只支撑字段设计，不启动真实浏览器、不调用 Playwright / Browser Use / Anthropic API，也不读取真实 DOM 或 screenshot。
 - 2026-07-11 运行 [Real Browser Playwright Validation](../../experiments/real-browser-playwright-validation/README.md) completed：使用临时 Playwright 依赖和本地 Chromium headless shell，在本地 demo page 上生成 4 条 action record 和 trace.zip；记录读价格、填表不提交、上传 redacted invoice 和高风险 submit 被策略阻断。
+- 2026-07-12 运行 [Real Browser Use Package Surface Validation](../../experiments/real-browser-use-package-validation/README.md) completed：使用临时 `browser-use` 依赖，验证 package version `0.13.3`、console scripts `browser-use` / `browser` / `browseruse` / `bu` / `browser-use-tui`，并在源码表面观察到 `class Agent`、`class BrowserProfile`、`class Tools`、`allowed_domains`、`sensitive` 和 `highlight_elements`。该结果不导入 `browser_use`，不启动浏览器，不调用模型，也不打开网站。
 
 ## 可能的问题
 
 - Browser Use README 含有 benchmark、leaderboard、hosted model 和 cloud product claims，这些不是独立评测结果；正文只能作为项目自述，不能当成已验证性能。
 - 浏览器 Agent 可能处理登录态、cookies、localStorage、文件上传/下载、购物、表单提交、邮箱、支付和第三方网站数据；权限和合规风险高于普通只读 RAG。
 - Playwright 是浏览器自动化和测试框架，不是 Agent runtime。它能支撑动作执行和 trace，但不证明模型能稳定规划网页任务。
-- Browser Action Trace Audit 是标准库字段审计，不是 browser agent benchmark。Real Browser Playwright Validation 只是固定 Playwright workflow，不是 Browser Use / computer-use-style action loop，也不调用模型；二者都不能证明任意模型的真实网页任务表现。
+- Browser Action Trace Audit 是标准库字段审计，不是 browser agent benchmark。Real Browser Use Package Surface Validation 只是 package / source surface 检查，不运行 agent；Real Browser Playwright Validation 只是固定 Playwright workflow，不是 Browser Use / computer-use-style action loop，也不调用模型；这些结果都不能证明任意模型的真实网页任务表现。
 - CAPTCHA、反自动化、网站 ToS、账号风控和代理/stealth 是真实系统问题；本手册当前没有复现实验。
 - 使用真实浏览器 profile 会扩大敏感数据暴露面。初学者练习应使用测试账号、隔离 profile、只读任务和人工确认。
 
@@ -69,9 +70,9 @@ Browser Use 和 Playwright 适合说明浏览器 Agent 的工程执行层：Agen
 - 使用 Playwright 在本地 demo page 上实现固定 workflow：打开页面、填写表单、上传 redacted 文件、对提交动作做审批阻断、记录 trace.zip，并检查 DOM 状态。
 - 使用 Browser Use 在同一 demo page 上运行一个自然语言任务，对比固定 Playwright workflow 与 browser agent 的步骤数、失败原因、trace 可读性、成本、延迟和是否需要人工确认。
 - 设计安全 case：登录态 profile、文件上传、购物车、表单提交、外部页面 prompt injection、CAPTCHA / 2FA、误点击 destructive button，记录 allow/block/require_approval 和 trace 脱敏。
-- 当前已完成无浏览器字段审计，并完成固定 Playwright workflow completed run；下一步仍需要扩展 Browser Use / computer-use-style 对照实验，记录模型决策、成本、延迟和失败样例。
+- 当前已完成 Browser Use package surface 检查、无浏览器字段审计，并完成固定 Playwright workflow completed run；下一步仍需要扩展 Browser Use / computer-use-style 对照实验，记录模型决策、成本、延迟和失败样例。
 
 ## 是否进入正文
 
 - 结论：部分进入
-- 原因：可作为 Web/Browser Agent 工程执行层、browser automation trace、auth/profile 风险和实践项目的 reference；与 WebArena、Agent eval evidence、tool permission evidence、Browser Action Trace Audit 和 Real Browser Playwright Validation completed run 共同支撑“浏览器 Agent 不能只看最终结果，必须看动作 trace、页面状态、权限、外部副作用、脱敏和失败分类”的边界。不能支撑 Browser Use benchmark 数字、云服务能力、真实点击精度、CAPTCHA/stealth 效果、生产可靠性或模型网页任务成功率。
+- 原因：可作为 Web/Browser Agent 工程执行层、browser automation trace、auth/profile 风险和实践项目的 reference；与 WebArena、Agent eval evidence、tool permission evidence、Browser Action Trace Audit、Real Browser Use Package Surface Validation 和 Real Browser Playwright Validation completed run 共同支撑“浏览器 Agent 不能只看最终结果，必须看动作 trace、页面状态、权限、外部副作用、脱敏和失败分类”的边界。不能支撑 Browser Use benchmark 数字、云服务能力、真实点击精度、CAPTCHA/stealth 效果、生产可靠性或模型网页任务成功率。

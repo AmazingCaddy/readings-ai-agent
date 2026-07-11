@@ -12,11 +12,13 @@ Browser Agent 是高风险的工具型 Agent：它把模型决策连接到真实
 - Source 4：[Evidence Note: 工具权限、人工确认与审计边界](tool-permission-audit-boundary.md)
 - Source 5：[Evidence Note: Observability 与 Trace 工程边界](observability-trace-boundary.md)
 - Source 6：[Anthropic Computer Use Tool Documentation](../sources/source-cards/2026-anthropic-computer-use-docs.md)
+- Source 7：[Real Browser Use Package Surface Validation 结果](../experiments/real-browser-use-package-validation/results-2026-07-12.md)
 
 ## 交叉验证结果
 
 - 一致点：Browser Use README 将浏览器 Agent 的动作面描述为打开页面、点击按钮、输入文本和填表，并展示求职表单、购物和网页搜索类任务。这说明 browser agent 会触达真实网页交互和外部副作用。
 - 一致点：Browser Use README / docs 提到 real browser profiles、saved logins、profile sync、persistent browser state、2FA、file/workspace、human-in-the-loop、MCP server 和 production hosting。这支持正文中把浏览器 Agent 视为权限和数据边界更复杂的工具型 Agent。
+- 一致点：Real Browser Use Package Surface Validation 验证 `browser-use==0.13.3` 可通过临时依赖安装，并暴露 `browser-use` / `browser` / `bu` 等 console scripts；源码表面包含 `Agent`、`BrowserProfile`、`Tools`、`allowed_domains`、`sensitive` 和 `highlight_elements`。这补强 Browser Use 的本地入口和安全相关配置表面，但不证明 agent task 行为。
 - 一致点：Playwright actions docs 支持文本输入、选择、点击、键盘、文件上传、拖拽和滚动等浏览器动作；trace viewer docs 支持按 action 回放 trace、查看页面状态、log、source、network 和 DOM snapshot。这说明浏览器自动化可以提供可复盘的动作轨迹。
 - 一致点：WebArena 摘要强调 web agent 任务是 long-horizon、diverse、需要 functional correctness 的端到端环境；这支持“浏览器 Agent 不能只看最终文本，需要看网页状态和过程”的评测边界。
 - 一致点：Anthropic computer use 文档把 screenshot、mouse、keyboard 和 desktop automation 作为工具动作面，并说明开发者需要在自己的 computer / container / VM 中执行 tool request，再把 screenshot 或 command output 作为 `tool_result` 回传。这与 Playwright / Browser Use 的“动作层和 trace 层必须由应用治理”的边界一致。
@@ -35,14 +37,15 @@ Browser Agent 是高风险的工具型 Agent：它把模型决策连接到真实
 - 已完成：标准库 [Browser Action Trace Audit](../experiments/browser-action-trace-audit/README.md)。该 audit 比较 `naive_trace` 和 `governed_trace`：`naive_trace` 0/8 通过，`governed_trace` 8/8 通过，覆盖 action trace、page state、side-effect approval、profile isolation、file upload control、external content untrusted boundary、sensitive trace redaction 和 failure classification。
 - 支撑范围：该结果支撑“浏览器 Agent 练习和评测需要记录哪些字段”的窄结论。
 - 已完成：真实 [Real Browser Playwright Validation](../experiments/real-browser-playwright-validation/README.md) harness。2026-07-11 completed run 使用本地 demo page 和 Playwright Chromium headless，生成 4 条 action record 和 trace.zip；覆盖读价格、填表不提交、上传 redacted invoice、submit order 被策略阻断、DOM/screenshot hash、临时 context、`127.0.0.1` allowlist、外部页面指令作为 untrusted data 和 trace 脱敏字段。
+- 已完成：真实 [Real Browser Use Package Surface Validation](../experiments/real-browser-use-package-validation/README.md) harness。2026-07-12 completed run 使用临时 `browser-use` 依赖，记录 package metadata、console scripts 和源码表面；它不导入 `browser_use`，不启动浏览器，不调用模型，也不打开网站。
 - 仍需实验：在同一本地 demo website 上把 Browser Use browser agent 和可选 Anthropic computer-use-style action loop 与已完成的固定 Playwright workflow 对照。任务包括只读信息提取、表单填写但不提交、需要确认后提交、文件上传、错误元素、外部页面/截图注入和登录态 profile。记录 browser action trace、DOM / screenshot state、tool decisions、action validation、approval、cost、latency、失败分类和敏感字段脱敏。
-- 结果边界：已完成真实 Playwright 固定 workflow run，但尚未完成真实模型 / Browser Use / computer-use-style completed run。当前标准库 audit 不启动浏览器；真实 Playwright harness 只验证本地 demo page 和固定脚本，不验证模型规划、Browser Use、Anthropic computer use、真实网站、登录态、classifier、成本或延迟。二者都不能证明任意浏览器 Agent 的真实成功率、点击精度、classifier 行为、成本、CAPTCHA/stealth、合规或生产可靠性。
+- 结果边界：已完成 Browser Use package surface run 和真实 Playwright 固定 workflow run，但尚未完成真实模型 / Browser Use agent / computer-use-style completed run。当前标准库 audit 不启动浏览器；Browser Use package harness 不运行 agent；真实 Playwright harness 只验证本地 demo page 和固定脚本，不验证模型规划、Browser Use task、Anthropic computer use、真实网站、登录态、classifier、成本或延迟。这些结果都不能证明任意浏览器 Agent 的真实成功率、点击精度、classifier 行为、成本、CAPTCHA/stealth、合规或生产可靠性。
 
 ## 结论状态
 
 - 可入正文：窄结论“浏览器 Agent 的执行层包括导航、点击、输入、选择、上传、滚动等网页动作；这些动作应被记录为可复盘 trace，并进入 eval、审计和回归测试”由 Browser Use / Playwright 文档、WebArena 和现有 eval/trace evidence 支撑。
 - 可入正文：窄结论“浏览器 / computer-use Agent 不能只用最终文本或 demo 成功判断可靠性；登录态、cookies、文件、表单提交、购物/支付、第三方站点 ToS、CAPTCHA/风控、网页/截图 prompt injection 和 destructive button 都需要权限、人工确认、隔离 profile / VM / container、测试账号和 trace 脱敏”由 Browser Use、Anthropic computer use 文档和工具权限 evidence 支撑。
-- 部分验证：固定 Playwright workflow 的动作记录和 trace.zip 生成已完成本地真实浏览器验证；Browser Use benchmark / leaderboard / hosted model claims、Anthropic screenshot classifier 行为、真实网页/桌面任务成功率、点击精度、CAPTCHA/stealth、成本、延迟、合规、跨站点稳定性和生产可靠性仍需真实实验与独立评测。
+- 部分验证：Browser Use 的本地 package / source surface 已完成临时依赖验证，固定 Playwright workflow 的动作记录和 trace.zip 生成已完成本地真实浏览器验证；Browser Use benchmark / leaderboard / hosted model claims、Browser Use agent task 行为、Anthropic screenshot classifier 行为、真实网页/桌面任务成功率、点击精度、CAPTCHA/stealth、成本、延迟、合规、跨站点稳定性和生产可靠性仍需真实实验与独立评测。
 
 ## 可进入章节
 

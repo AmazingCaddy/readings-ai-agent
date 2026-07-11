@@ -254,7 +254,7 @@ API key 泄露不是 prompt 层问题。生产系统应把 key 放在后端或 s
 - 针对具体 Agent 框架，guardrails、approval、sensitive trace 和 tool permission 覆盖范围有哪些差异？已完成 OpenAI Agents SDK、LangGraph 和 Semantic Kernel 第一轮文档验证，Real LangGraph Interrupt Recovery 已完成 `MemorySaver` 最小 run；仍需横向比较真实 pause/resume、持久化审批状态序列化、参数快照、真实服务并发恢复、幂等执行和 trace 脱敏。
 - MCP 工具生态中的安全边界应该如何落到 host、client 和 server 实现？
 - Anthropic MCP connector / tunnels 的 allowlist/denylist、OAuth token、data retention、shared responsibility 和 tunnel credential rotation 在真实试跑中如何记录到 trace 和安全检查清单？
-- Browser Agent 如何在真实或仿真网站中隔离 profile、限制登录态、确认表单/购物/上传等写操作，并记录可审计 action trace？标准库 browser action trace audit 已完成字段模板，固定 Playwright demo page run 已完成；Browser Use / computer-use 对照仍待做。
+- Browser Agent 如何在真实或仿真网站中隔离 profile、限制登录态、确认表单/购物/上传等写操作，并记录可审计 action trace？Browser Use package surface、标准库 browser action trace audit 字段模板和固定 Playwright demo page run 已完成；Browser Use agent / computer-use 对照仍待做。
 - 真实模型 / 框架 guardrail / Prompt Shields 或同类检测层下，prompt injection 防护的误报、漏报、成本、延迟和人工审批负担如何测量？Real Prompt Injection / Permission harness 已准备，当前无 API key 只验证 skip 分支；仍需实际运行并比较 prompt-only、detector-only、policy-enforced 和 HITL 对照。
 - agentic-specific 安全 regression set 应如何覆盖 goal hijacking、tool misuse、identity / privilege abuse、memory poisoning、insecure inter-agent communication、cascading failures 和 rogue agent / runaway loop 停止条件？
 - 哪些日志字段既能支持审计，又不会引入新的隐私风险？已完成 observability/trace 第一轮验证，仍需脱敏和访问控制实验。
