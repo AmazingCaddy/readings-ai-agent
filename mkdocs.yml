@@ -69,6 +69,7 @@ nav:
           - LangGraph memory docs: sources/source-cards/2026-langgraph-memory-docs.md
           - Letta docs: sources/source-cards/2026-letta-docs.md
           - LlamaIndex docs: sources/source-cards/2026-llamaindex-docs.md
+          - LlamaIndex examples repo: sources/source-cards/2026-llamaindex-examples-repo.md
           - NIST AI RMF: sources/source-cards/2026-nist-ai-rmf.md
           - OpenAI Agents SDK docs: sources/source-cards/2026-openai-agents-sdk-docs.md
           - OpenAI Cookbook: sources/source-cards/2026-openai-cookbook.md
