@@ -10,7 +10,7 @@
 
 2. RAG chunk size 对召回质量的影响
    - 目标：比较不同 chunk size 和 overlap 对答案准确率的影响。
-   - 状态：已完成标准库最小 pipeline / citation 模拟实验，见 [RAG 最小 Pipeline 与 Citation 实验](rag-pipeline/README.md) 和 [2026-07-11 结果](rag-pipeline/results-2026-07-11.md)。仍需真实 embedding / vector store / LLM synthesis 和 chunk size 对比实验。
+   - 状态：已完成标准库最小 pipeline / citation 模拟实验，见 [RAG 最小 Pipeline 与 Citation 实验](rag-pipeline/README.md) 和 [2026-07-11 结果](rag-pipeline/results-2026-07-11.md)；真实 LLM citation synthesis harness 已准备，见 [Real RAG Citation Synthesis 实验](real-rag-citation-validation/README.md)。仍需真实 embedding / vector store / rerank 和 chunk size 对比实验。
 
 3. Long-term memory 写入守门
    - 目标：验证自动写入记忆是否会引入冲突、过时和脏数据。
