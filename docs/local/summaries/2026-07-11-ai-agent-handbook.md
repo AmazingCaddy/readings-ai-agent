@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 21:45 CST
+**Last Updated:** 2026-07-11 21:51 CST
 **Status:** In Progress
 
 ## Objective
@@ -85,9 +85,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 68. Cleaned up the coverage matrix beginner-entry column. Rows that still said `待补` now point to the relevant handbook chapter and already deep-read core docs/papers, such as chapter 01 for Agent definition, chapter 04 for architecture patterns, chapter 07 for planning/multi-agent, and chapter 10 for framework landscape. Chapter 12 now clarifies that the beginner-entry column is a learning path aid, not a signal that real model/framework/production behavior has been validated.
 69. Added an Evidence Notes index at `docs/evidence/README.md` and exposed it in the MkDocs nav under `证据与实验`. Chapter 12 now links to this index. This improves GitHub Pages traceability from chapters to evidence notes without changing any claim status.
 70. Added the remaining deep-read source cards to the MkDocs Source Cards nav: OpenAI Structured Outputs, OpenAI Text Generation, LangSmith, and Arize Phoenix. This improves discoverability of references already used by the LLM/context and eval/observability evidence; it does not change claim status.
+71. Synced the Source Cards directory page with the actual source-card files by adding LangSmith and Arize Phoenix. A file-vs-directory comparison now shows no missing source cards in `docs/sources/source-cards/index.md`.
 
 ## Technical Context
-- Files modified recently: `mkdocs.yml`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/sources/source-cards/index.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
