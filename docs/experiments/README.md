@@ -40,6 +40,10 @@
    - 目标：验证 reflection 是否能帮助补证据，以及未验证反思是否会污染后续尝试。
    - 状态：已完成标准库 Reflection / Retry 模拟实验，见 [Reflection / Retry 与错误反思实验](reflection-retry/README.md) 和 [2026-07-11 结果](reflection-retry/results-2026-07-11.md)。仍需真实模型 / critic / framework / 长期 episodic memory 实验。
 
+10. 多 Agent 与 Flow 控制对比实验
+    - 目标：验证多角色协作是否抵消通信、重复读取和冲突处理成本。
+    - 状态：已完成标准库多 Agent / Flow 控制模拟实验，见 [多 Agent 与 Flow 控制对比实验](multi-agent-comparison/README.md) 和 [2026-07-11 结果](multi-agent-comparison/results-2026-07-11.md)。仍需真实模型 / AutoGen / CrewAI / LangGraph 横向实验。
+
 ## 实验记录要求
 
 - 明确假设。

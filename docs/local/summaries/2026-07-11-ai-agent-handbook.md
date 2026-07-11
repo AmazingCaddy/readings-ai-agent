@@ -1,6 +1,6 @@
 # Conversation Summary: AI Agent Handbook
 **Date:** 2026-07-11
-**Last Updated:** 2026-07-11 17:00 Asia/Shanghai
+**Last Updated:** 2026-07-11 17:05 Asia/Shanghai
 **Status:** In Progress
 
 ## Objective
@@ -48,9 +48,10 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 31. Completed a standard-library workflow / hybrid / ReAct-like comparison under `docs/experiments/workflow-agent-comparison/`. Fixed workflow succeeds on 2/3 fake issue triage tasks with 3 tool calls but misses a bug root cause requiring log/config/deploy evidence; workflow-agent hybrid succeeds on 3/3 with 7 tool calls; ReAct-like loop succeeds on 3/3 with 9 tool calls and extra feature-context lookup. This supports the control-boundary explanation but does not validate real models, frameworks, costs, permissions, or tool-error recovery.
 32. Completed a standard-library planner/executor comparison under `docs/experiments/planner-executor-comparison/`. Single checklist loop succeeds on 3/3 tasks with 9 tool calls; one-shot planner/executor succeeds on 2/3 with 8 tool calls because it misses migration evidence; planner/executor with feedback succeeds on 3/3 with one replan. This supports evidence validation and feedback replanning guidance but does not validate real models, frameworks, costs, permissions, tool failures, or human review.
 33. Completed a standard-library reflection/retry comparison under `docs/experiments/reflection-retry/`. No reflection succeeds on 1/3 tasks; verified reflection retry succeeds on 3/3 by using required-evidence feedback but increases tool calls; unverified reflection memory succeeds on 1/3 and applies two bad reflections that skip deploy/log/migration evidence. This supports reflection verifier and bad-reflection risk guidance but does not validate real models, critics, frameworks, long-term episodic memory, costs, or human review.
+34. Completed a standard-library multi-agent comparison under `docs/experiments/multi-agent-comparison/`. Single checklist succeeds on 3/3 tasks with 6 tool calls; ungoverned researcher/writer/reviewer succeeds on 1/3 with 7 messages, 1 unresolved conflict, and 3 duplicate reads; flow-controlled multi-agent succeeds on 3/3 with 9 messages. This supports the Flow-first multi-agent boundary but does not validate real AutoGen/CrewAI/LangGraph behavior, token cost, latency, tool failures, or human review.
 
 ## Technical Context
-- Files modified recently: `docs/chapters/04-agent-architecture.md`, `docs/chapters/07-planning-orchestration.md`, `docs/chapters/12-source-map.md`, `docs/evidence/agent-architecture-pattern-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/reflection-retry/README.md`, `docs/experiments/reflection-retry/reflection_retry.py`, `docs/experiments/reflection-retry/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
+- Files modified recently: `docs/chapters/07-planning-orchestration.md`, `docs/chapters/10-framework-landscape.md`, `docs/chapters/12-source-map.md`, `docs/evidence/multi-agent-default-boundary.md`, `docs/evidence/claim-ledger.md`, `docs/evidence/validation-backlog.md`, `docs/experiments/README.md`, `docs/experiments/multi-agent-comparison/README.md`, `docs/experiments/multi-agent-comparison/multi_agent_comparison.py`, `docs/experiments/multi-agent-comparison/results-2026-07-11.md`, `docs/references/coverage-matrix.md`, `docs/local/summaries/2026-07-11-ai-agent-handbook.md`.
 - Existing chapter pattern: target audience, learning outcomes, one-sentence intuition, concepts, examples, mechanisms, engineering practice, mistakes, boundaries, verified conclusions, summary, references.
 - Dependencies: `uv`, MkDocs Material.
 
@@ -61,6 +62,7 @@ Build a beginner-friendly Chinese AI Agent learning handbook from verified sourc
 - Run an output parsing experiment comparing free text, JSON mode, and Structured Outputs; include refusal and semantic-error handling.
 - Run a long-context failure-mode experiment covering irrelevant context, conflicting context, stale context, external prompt injection, truncation behavior, and token cost.
 - Run a single-agent vs planner/executor vs multi-agent comparison experiment for the same research/writing task.
+- Run a real multi-agent framework comparison beyond the current standard-library simulation, using real AutoGen/CrewAI/LangGraph or similar frameworks and recording token, latency, cost, conflicts, duplicate work, trace readability, and human review.
 - Run a same-task framework comparison across OpenAI Agents SDK, LangGraph, LlamaIndex, AutoGen/CrewAI, and Semantic Kernel, covering implementation effort, trace readability, permissions/human approval, state recovery, and error handling.
 - Run the practice roadmap examples locally: Structured Outputs, File Search/RAG, OpenAI Evals or a tiny eval harness, usage/cost monitoring, and rate-limit handling. Record dependency friction, cost, trace shape, failure examples, and beginner-facing instructions.
 - Run a real Agent eval experiment beyond the current standard-library simulation, comparing final-answer-only scoring with trajectory/trace-aware scoring on actual generated traces.
