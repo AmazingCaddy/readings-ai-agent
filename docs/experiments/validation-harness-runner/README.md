@@ -12,6 +12,8 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；不依赖 API 的本地 stdio MCP harness 应返回 `completed`。
 
+最新记录：见 [2026-07-11 结果](results-2026-07-11.md)。本次运行验证了统一入口、API harness 的 skip 分支和本地 MCP stdio harness；没有完成真实 API 行为验证。
+
 ## 覆盖范围
 
 - Real Tool Calling 参数校验与重试
