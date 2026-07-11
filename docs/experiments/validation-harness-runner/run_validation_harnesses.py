@@ -76,6 +76,10 @@ HARNESSES = [
         ROOT / "docs/experiments/real-framework-same-task-comparison/real_framework_same_task_comparison.py",
     ),
     Harness(
+        "real_smolagents_validation",
+        ROOT / "docs/experiments/real-smolagents-validation/real_smolagents_validation.py",
+    ),
+    Harness(
         "real_multi_agent_framework_validation",
         ROOT / "docs/experiments/real-multi-agent-framework-validation/real_multi_agent_framework_validation.py",
     ),
@@ -200,6 +204,10 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "frameworks_skipped",
         "full_comparison_completed",
         "fake_model_only",
+        "code_agent_validated",
+        "tool_calling_agent_validated",
+        "local_python_executor_import_block_observed",
+        "output_schema_not_enforced_observed",
         "real_model_validated",
         "real_api_validated",
         "coding_agent_validated",

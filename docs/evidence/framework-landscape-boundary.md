@@ -27,7 +27,7 @@ Agent 框架应按任务核心难点来比较，而不是按流行度排名。Op
 - 一致点：AutoGen 文档支持 AgentChat、Teams、Selector Group Chat、Swarm、GraphFlow、logging/tracing 等多 Agent 协调抽象。
 - 一致点：CrewAI 文档支持 Flows / Crews 的组合：Flow 管理状态和执行控制，Crew 在 Flow 内协作完成特定复杂任务。
 - 一致点：Semantic Kernel 文档支持企业集成定位：lightweight open-source development kit、middleware、plugins/functions、native/OpenAPI/MCP plugin 导入、task automation function invocation filter、agent framework、human-agent collaboration 和 process orchestration。
-- 一致点：smolagents 文档支持 `CodeAgent` / `ToolCallingAgent` 的范式对照：code action 提高组合表达能力但扩大本地代码执行风险；structured tool calling 更接近 JSON/text tool-call 范式但表达能力受限。其 Secure Code Execution / README 明确 `LocalPythonExecutor` 不是完整安全边界，Hub/MCP tools 和 `trust_remote_code=True` 是信任边界。
+- 一致点：smolagents 文档支持 `CodeAgent` / `ToolCallingAgent` 的范式对照：code action 提高组合表达能力但扩大本地代码执行风险；structured tool calling 更接近 JSON/text tool-call 范式但表达能力受限。其 Secure Code Execution / README 明确 `LocalPythonExecutor` 不是完整安全边界，Hub/MCP tools 和 `trust_remote_code=True` 是信任边界。Real smolagents validation 已用 `smolagents==1.26.0` 和 deterministic fake models 跑通 `CodeAgent` Python snippet、本地 tool 调用、`ToolCallingAgent` structured tool calls、`output_schema` 非强制校验和 local executor 未授权 import 阻断表面。
 - 一致点：Anthropic `Building effective agents` 指出 frameworks 可以简化 LLM 调用、tool definition 和 chain 编排，但也可能遮蔽 prompts / responses、增加 debugging 难度，并诱导不必要复杂度。这补强“框架是任务和调试边界的选择，不是默认升级路径”的正文表述。
 - 边界：Semantic Kernel Process Framework 当前入口是 `frameworks/process/process-framework`，旧 `frameworks/process/` 路径已返回 404；Process Framework 仍标注 experimental，只能作方向性参考。CrewAI source card 可信度为 B；smolagents API reference 明确 experimental and subject to change；框架文档通常强调能力和产品定位，不等于严格对照实验。
 - 边界：Anthropic 文章是工程博客，不是框架横向评测；它能支撑 abstraction caveat 和 simple-first 原则，不能证明裸 API、轻框架或复杂框架在真实任务中更可靠。
