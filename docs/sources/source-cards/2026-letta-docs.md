@@ -8,7 +8,7 @@
 - 主题：Agent Memory / Stateful Agents / MemGPT Ecosystem
 - 适合阶段：工程实践
 - 可信度等级：B
-- 是否已验证：memory 页面已复核；长期记忆治理边界已完成第一轮交叉验证；生命周期权限审计已完成标准库模拟
+- 是否已验证：memory 页面已复核；长期记忆治理窄边界可入正文；生命周期权限审计已完成标准库模拟；真实 Letta 行为仍部分验证
 
 ## 一句话总结
 
@@ -26,7 +26,7 @@ Letta 是 MemGPT 相关生态的工程化文档，可用于观察长期记忆 ag
 
 - 官方文档入口返回 HTTP 200。
 - 2026-07-11 抓取 `https://docs.letta.com/letta-agent/memory.md` 成功；页面包含 `/init`、`/doctor`、`/remember`、dream subagents、memory defragmentation、MemFS、version history、conflict resolution 和 direct inspection/editing 等关键内容。
-- 已与 MemoryBank、MemGPT、Generative Agents、Zep、OWASP 和 NIST 交叉验证长期记忆治理边界。
+- 已与 MemoryBank、MemGPT、Generative Agents、Zep、OWASP、NIST 和标准库 memory governance / lifecycle audit 实验交叉验证长期记忆治理边界；可支撑显式写入、审计、版本历史、冲突处理和可检查/可编辑等工程模式。
 - 标准库 lifecycle audit 已把 direct inspection/editing、版本历史、删除语义、权限隔离和 trace 脱敏转化为最小验收项；该实验不验证 Letta 的真实实现行为。
 
 ## 可能的问题
@@ -45,4 +45,4 @@ Letta 是 MemGPT 相关生态的工程化文档，可用于观察长期记忆 ag
 ## 是否进入正文
 
 - 结论：作为工程资料进入
-- 原因：Memory 章节需要工程治理案例，包括显式写入、审计、版本历史、冲突处理、可检查/可编辑和备份。
+- 原因：Memory 章节需要工程治理案例，包括显式写入、审计、版本历史、冲突处理、可检查/可编辑和备份；不能把 Letta 的真实实现效果或安全性提前写成已验证。

@@ -8,7 +8,7 @@
 - 主题：Short-term Memory / Long-term Memory / Stateful Agents
 - 适合阶段：入门后 / 工程实践
 - 可信度等级：A
-- 是否已验证：来源链接和 canonical 迁移已复核；关键段落已精读；RAG / Memory 术语边界和短期/长期记忆边界已交叉验证，窄边界可入正文
+- 是否已验证：来源链接和 canonical 迁移已复核；关键段落已精读；RAG / Memory 术语边界、短期/长期记忆边界和长期记忆治理窄边界可入正文；真实 memory framework 行为仍部分验证
 
 ## 一句话总结
 
@@ -27,6 +27,7 @@ LangGraph memory 文档适合用于解释工程框架中短期记忆、长期记
 
 - 旧链接 `https://langchain-ai.github.io/langgraph/concepts/memory/` 重定向到 `https://docs.langchain.com/oss/python/langgraph/memory`，页面 canonical 指向 `https://docs.langchain.com/oss/python/concepts/memory`。
 - 2026-07-11 抓取 `https://docs.langchain.com/oss/python/concepts/memory.md` 成功；页面包含 short-term memory、long-term memory、semantic/episodic/procedural memory 和 writing memories 段落。
+- 已与 MemoryBank、MemGPT、Letta、Zep、OWASP/NIST 和标准库 memory governance / lifecycle audit 实验交叉验证长期记忆治理边界；long-term memory 的 one-size-fits-all 风险和 hot path / background 写入权衡支持保守正文写法。
 
 ## 可能的问题
 
@@ -44,4 +45,4 @@ LangGraph memory 文档适合用于解释工程框架中短期记忆、长期记
 ## 是否进入正文
 
 - 结论：进入；术语边界可入正文
-- 原因：Memory 章节需要现代框架文档支撑短期/长期记忆边界；真实 memory framework 的收益、污染、用户编辑/删除和权限行为仍需实验。
+- 原因：Memory 章节需要现代框架文档支撑短期/长期记忆边界和写入治理权衡；真实 memory framework 的收益、污染、用户编辑/删除和权限行为仍需实验。

@@ -8,7 +8,7 @@
 - 主题：Agent Memory / Reflection / Planning / Simulation
 - 适合阶段：进阶
 - 可信度等级：A
-- 是否已验证：arXiv 元数据和摘要已复核；memory/reflection/planning 边界已完成第一轮交叉验证
+- 是否已验证：arXiv 元数据和摘要已复核；memory/reflection/planning 边界已完成第一轮交叉验证；长期记忆治理窄边界可入正文，真实任务可靠性仍部分验证
 
 ## 一句话总结
 
@@ -24,7 +24,7 @@ Generative Agents 是理解“记忆、反思、规划”如何组合成 believa
 
 - arXiv API 返回有效条目：`2304.03442v2`。
 - 2026-07-11 抓取 arXiv 页面成功；摘要包含 complete record of experiences、synthesize memories into higher-level reflections、retrieve memories dynamically 和 plan behavior 等关键表述。
-- 已与 MemoryBank、MemGPT、Letta、Zep、OWASP 和 NIST 交叉验证长期记忆治理边界。
+- 已与 MemoryBank、MemGPT、Letta、Zep、OWASP、NIST 和标准库 memory governance / lifecycle audit 实验交叉验证长期记忆治理边界；该论文可作为 memory/reflection/planning 组合案例，不证明生产 Agent 默认更可靠。
 
 ## 可能的问题
 
