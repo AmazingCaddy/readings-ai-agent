@@ -63,6 +63,8 @@ uv run mkdocs build
 - [章节目录](docs/chapter-outline.md)
 - [00. 序言：如何学习 AI Agent](docs/chapters/00-preface.md)
 - [01. AI Agent 是什么](docs/chapters/01-agent-landscape.md)
+- [02. LLM 基础与上下文工程](docs/chapters/02-llm-context.md)
+- [03. Tool Use、Function Calling 与 Structured Output](docs/chapters/03-tool-use.md)
 - [候选资料清单](docs/sources/seed-candidates.md)
 - [Source Card 索引](docs/sources/source-card-index.md)
 - [Source Cards](docs/sources/source-cards/index.md)
