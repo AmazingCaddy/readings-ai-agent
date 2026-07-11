@@ -214,6 +214,8 @@
 
 成本和延迟记录也不要只写“看起来还行”。最小记录表应包含：input tokens、output tokens、request count、model、rate-limit headers、retry count、平均 latency、P95 latency、cost estimate、budget threshold、超预算后的停止或降级行为。先把这些字段记录下来，再讨论减少输出 token、换模型、streaming、Batch、Flex、Prompt Caching 或异步处理是否真的改善了你的任务。
 
+标准库 production cost / latency / rate-limit audit 可以作为无 API key 时的字段模板：它检查 usage/token accounting、rate-limit headers、bounded retry、latency distribution、budget gate、model/output controls、Batch boundary、Flex fallback 和 Prompt Caching read/write 字段。真实项目仍要用真实 API 日志、rate-limit headers、usage/cost 记录、latency 样本和质量 eval 复核，不能把模板通过当成优化有效。
+
 数据治理记录也要具体。最小记录表应包含：是否产生服务端 application state、对象如何删除、trace 是否脱敏、是否发送 `safety_identifier`、API key 如何存放和撤销、remote MCP / web search / hosted tool / browser 工具会看到哪些数据，以及这些第三方服务的数据保留政策由谁负责。标准库 production safety / data governance checklist audit 可以作为无 API key 时的字段模板；真实项目仍要用平台配置、应用日志和 runbook 复核。
 
 ### 关联章节
@@ -226,6 +228,7 @@
 - OpenAI Cookbook 的 `How to handle rate limits`。
 - OpenAI Production / Cost / Latency / Rate Limit source card。它适合用来理解 usage dashboard、billing / usage limits、token counting、rate-limit headers、exponential backoff、`max_tokens`、streaming、batching 和预算阈值的工程边界。
 - OpenAI Batch / Flex / Prompt Caching source card。它适合用来理解 Batch 的离线任务边界、Flex 的低优先级取舍，以及 Prompt Caching 的 cache read/write 观测字段。
+- [Production Cost / Latency / Rate-Limit Audit](../experiments/production-cost-latency-rate-limit/README.md)。它适合在无 API key 时练习生产字段检查，但不能替代真实成本、延迟、限流和质量实验。
 - OpenAI Moderation source card。它适合用来理解 generated/input/output moderation、`flagged` / categories / scores、tool-calling 覆盖限制和 streaming 限制。
 - OpenAI Safety / Data Controls source card。它适合用来理解 moderation、red-team、HITL、`safety_identifier`、API key revoke、abuse monitoring logs、application state、ZDR/MAM、remote MCP third-party retention 和 data residency 边界。
 

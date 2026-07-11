@@ -94,6 +94,10 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
     - 目标：把 Moderation、Safety Best Practices 和 Data Controls 文档中的生产安全与数据治理边界整理成可审计 checklist。
     - 状态：已完成标准库 checklist audit，见 [Production Safety / Data Governance Checklist](production-safety-data-governance/README.md) 和 [2026-07-11 结果](production-safety-data-governance/results-2026-07-11.md)。尚未读取真实 project / account 配置；不能证明任何 moderation、HITL、数据保留、data residency 或合规方案有效。
 
+19. Production cost / latency / rate-limit audit 实验
+    - 目标：把 Production、Cost、Latency、Rate Limits、Token Counting、Batch、Flex 和 Prompt Caching 文档中的生产质量边界整理成可审计字段表。
+    - 状态：已完成标准库 field audit，见 [Production Cost / Latency / Rate-Limit Audit](production-cost-latency-rate-limit/README.md) 和 [2026-07-11 结果](production-cost-latency-rate-limit/results-2026-07-11.md)。尚未调用真实 API、读取真实 rate-limit headers、提交 Batch job、使用 Flex 或触发 Prompt Caching；不能证明任何真实成本、P95 latency、吞吐、缓存命中率、优化收益或生产可靠性。
+
 ## 实验记录要求
 
 - 明确假设。

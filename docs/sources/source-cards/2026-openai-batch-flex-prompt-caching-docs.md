@@ -55,6 +55,7 @@ Batch、Flex processing 和 Prompt Caching 都是成本/延迟治理工具，但
 
 ## 可复现实验
 
+- 已完成标准库 production cost / latency / rate-limit audit：它检查 Batch candidate/status/`custom_id`/expiration、Flex service tier/resource unavailable/fallback 和 Prompt Caching cache eligible/`cached_tokens`/`cache_write_tokens`/miss reason 字段。该实验不提交 Batch job、不使用 Flex、不触发 Prompt Caching，因此不证明真实收益、命中率、延迟或失败率。
 - 后续可选一个小型 eval dataset，用同步请求与 Batch API 对比：提交文件、batch status、completed / failed / expired request、`custom_id` 映射、成本估算和等待时间。
 - 后续可用同一低优先级任务对比 standard vs flex：成功率、timeout、`429 Resource Unavailable`、fallback 次数、等待时间和成本估算。
 - 后续可用一个长稳定 system prompt / tool schema 对比缓存前后：`cached_tokens`、`cache_write_tokens`、latency、cost estimate 和 cache miss 原因。
