@@ -9,7 +9,7 @@
 - 主题：SWE-agent / Agent-computer interface / Repo issue fixing / Software engineering agents
 - 适合阶段：进阶 / 实践扩展
 - 可信度等级：A
-- 是否已验证：来源链接、HTTP metadata、arXiv 元数据、摘要和 GitHub README 已复核；支撑“软件工程 Agent 需要面向 Agent 的计算机/仓库接口，覆盖创建/编辑代码、导航仓库、运行测试和程序”的窄边界；SWE-agent README 已提示当前推荐使用 mini-SWE-agent；真实 repo issue 成功率、成本、延迟、安全隔离和当前 leaderboard 表现仍部分验证
+- 是否已验证：来源链接、HTTP metadata、arXiv 元数据、摘要和 GitHub README 已复核；支撑“软件工程 Agent 需要面向 Agent 的计算机/仓库接口，覆盖创建/编辑代码、导航仓库、运行测试和程序”的窄边界；SWE-agent README 已提示当前推荐使用 mini-SWE-agent；Real Repo Issue Agent Toy 已完成固定 workflow baseline，但尚未运行 SWE-agent；真实 repo issue 成功率、成本、延迟、安全隔离和当前 leaderboard 表现仍部分验证
 
 ## 一句话总结
 
@@ -54,4 +54,4 @@ SWE-agent 适合用来理解软件工程 Agent 的真实复杂度：它不是让
 ## 可复现实验
 
 - 本手册已完成标准库 workflow / hybrid / ReAct-like 对比、planner/executor 对比和 trace-aware eval 实验，可作为 repo issue 任务实验设计的起点。
-- 后续真实实验可选择 toy repo issue：固定 workflow、workflow-agent hybrid、SWE-agent / mini-SWE-agent 或其他 coding agent 进行对比，记录文件读写、测试执行、失败原因、token、latency、cost、权限确认、回滚和 trace 可读性。
+- Real Repo Issue Agent Toy 已完成固定 workflow baseline：临时 toy repo 初始 `pytest` 失败，修复实现后通过，并记录 implementation-only diff 和 trajectory。后续真实实验应增加 workflow-agent hybrid、SWE-agent / mini-SWE-agent 或其他 coding agent 进行同题对比，记录文件读写、测试执行、失败原因、token、latency、cost、权限确认、回滚和 trace 可读性。

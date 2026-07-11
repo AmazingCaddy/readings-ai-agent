@@ -8,9 +8,9 @@
 
 ## 实验边界
 
-这是一个真实实验设计，当前尚未运行 mini-SWE-agent、SWE-agent 或任何真实模型。
+这是一个真实 toy repo baseline 实验。当前已运行固定 workflow baseline，尚未运行 mini-SWE-agent、SWE-agent 或任何真实模型。
 
-未运行前，只能支撑“实验应如何设计和记录”的教学边界，不能证明：
+当前 completed baseline 只能支撑“toy repo、失败测试、diff、trajectory 和固定 workflow 对照组可以安全复现”的教学边界，不能证明：
 
 - mini-SWE-agent 或 SWE-agent 能修复 toy repo issue。
 - bash-only coding agent 比固定 workflow、workflow-agent hybrid 或其他框架更好。
@@ -18,6 +18,14 @@
 - Docker、bubblewrap、contree、singularity/apptainer 或本地环境已经提供足够 sandbox。
 
 ## 最小任务设计
+
+固定 workflow baseline 运行方式：
+
+```bash
+uv run --with pytest python docs/experiments/real-repo-issue-agent-toy/real_repo_issue_agent_toy.py
+```
+
+没有 `pytest` 时，脚本会返回 `skipped`。
 
 toy repo 应满足：
 
@@ -70,21 +78,19 @@ toy repo 应满足：
 
 | run | approach | model | sandbox | result | tests | confirmations | cost | latency | notable failure |
 | --- | --- | --- | --- | --- | --- | ---: | ---: | ---: | --- |
-| TODO | fixed workflow | n/a | temp dir | pending | pending | 0 | n/a | n/a | pending |
+| 2026-07-12 | fixed workflow | n/a | temp dir | completed | initial 3 failed, final 5 passed | 0 | n/a | <1s local | no agent/model tested |
 | TODO | workflow-agent hybrid | TBD | temp dir | pending | pending | TBD | TBD | TBD | pending |
 | TODO | mini-SWE-agent confirm | TBD | TBD | pending | pending | TBD | TBD | TBD | pending |
 
 ## 结论状态
 
-- 当前状态：实验设计已准备，真实结果待跑。
-- 可支撑：第 11 章可以把 Repo Issue Agent 作为进阶练习，并要求 toy repo、sandbox、确认模式、trajectory、diff/rollback、测试输出、成本和延迟记录。
+- 当前状态：固定 workflow baseline 已完成，见 [2026-07-12 结果](results-2026-07-12.md)；workflow-agent hybrid、mini-SWE-agent confirm 和 SWE-agent 仍待跑。
+- 可支撑：第 11 章可以把 Repo Issue Agent 作为进阶练习，并要求 toy repo、sandbox、确认模式、trajectory、diff/rollback、测试输出、成本和延迟记录；固定 workflow baseline 证明这个 toy repo 能产生失败测试、最小实现 diff 和通过测试的可复现对照组。
 - 不可支撑：不能把任何 coding agent、模型、sandbox 或框架写成默认可靠或默认更好。
 
 ## 后续产出
 
-真实运行后应新增：
+后续真实 agent 运行后应新增：
 
-- toy repo 结构或生成脚本。
 - 每个 approach 的完整运行日志或脱敏 trajectory。
-- `results-YYYY-MM-DD.md`。
 - 对 claim ledger、coverage matrix、第 11/12 章和相关 source card 的同步更新。

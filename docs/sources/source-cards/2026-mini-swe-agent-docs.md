@@ -10,7 +10,7 @@
 - 主题：coding agent / repo issue agent / bash-only agent / trajectory / sandbox
 - 适合阶段：进阶 / 实践扩展
 - 可信度等级：A/B
-- 是否已验证：GitHub 页面、raw README、官方文档 Markdown、默认 agent / interactive agent / local environment / config 源码已抽样复核；支撑 mini-SWE-agent 是当前 SWE-agent 系列中更推荐的轻量 coding agent 入口，并支撑 bash-only、线性 history、confirm / yolo / human 模式、trajectory、call/cost limit 和本地 / container sandbox 相关工程边界；真实安装、真实 repo issue 成功率、benchmark claim、模型表现、成本、延迟和安全隔离效果仍部分验证
+- 是否已验证：GitHub 页面、raw README、官方文档 Markdown、默认 agent / interactive agent / local environment / config 源码已抽样复核；支撑 mini-SWE-agent 是当前 SWE-agent 系列中更推荐的轻量 coding agent 入口，并支撑 bash-only、线性 history、confirm / yolo / human 模式、trajectory、call/cost limit 和本地 / container sandbox 相关工程边界；Real Repo Issue Agent Toy 已完成固定 workflow baseline，但尚未运行 mini-SWE-agent；真实安装、真实 repo issue 成功率、benchmark claim、模型表现、成本、延迟和安全隔离效果仍部分验证
 
 ## 一句话总结
 
@@ -49,7 +49,7 @@ mini-SWE-agent 适合放在进阶实践路线里作为 repo issue / coding agent
 - `yolo` 模式会跳过确认，初学者不应在真实仓库、真实凭据或重要文件上使用。
 - 默认 LocalEnvironment 会在本机直接执行 bash 命令；如果没有 Docker、bubblewrap、contree、singularity/apptainer 或其他 sandbox 配置，不能假设它已经隔离。
 - API key 可以写入全局 `.env`，这对长期使用方便，但学习材料应提示不要把真实 key 写入项目仓库或 trace。
-- 本次没有安装或运行 mini-SWE-agent，也没有验证真实模型、真实 repo issue、SWE-bench 得分、cost tracking、sandbox 实现或 trajectory browser 行为。
+- 本次没有安装或运行 mini-SWE-agent，也没有验证真实模型、真实 repo issue、SWE-bench 得分、cost tracking、sandbox 实现或 trajectory browser 行为。Real Repo Issue Agent Toy 只完成固定 workflow baseline：临时 toy repo 初始测试失败、实现修复后测试通过、记录 diff 和 trajectory；它是后续 mini-SWE-agent 对照组，不代表 mini-SWE-agent 表现。
 
 ## 初学者阅读建议
 
@@ -59,5 +59,5 @@ mini-SWE-agent 适合放在进阶实践路线里作为 repo issue / coding agent
 
 ## 可复现实验
 
-- 后续可创建 toy repo issue，用固定 workflow、workflow-agent hybrid、mini-SWE-agent 和可选 SWE-agent 做同题对比。
+- Real Repo Issue Agent Toy 已创建并运行固定 workflow baseline；后续应在同一 toy repo 任务上增加 workflow-agent hybrid、mini-SWE-agent confirm 和可选 SWE-agent 做同题对比。
 - 最小记录项：安装方式、模型、API key 放置方式、sandbox、任务描述、文件读写、命令执行、测试输出、trajectory、人工确认次数、拒绝/恢复、diff、回滚、token、成本、延迟和失败原因。

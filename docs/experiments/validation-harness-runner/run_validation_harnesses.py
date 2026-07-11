@@ -70,6 +70,10 @@ HARNESSES = [
         ROOT / "docs/experiments/real-multi-agent-framework-validation/real_multi_agent_framework_validation.py",
     ),
     Harness(
+        "real_repo_issue_agent_toy",
+        ROOT / "docs/experiments/real-repo-issue-agent-toy/real_repo_issue_agent_toy.py",
+    ),
+    Harness(
         "real_moderation_safety",
         ROOT / "docs/experiments/real-moderation-safety-validation/real_moderation_safety_validation.py",
     ),
@@ -116,7 +120,12 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "full_comparison_completed",
         "fake_model_only",
         "real_model_validated",
+        "coding_agent_validated",
         "all_completed_passed",
+        "toy_repo_created",
+        "approach_count",
+        "completed_approaches",
+        "pending_approaches",
         "index",
         "embedding",
         "llm_synthesis",

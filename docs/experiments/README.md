@@ -10,9 +10,9 @@
 uv run python docs/experiments/validation-harness-runner/run_validation_harnesses.py
 ```
 
-没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`；官方 MCP SDK harness 在没有 `mcp` Python package 时应返回 `skipped`；LlamaIndex harness 在没有 `llama-index-core` 时应返回 `skipped`；AutoGen/CrewAI harness 在没有对应包时应返回 `skipped`。部分框架 harness 可以用 `uv run --with ...` 临时依赖运行。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
+没有 `OPENAI_API_KEY` 时，依赖真实 API 的 harness 应返回 `skipped`；本地 MCP stdio harness 应返回 `completed`；官方 MCP SDK harness 在没有 `mcp` Python package 时应返回 `skipped`；LlamaIndex harness 在没有 `llama-index-core` 时应返回 `skipped`；AutoGen/CrewAI harness 在没有对应包时应返回 `skipped`；Repo Issue Agent toy harness 在没有 `pytest` 时应返回 `skipped`。部分框架 harness 可以用 `uv run --with ...` 临时依赖运行。runner 只汇总 harness 状态，不代表真实 API / 框架结论已经完成。
 
-当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-12.md)：2026-07-12 运行覆盖 17 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，LlamaIndex harness 通过临时依赖完成本地 `VectorStoreIndex` / retriever / source-node metadata run，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph interrupt recovery harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，LangGraph memory store harness 完成本地 `InMemoryStore` namespace / put / get / search / delete run，Real Framework Same-Task Comparison 在标准 full runner 中完成 OpenAI Agents SDK / LangGraph / LlamaIndex adapter，本地 MCP stdio harness 和官方 MCP Python SDK stdio harness 完成。Semantic Kernel plugin harness、same-task comparison 的 Semantic Kernel adapter 和 Real Multi-Agent Framework Validation 均已有单独 completed run；在标准 full runner 中因未安装对应依赖而保守 skipped。
+当前 runner 状态见 [Validation Harness Runner 结果](validation-harness-runner/results-2026-07-12.md)：2026-07-12 运行覆盖 18 个入口，真实 API harness 因缺少 `OPENAI_API_KEY` 保守跳过，LlamaIndex harness 通过临时依赖完成本地 `VectorStoreIndex` / retriever / source-node metadata run，Playwright harness 通过临时依赖和本地 Chromium headless shell 完成固定 demo page workflow，LangGraph interrupt recovery harness 通过临时依赖完成 `MemorySaver` 最小 run 和 `SqliteSaver` 本地 SQLite 同进程 graph 重建恢复 case、双本地 Python 进程 prepare/resume case 和双本地 Python 进程并发 resume case，LangGraph memory store harness 完成本地 `InMemoryStore` namespace / put / get / search / delete run，Real Framework Same-Task Comparison 在标准 full runner 中完成 OpenAI Agents SDK / LangGraph / LlamaIndex adapter，本地 MCP stdio harness 和官方 MCP Python SDK stdio harness 完成。Semantic Kernel plugin harness、same-task comparison 的 Semantic Kernel adapter、Real Multi-Agent Framework Validation 和 Real Repo Issue Agent Toy 均已有单独 completed run；在标准 full runner 中因未安装对应依赖而保守 skipped。
 
 ## 实验清单与状态
 
@@ -80,7 +80,7 @@ uv run python docs/experiments/validation-harness-runner/run_validation_harnesse
 
 15. Repo Issue Agent toy 实验
     - 目标：验证 coding agent 进阶项目是否能用 toy repo、安全 sandbox、确认模式、trajectory、diff/rollback、测试输出和成本/延迟记录来复现。
-    - 状态：真实实验设计已准备，见 [Real Repo Issue Agent Toy 实验](real-repo-issue-agent-toy/README.md)。尚未运行 mini-SWE-agent、SWE-agent、真实模型或 toy repo；不能证明任何 coding agent 默认可靠。
+    - 状态：固定 workflow baseline 已完成，见 [Real Repo Issue Agent Toy 实验](real-repo-issue-agent-toy/README.md) 和 [2026-07-12 结果](real-repo-issue-agent-toy/results-2026-07-12.md)。本次创建临时 toy repo，初始 3 failed / 2 passed，修复后 5 passed，只修改实现文件并记录 diff/trajectory；尚未运行 workflow-agent hybrid、mini-SWE-agent、SWE-agent 或真实模型，不能证明任何 coding agent 默认可靠。
 
 16. LangGraph interrupt recovery 实验
     - 目标：验证 LangGraph `interrupt()`、checkpointer、`thread_id` 和 `Command(resume=...)` 在高风险工具审批流程中的恢复、幂等和审计边界。
