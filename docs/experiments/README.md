@@ -30,7 +30,7 @@
 
 7. MCP 最小 trace 实验
    - 目标：验证 host/client/server、`tools/list`、`tools/call`、`resources/list`、`resources/read`、roots 和 host approval trace 字段。
-   - 状态：已完成标准库模拟实验，见 [MCP 最小 Trace 实验](mcp-trace/README.md) 和 [2026-07-11 结果](mcp-trace/results-2026-07-11.md)。仍需真实 MCP SDK / host 实验。
+   - 状态：已完成标准库模拟实验，见 [MCP 最小 Trace 实验](mcp-trace/README.md) 和 [2026-07-11 结果](mcp-trace/results-2026-07-11.md)；本地 stdio JSON-RPC harness 已准备，见 [Real MCP Stdio Trace 实验](real-mcp-stdio-trace/README.md)。仍需真实 MCP SDK / host / OAuth / URL mode 实验。
 
 8. Trace-aware eval 最小实验
    - 目标：比较 final-answer-only scoring 和 trace-aware scoring 能发现的错误类型差异。
