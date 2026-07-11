@@ -24,6 +24,9 @@ def run_validation() -> dict[str, Any]:
     try:
         from llama_index.core import Document, Settings, VectorStoreIndex
         from llama_index.core.embeddings import BaseEmbedding
+        from llama_index.core.llms.mock import MockLLM
+        from llama_index.core.postprocessor.types import BaseNodePostprocessor
+        from llama_index.core.schema import NodeWithScore, QueryBundle
     except ImportError:
         return {
             "status": "skipped",
@@ -47,7 +50,20 @@ def run_validation() -> dict[str, Any]:
         async def _aget_query_embedding(self, query: str) -> list[float]:
             return self._embed(query)
 
+    class TrustAndScoreFilter(BaseNodePostprocessor):
+        def _postprocess_nodes(
+            self,
+            nodes: list[NodeWithScore],
+            query_bundle: QueryBundle | None = None,
+        ) -> list[NodeWithScore]:
+            return [
+                node
+                for node in nodes
+                if node.node.metadata.get("trust") == "trusted" and node.score is not None and node.score > 0.0
+            ]
+
     Settings.embed_model = KeywordEmbedding()
+    Settings.llm = MockLLM(max_tokens=32)
 
     documents = [
         Document(
@@ -69,6 +85,7 @@ def run_validation() -> dict[str, Any]:
     ]
     index = VectorStoreIndex.from_documents(documents)
     retriever = index.as_retriever(similarity_top_k=3)
+    query_engine = index.as_query_engine(similarity_top_k=3, node_postprocessors=[TrustAndScoreFilter()])
 
     cases = [
         {
@@ -92,6 +109,7 @@ def run_validation() -> dict[str, Any]:
     ]
 
     results: list[dict[str, Any]] = []
+    query_engine_results: list[dict[str, Any]] = []
     for case in cases:
         raw_nodes = retriever.retrieve(case["query"])
         trusted_nodes = [node for node in raw_nodes if node.node.metadata.get("trust") == "trusted"]
@@ -133,25 +151,65 @@ def run_validation() -> dict[str, Any]:
         )
         results.append(result)
 
+        response = query_engine.query(case["query"])
+        source_nodes = [
+            {
+                "chunk_id": node.node.metadata["chunk_id"],
+                "source": node.node.metadata["source"],
+                "trust": node.node.metadata["trust"],
+                "score": round(float(node.score or 0.0), 6),
+            }
+            for node in response.source_nodes
+        ]
+        response_text = str(response)
+        query_engine_result = {
+            "name": case["name"],
+            "query": case["query"],
+            "response_text_present": bool(response_text),
+            "response_text_preview": response_text[:80],
+            "source_nodes": source_nodes,
+            "source_node_count": len(source_nodes),
+            "top_chunk_id": source_nodes[0]["chunk_id"] if source_nodes else None,
+            "expected_top_chunk_id": case["expected_top_chunk_id"],
+        }
+        query_engine_result["passed"] = (
+            query_engine_result["top_chunk_id"] == query_engine_result["expected_top_chunk_id"]
+            and all(node["trust"] == "trusted" for node in source_nodes)
+            and all(node["score"] > 0.0 for node in source_nodes)
+        )
+        query_engine_results.append(query_engine_result)
+
     untrusted_chunk_cited = any(
         citation["chunk_id"] == "malicious_refund_note"
         for result in results
         for citation in result["citations"]
     )
-    trace_json = json.dumps(results, ensure_ascii=False)
+    trace_json = json.dumps({"retrieval": results, "query_engine": query_engine_results}, ensure_ascii=False)
+    query_engine_source_nodes_present = all(
+        result["source_node_count"] > 0 for result in query_engine_results if result["expected_top_chunk_id"] is not None
+    )
+    unsupported_query_engine_empty = all(
+        result["source_node_count"] == 0 for result in query_engine_results if result["expected_top_chunk_id"] is None
+    )
     return {
         "status": "completed",
         "framework": "llama-index-core",
         "index": "VectorStoreIndex",
         "embedding": "local_keyword_embedding",
-        "llm_synthesis": "not_run",
+        "llm_synthesis": "mock_llm_query_engine",
         "document_count": len(documents),
         "case_count": len(results),
         "passed_count": sum(1 for result in results if result["passed"]),
-        "all_passed": all(result["passed"] for result in results),
+        "query_engine_case_count": len(query_engine_results),
+        "query_engine_passed_count": sum(1 for result in query_engine_results if result["passed"]),
+        "all_passed": all(result["passed"] for result in results)
+        and all(result["passed"] for result in query_engine_results),
         "untrusted_chunk_cited": untrusted_chunk_cited,
+        "query_engine_source_nodes_present": query_engine_source_nodes_present,
+        "unsupported_query_engine_empty": unsupported_query_engine_empty,
         "secret_leaked_in_trace": "secret=example-token" in trace_json,
         "results": results,
+        "query_engine_results": query_engine_results,
     }
 
 

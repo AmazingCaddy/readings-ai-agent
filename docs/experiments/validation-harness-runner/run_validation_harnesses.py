@@ -183,6 +183,8 @@ def compact_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "embedding",
         "llm_synthesis",
         "all_passed",
+        "query_engine_source_nodes_present",
+        "unsupported_query_engine_empty",
         "input_guardrail_blocked_before_model",
         "output_guardrail_blocked_after_model",
         "tool_input_reject_prevented_side_effect",
