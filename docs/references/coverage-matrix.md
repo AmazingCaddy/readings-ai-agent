@@ -15,7 +15,7 @@
 
 Claim Boundary Consistency Audit 会检查 coverage matrix 的主题行是否保留缺口字段，以及 `可入正文` 状态摘要是否仍带有部分验证 / 待验证 / 不证明等边界措辞。这个 audit 只防文本边界回归，不验证外部事实或真实系统表现。
 
-Source Reference Integrity Audit 会检查 source-card index、source card 元数据、章节 References 和本地 Markdown links 的结构完整性。它能防漏索引和本地断链，但不联网验证外部 URL 或资料事实。
+Source Reference Integrity Audit 会检查 source-card index、source-card 目录页、MkDocs Source Cards 导航、source card 元数据、章节 References 和本地 Markdown links 的结构完整性。它能防漏索引、导航漏挂和本地断链，但不联网验证外部 URL 或资料事实。
 
 Source URL Availability Audit 会联网检查 source card 元数据中的主来源 URL 当前是否可访问；2026-07-12 本地运行覆盖 64 张 source cards 的 89 个主 URL，89 个返回 HTTP 2xx/3xx，attention items 为 0；OpenAI Evals repo URL、LangChain / LangSmith docs URL 和 tau2/tau3-bench 主入口均可达。它只补链接可达性快照，不验证资料内容正确、章节解释正确或真实系统表现。
 

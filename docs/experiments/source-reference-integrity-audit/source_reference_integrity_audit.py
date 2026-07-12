@@ -2,9 +2,9 @@
 """Audit local source-card and reference link integrity.
 
 This deterministic harness checks handbook reference structure, not source truth.
-It verifies that source-card files are indexed, contain required metadata and
-sections, chapter reference blocks exist, and local Markdown links resolve to
-files in the repository.
+It verifies that source-card files are indexed and discoverable, contain
+required metadata and sections, chapter reference blocks exist, and local
+Markdown links resolve to files in the repository.
 """
 
 from __future__ import annotations
@@ -20,6 +20,8 @@ from urllib.parse import unquote
 ROOT = Path(__file__).resolve().parents[3]
 SOURCE_CARD_DIR = ROOT / "docs/sources/source-cards"
 SOURCE_CARD_INDEX = ROOT / "docs/sources/source-card-index.md"
+SOURCE_CARD_DIRECTORY_INDEX = SOURCE_CARD_DIR / "index.md"
+MKDOCS_CONFIG = ROOT / "mkdocs.yml"
 
 REQUIRED_METADATA = (
     "来源链接",
@@ -87,6 +89,33 @@ def audit_source_card_index() -> list[AuditResult]:
             not unindexed_files,
             {"source_card_files": len(card_files), "unindexed_files": unindexed_files},
             "Every source-card Markdown file except source-cards/index.md is listed in the source-card index.",
+        ),
+    ]
+
+
+def audit_source_card_discoverability() -> list[AuditResult]:
+    card_files = {path.name for path in source_card_files()}
+    directory_links = [link for link in markdown_links(SOURCE_CARD_DIRECTORY_INDEX) if link.endswith(".md")]
+    directory_linked_files = {Path(link.split("#", 1)[0]).name for link in directory_links}
+    mkdocs_text = MKDOCS_CONFIG.read_text(encoding="utf-8")
+    missing_from_directory = sorted(card_files - directory_linked_files)
+    missing_from_nav = sorted(name for name in card_files if f"sources/source-cards/{name}" not in mkdocs_text)
+    return [
+        AuditResult(
+            "source_card_directory_lists_all_cards",
+            not missing_from_directory,
+            {
+                "source_card_files": len(card_files),
+                "directory_links": len(directory_links),
+                "missing_from_directory": missing_from_directory,
+            },
+            "Every source-card Markdown file except source-cards/index.md is listed in docs/sources/source-cards/index.md.",
+        ),
+        AuditResult(
+            "mkdocs_nav_lists_all_source_cards",
+            not missing_from_nav,
+            {"source_card_files": len(card_files), "missing_from_nav": missing_from_nav},
+            "Every source-card Markdown file except source-cards/index.md is reachable from the MkDocs Source Cards navigation.",
         ),
     ]
 
@@ -176,7 +205,13 @@ def audit_local_markdown_links() -> list[AuditResult]:
 
 
 def main() -> None:
-    audits = audit_source_card_index() + audit_source_card_shape() + audit_chapter_references() + audit_local_markdown_links()
+    audits = (
+        audit_source_card_index()
+        + audit_source_card_discoverability()
+        + audit_source_card_shape()
+        + audit_chapter_references()
+        + audit_local_markdown_links()
+    )
     payload = {
         "status": "completed",
         "control": "deterministic_source_reference_integrity_audit",
