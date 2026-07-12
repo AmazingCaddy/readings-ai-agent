@@ -89,7 +89,7 @@
 | Agent 入门 | OpenAI A Practical Guide to Building Agents PDF | Official Guide | A | PDF CDN 直链、HTTP metadata 和关键段落已复核；source card 已创建；支撑初学者定义、适用场景、单 Agent 优先、guardrails 和 human intervention 边界；真实 API/SDK/模型效果待验证 |
 | RAG 入门 | DeepLearning.AI / framework courses on RAG | Course | B | 待复核 |
 | LLM 应用开发 | OpenAI cookbook examples | Official Examples | A/B | 链接已复核；source card 已创建 |
-| LangChain/LangGraph 入门 | LangChain Academy materials | Course | B | 待复核 |
+| LangChain/LangGraph 入门 | LangChain Academy materials | Course / Open Source Notebook Repository | B+ | GitHub repo metadata、raw README、requirements、module directory listings 和 `simple-graph.ipynb` 抽样已复核；source card 已创建；公开 academy 站点当前 Cloudflare 403，未作为网页课程证据；真实 notebook run、Studio、Tavily、部署、成本和延迟待实验 |
 
 ## 下一步处理方式
 

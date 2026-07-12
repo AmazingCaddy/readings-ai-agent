@@ -26,6 +26,8 @@ OpenAI 的 Practical Guide to Building Agents PDF 适合补充本章的入门判
 
 Hugging Face Agents Course 适合作为外部跟学地图：Unit 0 给出 basic Python / basic LLM prerequisites 和每周 3-4 小时的节奏建议，Unit 1 用 agent、tools、actions / observations 和 agency spectrum 建立词汇，Unit 2 再进入 smolagents、LlamaIndex、LangGraph 等框架，bonus 单元覆盖 observability 和 evaluation。它能帮助初学者安排学习顺序和练习主题，但课程示例、Spaces、final assignment、leaderboard、框架质量、成本、延迟和生产可靠性都还没有在本仓库复现，正文只能把它作为“部分进入”的学习路线参考。
 
+LangChain Academy 的开源仓库可以作为 LangGraph 跟练路线参考：README 把课程拆成 basic setup、LangGraph modules 和 deployment module，仓库包含 module 1-6 notebooks，覆盖 simple graph、router、agent、state schema/reducers、message trimming、external memory、breakpoints、human feedback、streaming interruption、map-reduce、parallelization、sub-graph、research assistant、memory store 和 deployment。它适合项目 4/5 的 state、memory、human feedback 和 workflow 练习；但公开 academy 站点当前返回 Cloudflare challenge / HTTP 403，本仓库也没有运行 notebooks、LangSmith Studio、Tavily search 或 deployment 示例，所以它只能作为开源 notebook 路线参考，不能证明 LangGraph 真实模型表现、部署可靠性、成本、延迟或生产安全。
+
 如果沿着 Hugging Face 课程尝试 smolagents，建议把它当作“同一任务的两种工具调用表达方式”来练：先用只读 mock tool 对比 `CodeAgent` 和 `ToolCallingAgent`，记录 Python code snippet、JSON/text tool call、参数校验、错误恢复和 trace。Real smolagents validation 已经跑通一个本地 fake-model 对照：`CodeAgent` 调用本地 tools，`ToolCallingAgent` 执行 structured tool calls，声明 `output_schema` 的 tool 返回 plain string 时没有自动 runtime validation，默认 local executor 会阻断未授权 `import os`。这个练习仍不能接触重要目录、真实账号或高权限工具；`LocalPythonExecutor` 不是安全边界，Hub/MCP tools 和 `trust_remote_code=True` 也要单独做信任审查。没有 Docker/E2B/Blaxel/Modal 等 sandbox 或明确的临时目录策略时，不要把它作为第一个真实环境练习。
 
 ## 项目 1：最小问答应用
@@ -384,6 +386,7 @@ Hugging Face Agents Course 适合作为外部跟学地图：Unit 0 给出 basic 
 - [OpenAI Cookbook](../sources/source-cards/2026-openai-cookbook.md)
 - [OpenAI Practical Guide to Building Agents](../sources/source-cards/2025-openai-practical-guide-building-agents.md)
 - [Hugging Face Agents Course](../sources/source-cards/2026-huggingface-agents-course.md)
+- [LangChain Academy Repository](../sources/source-cards/2026-langchain-academy.md)
 - [Hugging Face smolagents Documentation and Source](../sources/source-cards/2026-smolagents-docs.md)
 - [OpenAI Production, Cost, Latency and Rate Limit Documentation](../sources/source-cards/2026-openai-production-cost-latency-docs.md)
 - [OpenAI Batch, Flex Processing and Prompt Caching Documentation](../sources/source-cards/2026-openai-batch-flex-prompt-caching-docs.md)

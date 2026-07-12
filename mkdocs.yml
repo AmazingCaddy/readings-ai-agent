@@ -77,6 +77,7 @@ nav:
           - MCP official docs: sources/source-cards/2026-mcp-official-docs.md
           - Anthropic MCP docs: sources/source-cards/2026-anthropic-mcp-docs.md
           - LangGraph docs: sources/source-cards/2026-langgraph-docs.md
+          - LangChain Academy Repository: sources/source-cards/2026-langchain-academy.md
           - LangGraph examples repo: sources/source-cards/2026-langgraph-examples-repo.md
           - LangGraph memory docs: sources/source-cards/2026-langgraph-memory-docs.md
           - Letta docs: sources/source-cards/2026-letta-docs.md
